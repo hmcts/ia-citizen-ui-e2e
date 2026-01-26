@@ -1,0 +1,69 @@
+import { Page, Locator, expect } from '@playwright/test';
+import { CuiBase } from '../../../cui-base';
+
+export class SponsorAddressPage extends CuiBase {
+  constructor(page: Page) {
+    super(page);
+  }
+
+  private readonly pageForm = this.page.locator('body:has(form[action="/sponsor-address"])');
+
+  public readonly $inputs = {
+    addressLine1: this.pageForm.locator('input[id="address-line-1"]'),
+    addressLine2: this.pageForm.locator('input[id="address-line-2"]'),
+    townOrCity: this.pageForm.locator('input[id="address-town"]'),
+    county: this.pageForm.locator('input[id="address-county"]'),
+    postCode: this.pageForm.locator('input[id="address-postcode"]'),
+  } as const satisfies Record<string, Locator>;
+
+  public readonly $interactive = {
+    saveAndContinueButton: this.pageForm.locator('button', {
+      hasText: 'Save and continue',
+    }),
+  } as const satisfies Record<string, Locator>;
+
+  public readonly $static = {
+    pageHeading: this.pageForm.locator('h1', {
+      hasText: `What is your sponsor's address?`,
+    }),
+  } as const satisfies Record<string, Locator>;
+
+  public async verifyUserIsOnSponsorAddressPage(): Promise<void> {
+    await Promise.all([
+      expect(async () => {
+        expect(this.page.url().includes('sponsor-address')).toBeTruthy();
+      }).toPass({ intervals: [100], timeout: 15_000 }),
+
+      expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 }),
+    ]);
+  }
+
+  public async completePageAndContinue(options: {
+    addressLine1: string;
+    addressLine2?: string;
+    townOrCity: string;
+    county?: string;
+    postCode: string;
+  }): Promise<void> {
+    await this.$inputs.addressLine1.fill(options.addressLine1);
+    await expect(this.$inputs.addressLine1).toHaveValue(options.addressLine1);
+
+    if (options.addressLine2) {
+      await this.$inputs.addressLine2.fill(options.addressLine2);
+      await expect(this.$inputs.addressLine2).toHaveValue(options.addressLine2);
+    }
+
+    await this.$inputs.townOrCity.fill(options.townOrCity);
+    await expect(this.$inputs.townOrCity).toHaveValue(options.townOrCity);
+
+    if (options.county) {
+      await this.$inputs.county.fill(options.county);
+      await expect(this.$inputs.county).toHaveValue(options.county);
+    }
+
+    await this.$inputs.postCode.fill(options.postCode);
+    await expect(this.$inputs.postCode).toHaveValue(options.postCode);
+
+    await this.navigationClick(this.$interactive.saveAndContinueButton);
+  }
+}
