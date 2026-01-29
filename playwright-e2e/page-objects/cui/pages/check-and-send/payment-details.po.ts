@@ -31,14 +31,8 @@ export class PaymentDetailsPage extends CuiBase {
     pageHeading: this.page.locator('h1', { hasText: 'Enter card details' }),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnPaymentDetailsPage(): Promise<void> {
-    await Promise.all([
-      expect(async () => {
-        expect(this.page.url().includes('card_details')).toBeTruthy();
-      }).toPass({ intervals: [100], timeout: 15_000 }),
-
-      expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 }),
-    ]);
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'card_details', pageHeading: this.$static.pageHeading });
   }
 
   public async autoPopulateAndSubmitPaymentDetailsForm(): Promise<void> {

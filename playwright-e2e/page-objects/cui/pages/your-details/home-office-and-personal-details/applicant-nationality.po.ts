@@ -23,14 +23,8 @@ export class ApplicantNationalityPage extends CuiBase {
     }),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnApplicantNationalityPage(): Promise<void> {
-    await Promise.all([
-      expect(async () => {
-        expect(this.page.url().includes('nationality')).toBeTruthy();
-      }).toPass({ intervals: [100], timeout: 15_000 }),
-
-      expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 }),
-    ]);
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'nationality', pageHeading: this.$static.pageHeading });
   }
 
   /**

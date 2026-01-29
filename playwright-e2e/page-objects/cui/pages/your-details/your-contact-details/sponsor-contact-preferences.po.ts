@@ -27,14 +27,8 @@ export class SponsorContactPreferencesPage extends CuiBase {
     }),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnSponsorContactPreferencesPage(): Promise<void> {
-    await Promise.all([
-      expect(async () => {
-        expect(this.page.url().includes('sponsor-contact-preferences')).toBeTruthy();
-      }).toPass({ intervals: [100], timeout: 15_000 }),
-
-      expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 }),
-    ]);
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'sponsor-contact-preferences', pageHeading: this.$static.pageHeading });
   }
 
   /**

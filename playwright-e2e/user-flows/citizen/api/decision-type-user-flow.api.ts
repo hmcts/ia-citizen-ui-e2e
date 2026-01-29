@@ -2,7 +2,7 @@ import { APIRequestContext } from '@playwright/test';
 import { DecisionTypeJourney } from '../../../types';
 import { DecisionTypeApi, PayNowApi } from '../../../api-requests/citizen/index';
 
-export class DecisionTypeJourneyApi {
+export class DecisionTypeUserFlowApi {
   private cui_decisionTypeApi: DecisionTypeApi;
   private cui_payNowApi: PayNowApi;
 

@@ -1,13 +1,14 @@
 import { Page } from '@playwright/test';
 import { UtilsFixtures } from '../../utils';
-import { AppealData } from '../../types';
 import {
   StartAppealPage,
   SignInPage,
   AppealOverviewPage,
   AboutAppealPage,
   InTheUkPage,
-  OutOfCountryPage,
+  OutOfCountryProtectionDepartureDatePage,
+  OutOfCountryHrEeaPage,
+  OutOfCountryHrInsidePage,
   AppealTypePage,
   HomeOfficeReferenceNumberPage,
   ApplicantNamePage,
@@ -35,20 +36,13 @@ import {
   FeeWaiverPage,
   LocalAuthorityLetterPage,
   HelpWithFeesPage,
+  LateAppealPage,
   CheckAnswersPage,
   AppealDetailsSentPage,
   PaymentDetailsPage,
   ConfirmPaymentDetailsPage,
   ConfirmationOfPaymentPage,
 } from './pages/index';
-
-import {
-  YourDetailsSectionOfAppealJourney,
-  ApplicantDetailsType,
-  DecisionTypeSectionOfAppealJourney,
-  FeeSupportSectionOfAppealJourney,
-  CheckAndSendSectionOfAppealJourney,
-} from '../../journeys/citizen/ui/index';
 
 export interface CuiPageFixtures {
   determinePage: Page;
@@ -57,7 +51,9 @@ export interface CuiPageFixtures {
   cui_appealOverviewPage: AppealOverviewPage;
   cui_aboutAppealPage: AboutAppealPage;
   cui_inTheUkPage: InTheUkPage;
-  cui_outOfCountryPage: OutOfCountryPage;
+  cui_outOfCountryProtectionDepartureDatePage: OutOfCountryProtectionDepartureDatePage;
+  cui_outOfCountryHrEeaPage: OutOfCountryHrEeaPage;
+  cui_outOfCountryHrInsidePage: OutOfCountryHrInsidePage;
   cui_appealTypePage: AppealTypePage;
   cui_homeOfficeReferenceNumberPage: HomeOfficeReferenceNumberPage;
   cui_applicantNamePage: ApplicantNamePage;
@@ -85,13 +81,13 @@ export interface CuiPageFixtures {
   cui_feeWaiverPage: FeeWaiverPage;
   cui_localAuthorityLetterPage: LocalAuthorityLetterPage;
   cui_helpWithFeesPage: HelpWithFeesPage;
+  cui_lateAppealPage: LateAppealPage;
   cui_checkAnswersPage: CheckAnswersPage;
   cui_appealDetailsSentPage: AppealDetailsSentPage;
   cui_paymentDetailsPage: PaymentDetailsPage;
   cui_confirmPaymentDetailsPage: ConfirmPaymentDetailsPage;
   cui_confirmationOfPaymentPage: ConfirmationOfPaymentPage;
   cui_login: (email: string, password: string) => Promise<void>;
-  cui_completeAndSubmitAppealJourneyViaUI: (appealData: AppealData) => Promise<ApplicantDetailsType>;
 }
 
 /* Instantiates pages and provides page to the test via use()
@@ -127,9 +123,17 @@ export const cuiPageFixtures = {
     const cui_inTheUkPage = new InTheUkPage(determinePage);
     await use(cui_inTheUkPage);
   },
-  cui_outOfCountryPage: async ({ determinePage }, use) => {
-    const cui_outOfCountryPage = new OutOfCountryPage(determinePage);
-    await use(cui_outOfCountryPage);
+  cui_outOfCountryProtectionDepartureDatePage: async ({ determinePage }, use) => {
+    const cui_outOfCountryProtectionDepartureDatePage = new OutOfCountryProtectionDepartureDatePage(determinePage);
+    await use(cui_outOfCountryProtectionDepartureDatePage);
+  },
+  cui_outOfCountryHrEeaPage: async ({ determinePage }, use) => {
+    const cui_outOfCountryHrEeaPage = new OutOfCountryHrEeaPage(determinePage);
+    await use(cui_outOfCountryHrEeaPage);
+  },
+  cui_outOfCountryHrInsidePage: async ({ determinePage }, use) => {
+    const cui_outOfCountryHrInsidePage = new OutOfCountryHrInsidePage(determinePage);
+    await use(cui_outOfCountryHrInsidePage);
   },
   cui_appealTypePage: async ({ determinePage }, use) => {
     const cui_appealTypePage = new AppealTypePage(determinePage);
@@ -239,6 +243,10 @@ export const cuiPageFixtures = {
     const cui_helpWithFeesPage = new HelpWithFeesPage(determinePage);
     await use(cui_helpWithFeesPage);
   },
+  cui_lateAppealPage: async ({ determinePage }, use) => {
+    const cui_lateAppealPage = new LateAppealPage(determinePage);
+    await use(cui_lateAppealPage);
+  },
   cui_checkAnswersPage: async ({ determinePage }, use) => {
     const cui_checkAnswersPage = new CheckAnswersPage(determinePage);
     await use(cui_checkAnswersPage);
@@ -262,51 +270,13 @@ export const cuiPageFixtures = {
   cui_login: async ({ cui_startAppealPage, cui_signInPage, cui_appealOverviewPage }: CuiPageFixtures & UtilsFixtures, use) => {
     await use(async (email: string, password: string) => {
       await cui_startAppealPage.goTo();
-      await cui_startAppealPage.verifyUserIsOnStartAppealPage();
+      await cui_startAppealPage.verifyUserIsOnPage();
       await cui_startAppealPage.navigationClick(cui_startAppealPage.$interactive.signInLink);
 
-      await cui_signInPage.verifyUserIsOnSignInPage();
+      await cui_signInPage.verifyUserIsOnPage();
       await cui_signInPage.signIn(email, password);
 
-      await cui_appealOverviewPage.verifyUserIsOnAppealOverviewPage();
-    });
-  },
-  cui_completeAndSubmitAppealJourneyViaUI: async ({ determinePage, cui_appealOverviewPage }: CuiPageFixtures, use) => {
-    const cui_completeYourDetailsSectionOfJourney = new YourDetailsSectionOfAppealJourney(determinePage);
-    const cui_completeDecisionTypeSectionOfJourney = new DecisionTypeSectionOfAppealJourney(determinePage);
-    const cui_completeFeeSupportSectionOfJourney = new FeeSupportSectionOfAppealJourney(determinePage);
-    const cui_completeCheckAndSendSectionOfJourney = new CheckAndSendSectionOfAppealJourney(determinePage);
-    await use(async (appealData: AppealData) => {
-      await cui_appealOverviewPage.verifyUserIsOnAppealOverviewPage();
-      await cui_appealOverviewPage.navigationClick(cui_appealOverviewPage.$interactive.continueButton);
-
-      const applicantDetails = await cui_completeYourDetailsSectionOfJourney.complete({
-        isUserInTheUk: appealData.isUserInTheUk,
-        appealType: appealData.appealType,
-        isApplicantStateless: appealData.isApplicantStateless,
-        nationality: appealData.nationality,
-        hasApplicantReceivedADeportationOrder: appealData.hasApplicantReceivedADeportationOrder,
-        doesApplicantHaveASponsor: appealData.doesApplicantHaveASponsor,
-      });
-
-      await cui_completeDecisionTypeSectionOfJourney.complete({
-        appealType: appealData.appealType,
-        decisionWithOrWithoutHearing: appealData.decisionWithOrWithoutHearing,
-        payForAppealNowOrLater: appealData.payForAppealNowOrLater,
-      });
-
-      if (appealData.appealType !== 'Deprivation of Citizenship' && appealData.appealType !== 'Revocation of Protection Status') {
-        if (!appealData.whetherApplicantHasToPayAFee) {
-          throw new Error('Fee support information is required for this appeal type.');
-        }
-
-        await cui_completeFeeSupportSectionOfJourney.complete({
-          whetherApplicantHasToPayAFee: appealData.whetherApplicantHasToPayAFee,
-        });
-      }
-
-      await cui_completeCheckAndSendSectionOfJourney.complete({ appealSubmissionType: appealData.appealSubmissionType });
-      return applicantDetails;
+      await cui_appealOverviewPage.verifyUserIsOnPage();
     });
   },
 };

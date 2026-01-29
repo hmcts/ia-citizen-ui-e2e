@@ -13,6 +13,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
         isUserInTheUk: 'Yes',
         appealType: 'Human Rights',
         isApplicantStateless: false,
+        isApplicationInTime: true,
         nationality: 'China',
         hasApplicantReceivedADeportationOrder: 'No',
         doesApplicantHaveASponsor: 'No',
@@ -36,7 +37,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
       await expect(cui_appealOverviewPage.$yourCaseInformation.tribunalWillCheckInformationSentParagraph).toBeVisible();
       const formattedExpectedDate = (await dataUtils.getDateFromToday({ dayOffset: 14 })).full;
       await expect(
-        cui_appealOverviewPage.page.locator('p', { hasText: `This should be by ${formattedExpectedDate} but it might take longer than that.` }),
+        cui_appealOverviewPage.page.getByText(`This should be by ${formattedExpectedDate} but it might take longer than that.`, { exact: true }),
       ).toBeVisible();
     });
 
@@ -45,7 +46,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
       await expect(cui_appealOverviewPage.$yourAppealDetails.yourAppealDetailsHeading).toBeVisible();
       const formattedTodaysDate = (await dataUtils.getDateFromToday({})).full;
       await expect(
-        cui_appealOverviewPage.page.locator('div', { hasText: `${formattedTodaysDate} - You sent your appeal details to the Tribunal.` }).last(),
+        cui_appealOverviewPage.page.getByText(`${formattedTodaysDate} - You sent your appeal details to the Tribunal.`, { exact: true }),
       ).toBeVisible();
       await expect(cui_appealOverviewPage.$yourAppealDetails.whatYouSentHeading).toBeVisible();
       await expect(cui_appealOverviewPage.$yourAppealDetails.yourAppealDetailsLink).toBeVisible();
@@ -66,6 +67,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
         isUserInTheUk: 'Yes',
         appealType: 'Protection',
         isApplicantStateless: false,
+        isApplicationInTime: true,
         nationality: 'China',
         payForAppealNowOrLater: 'payNow',
         hasApplicantReceivedADeportationOrder: 'No',
@@ -88,9 +90,10 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
       await expect(cui_appealOverviewPage.$yourCaseInformation.detailsSentToTribunalParagraph).toBeVisible();
       const formattedExpectedDate = (await dataUtils.getDateFromToday({ dayOffset: 14 })).full;
       await expect(
-        cui_appealOverviewPage.page.locator('p', {
-          hasText: `A Tribunal Caseworker will contact you to tell you what happens next. This should be by ${formattedExpectedDate}  but it might take longer than that.`,
-        }),
+        cui_appealOverviewPage.page.getByText(
+          `A Tribunal Caseworker will contact you to tell you what happens next. This should be by ${formattedExpectedDate}  but it might take longer than that.`,
+          { exact: true },
+        ),
       ).toBeVisible();
       await expect(cui_appealOverviewPage.$yourCaseInformation.helpfulInformationHeading).toBeVisible();
       await expect(cui_appealOverviewPage.$yourCaseInformation.whatIsATribunalCaseWorkerLink).toBeVisible();
@@ -99,7 +102,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     await test.step('Verify appeal argument section of appeal overview page', async () => {
       await expect(cui_appealOverviewPage.$yourAppealArgument.yourAppealArgumentHeading).toBeVisible();
       const formattedTodaysDate = (await dataUtils.getDateFromToday({})).full;
-      await expect(cui_appealOverviewPage.page.locator('div', { hasText: `${formattedTodaysDate} - You paid for your appeal` }).last()).toBeVisible();
+      await expect(cui_appealOverviewPage.page.getByText(`${formattedTodaysDate} - You paid for your appeal`, { exact: true })).toBeVisible();
       await expect(cui_appealOverviewPage.$yourAppealArgument.whatYouSentHeading).toBeVisible();
       await expect(cui_appealOverviewPage.$yourAppealArgument.yourAppealDetailsLink).toBeVisible();
     });
@@ -109,7 +112,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
       await expect(cui_appealOverviewPage.$yourAppealDetails.yourAppealDetailsHeading).toBeVisible();
       const formattedTodaysDate = (await dataUtils.getDateFromToday({})).full;
       await expect(
-        cui_appealOverviewPage.page.locator('div', { hasText: `${formattedTodaysDate} - You sent your appeal details to the Tribunal.` }).last(),
+        cui_appealOverviewPage.page.getByText(`${formattedTodaysDate} - You sent your appeal details to the Tribunal.`, { exact: true }),
       ).toBeVisible();
       await expect(cui_appealOverviewPage.$yourAppealDetails.whatYouSentHeading).toBeVisible();
       await expect(cui_appealOverviewPage.$yourAppealDetails.yourAppealDetailsLink).toBeVisible();
@@ -130,6 +133,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
         isUserInTheUk: 'Yes',
         appealType: 'Deprivation of Citizenship',
         isApplicantStateless: false,
+        isApplicationInTime: true,
         nationality: 'China',
         hasApplicantReceivedADeportationOrder: 'No',
         doesApplicantHaveASponsor: 'No',
@@ -150,9 +154,10 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
       await expect(cui_appealOverviewPage.$yourCaseInformation.detailsSentToTribunalParagraph).toBeVisible();
       const formattedExpectedDate = (await dataUtils.getDateFromToday({ dayOffset: 14 })).full;
       await expect(
-        cui_appealOverviewPage.page.locator('p', {
-          hasText: `A Tribunal Caseworker will contact you to tell you what happens next. This should be by ${formattedExpectedDate}  but it might take longer than that.`,
-        }),
+        cui_appealOverviewPage.page.getByText(
+          `A Tribunal Caseworker will contact you to tell you what happens next. This should be by ${formattedExpectedDate}  but it might take longer than that.`,
+          { exact: true },
+        ),
       ).toBeVisible();
       await expect(cui_appealOverviewPage.$yourCaseInformation.helpfulInformationHeading).toBeVisible();
       await expect(cui_appealOverviewPage.$yourCaseInformation.whatIsATribunalCaseWorkerLink).toBeVisible();
@@ -163,7 +168,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
       await expect(cui_appealOverviewPage.$yourAppealDetails.yourAppealDetailsHeading).toBeVisible();
       const formattedTodaysDate = (await dataUtils.getDateFromToday({})).full;
       await expect(
-        cui_appealOverviewPage.page.locator('div', { hasText: `${formattedTodaysDate} - You sent your appeal details to the Tribunal.` }).last(),
+        cui_appealOverviewPage.page.getByText(`${formattedTodaysDate} - You sent your appeal details to the Tribunal.`, { exact: true }),
       ).toBeVisible();
       await expect(cui_appealOverviewPage.$yourAppealDetails.whatYouSentHeading).toBeVisible();
       await expect(cui_appealOverviewPage.$yourAppealDetails.yourAppealDetailsLink).toBeVisible();
@@ -179,19 +184,21 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     cui_appealOverviewPage,
     cui_aboutAppealPage,
   }) => {
+    let applicantDetails;
     await test.step('Fill in your details section of journey via api', async () => {
-      await cui_apiClient.submitYourDetailsJourneyViaApi({
-        isUserInTheUk: 'Yes',
-        appealType: 'Protection',
+      applicantDetails = await cui_apiClient.submitYourDetailsUserFlowViaApi({
+        isUserInTheUk: 'No',
+        appealType: 'Human Rights',
         isApplicantStateless: false,
+        isApplicationInTime: false,
         nationality: 'Turkey',
         hasApplicantReceivedADeportationOrder: 'No',
-        doesApplicantHaveASponsor: 'No',
+        doesApplicantHaveASponsor: 'Yes',
       });
     });
 
     await test.step('Fill in decision type section of journey via api', async () => {
-      await cui_apiClient.submitDecisionTypeJourneyViaApi({
+      await cui_apiClient.submitDecisionTypeUserFlowViaApi({
         appealType: 'Protection',
         decisionWithOrWithoutHearing: 'decisionWithHearing',
         payForAppealNowOrLater: 'payNow',
@@ -199,7 +206,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Fill in fee support section of journey via api', async () => {
-      await cui_apiClient.submitFeeSupportJourneyViaApi({
+      await cui_apiClient.submitFeeSupportUserFlowViaApi({
         whetherApplicantHasToPayAFee: 'None of these statements apply to me',
       });
     });
@@ -210,9 +217,9 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
 
     await test.step('Navigate to about appeal page', async () => {
       await cui_appealOverviewPage.navigationClick(cui_appealOverviewPage.$interactive.continueButton);
-      await cui_aboutAppealPage.verifyUserIsOnAboutAppealPage();
+      await cui_aboutAppealPage.verifyUserIsOnPage();
     });
-
+    console.log(applicantDetails);
     // WIP - continue from here to verify check and send page details
   });
 });

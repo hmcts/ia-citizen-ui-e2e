@@ -1,20 +1,20 @@
 import { APIRequestContext, expect } from '@playwright/test';
-import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
+import { getCsrfToken, postForm } from '../../../utils/citizen-user.utils';
 import path from 'path';
 import fs from 'fs';
 import mime from 'mime-types';
 
-export class UploadDecisionLetterApi {
+export class LateAppealApi {
   private apiContext: APIRequestContext;
 
   constructor(apiContext: APIRequestContext) {
     this.apiContext = apiContext;
   }
 
-  public async submitForm(options: { nameOfFileToUpload?: string }): Promise<void> {
+  public async submitForm(options: { reasonForLateAppeal: string; nameOfFileToUpload?: string }): Promise<void> {
     const csrfToken = await getCsrfToken({
       apiContext: this.apiContext,
-      path: 'home-office-upload-decision-letter',
+      path: 'late-appeal',
     });
 
     const fileName = options.nameOfFileToUpload ?? 'Upload_Document_Test_1.txt';
@@ -23,18 +23,20 @@ export class UploadDecisionLetterApi {
     const mimeType = mime.lookup(filePath) || 'application/octet-stream';
 
     await expect(async () => {
-      const response = await this.apiContext.post(`home-office-upload-decision-letter/upload?_csrf=${csrfToken}`, {
+      const response = await this.apiContext.post(`late-appeal?_csrf=${csrfToken}`, {
         headers: {
           Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
         },
         multipart: {
           _csrf: csrfToken,
+          'appeal-late': options.reasonForLateAppeal,
           uploadFile: '',
           'file-upload': {
             name: fileName,
             mimeType: mimeType,
             buffer: fileBuffer,
           },
+          saveAndContinue: '',
         },
       });
 
@@ -42,16 +44,6 @@ export class UploadDecisionLetterApi {
     }).toPass({
       timeout: 17_000,
       intervals: [2_000],
-    });
-
-    await postForm({
-      apiContext: this.apiContext,
-      path: 'home-office-upload-decision-letter',
-      form: {
-        _csrf: csrfToken,
-        'file-upload': '',
-        saveAndContinue: '',
-      },
     });
   }
 }

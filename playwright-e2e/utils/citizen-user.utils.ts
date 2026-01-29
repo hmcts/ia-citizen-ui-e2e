@@ -52,7 +52,8 @@ export async function getCsrfToken(options: { apiContext: APIRequestContext; pat
     await expect(response).toBeOK();
 
     const html = await response.text();
-    csrfToken = html.match(/name="_csrf"\s+value="([^"]+)"/)?.[1];
+
+    csrfToken = html.match(/name="_csrf"\s+value="([^"]+)"/)?.[1] ?? html.match(/[?&]_csrf=([^"&\s]+)/)?.[1];
 
     expect(csrfToken).toBeDefined();
   }).toPass({

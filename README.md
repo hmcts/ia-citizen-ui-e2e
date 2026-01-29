@@ -6,12 +6,11 @@ See the [POM docs](https://github.com/hmcts/tcoe-playwright-example/blob/master/
 
 ```sh
 ├── tests/                  # Test files
-├── journeys/               # UI flows broken down into journeys for test data setup
+├── user-flow/              # User flows that makeup the entire journey
 ├── api-client/             # Setting up test data via api
-├── page-objects/           # Page objects
-├─── elements/              # Common elements that could be found in a page or in a component
-├─── pages/                 # Unique pages that may contain their own locators
-├── utils/                  # Utility functions or common tasks (e.g., login, API methods etc)
+├── page-objects/           # Page objects containing page elements and functions
+├── utils/                  # Utility functions or common tasks (e.g., login, generating data etc)
+├── fixtures/               # Test files/payloads for sending api requests or uploading documents
 ```
 
 TCoE Best Practices for setting up playwright in your service can be found in the [playwright-e2e/readme.md](https://github.com/hmcts/tcoe-playwright-example/blob/master/docs/BEST_PRACTICE.md).
@@ -35,8 +34,28 @@ Clone the repository and install the dependencies:
 
 ```bash
 git clone https://github.com/hmcts/ia-citizen-ui-e2e.git
-cd playwright-template
+```
+
+Once cloned, run the following command to install dev dependencies:
+
+```bash
 yarn install
+```
+
+run the following command after running yarn install in order to install playwright browsers
+
+```bash
+yarn setup
+```
+
+### Env Config
+
+Run the following command found in package.json to fetch secrets for aat env, Ensure you have azure cli installed and logged in.
+
+AAT
+
+```bash
+yarn load-secrets-aat
 ```
 
 ### Running Tests

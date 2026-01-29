@@ -23,7 +23,7 @@ export class StartAppealPage extends CuiBase {
     await this.page.goto(config.urls.citizenUrl);
   }
 
-  public async verifyUserIsOnStartAppealPage(): Promise<void> {
-    await expect(this.$static.pageHeading).toBeVisible({ timeout: 60_000 });
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'start-appeal', pageHeading: this.$static.pageHeading, timeout: 60_000 });
   }
 }

@@ -21,14 +21,8 @@ export class HelpWithFeesPage extends CuiBase {
     }),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnHelpWithTheFeesPage(): Promise<void> {
-    await Promise.all([
-      expect(async () => {
-        expect(this.page.url().includes('help-with-fees')).toBeTruthy();
-      }).toPass({ intervals: [100], timeout: 15_000 }),
-
-      expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 }),
-    ]);
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'help-with-fees', pageHeading: this.$static.pageHeading });
   }
 
   public async completePageAndContinue(option: { helpWithFees: 'wantToApply' | 'alreadyApplied' | 'willPayForAppeal' }): Promise<void> {

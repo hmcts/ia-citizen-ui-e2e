@@ -1,10 +1,11 @@
 import { APIRequestContext } from '@playwright/test';
 import { YourDetailsJourney } from '../../../types';
-import { ApplicantDetailsType } from '../ui';
 import { DataUtils } from '../../../utils';
 import {
   InTheUkApi,
-  OutOfCountryApi,
+  OutOfCountryProtectionDepartureDateApi,
+  OutOfCountryHrEeaApi,
+  OutOfCountryHrInsideApi,
   AppealTypeApi,
   HomeOfficeReferenceNumberApi,
   ApplicantNameApi,
@@ -24,9 +25,32 @@ import {
   SponsorAuthorisationApi,
 } from '../../../api-requests/citizen/index';
 
-export class YourDetailsJourneyApi {
+export type ApplicantDetailsType = {
+  homeOfficeReference: number;
+  applicantDetails: {
+    givenNames: string[];
+    familyName: string;
+    dob: string;
+    dateLeftUk?: string;
+    decisionLetterDate: string;
+    address: string;
+    email?: string;
+    phoneNumber?: string;
+  };
+  sponsorDetails?: {
+    givenNames: string[];
+    familyName: string;
+    address: string;
+    email?: string;
+    phoneNumber?: string;
+  };
+};
+
+export class YourDetailsUserFlowApi {
   private cui_inTheUkApi: InTheUkApi;
-  private cui_outOfCountryApi: OutOfCountryApi;
+  private cui_outOfCountryProtectionDepartureDateApi: OutOfCountryProtectionDepartureDateApi;
+  private cui_outOfCountryHrEeaApi: OutOfCountryHrEeaApi;
+  private cui_outOfCountryHrInsideApi: OutOfCountryHrInsideApi;
   private cui_appealTypeApi: AppealTypeApi;
   private cui_homeOfficeReferenceNumberApi: HomeOfficeReferenceNumberApi;
   private cui_applicantNameApi: ApplicantNameApi;
@@ -48,7 +72,9 @@ export class YourDetailsJourneyApi {
 
   constructor(apiContext: APIRequestContext) {
     this.cui_inTheUkApi = new InTheUkApi(apiContext);
-    this.cui_outOfCountryApi = new OutOfCountryApi(apiContext);
+    this.cui_outOfCountryProtectionDepartureDateApi = new OutOfCountryProtectionDepartureDateApi(apiContext);
+    this.cui_outOfCountryHrEeaApi = new OutOfCountryHrEeaApi(apiContext);
+    this.cui_outOfCountryHrInsideApi = new OutOfCountryHrInsideApi(apiContext);
     this.cui_appealTypeApi = new AppealTypeApi(apiContext);
     this.cui_homeOfficeReferenceNumberApi = new HomeOfficeReferenceNumberApi(apiContext);
     this.cui_applicantNameApi = new ApplicantNameApi(apiContext);
@@ -74,8 +100,24 @@ export class YourDetailsJourneyApi {
 
     let dateLeftUk;
     if (appealData.isUserInTheUk === 'No') {
-      dateLeftUk = await this.dataUtils.getDateFromToday({ yearOffset: -2 });
-      await this.cui_outOfCountryApi.submitForm({ day: dateLeftUk.day, month: dateLeftUk.month, year: dateLeftUk.year });
+      switch (appealData.appealType) {
+        case 'Protection':
+          dateLeftUk = await this.dataUtils.getDateFromToday({ yearOffset: -2 });
+          await this.cui_outOfCountryProtectionDepartureDateApi.submitForm({ day: dateLeftUk.day, month: dateLeftUk.month, year: dateLeftUk.year });
+          break;
+        case 'Human Rights':
+          await this.cui_outOfCountryHrEeaApi.submitForm({ outsideUkWhenApplicationMade: 'No' });
+
+          dateLeftUk = await this.dataUtils.getDateFromToday({ yearOffset: -2 });
+
+          await this.cui_outOfCountryHrInsideApi.submitForm({ day: dateLeftUk.day, month: dateLeftUk.month, year: dateLeftUk.year });
+          break;
+        case 'European Economic Area':
+          await this.cui_outOfCountryHrEeaApi.submitForm({ outsideUkWhenApplicationMade: 'No' });
+          break;
+        default:
+          throw new Error(`Option not supported for appeal type: ${appealData.appealType}`);
+      }
     }
 
     const homeOfficeReference = await this.dataUtils.generateRandomNumber({ digitLength: 9 });
@@ -99,9 +141,16 @@ export class YourDetailsJourneyApi {
       await this.cui_applicantNationalityApi.submitForm({ stateless: false, nationality: appealData.nationality });
     }
 
-    const decisionLetterDate = await this.dataUtils.getDateFromToday({
-      dayOffset: -13,
-    });
+    let decisionLetterDate;
+    if (appealData.isApplicationInTime) {
+      decisionLetterDate = await this.dataUtils.getDateFromToday({
+        dayOffset: -5,
+      });
+    } else {
+      decisionLetterDate = await this.dataUtils.getDateFromToday({
+        dayOffset: -40,
+      });
+    }
 
     switch (appealData.isUserInTheUk) {
       case 'Yes':

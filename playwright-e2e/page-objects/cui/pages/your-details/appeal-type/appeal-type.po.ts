@@ -21,14 +21,8 @@ export class AppealTypePage extends CuiBase {
     }),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnAppealTypePage(): Promise<void> {
-    await Promise.all([
-      expect(async () => {
-        expect(this.page.url().includes('appeal-type')).toBeTruthy();
-      }).toPass({ intervals: [100], timeout: 15_000 }),
-
-      expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 }),
-    ]);
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'appeal-type', pageHeading: this.$static.pageHeading });
   }
 
   public async completePageAndContinue(option: { appealType: AppealType }): Promise<void> {

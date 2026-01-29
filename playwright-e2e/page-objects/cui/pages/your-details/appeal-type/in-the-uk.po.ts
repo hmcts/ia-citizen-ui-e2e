@@ -21,14 +21,8 @@ export class InTheUkPage extends CuiBase {
     }),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnInTheUkPage(): Promise<void> {
-    await Promise.all([
-      expect(async () => {
-        expect(this.page.url().includes('in-the-uk')).toBeTruthy();
-      }).toPass({ intervals: [100], timeout: 15_000 }),
-
-      expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 }),
-    ]);
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'in-the-uk', pageHeading: this.$static.pageHeading });
   }
 
   public async completePageAndContinue(option: { isUserInTheUk: YesOrNoType }): Promise<void> {

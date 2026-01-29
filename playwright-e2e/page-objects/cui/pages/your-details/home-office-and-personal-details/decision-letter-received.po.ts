@@ -26,14 +26,8 @@ export class DecisionLetterReceivedPage extends CuiBase {
     }),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnDecisionLetterReceivedPage(): Promise<void> {
-    await Promise.all([
-      expect(async () => {
-        expect(this.page.url().includes('date-letter-received')).toBeTruthy();
-      }).toPass({ intervals: [100], timeout: 15_000 }),
-
-      expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 }),
-    ]);
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'date-letter-received', pageHeading: this.$static.pageHeading });
   }
 
   public async completePageAndContinue(dateDecisionLetterReceived: { day: number; month: number; year: number }): Promise<void> {

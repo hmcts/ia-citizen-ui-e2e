@@ -1,7 +1,7 @@
 import { APIRequestContext } from '@playwright/test';
 import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
 
-export class OutOfCountryApi {
+export class OutOfCountryHrInsideApi {
   private apiContext: APIRequestContext;
 
   constructor(apiContext: APIRequestContext) {
@@ -9,11 +9,11 @@ export class OutOfCountryApi {
   }
 
   public async submitForm(dateApplicantLeftUk: { day: number; month: number; year: number }): Promise<void> {
-    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'ooc-protection-departure-date' });
+    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'ooc-hr-inside' });
 
     await postForm({
       apiContext: this.apiContext,
-      path: 'ooc-protection-departure-date',
+      path: 'ooc-hr-inside',
       form: {
         _csrf: csrfToken,
         day: dateApplicantLeftUk.day.toString(),

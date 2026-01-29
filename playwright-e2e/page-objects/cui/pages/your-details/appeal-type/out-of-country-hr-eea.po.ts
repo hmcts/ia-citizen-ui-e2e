@@ -2,31 +2,32 @@ import { Page, Locator, expect } from '@playwright/test';
 import { CuiBase } from '../../../cui-base';
 import { YesOrNoType } from '../../../../../types';
 
-export class HasSponsorPage extends CuiBase {
+export class OutOfCountryHrEeaPage extends CuiBase {
   constructor(page: Page) {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/has-sponsor"])');
+  private readonly pageForm = this.page.locator('body:has(form[action="/ooc-hr-eea"])');
 
   public readonly $interactive = {
-    continueButton: this.pageForm.locator('button[name="continue"]', {
-      hasText: 'Continue',
+    continueButton: this.pageForm.getByRole('button', {
+      name: 'Continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
     pageHeading: this.pageForm.locator('h1', {
-      hasText: 'Do you have a sponsor?',
+      hasText: 'Were you outside the UK when you made your application?',
     }),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
-    await this.verifyUserIsOnExpectedPage({ urlPath: 'has-sponsor', pageHeading: this.$static.pageHeading });
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'ooc-hr-eea', pageHeading: this.$static.pageHeading });
   }
 
-  public async completePageAndContinue(option: { doesApplicantHaveASponsor: YesOrNoType }): Promise<void> {
-    const element = this.pageForm.locator(`input[type="radio"][value="${option.doesApplicantHaveASponsor}"]`);
+  public async completePageAndContinue(option: { outsideUkWhenApplicationMade: YesOrNoType }): Promise<void> {
+    const element = this.pageForm.locator(`input[type="radio"][value="${option.outsideUkWhenApplicationMade}"]`);
+
     await element.check();
     await expect(element).toBeChecked();
     await this.navigationClick(this.$interactive.continueButton);

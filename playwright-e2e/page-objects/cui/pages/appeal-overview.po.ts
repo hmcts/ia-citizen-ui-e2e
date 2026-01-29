@@ -19,67 +19,39 @@ export class AppealOverviewPage extends CuiBase {
 
   public readonly $static = {
     userNameHeading: this.page.locator('h1[class*="govuk-heading"]'),
-    nothingToDoNextHeading: this.page.locator('h2', {
-      hasText: 'Nothing to do next',
-    }),
-    completedHeading: this.page.locator('h2', {
-      hasText: 'Completed',
-    }),
+    nothingToDoNextHeading: this.page.getByRole('heading', { name: 'Nothing to do next', level: 2, exact: true }),
+    completedHeading: this.page.getByRole('heading', { name: 'Completed', level: 2, exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $yourCaseInformation = {
-    detailsSentToTribunalParagraph: this.caseInformationArea.locator('p', {
-      hasText: 'Your appeal details have been sent to the Tribunal.',
-    }),
-    thereIsAFeeForThisAppealParagraph: this.caseInformationArea.locator('p', {
-      hasText: 'There is a fee for this appeal. You told the Tribunal that you believe you do not have to pay some or all of the fee.',
-    }),
-    tribunalWillCheckInformationSentParagraph: this.caseInformationArea.locator('p', {
-      hasText: 'The Tribunal will check the information you sent and let you know if you need to pay a fee.',
-    }),
-    helpfulInformationHeading: this.caseInformationArea.locator('span', { hasText: 'Helpful Information' }),
-    whatIsATribunalCaseWorkerLink: this.caseInformationArea.locator('a[href="/tribunal-caseworker"]', {
-      hasText: 'What is a Tribunal Caseworker?',
-    }),
+    detailsSentToTribunalParagraph: this.caseInformationArea.getByText('Your appeal details have been sent to the Tribunal.', { exact: true }),
+    thereIsAFeeForThisAppealParagraph: this.caseInformationArea.getByText(
+      'There is a fee for this appeal. You told the Tribunal that you believe you do not have to pay some or all of the fee.',
+      { exact: true },
+    ),
+    tribunalWillCheckInformationSentParagraph: this.caseInformationArea.getByText(
+      'The Tribunal will check the information you sent and let you know if you need to pay a fee.',
+      { exact: true },
+    ),
+    helpfulInformationHeading: this.caseInformationArea.getByText('Helpful Information', { exact: true }),
+    whatIsATribunalCaseWorkerLink: this.caseInformationArea.getByText('What is a Tribunal Caseworker?', { exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $yourAppealArgument = {
-    yourAppealArgumentHeading: this.page.locator('h3', {
-      hasText: 'Your appeal argument',
-    }),
-    whatYouSentHeading: this.yourAppealArgumentArea.locator('h4', {
-      hasText: 'What you sent',
-    }),
-    yourAppealDetailsLink: this.yourAppealArgumentArea.locator('a[href="/appeal-details"]', {
-      hasText: 'Your appeal details',
-    }),
+    yourAppealArgumentHeading: this.page.getByRole('heading', { name: 'Your appeal argument', level: 3, exact: true }),
+    whatYouSentHeading: this.yourAppealArgumentArea.getByRole('heading', { name: 'What you sent', level: 4, exact: true }),
+    yourAppealDetailsLink: this.yourAppealArgumentArea.getByRole('link', { name: 'Your appeal details', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $yourAppealDetails = {
-    yourAppealDetailsHeading: this.page.locator('h3', {
-      hasText: 'Your appeal details',
-    }),
-    whatYouSentHeading: this.yourAppealDetailsArea.locator('h4', {
-      hasText: 'What you sent',
-    }),
-    yourAppealDetailsLink: this.yourAppealDetailsArea.locator('a[href="/appeal-details"]', {
-      hasText: 'Your appeal details',
-    }),
-    helpfulInformationHeading: this.yourAppealDetailsArea.locator('h4', {
-      hasText: 'Helpful information',
-    }),
-    whatIsATribunalCaseWorkerLink: this.yourAppealDetailsArea.locator('a[href="/tribunal-caseworker"]', {
-      hasText: 'What is a Tribunal Caseworker?',
-    }),
+    yourAppealDetailsHeading: this.page.getByRole('heading', { name: 'Your appeal details', level: 3, exact: true }),
+    whatYouSentHeading: this.yourAppealDetailsArea.getByRole('heading', { name: 'What you sent', level: 4, exact: true }),
+    yourAppealDetailsLink: this.yourAppealDetailsArea.getByRole('link', { name: 'Your appeal details', exact: true }),
+    helpfulInformationHeading: this.yourAppealDetailsArea.getByRole('heading', { name: 'Helpful information', level: 4, exact: true }),
+    whatIsATribunalCaseWorkerLink: this.yourAppealDetailsArea.getByRole('link', { name: 'What is a Tribunal Caseworker?', exact: true }),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnAppealOverviewPage(): Promise<void> {
-    await Promise.all([
-      expect(async () => {
-        expect(this.page.url().includes('appeal-overview')).toBeTruthy();
-      }).toPass({ intervals: [100], timeout: 15_000 }),
-
-      expect(this.$static.userNameHeading).toBeVisible({ timeout: 15_000 }),
-    ]);
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'appeal-overview', pageHeading: this.$static.userNameHeading });
   }
 }

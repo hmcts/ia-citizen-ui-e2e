@@ -1,12 +1,12 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { CuiBase } from '../../../cui-base';
 
-export class OutOfCountryPage extends CuiBase {
+export class OutOfCountryHrInsidePage extends CuiBase {
   constructor(page: Page) {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/ooc-protection-departure-date"])');
+  private readonly pageForm = this.page.locator('body:has(form[action="/ooc-hr-inside"])');
 
   public readonly $inputs = {
     day: this.pageForm.locator('input[name="day"]'),
@@ -22,18 +22,12 @@ export class OutOfCountryPage extends CuiBase {
 
   public readonly $static = {
     pageHeading: this.pageForm.locator('h1', {
-      hasText: 'What date did you leave the UK after your Protection claim was refused?',
+      hasText: 'What date did you leave the UK after your application to stay in the country was refused?',
     }),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnOutOfCountryPage(): Promise<void> {
-    await Promise.all([
-      expect(async () => {
-        expect(this.page.url().includes('ooc-protection-departure-date')).toBeTruthy();
-      }).toPass({ intervals: [100], timeout: 15_000 }),
-
-      expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 }),
-    ]);
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'ooc-hr-inside', pageHeading: this.$static.pageHeading });
   }
 
   public async completePageAndContinue(dateApplicantLeftUk: { day: number; month: number; year: number }): Promise<void> {
