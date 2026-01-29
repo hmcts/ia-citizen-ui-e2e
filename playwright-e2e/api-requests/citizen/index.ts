@@ -1,6 +1,8 @@
 export * from './your-details/appeal-type/in-the-uk.api';
 export * from './your-details/appeal-type/appeal-type.api';
-export * from './your-details/appeal-type/out-of-country.api';
+export * from './your-details/appeal-type/out-of-country-protection-departure-date.api';
+export * from './your-details/appeal-type/out-of-country-hr-eea.api';
+export * from './your-details/appeal-type/out-of-country-hr-inside.api';
 export * from './your-details/home-office-and-personal-details/home-office-reference-number.api';
 export * from './your-details/home-office-and-personal-details/applicant-name.api';
 export * from './your-details/home-office-and-personal-details/applicant-dob.api';
@@ -24,5 +26,6 @@ export * from './fee-support/asylum-support.api';
 export * from './fee-support/fee-waiver.api';
 export * from './fee-support/local-authority-letter.api';
 export * from './fee-support/help-with-fees.api';
+export * from './check-and-send/late-appeal.api';
 export * from './check-and-send/check-answers.api';
 export * from './check-and-send/payment.api';

@@ -6,6 +6,7 @@ export type YourDetailsJourney = {
   isUserInTheUk: YesOrNoType;
   appealType: AppealType;
   isApplicantStateless: boolean;
+  isApplicationInTime: boolean;
   nationality?: Nationality;
   hasApplicantReceivedADeportationOrder: YesOrNoType;
   doesApplicantHaveASponsor: YesOrNoType;
@@ -22,6 +23,7 @@ export type FeeSupportJourney = {
 };
 
 export type CheckAndSendJourney = {
+  isApplicationInTime: boolean;
   appealSubmissionType: 'Non-Pay Appeal' | 'Pay Appeal';
 };
 

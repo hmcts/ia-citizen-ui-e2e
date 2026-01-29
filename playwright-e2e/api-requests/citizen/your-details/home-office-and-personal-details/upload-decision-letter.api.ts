@@ -18,7 +18,7 @@ export class UploadDecisionLetterApi {
     });
 
     const fileName = options.nameOfFileToUpload ?? 'Upload_Document_Test_1.txt';
-    const filePath = path.join(process.cwd(), 'playwright-e2e', 'fixtures', 'test-files', fileName);
+    const filePath = path.join(process.cwd(), 'playwright-e2e', 'fixtures', 'documents', fileName);
     const fileBuffer = fs.readFileSync(filePath);
     const mimeType = mime.lookup(filePath) || 'application/octet-stream';
 

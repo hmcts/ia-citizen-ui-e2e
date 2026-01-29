@@ -24,18 +24,12 @@ export class LocalAuthorityLetterPage extends CuiBase {
     fileUploadedTableRow: this.pageForm.locator('table[id="files-uploaded"] a[class="govuk-link"]').filter({ hasNotText: 'Delete' }),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnLocalAuthorityLetterPage(): Promise<void> {
-    await Promise.all([
-      expect(async () => {
-        expect(this.page.url().includes('local-authority-letter')).toBeTruthy();
-      }).toPass({ intervals: [100], timeout: 15_000 }),
-
-      expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 }),
-    ]);
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'local-authority-letter', pageHeading: this.$static.pageHeading });
   }
 
   public async completePageAndContinue(options: { nameOfFileToUpload?: string }): Promise<void> {
-    const filePath = path.join(process.cwd(), 'playwright-e2e', 'fixtures', 'test-files');
+    const filePath = path.join(process.cwd(), 'playwright-e2e', 'fixtures', 'documents');
     const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Upload_Document_Test_1.txt';
 
     await this.$interactive.chooseFileToUploadInput.setInputFiles(path.join(filePath, fileToUpload));

@@ -1,7 +1,7 @@
 import { APIRequestContext } from '@playwright/test';
 import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
 
-export class OutOfCountryApi {
+export class OutOfCountryProtectionDepartureDateApi {
   private apiContext: APIRequestContext;
 
   constructor(apiContext: APIRequestContext) {

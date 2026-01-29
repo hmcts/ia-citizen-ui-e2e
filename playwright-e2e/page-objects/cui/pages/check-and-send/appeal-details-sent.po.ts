@@ -15,16 +15,11 @@ export class AppealDetailsSentPage extends CuiBase {
     pageHeading: this.page
       .locator('h1', { hasText: 'Your appeal has been submitted' })
       .or(this.page.locator('h1', { hasText: 'Your appeal details have been sent' }))
-      .or(this.page.locator('h1', { hasText: 'You have sent your appeal details' })),
+      .or(this.page.locator('h1', { hasText: 'You have sent your appeal details' }))
+      .or(this.page.locator('h1', { hasText: 'Your late appeal details have been sent' })),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnAppealDetailsSentPage(): Promise<void> {
-    await Promise.all([
-      expect(async () => {
-        expect(this.page.url().includes('appeals-details-sent')).toBeTruthy();
-      }).toPass({ intervals: [100], timeout: 15_000 }),
-
-      expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 }),
-    ]);
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'appeals-details-sent', pageHeading: this.$static.pageHeading });
   }
 }

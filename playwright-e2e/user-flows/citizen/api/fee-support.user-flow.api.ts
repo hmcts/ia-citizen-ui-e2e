@@ -3,7 +3,7 @@ import { FeeSupportJourney } from '../../../types';
 import { FeeSupportApi, AsylumSupportApi, FeeWaiverApi, LocalAuthorityLetterApi, HelpWithFeesApi } from '../../../api-requests/citizen/index';
 import { DataUtils } from '../../../utils/data.utils';
 
-export class FeeSupportJourneyApi {
+export class FeeSupportUserFlowApi {
   private cui_feeSupportApi: FeeSupportApi;
   private cui_asylumSupportApi: AsylumSupportApi;
   private cui_feeWaiverApi: FeeWaiverApi;

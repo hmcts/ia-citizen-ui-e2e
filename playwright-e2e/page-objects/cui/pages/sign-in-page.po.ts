@@ -18,8 +18,8 @@ export class SignInPage extends CuiBase {
     }),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnSignInPage(): Promise<void> {
-    await expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 });
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'login', pageHeading: this.$static.pageHeading });
   }
 
   public async signIn(email: string, password: string): Promise<void> {

@@ -15,13 +15,7 @@ export class ConfirmPaymentDetailsPage extends CuiBase {
     pageHeading: this.page.locator('h1', { hasText: 'Confirm your payment' }),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnConfirmPaymentDetailsPage(): Promise<void> {
-    await Promise.all([
-      expect(async () => {
-        expect(this.page.url().includes('confirm')).toBeTruthy();
-      }).toPass({ intervals: [100], timeout: 15_000 }),
-
-      expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 }),
-    ]);
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'confirm', pageHeading: this.$static.pageHeading });
   }
 }

@@ -21,14 +21,8 @@ export class SponsorAuthorisationPage extends CuiBase {
     }),
   } as const satisfies Record<string, Locator>;
 
-  public async verifyUserIsOnSponsorAuthorisationPage(): Promise<void> {
-    await Promise.all([
-      expect(async () => {
-        expect(this.page.url().includes('sponsor-authorisation')).toBeTruthy();
-      }).toPass({ intervals: [100], timeout: 15_000 }),
-
-      expect(this.$static.pageHeading).toBeVisible({ timeout: 15_000 }),
-    ]);
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'sponsor-authorisation', pageHeading: this.$static.pageHeading });
   }
 
   public async completePageAndContinue(option: { allowSponsorToSeeAppealInformation: YesOrNoType }): Promise<void> {
