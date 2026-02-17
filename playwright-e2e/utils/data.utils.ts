@@ -1,4 +1,7 @@
 import { faker } from '@faker-js/faker';
+import fs from 'fs';
+import path from 'path';
+import mime from 'mime-types';
 
 export class DataUtils {
   /**
@@ -148,5 +151,15 @@ export class DataUtils {
       postcode: 'SW1A 1AA',
       email: faker.internet.email().toLowerCase(),
     };
+  }
+
+  /**
+   *
+   * @param fileName - name of the file to fetch from the fixtures/documents folder
+   * @returns         A promise that resolves to the file path of the requested document
+   */
+  public async fetchDocumentUploadPath(fileName: string): Promise<string> {
+    const filePath = path.join(process.cwd(), 'playwright-e2e', 'fixtures', 'documents', fileName);
+    return filePath;
   }
 }

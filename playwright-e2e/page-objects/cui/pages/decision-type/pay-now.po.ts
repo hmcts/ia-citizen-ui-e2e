@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { CuiBase } from '../../cui-base';
-import { payForAppealNowOrLaterType } from '../../../../types';
+import { payForAppealNowOrLaterType } from '../../../../citizen-types';
 
 export class PayNowPage extends CuiBase {
   constructor(page: Page) {

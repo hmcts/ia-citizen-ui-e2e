@@ -31,6 +31,10 @@ export class AboutAppealPage extends CuiBase {
     pageHeading: this.page.locator('h1[class*="govuk-heading"]', {
       hasText: 'Tell us about your appeal',
     }),
+    appealTypeStatus: this.page.locator('li.task-list__item', { has: this.page.locator('a[title="Appeal type"]') }).locator('strong'),
+    homeOfficeAndPersonalDetailsStatus: this.page
+      .locator('li.task-list__item', { has: this.page.locator('a[title="Your Home Office and personal details"]') })
+      .locator('strong'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

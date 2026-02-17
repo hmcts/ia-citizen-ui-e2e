@@ -1,12 +1,13 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { CuiBase } from '../../../cui-base';
-import path from 'path';
+import { DataUtils } from '../../../../../utils';
 
 export class UploadDecisionLetterPage extends CuiBase {
   constructor(page: Page) {
     super(page);
   }
 
+  private dataUtils = new DataUtils();
   private readonly pageForm = this.page.locator('body:has(form[action="/home-office-upload-decision-letter"])');
 
   public readonly $interactive = {
@@ -29,10 +30,10 @@ export class UploadDecisionLetterPage extends CuiBase {
   }
 
   public async completePageAndContinue(options: { nameOfFileToUpload?: string }): Promise<void> {
-    const filePath = path.join(process.cwd(), 'playwright-e2e', 'fixtures', 'documents');
     const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Upload_Document_Test_1.txt';
+    const filePath = await this.dataUtils.fetchDocumentUploadPath(fileToUpload);
 
-    await this.$interactive.chooseFileToUploadInput.setInputFiles(path.join(filePath, fileToUpload));
+    await this.$interactive.chooseFileToUploadInput.setInputFiles(filePath);
     await expect(this.$interactive.chooseFileToUploadInput).toHaveValue(new RegExp(`${fileToUpload.replace('.', '\\.')}$`));
 
     await expect(async () => {

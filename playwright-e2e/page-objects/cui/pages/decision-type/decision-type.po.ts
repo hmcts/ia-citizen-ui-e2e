@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { CuiBase } from '../../cui-base';
-import { decisionWithOrWithoutHearingType } from '../../../../types';
+import { decisionWithOrWithoutHearingType } from '../../../../citizen-types';
 
 export class DecisionTypePage extends CuiBase {
   constructor(page: Page) {

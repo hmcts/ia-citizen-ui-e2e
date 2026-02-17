@@ -1,5 +1,4 @@
 export * from './start-appeal-page.po';
-export * from './sign-in-page.po';
 export * from './appeal-overview.po';
 export * from './about-appeal.po';
 export * from './your-details/appeal-type/in-the-uk.po';
