@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, uploadDocument } from '../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_uploadDocument } from '../../../../utils/api-requests-utils';
 
 export class LateAppealApi {
   private apiContext: APIRequestContext;
@@ -9,14 +9,14 @@ export class LateAppealApi {
   }
 
   public async submitForm(options: { reasonForLateAppeal: string; nameOfFileToUpload?: string }): Promise<void> {
-    const csrfToken = await getCsrfToken({
+    const csrfToken = await cui_getCsrfToken({
       apiContext: this.apiContext,
       path: 'late-appeal',
     });
 
-    const fileName = options.nameOfFileToUpload ?? 'Upload_Document_Test_1.txt';
+    const fileName = options.nameOfFileToUpload ?? 'Late_Appeal.txt';
 
-    await uploadDocument({
+    await cui_uploadDocument({
       apiContext: this.apiContext,
       path: `late-appeal?_csrf=${csrfToken}`,
       addtionalFields: {

@@ -1,5 +1,5 @@
 import { request, APIRequestContext } from '@playwright/test';
-import { LoginApi } from './citizen/login.api';
+import { CuiLoginApi } from './citizen/login.api';
 import { config } from '../utils/index';
 
 export class ApiContext {
@@ -14,7 +14,7 @@ export class ApiContext {
       timeout: 5_000,
     });
 
-    const loginApi = new LoginApi(context);
+    const loginApi = new CuiLoginApi(context);
     await loginApi.login(options.userName, options.password);
     return context;
   }

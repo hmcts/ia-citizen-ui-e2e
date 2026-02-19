@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../utils/api-requests-utils';
 
 export class HearingMultiMediaEvidenceEquipmentReasonsApi {
   private apiContext: APIRequestContext;
@@ -9,9 +9,9 @@ export class HearingMultiMediaEvidenceEquipmentReasonsApi {
   }
 
   public async submitForm(option: { reasonUnableToBringEquipment: string }): Promise<void> {
-    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'hearing-multimedia-evidence-equipment-reasons' });
+    const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'hearing-multimedia-evidence-equipment-reasons' });
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'hearing-multimedia-evidence-equipment-reasons',
       form: {

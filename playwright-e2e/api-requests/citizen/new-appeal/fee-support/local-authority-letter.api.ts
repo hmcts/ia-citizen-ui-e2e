@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, postForm, uploadDocument } from '../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm, cui_uploadDocument } from '../../../../utils/api-requests-utils';
 
 export class LocalAuthorityLetterApi {
   private apiContext: APIRequestContext;
@@ -9,14 +9,14 @@ export class LocalAuthorityLetterApi {
   }
 
   public async submitForm(options: { nameOfFileToUpload?: string }): Promise<void> {
-    const csrfToken = await getCsrfToken({
+    const csrfToken = await cui_getCsrfToken({
       apiContext: this.apiContext,
       path: 'local-authority-letter',
     });
 
-    const fileName = options.nameOfFileToUpload ?? 'Upload_Document_Test_1.txt';
+    const fileName = options.nameOfFileToUpload ?? 'Local_Authority_Letter.txt';
 
-    await uploadDocument({
+    await cui_uploadDocument({
       apiContext: this.apiContext,
       path: `local-authority-letter/upload?_csrf=${csrfToken}`,
       addtionalFields: {
@@ -27,7 +27,7 @@ export class LocalAuthorityLetterApi {
       nameOfFileToUpload: fileName,
     });
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'local-authority-letter',
       form: {

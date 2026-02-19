@@ -37,7 +37,7 @@ export class CaseListApi {
       expect(caseId).toBeDefined();
     }).toPass({
       timeout: 20_000,
-      intervals: [500],
+      intervals: [1_000],
     });
 
     return caseId!;

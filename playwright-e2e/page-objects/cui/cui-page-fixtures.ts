@@ -84,7 +84,7 @@ export interface CuiPageFixtures {
   cui_paymentDetailsPage: PaymentDetailsPage;
   cui_confirmPaymentDetailsPage: ConfirmPaymentDetailsPage;
   cui_confirmationOfPaymentPage: ConfirmationOfPaymentPage;
-  cui_login: (email: string, password: string) => Promise<void>;
+  cui_login: (options: { email: string; password: string }) => Promise<void>;
 }
 
 /* Instantiates pages and provides page to the test via use()
@@ -253,13 +253,13 @@ export const cuiPageFixtures = {
     await use(cui_confirmationOfPaymentPage);
   },
   cui_login: async ({ cui_startAppealPage, idam_signInPage, cui_appealOverviewPage }: PageFixtures & UtilsFixtures, use) => {
-    await use(async (email: string, password: string) => {
+    await use(async (options: { email: string; password: string }) => {
       await cui_startAppealPage.goTo();
       await cui_startAppealPage.verifyUserIsOnPage();
       await cui_startAppealPage.navigationClick(cui_startAppealPage.$interactive.signInLink);
 
       await idam_signInPage.verifyUserIsOnPage();
-      await idam_signInPage.signIn(email, password);
+      await idam_signInPage.signIn(options.email, options.password);
 
       await cui_appealOverviewPage.verifyUserIsOnPage();
     });

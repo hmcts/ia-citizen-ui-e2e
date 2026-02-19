@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, postForm, uploadDocument } from '../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm, cui_uploadDocument } from '../../../utils/api-requests-utils';
 
 export class ProvideSupportingEvidenceApi {
   private apiContext: APIRequestContext;
@@ -9,14 +9,14 @@ export class ProvideSupportingEvidenceApi {
   }
 
   public async submitForm(options: { nameOfFileToUpload?: string }): Promise<void> {
-    const csrfToken = await getCsrfToken({
+    const csrfToken = await cui_getCsrfToken({
       apiContext: this.apiContext,
       path: 'case-building/provide-supporting-evidence',
     });
 
-    const fileName = options.nameOfFileToUpload ?? 'Upload_Document_Test_1.txt';
+    const fileName = options.nameOfFileToUpload ?? 'Provide_Supporting_Evidence.txt';
 
-    await uploadDocument({
+    await cui_uploadDocument({
       apiContext: this.apiContext,
       path: `case-building/reason-for-appeal/supporting-evidence/upload/file?_csrf=${csrfToken}`,
       fileUploadFieldName: 'file-upload',
@@ -27,7 +27,7 @@ export class ProvideSupportingEvidenceApi {
       nameOfFileToUpload: fileName,
     });
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'case-building/reason-for-appeal/supporting-evidence/submit',
       form: {

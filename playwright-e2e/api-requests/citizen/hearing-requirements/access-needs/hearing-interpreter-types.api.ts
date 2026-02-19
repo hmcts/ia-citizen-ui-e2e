@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../utils/api-requests-utils';
 import { InterpretorSupportType } from '../../../../citizen-types';
 
 export class HearingInterpreterTypesApi {
@@ -10,7 +10,7 @@ export class HearingInterpreterTypesApi {
   }
 
   public async submitForm(options: { applicantOrWitness: 'Applicant' | 'Witness'; typeOfInterpretor: InterpretorSupportType }): Promise<void> {
-    const csrfToken = await getCsrfToken({
+    const csrfToken = await cui_getCsrfToken({
       apiContext: this.apiContext,
       path: 'hearing-interpreter-types',
       params: options.applicantOrWitness === 'Witness' ? { selectedWitnesses: '0' } : undefined,
@@ -41,7 +41,7 @@ export class HearingInterpreterTypesApi {
       form.selectedWitnessesList = '';
     }
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'hearing-interpreter-types',
       form,

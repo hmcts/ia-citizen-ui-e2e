@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../utils/api-requests-utils';
 
 export class AsylumSupportApi {
   private apiContext: APIRequestContext;
@@ -9,9 +9,9 @@ export class AsylumSupportApi {
   }
 
   public async submitForm(option: { asylumSupportRefNumber: number }): Promise<void> {
-    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'asylum-support' });
+    const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'asylum-support' });
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'asylum-support',
       form: {

@@ -20,7 +20,7 @@ export class AdminOfficerApiClient extends BaseExuiApiClient {
   }
 
   public async submitRequestAHearingEvent(options: RequestAHearingEventType): Promise<string> {
-    const hearingId = await this.requestAHearingApi.submitEvent(options);
+    const hearingId = await this.requestAHearingApi.submitRequestForHearing(options);
     return hearingId;
   }
 

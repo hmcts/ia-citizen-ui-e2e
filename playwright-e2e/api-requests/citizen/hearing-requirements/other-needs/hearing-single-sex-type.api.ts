@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../utils/api-requests-utils';
 import { AllMaleOrFemaleHearingType } from '../../../../citizen-types';
 
 export class HearingSingleSexTypeApi {
@@ -10,7 +10,7 @@ export class HearingSingleSexTypeApi {
   }
 
   public async submitForm(options: { typeOfHearing: AllMaleOrFemaleHearingType }): Promise<void> {
-    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'hearing-single-sex-type' });
+    const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'hearing-single-sex-type' });
 
     const form: Record<string, string> = {
       _csrf: csrfToken,
@@ -23,7 +23,7 @@ export class HearingSingleSexTypeApi {
       form.answer = 'no';
     }
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'hearing-single-sex-type',
       form: form,

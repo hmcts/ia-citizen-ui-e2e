@@ -31,7 +31,7 @@ export class LocalAuthorityLetterPage extends CuiBase {
   }
 
   public async completePageAndContinue(options: { nameOfFileToUpload?: string }): Promise<void> {
-    const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Upload_Document_Test_1.txt';
+    const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Local_Authority_Letter.txt';
     const filePath = await this.dataUtils.fetchDocumentUploadPath(fileToUpload);
 
     await this.$interactive.chooseFileToUploadInput.setInputFiles(filePath);

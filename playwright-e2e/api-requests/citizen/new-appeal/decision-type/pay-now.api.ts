@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../utils/api-requests-utils';
 import { payForAppealNowOrLaterType } from '../../../../citizen-types';
 
 export class PayNowApi {
@@ -10,9 +10,9 @@ export class PayNowApi {
   }
 
   public async submitForm(option: { payNowOrLater: payForAppealNowOrLaterType }): Promise<void> {
-    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'pay-now' });
+    const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'pay-now' });
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'pay-now',
       form: {

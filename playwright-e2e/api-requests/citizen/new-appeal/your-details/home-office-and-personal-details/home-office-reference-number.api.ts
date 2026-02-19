@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, postForm } from '../../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../../utils/api-requests-utils';
 
 export class HomeOfficeReferenceNumberApi {
   private apiContext: APIRequestContext;
@@ -9,9 +9,9 @@ export class HomeOfficeReferenceNumberApi {
   }
 
   public async submitForm(option: { homeOfficeReference: number }): Promise<void> {
-    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'home-office-reference-number' });
+    const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'home-office-reference-number' });
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'home-office-reference-number',
       form: {

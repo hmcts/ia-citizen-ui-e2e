@@ -1,5 +1,5 @@
 import { APIRequestContext, expect, Page } from '@playwright/test';
-import { postForm } from '../../../../utils/citizen-user.utils';
+import { cui_postForm } from '../../../../utils/api-requests-utils';
 import { DataUtils } from '../../../../utils';
 
 export class PaymentApi {
@@ -57,7 +57,7 @@ export class PaymentApi {
       const confirmPaymentCsrf = confirmPaymentHtml.match(/name="csrfToken".*?value="([^"]+)"/)?.[1];
       if (!confirmPaymentCsrf) throw new Error('Could not extract confirmation csrfToken');
 
-      await postForm({
+      await cui_postForm({
         apiContext: this.apiContext,
         path: `${submissionBaseUrl}/confirm`,
         form: {

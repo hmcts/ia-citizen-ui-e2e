@@ -8,7 +8,7 @@ export class RequestAHearingApi {
     this.apiContext = apiContext;
   }
 
-  public async submitEvent(options: RequestAHearingEventType): Promise<string> {
+  public async submitRequestForHearing(options: RequestAHearingEventType): Promise<string> {
     type HearingType = RequestAHearingEventType['hearingType'];
     const hearingTypeMap: Record<HearingType, string> = {
       Bail: 'BFA1-BAI',
@@ -129,7 +129,7 @@ export class RequestAHearingApi {
       const responseJson = await submissionResponse.json();
       hearingId = responseJson.hearingRequestID.toString();
       expect(responseJson.hearingRequestID).toBeDefined();
-    }).toPass({ timeout: 30_000, intervals: [1_000] });
+    }).toPass({ timeout: 30_000, intervals: [2_000] });
 
     if (!hearingId) throw new Error('Hearing ID was not set after submission.');
     return hearingId;

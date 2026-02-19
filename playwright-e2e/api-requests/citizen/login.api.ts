@@ -1,6 +1,6 @@
 import { APIRequestContext, expect } from '@playwright/test';
 
-export class LoginApi {
+export class CuiLoginApi {
   private apiContext: APIRequestContext;
 
   constructor(apiContext: APIRequestContext) {

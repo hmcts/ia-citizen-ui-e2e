@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../utils/api-requests-utils';
 import { WhoNeedsInterpretorType } from '../../../../citizen-types';
 
 export class HearingInterpreterSupportAppellantWitnessesApi {
@@ -10,7 +10,7 @@ export class HearingInterpreterSupportAppellantWitnessesApi {
   }
 
   public async submitForm(options: { typeOfSupport: WhoNeedsInterpretorType }): Promise<void> {
-    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'hearing-interpreter-support-appellant-Witnesses' });
+    const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'hearing-interpreter-support-appellant-Witnesses' });
 
     const form: Record<string, string> = {
       _csrf: csrfToken,
@@ -34,7 +34,7 @@ export class HearingInterpreterSupportAppellantWitnessesApi {
         throw new Error(`Invalid type of support: ${options.typeOfSupport}`);
     }
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'hearing-interpreter-support-appellant-Witnesses',
       form,

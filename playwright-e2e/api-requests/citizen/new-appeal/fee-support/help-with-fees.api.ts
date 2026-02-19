@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../utils/api-requests-utils';
 
 export class HelpWithFeesApi {
   private apiContext: APIRequestContext;
@@ -9,9 +9,9 @@ export class HelpWithFeesApi {
   }
 
   public async submitForm(option: { helpWithFees: 'wantToApply' | 'alreadyApplied' | 'willPayForAppeal' }): Promise<void> {
-    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'help-with-fees' });
+    const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'help-with-fees' });
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'help-with-fees',
       form: {

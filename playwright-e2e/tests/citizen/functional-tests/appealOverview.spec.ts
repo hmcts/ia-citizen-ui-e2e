@@ -1,4 +1,4 @@
-import { test, expect } from '../fixtures.js';
+import { test, expect } from '../../../fixtures.js';
 
 test.describe('Set of tests to verify functionality of citizen UI using Api fixtures', () => {
   test('Verify application overview page displays correct information for a paid application that has not received any payment', async ({
@@ -24,7 +24,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Navigate to citizen UI and login', async () => {
-      await cui_login(citizenUser.email, citizenUser.password);
+      await cui_login({ email: citizenUser.email, password: citizenUser.password });
     });
 
     await test.step('Verify applicant no longer has anything remaining to fulfil on their application', async () => {
@@ -79,7 +79,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Navigate to citizen UI and login', async () => {
-      await cui_login(citizenUser.email, citizenUser.password);
+      await cui_login({ email: citizenUser.email, password: citizenUser.password });
     });
 
     await test.step('Verify applicant no longer has anything remaining to fulfil on their application', async () => {
@@ -143,7 +143,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Navigate to citizen UI and login', async () => {
-      await cui_login(citizenUser.email, citizenUser.password);
+      await cui_login({ email: citizenUser.email, password: citizenUser.password });
     });
 
     await test.step('Verify applicant no longer has anything remaining to fulfil on their application', async () => {
@@ -212,7 +212,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Navigate to citizen UI and login', async () => {
-      await cui_login(citizenUser.email, citizenUser.password);
+      await cui_login({ email: citizenUser.email, password: citizenUser.password });
     });
 
     await test.step('Navigate to about appeal page', async () => {

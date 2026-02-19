@@ -1,6 +1,6 @@
 import { APIRequestContext } from '@playwright/test';
 import { YesOrNoType } from '../../../../citizen-types';
-import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../utils/api-requests-utils';
 
 export class HearingMultiMediaEvidenceEquipmentApi {
   private apiContext: APIRequestContext;
@@ -10,9 +10,9 @@ export class HearingMultiMediaEvidenceEquipmentApi {
   }
 
   public async submitForm(option: { willYouBringEquipmentToPlayEvidence: YesOrNoType }): Promise<void> {
-    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'hearing-multimedia-evidence-equipment' });
+    const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'hearing-multimedia-evidence-equipment' });
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'hearing-multimedia-evidence-equipment',
       form: {

@@ -86,7 +86,7 @@ export class CaseOfficerApiClient extends BaseExuiApiClient {
   }
 
   public async submitDecisionAndReasonsStartedEvent(options: DecisionAndReasonsStartedEventType): Promise<void> {
-    /*     await expect(async () => {
+    await expect(async () => {
       const caseData = await this.fetchCaseData({ caseId: options.caseId });
       const caseDataString = JSON.stringify(caseData);
 
@@ -96,7 +96,7 @@ export class CaseOfficerApiClient extends BaseExuiApiClient {
     }).toPass({
       timeout: 60_000,
       intervals: [2_000],
-    }); */
+    });
 
     await this.decisionAndReasonsStartedApi.submitEvent(options);
   }

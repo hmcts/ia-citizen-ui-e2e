@@ -1,5 +1,5 @@
-import { APIRequestContext, expect } from '@playwright/test';
-import { getCsrfToken, postForm, uploadDocument } from '../../../../../utils/citizen-user.utils';
+import { APIRequestContext } from '@playwright/test';
+import { cui_getCsrfToken, cui_postForm, cui_uploadDocument } from '../../../../../utils/api-requests-utils';
 
 export class UploadDecisionLetterApi {
   private apiContext: APIRequestContext;
@@ -9,14 +9,14 @@ export class UploadDecisionLetterApi {
   }
 
   public async submitForm(options: { nameOfFileToUpload?: string }): Promise<void> {
-    const csrfToken = await getCsrfToken({
+    const csrfToken = await cui_getCsrfToken({
       apiContext: this.apiContext,
       path: 'home-office-upload-decision-letter',
     });
 
-    const fileName = options.nameOfFileToUpload ?? 'Upload_Document_Test_1.txt';
+    const fileName = options.nameOfFileToUpload ?? 'Decision_Letter.txt';
 
-    await uploadDocument({
+    await cui_uploadDocument({
       apiContext: this.apiContext,
       path: `home-office-upload-decision-letter/upload?_csrf=${csrfToken}`,
       addtionalFields: {
@@ -27,7 +27,7 @@ export class UploadDecisionLetterApi {
       nameOfFileToUpload: fileName,
     });
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'home-office-upload-decision-letter',
       form: {

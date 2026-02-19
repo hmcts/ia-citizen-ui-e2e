@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../utils/api-requests-utils';
 import { decisionWithOrWithoutHearingType } from '../../../../citizen-types';
 
 export class DecisionTypeApi {
@@ -10,9 +10,9 @@ export class DecisionTypeApi {
   }
 
   public async submitForm(option: { decisionWithOrWithoutHearing: decisionWithOrWithoutHearingType }): Promise<void> {
-    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'decision-type' });
+    const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'decision-type' });
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'decision-type',
       form: {

@@ -1,6 +1,6 @@
 import { APIRequestContext } from '@playwright/test';
 import { SignLanguagesType, SIGN_LANGUAGE_NAME_TO_CODE } from '../../../../citizen-types';
-import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../utils/api-requests-utils';
 
 export class HearingInterpreterSignLanguageSelectionApi {
   private apiContext: APIRequestContext;
@@ -10,7 +10,7 @@ export class HearingInterpreterSignLanguageSelectionApi {
   }
 
   public async submitForm(options: { applicantOrWitness: 'Applicant' | 'Witness'; signLanguageToInterpret: SignLanguagesType }): Promise<void> {
-    const csrfToken = await getCsrfToken({
+    const csrfToken = await cui_getCsrfToken({
       apiContext: this.apiContext,
       path: 'hearing-interpreter-sign-language-selection',
       params: options.applicantOrWitness === 'Witness' ? { selectedWitnesses: '0' } : undefined,
@@ -29,7 +29,7 @@ export class HearingInterpreterSignLanguageSelectionApi {
       form.selectedWitnessesList = '';
     }
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'hearing-interpreter-sign-language-selection',
       form: form,

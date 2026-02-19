@@ -1,6 +1,6 @@
 import { APIRequestContext } from '@playwright/test';
 import { AppealType } from '../../../../../citizen-types';
-import { getCsrfToken, postForm } from '../../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../../utils/api-requests-utils';
 
 export class AppealTypeApi {
   private apiContext: APIRequestContext;
@@ -24,9 +24,9 @@ export class AppealTypeApi {
       throw new Error(`No API mapping defined for appeal type "${option.appealType}"`);
     }
 
-    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'appeal-type' });
+    const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'appeal-type' });
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'appeal-type',
       form: {

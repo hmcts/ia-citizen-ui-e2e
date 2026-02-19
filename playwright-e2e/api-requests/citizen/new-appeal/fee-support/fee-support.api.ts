@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, postForm } from '../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../utils/api-requests-utils';
 import { FeeSupportType } from '../../../../citizen-types';
 
 export class FeeSupportApi {
@@ -10,7 +10,7 @@ export class FeeSupportApi {
   }
 
   public async submitForm(option: { whetherApplicantHasToPayAFee: FeeSupportType }): Promise<void> {
-    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'fee-support' });
+    const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'fee-support' });
 
     const feeSupportTypeApiMap: Record<FeeSupportType, string> = {
       'I get asylum support from the Home Office': 'asylumSupportFromHo',
@@ -26,7 +26,7 @@ export class FeeSupportApi {
       throw new Error(`No API mapping defined for fee support type "${option.whetherApplicantHasToPayAFee}"`);
     }
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'fee-support',
       form: {

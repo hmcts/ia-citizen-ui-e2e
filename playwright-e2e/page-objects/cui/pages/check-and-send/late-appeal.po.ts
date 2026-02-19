@@ -38,7 +38,7 @@ export class LateAppealPage extends CuiBase {
     await this.$inputs.appealLateTextArea.fill(options.reasonForLateAppeal);
     await expect(this.$inputs.appealLateTextArea).toHaveValue(options.reasonForLateAppeal);
 
-    const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Upload_Document_Test_1.txt';
+    const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Late_Appeal.txt';
     const filePath = await this.dataUtils.fetchDocumentUploadPath(fileToUpload);
 
     await this.$interactive.chooseFileToUploadInput.setInputFiles(filePath);

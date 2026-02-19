@@ -1,5 +1,5 @@
 import { APIRequestContext } from '@playwright/test';
-import { getCsrfToken, postForm } from '../../../../../utils/citizen-user.utils';
+import { cui_getCsrfToken, cui_postForm } from '../../../../../utils/api-requests-utils';
 
 export class ContactPreferencesApi {
   private apiContext: APIRequestContext;
@@ -13,7 +13,7 @@ export class ContactPreferencesApi {
     applicantEmail?: string;
     applicantPhoneNumber?: string;
   }): Promise<void> {
-    const csrfToken = await getCsrfToken({ apiContext: this.apiContext, path: 'contact-preferences' });
+    const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'contact-preferences' });
 
     const form: Record<string, string> = {
       _csrf: csrfToken,
@@ -50,7 +50,7 @@ export class ContactPreferencesApi {
         throw new Error(`Invalid contact preference: ${options.contactPreference}`);
     }
 
-    await postForm({
+    await cui_postForm({
       apiContext: this.apiContext,
       path: 'contact-preferences',
       form,
