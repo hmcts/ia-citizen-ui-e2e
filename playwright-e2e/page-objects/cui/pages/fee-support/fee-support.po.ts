@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { CuiBase } from '../../cui-base';
-import { FeeSupportType } from '../../../../types';
+import { FeeSupportType } from '../../../../citizen-types';
 
 export class FeeSupportPage extends CuiBase {
   constructor(page: Page) {

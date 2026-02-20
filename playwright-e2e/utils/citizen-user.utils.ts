@@ -1,6 +1,11 @@
 import { expect, APIRequestContext } from '@playwright/test';
 import { IdamUtils } from '@hmcts/playwright-common';
 import { v4 as uuidv4 } from 'uuid';
+import { DataUtils } from './data.utils';
+import fs from 'fs';
+import mime from 'mime-types';
+
+const dataUtils = new DataUtils();
 
 export type UserInfo = {
   email: string;
@@ -42,37 +47,4 @@ export class CitizenUserUtils {
       surname,
     };
   }
-}
-
-export async function getCsrfToken(options: { apiContext: APIRequestContext; path: string }): Promise<string> {
-  let csrfToken: string | undefined;
-
-  await expect(async () => {
-    const response = await options.apiContext.get(options.path);
-    await expect(response).toBeOK();
-
-    const html = await response.text();
-
-    csrfToken = html.match(/name="_csrf"\s+value="([^"]+)"/)?.[1] ?? html.match(/[?&]_csrf=([^"&\s]+)/)?.[1];
-
-    expect(csrfToken).toBeDefined();
-  }).toPass({
-    timeout: 17_000,
-    intervals: [500],
-  });
-
-  return csrfToken!;
-}
-
-export async function postForm(options: { apiContext: APIRequestContext; path: string; form: Record<string, string> }): Promise<void> {
-  await expect(async () => {
-    const response = await options.apiContext.post(options.path, {
-      form: options.form,
-    });
-
-    await expect(response).toBeOK();
-  }).toPass({
-    timeout: 17_000,
-    intervals: [500],
-  });
 }

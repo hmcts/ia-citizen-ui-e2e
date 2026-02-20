@@ -1,5 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { CuiBase } from '../../cui-base';
+import { DataUtils } from '../../../../utils';
 import path from 'path';
 
 export class LateAppealPage extends CuiBase {
@@ -7,6 +8,7 @@ export class LateAppealPage extends CuiBase {
     super(page);
   }
 
+  private readonly dataUtils = new DataUtils();
   private readonly pageForm = this.page.locator('body:has(form[action*="/late-appeal"])');
 
   public readonly $inputs = {
@@ -36,10 +38,10 @@ export class LateAppealPage extends CuiBase {
     await this.$inputs.appealLateTextArea.fill(options.reasonForLateAppeal);
     await expect(this.$inputs.appealLateTextArea).toHaveValue(options.reasonForLateAppeal);
 
-    const filePath = path.join(process.cwd(), 'playwright-e2e', 'fixtures', 'documents');
-    const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Upload_Document_Test_1.txt';
+    const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Late_Appeal.txt';
+    const filePath = await this.dataUtils.fetchDocumentUploadPath(fileToUpload);
 
-    await this.$interactive.chooseFileToUploadInput.setInputFiles(path.join(filePath, fileToUpload));
+    await this.$interactive.chooseFileToUploadInput.setInputFiles(filePath);
     await expect(this.$interactive.chooseFileToUploadInput).toHaveValue(new RegExp(`${fileToUpload.replace('.', '\\.')}$`));
 
     await this.navigationClick(this.$interactive.saveAndContinueButton);

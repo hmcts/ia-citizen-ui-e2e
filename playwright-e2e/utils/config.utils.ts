@@ -1,5 +1,7 @@
 import path from 'path';
 
+export type ExuiUserRole = keyof Config['exuiUsers'];
+
 export interface UserCredentials {
   username: string;
   password: string;
@@ -16,22 +18,36 @@ interface Urls {
 }
 
 export interface Config {
-  users: {
-    caseManager: UserCredentials;
-    judge: UserCredentials;
+  exuiUsers: {
+    caseOfficer: UserCredentials;
+    adminOfficer: UserCredentials;
+    homeOfficeUser: UserCredentials;
+    judgeUser: UserCredentials;
   };
   urls: Urls;
 }
 
 export const config: Config = {
-  users: {
-    caseManager: {
-      username: getEnvVar('CASEMANAGER_USERNAME'),
-      password: getEnvVar('CASEMANAGER_PASSWORD'),
-      sessionFile: pathToFile('.sessions/', `${getEnvVar('CASEMANAGER_USERNAME')}.json`),
+  exuiUsers: {
+    caseOfficer: {
+      username: getEnvVar('CASE_OFFICER_USERNAME'),
+      password: getEnvVar('CASE_OFFICER_PASSWORD'),
+      sessionFile: pathToFile('.sessions/', `${getEnvVar('CASE_OFFICER_USERNAME')}.json`),
       cookieName: 'xui-webapp',
     },
-    judge: {
+    adminOfficer: {
+      username: getEnvVar('ADMIN_OFFICER_USERNAME'),
+      password: getEnvVar('ADMIN_OFFICER_PASSWORD'),
+      sessionFile: pathToFile('.sessions/', `${getEnvVar('ADMIN_OFFICER_USERNAME')}.json`),
+      cookieName: 'xui-webapp',
+    },
+    homeOfficeUser: {
+      username: getEnvVar('HOME_OFFICE_USERNAME'),
+      password: getEnvVar('HOME_OFFICE_PASSWORD'),
+      sessionFile: pathToFile('.sessions/', `${getEnvVar('HOME_OFFICE_USERNAME')}.json`),
+      cookieName: 'xui-webapp',
+    },
+    judgeUser: {
       username: getEnvVar('JUDGE_USERNAME'),
       password: getEnvVar('JUDGE_PASSWORD'),
       sessionFile: pathToFile('.sessions/', `${getEnvVar('JUDGE_USERNAME')}.json`),
@@ -39,7 +55,7 @@ export const config: Config = {
     },
   },
   urls: {
-    exuiDefaultUrl: 'https://manage-case.aat.platform.hmcts.net',
+    exuiDefaultUrl: 'https://manage-case.aat.platform.hmcts.net/',
     citizenUrl: getEnvVar('CITIZEN_FRONTEND_BASE_URL'),
     idamWebUrl: getEnvVar('IDAM_WEB_URL'),
     idamTestingSupportUrl: getEnvVar('IDAM_TESTING_SUPPORT_URL'),

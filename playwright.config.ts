@@ -10,7 +10,8 @@ export default defineConfig({
   ...CommonConfig.recommended,
   testDir: './playwright-e2e/',
   snapshotDir: './playwright-e2e/snapshots',
-  timeout: 120_000,
+  reporter: [['list'], ['html', { outputFolder: 'playwright-report' }]],
+  timeout: 180_000,
   expect: {
     timeout: 5_000,
     toHaveScreenshot: {

@@ -1,6 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { CuiBase } from '../../../cui-base';
-import { YesOrNoType } from '../../../../../types';
+import { YesOrNoType } from '../../../../../citizen-types';
 
 export class DeportationOrderPage extends CuiBase {
   constructor(page: Page) {
