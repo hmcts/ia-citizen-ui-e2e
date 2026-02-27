@@ -2,11 +2,14 @@ import { Page } from '@playwright/test';
 import { IdamSignInPage } from './idam-sign-in-page.po';
 import { CuiPageFixtures, cuiPageFixtures } from './cui/cui-page-fixtures';
 import { ExuiPageFixtures, exuiPageFixtures } from './exui/exui-page-fixtures';
+import { ExuiUserRole } from '../utils';
+import { config } from '../utils';
 
 export type PageFixtures = CuiPageFixtures &
   ExuiPageFixtures & {
     determinePage: Page;
     idam_signInPage: IdamSignInPage;
+    newBrowserContextAndPage: (options: { user: ExuiUserRole | 'citizen' }) => Promise<Page>;
   };
 
 export const pageFixtures = {
@@ -23,5 +26,21 @@ export const pageFixtures = {
   idam_signInPage: async ({ determinePage }: PageFixtures, use) => {
     const idam_signInPage = new IdamSignInPage(determinePage);
     await use(idam_signInPage);
+  },
+  newBrowserContextAndPage: async ({ browser }, use) => {
+    await use(async (options: { user: ExuiUserRole | 'citizen' }) => {
+      let page: Page;
+
+      if (options.user === 'citizen') {
+        const context = await browser.newContext();
+        page = await context.newPage();
+      } else {
+        const context = await browser.newContext({
+          storageState: config.exuiUsers[options.user].sessionFile,
+        });
+        page = await context.newPage();
+      }
+      return page;
+    });
   },
 };
