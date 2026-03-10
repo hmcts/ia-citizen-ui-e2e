@@ -21,10 +21,25 @@ export class ApplicantNationalityPage extends CuiBase {
     pageHeading: this.pageForm.locator('h1 label', {
       hasText: 'What is your nationality?',
     }),
+    statelessLabel: this.pageForm.locator('label[for="stateless"]'),
+    statelessHint: this.pageForm.locator('div[id="stateless-item-hint"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'nationality', pageHeading: this.$static.pageHeading });
+  }
+
+  private async verifyAllTextOnPage(): Promise<void> {
+    const defaultDropDownText = await this.$interactive.nationalityDropdown.locator('option:checked').textContent();
+    await Promise.all([
+      expect(defaultDropDownText?.trim()).toBe('Please select a nationality'),
+
+      expect(this.$static.statelessLabel).toHaveText('I do not have a nationality'),
+      expect(this.$static.statelessLabel).toBeVisible(),
+
+      expect(this.$static.statelessHint).toHaveText('This is known as being stateless. You can still appeal if you do not have a nationality.'),
+      expect(this.$static.statelessHint).toBeVisible(),
+    ]);
   }
 
   /**
@@ -32,7 +47,11 @@ export class ApplicantNationalityPage extends CuiBase {
    * @param options - Object containing stateless boolean and nationality string
    * If stateless is false, nationality must be provided.
    */
-  public async completePageAndContinue(options: { stateless: boolean; nationality?: Nationality }): Promise<void> {
+  public async completePageAndContinue(options: { stateless: boolean; nationality?: Nationality; verifyAllTextOnPage?: boolean }): Promise<void> {
+    if (options.verifyAllTextOnPage) {
+      await this.verifyAllTextOnPage();
+    }
+
     if (!options.stateless) {
       if (!options.nationality) {
         throw new Error('Nationality must be provided when stateless is false.');

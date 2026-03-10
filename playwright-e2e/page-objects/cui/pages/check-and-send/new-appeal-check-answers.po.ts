@@ -1,7 +1,7 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { CuiBase } from '../../cui-base';
 
-export class CheckAnswersPage extends CuiBase {
+export class NewAppealCheckAnswersPage extends CuiBase {
   constructor(page: Page) {
     super(page);
   }

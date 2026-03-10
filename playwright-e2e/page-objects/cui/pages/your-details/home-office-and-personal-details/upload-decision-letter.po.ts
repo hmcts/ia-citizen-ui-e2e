@@ -23,13 +23,50 @@ export class UploadDecisionLetterPage extends CuiBase {
       hasText: 'Upload your Home Office decision letter',
     }),
     fileUploadedTableRow: this.pageForm.locator('table[id="files-uploaded"] a[class="govuk-link"]').filter({ hasNotText: 'Delete' }),
+    decisionByEmailHeading: this.pageForm.getByRole('heading', { level: 2 }).filter({ hasText: 'email' }),
+    decisionByEmailText: this.pageForm.locator('p', { hasText: 'attached to the email.' }),
+    decisionByPostHeading: this.pageForm.getByRole('heading', { level: 2 }).filter({ hasText: 'post' }),
+    decisionByPostText: this.pageForm.locator('p', { hasText: 'If you have a smartphone' }),
+    uploadFileText: this.pageForm.getByText('Upload a file', { exact: true }),
+    uploadedFileText: this.pageForm.locator('table[id="files-uploaded"] [class="govuk-table__header"]'),
+    noFilesUploadedText: this.pageForm.locator('td[class="govuk-table__cell"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'home-office-upload-decision-letter', pageHeading: this.$static.pageHeading });
   }
 
-  public async completePageAndContinue(options: { nameOfFileToUpload?: string }): Promise<void> {
+  private async verifyAllTextOnPage(): Promise<void> {
+    await Promise.all([
+      expect(this.$static.decisionByEmailHeading).toHaveText('If you got your decision by email'),
+      expect(this.$static.decisionByEmailHeading).toBeVisible(),
+
+      expect(this.$static.decisionByEmailText).toHaveText('Upload the decision letter attached to the email.'),
+      expect(this.$static.decisionByEmailText).toBeVisible(),
+
+      expect(this.$static.decisionByPostHeading).toHaveText('If you got your decision by post'),
+      expect(this.$static.decisionByPostHeading).toBeVisible(),
+
+      expect(this.$static.decisionByPostText).toHaveText(
+        'If you have a smartphone, you can use a scanner app to create a single document to upload. Or you can scan or take a photo of each page and upload each file individually.',
+      ),
+      expect(this.$static.decisionByPostText).toBeVisible(),
+
+      expect(this.$static.uploadFileText).toBeVisible(),
+
+      expect(this.$static.uploadedFileText).toHaveText('Uploaded file'),
+      expect(this.$static.uploadedFileText).toBeVisible(),
+
+      expect(this.$static.noFilesUploadedText).toHaveText('No files uploaded'),
+      expect(this.$static.noFilesUploadedText).toBeVisible(),
+    ]);
+  }
+
+  public async completePageAndContinue(options: { nameOfFileToUpload?: string; verifyAllTextOnPage?: boolean }): Promise<void> {
+    if (options.verifyAllTextOnPage) {
+      await this.verifyAllTextOnPage();
+    }
+
     const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Decision_Letter.txt';
     const filePath = await this.dataUtils.fetchDocumentUploadPath(fileToUpload);
 

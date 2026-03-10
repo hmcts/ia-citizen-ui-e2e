@@ -12,9 +12,10 @@ export class AppealOverviewPage extends CuiBase {
   private readonly yourAppealDetailsArea = this.page.locator("//h3[normalize-space()='Your appeal details']/parent::div");
 
   public readonly $interactive = {
-    continueButton: this.page.locator('a[href="/about-appeal"][role="button"]', {
+    continueButton: this.page.locator('a[role="button"]', {
       hasText: 'Continue',
     }),
+    payForAppealLink: this.page.getByRole('link', { name: 'Pay for this appeal' }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
@@ -35,6 +36,7 @@ export class AppealOverviewPage extends CuiBase {
     ),
     helpfulInformationHeading: this.caseInformationArea.getByText('Helpful Information', { exact: true }),
     whatIsATribunalCaseWorkerLink: this.caseInformationArea.getByText('What is a Tribunal Caseworker?', { exact: true }),
+    askForMoreTimeLink: this.caseInformationArea.getByRole('link', { name: 'Ask for more time', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $yourAppealArgument = {

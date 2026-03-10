@@ -26,10 +26,30 @@ export class SponsorAddressPage extends CuiBase {
     pageHeading: this.pageForm.locator('h1', {
       hasText: `What is your sponsor's address?`,
     }),
+    buildingAndStreetLabel: this.pageForm.locator('label[for="address-line-1"]'),
+    townOrCityLabel: this.pageForm.locator('label[for="address-town"]'),
+    countyLabel: this.pageForm.locator('label[for="address-county"]'),
+    postCodeLabel: this.pageForm.locator('label[for="address-postcode"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'sponsor-address', pageHeading: this.$static.pageHeading });
+  }
+
+  private async verifyAllTextOnPage(): Promise<void> {
+    await Promise.all([
+      expect(this.$static.buildingAndStreetLabel).toContainText('Building and street'),
+      expect(this.$static.buildingAndStreetLabel).toBeVisible(),
+
+      expect(this.$static.townOrCityLabel).toHaveText('Town or city'),
+      expect(this.$static.townOrCityLabel).toBeVisible(),
+
+      expect(this.$static.countyLabel).toHaveText('County'),
+      expect(this.$static.countyLabel).toBeVisible(),
+
+      expect(this.$static.postCodeLabel).toHaveText('Postcode'),
+      expect(this.$static.postCodeLabel).toBeVisible(),
+    ]);
   }
 
   public async completePageAndContinue(options: {
@@ -38,7 +58,12 @@ export class SponsorAddressPage extends CuiBase {
     townOrCity: string;
     county?: string;
     postCode: string;
+    verifyAllTextOnPage?: boolean;
   }): Promise<void> {
+    if (options.verifyAllTextOnPage) {
+      await this.verifyAllTextOnPage();
+    }
+
     await this.$inputs.addressLine1.fill(options.addressLine1);
     await expect(this.$inputs.addressLine1).toHaveValue(options.addressLine1);
 

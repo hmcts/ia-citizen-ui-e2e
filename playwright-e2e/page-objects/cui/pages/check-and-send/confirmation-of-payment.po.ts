@@ -1,22 +1,18 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page } from '@playwright/test';
+import { AppealDetailsSentPage } from './appeal-details-sent.po';
 import { CuiBase } from '../../cui-base';
 
 export class ConfirmationOfPaymentPage extends CuiBase {
+  private appealDetailsSentPage: AppealDetailsSentPage;
+  public readonly $interactive: typeof this.appealDetailsSentPage.$interactive;
+  public readonly $static: typeof this.appealDetailsSentPage.$static;
+
   constructor(page: Page) {
     super(page);
+    this.appealDetailsSentPage = new AppealDetailsSentPage(page);
+    this.$interactive = this.appealDetailsSentPage.$interactive;
+    this.$static = this.appealDetailsSentPage.$static;
   }
-
-  public readonly $interactive = {
-    appealProgressButton: this.page.locator('a[class="govuk-button"]', {
-      hasText: 'See your appeal progress',
-    }),
-  } as const satisfies Record<string, Locator>;
-
-  public readonly $static = {
-    pageHeading: this.page.locator('h1', {
-      hasText: 'Your appeal details have been sent',
-    }),
-  } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'confirmation-payment', pageHeading: this.$static.pageHeading });

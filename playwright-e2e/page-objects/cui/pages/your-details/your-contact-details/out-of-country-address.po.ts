@@ -22,15 +22,23 @@ export class OutOfCountryAddressPage extends CuiBase {
     pageHeading: this.pageForm.locator('h1', {
       hasText: 'What is your address?',
     }),
+    enterAddressText: this.pageForm.locator('label[for="outofcountry-address"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'out-of-country-address', pageHeading: this.$static.pageHeading });
   }
 
-  public async completePageAndContinue(option: { applicantAddress: string }): Promise<void> {
-    await this.$inputs.addressTextArea.fill(option.applicantAddress);
-    await expect(this.$inputs.addressTextArea).toHaveValue(option.applicantAddress);
+  public async completePageAndContinue(options: { applicantAddress: string; verifyAllTextOnPage?: boolean }): Promise<void> {
+    if (options.verifyAllTextOnPage) {
+      await Promise.all([
+        expect(this.$static.enterAddressText).toHaveText('Enter your address'),
+        expect(this.$static.enterAddressText).toBeVisible(),
+      ]);
+    }
+
+    await this.$inputs.addressTextArea.fill(options.applicantAddress);
+    await expect(this.$inputs.addressTextArea).toHaveValue(options.applicantAddress);
 
     await this.navigationClick(this.$interactive.saveAndContinueButton);
   }

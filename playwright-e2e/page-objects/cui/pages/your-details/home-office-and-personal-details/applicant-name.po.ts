@@ -23,13 +23,29 @@ export class ApplicantNamePage extends CuiBase {
     pageHeading: this.pageForm.locator('h1', {
       hasText: 'What is your name?',
     }),
+    givenNameLabel: this.pageForm.locator('label[for="givenNames"]'),
+    familyNameLabel: this.pageForm.locator('label[for="familyName"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'name', pageHeading: this.$static.pageHeading });
   }
 
-  public async completePageAndContinue(option: { givenNames: string | string[]; familyName: string }): Promise<void> {
+  private async verifyAllTextOnPage(): Promise<void> {
+    await Promise.all([
+      expect(this.$static.givenNameLabel).toHaveText('Given names'),
+      expect(this.$static.givenNameLabel).toBeVisible(),
+
+      expect(this.$static.familyNameLabel).toHaveText('Family name'),
+      expect(this.$static.familyNameLabel).toBeVisible(),
+    ]);
+  }
+
+  public async completePageAndContinue(option: { givenNames: string | string[]; familyName: string; verifyAllTextOnPage?: boolean }): Promise<void> {
+    if (option.verifyAllTextOnPage) {
+      await this.verifyAllTextOnPage();
+    }
+
     const givenNames = Array.isArray(option.givenNames) ? option.givenNames.join(' ') : option.givenNames;
     const familyName = option.familyName;
 

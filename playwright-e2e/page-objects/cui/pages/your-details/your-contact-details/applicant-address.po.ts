@@ -10,6 +10,7 @@ export class ApplicantAddressPage extends CuiBase {
 
   public readonly $inputs = {
     postcode: this.pageForm.locator('input[id="postcode"]'),
+    enterAddressManuallyLink: this.pageForm.getByRole('link', { name: 'I want to enter my address manually', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
@@ -23,16 +24,31 @@ export class ApplicantAddressPage extends CuiBase {
     pageHeading: this.pageForm.locator('h1', {
       hasText: 'What is your address?',
     }),
+    enterPostCodeLabel: this.pageForm.locator('label[for="postcode"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'address', pageHeading: this.$static.pageHeading });
   }
 
+  private async verifyAllTextOnPage(): Promise<void> {
+    await Promise.all([
+      expect(this.$static.enterPostCodeLabel).toHaveText('Enter a UK postcode'),
+      expect(this.$static.enterPostCodeLabel).toBeVisible(),
+
+      expect(this.$interactive.enterAddressManuallyLink).toBeVisible(),
+    ]);
+  }
+
   public async completePageAndContinue(options: {
     addressPreference: 'Post Code Search' | 'Enter Address Manually';
     postCode?: string;
+    verifyAllTextOnPage?: boolean;
   }): Promise<void> {
+    if (options.verifyAllTextOnPage) {
+      await this.verifyAllTextOnPage();
+    }
+
     switch (options.addressPreference) {
       case 'Enter Address Manually':
         await this.navigationClick(this.$interactive.enterAddressManuallyLink);

@@ -1,0 +1,108 @@
+import { Page, Locator, expect } from '@playwright/test';
+import { CuiBase } from '../../cui-base';
+import { DataUtils } from '../../../../utils';
+
+export class ProvideSupportingEvidencePage extends CuiBase {
+  constructor(page: Page) {
+    super(page);
+  }
+
+  private dataUtils = new DataUtils();
+  private readonly pageForm = this.page.locator('body:has(form[action*="/provide-supporting-evidence"])');
+
+  public readonly $interactive = {
+    chooseFileToUploadInput: this.pageForm.locator('input[id="file-upload"]'),
+    uploadFileButton: this.pageForm.locator('button[name="uploadFile"]'),
+    saveAndContinueButton: this.pageForm.locator('button', {
+      hasText: 'Save and continue',
+    }),
+  } as const satisfies Record<string, Locator>;
+
+  private readonly needMoreTimeHeading = this.pageForm.getByRole('heading', { name: 'Need more time?', exact: true });
+  private readonly adviceForSupportingEvidenceText = this.pageForm.getByText('Advice');
+
+  public readonly $static = {
+    pageHeading: this.pageForm.getByRole('heading', { level: 1, name: 'Provide supporting evidence', exact: true }),
+    fileUploadedTableRow: this.pageForm.locator('table[id="files-uploaded"] a[class="govuk-link"]').filter({ hasNotText: 'Delete' }),
+    adviceForSupportingEvidenceText: this.adviceForSupportingEvidenceText,
+    adviceBulletPoint1: this.adviceForSupportingEvidenceText.locator('+ ul li').nth(0),
+    adviceBulletPoint2: this.adviceForSupportingEvidenceText.locator('+ ul li').nth(1),
+    adviceBulletPoint3: this.adviceForSupportingEvidenceText.locator('+ ul li').nth(2),
+    uploadFileText: this.pageForm.getByText('Upload a file', { exact: true }),
+    uploadedFileText: this.pageForm.locator('table[id="files-uploaded"] [class="govuk-table__header"]'),
+    noFilesUploadedText: this.pageForm.locator('td[class="govuk-table__cell"]'),
+    needMoreTimeHeading: this.needMoreTimeHeading,
+    needMoreTimeHeadingFirstBulletPoint: this.needMoreTimeHeading.locator('+ ul li').nth(0),
+  } as const satisfies Record<string, Locator>;
+
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'provide-supporting-evidence', pageHeading: this.$static.pageHeading });
+  }
+
+  private async verifyAllTextOnPage(): Promise<void> {
+    await Promise.all([
+      expect(this.$static.adviceForSupportingEvidenceText).toHaveText('Advice on providing supporting evidence'),
+      expect(this.$static.adviceForSupportingEvidenceText).toBeVisible(),
+
+      expect(this.$static.adviceBulletPoint1).toHaveText('It will be helpful to read our information about supporting evidence'),
+      expect(this.$static.adviceBulletPoint1).toBeVisible(),
+
+      expect(this.$static.adviceBulletPoint2).toHaveText(
+        'You can upload evidence to support your appeal such as letters, photos and documents. If you are taking a picture of a letter, place it on a flat surface and take the picture from above',
+      ),
+      expect(this.$static.adviceBulletPoint2).toBeVisible(),
+
+      expect(this.$static.adviceBulletPoint3).toHaveText(
+        'If you provide evidence that is not in English, you must also provide an English translation of that evidence',
+      ),
+      expect(this.$static.adviceBulletPoint3).toBeVisible(),
+
+      expect(this.$static.uploadFileText).toBeVisible(),
+
+      expect(this.$static.uploadedFileText).toHaveText('Uploaded file'),
+      expect(this.$static.uploadedFileText).toBeVisible(),
+
+      expect(this.$static.noFilesUploadedText).toHaveText('No files uploaded'),
+      expect(this.$static.noFilesUploadedText).toBeVisible(),
+
+      expect(this.$static.needMoreTimeHeading).toBeVisible(),
+
+      expect(this.$static.needMoreTimeHeadingFirstBulletPoint).toHaveText(
+        "If you want to provide evidence but don't have it right now, you can save your answer and ask for more time",
+      ),
+      expect(this.$static.needMoreTimeHeadingFirstBulletPoint).toBeVisible(),
+    ]);
+  }
+
+  public async completePageAndContinue(options: { nameOfFileToUpload?: string; verifyAllTextOnPage?: boolean }): Promise<void> {
+    if (options.verifyAllTextOnPage) {
+      await this.verifyAllTextOnPage();
+    }
+
+    const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Provide_Supporting_Evidence.txt';
+    const filePath = await this.dataUtils.fetchDocumentUploadPath(fileToUpload);
+
+    await this.$interactive.chooseFileToUploadInput.setInputFiles(filePath);
+    await expect(this.$interactive.chooseFileToUploadInput).toHaveValue(new RegExp(`${fileToUpload.replace('.', '\\.')}$`));
+
+    await expect(async () => {
+      await Promise.all([
+        this.interceptNetworkRequestToVerifySupportingEvidenceUploaded({ timeoutMs: 15_000 }),
+        this.$interactive.uploadFileButton.click(),
+      ]);
+    }).toPass({ intervals: [1_000], timeout: 30_000 });
+
+    await expect(this.$static.fileUploadedTableRow.filter({ hasText: fileToUpload })).toBeVisible();
+    await this.navigationClick(this.$interactive.saveAndContinueButton);
+  }
+
+  private async interceptNetworkRequestToVerifySupportingEvidenceUploaded(options: { timeoutMs: number }): Promise<void> {
+    const response = await this.page.waitForResponse((res) => res.request().method() === 'POST' && res.url().includes('supporting-evidence/upload'), {
+      timeout: options.timeoutMs,
+    });
+
+    const status = response.status();
+    expect(status).toBeGreaterThanOrEqual(200);
+    expect(status).toBeLessThan(400);
+  }
+}

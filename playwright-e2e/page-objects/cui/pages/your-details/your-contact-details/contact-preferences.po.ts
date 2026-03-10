@@ -25,12 +25,35 @@ export class ContactPreferencesPage extends CuiBase {
     pageHeading: this.pageForm.locator('h1', {
       hasText: 'How do you want us to contact you?',
     }),
+    contactDetailsHintText: this.pageForm.locator('div[id="contactDetails-hint"]'),
+    emailLabel: this.pageForm.locator("//input[@value='email']/following-sibling::label"),
+    mobilePhoneLabel: this.pageForm.locator("//input[@value='text-message']/following-sibling::label"),
+    under18Text: this.pageForm.getByText('If you are under 18'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'contact-preferences', pageHeading: this.$static.pageHeading });
   }
 
+  private async verifyAllTextOnPage(): Promise<void> {
+    await Promise.all([
+      expect(this.$static.contactDetailsHintText).toHaveText(
+        'Select at least one of option, or both. For international numbers include the country code for the country your phone is registered in.',
+      ),
+      expect(this.$static.contactDetailsHintText).toBeVisible(),
+
+      expect(this.$static.emailLabel).toHaveText('Email'),
+      expect(this.$static.emailLabel).toBeVisible(),
+
+      expect(this.$static.mobilePhoneLabel).toHaveText('Mobile phone'),
+      expect(this.$static.mobilePhoneLabel).toBeVisible(),
+
+      expect(this.$static.under18Text).toHaveText(
+        'If you are under 18 years old, you can enter contact details for a parent, guardian, sponsor or other responsible adult',
+      ),
+      expect(this.$static.under18Text).toBeVisible(),
+    ]);
+  }
   /**
    *
    * @param options - contactPreference: 'Email' | 'Phone' | 'Email and Phone'
@@ -41,7 +64,12 @@ export class ContactPreferencesPage extends CuiBase {
     contactPreference: 'Email' | 'Phone' | 'Email and Phone';
     applicantEmail?: string;
     applicantPhoneNumber?: string;
+    verifyAllTextOnPage?: boolean;
   }): Promise<void> {
+    if (options.verifyAllTextOnPage) {
+      await this.verifyAllTextOnPage();
+    }
+
     const fillEmail = async (email: string) => {
       await this.$interactive.emailCheckbox.check();
       await expect(this.$interactive.emailCheckbox).toBeChecked();

@@ -24,13 +24,45 @@ export class OutOfCountryHrInsidePage extends CuiBase {
     pageHeading: this.pageForm.locator('h1', {
       hasText: 'What date did you leave the UK after your application to stay in the country was refused?',
     }),
+    enterDateText: this.pageForm.getByText('Enter the date', { exact: true }),
+    dateHintText: this.pageForm.locator('div[id="date-hint"]'),
+    dayLabel: this.pageForm.locator('label[for="day"]'),
+    monthLabel: this.pageForm.locator('label[for="month"]'),
+    yearLabel: this.pageForm.locator('label[for="year"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'ooc-hr-inside', pageHeading: this.$static.pageHeading });
   }
 
-  public async completePageAndContinue(dateApplicantLeftUk: { day: number; month: number; year: number }): Promise<void> {
+  private async verifyAllTextOnPage(): Promise<void> {
+    await Promise.all([
+      expect(this.$static.enterDateText).toBeVisible(),
+
+      expect(this.$static.dateHintText).toHaveText('For example, 31 3 2019'),
+      expect(this.$static.dateHintText).toBeVisible(),
+
+      expect(this.$static.dayLabel).toHaveText('Day'),
+      expect(this.$static.dayLabel).toBeVisible(),
+
+      expect(this.$static.monthLabel).toHaveText('Month'),
+      expect(this.$static.monthLabel).toBeVisible(),
+
+      expect(this.$static.yearLabel).toHaveText('Year'),
+      expect(this.$static.yearLabel).toBeVisible(),
+    ]);
+  }
+
+  public async completePageAndContinue(dateApplicantLeftUk: {
+    day: number;
+    month: number;
+    year: number;
+    verifyAllTextOnPage?: boolean;
+  }): Promise<void> {
+    if (dateApplicantLeftUk.verifyAllTextOnPage) {
+      await this.verifyAllTextOnPage();
+    }
+
     const day = dateApplicantLeftUk.day.toString();
     const month = dateApplicantLeftUk.month.toString();
     const year = dateApplicantLeftUk.year.toString();
