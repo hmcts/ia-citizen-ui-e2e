@@ -1,11 +1,5 @@
-import { expect, APIRequestContext } from '@playwright/test';
 import { IdamUtils } from '@hmcts/playwright-common';
 import { v4 as uuidv4 } from 'uuid';
-import { DataUtils } from './data.utils';
-import fs from 'fs';
-import mime from 'mime-types';
-
-const dataUtils = new DataUtils();
 
 export type UserInfo = {
   email: string;

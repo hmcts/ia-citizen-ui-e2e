@@ -25,10 +25,28 @@ export class SponsorContactPreferencesPage extends CuiBase {
     pageHeading: this.pageForm.locator('h1', {
       hasText: `What are your sponsor's contact details?`,
     }),
+    contactDetailsHintText: this.pageForm.locator('div[id="sponsorContactDetails-hint"]'),
+    emailLabel: this.pageForm.locator("//input[@value='email']/following-sibling::label"),
+    textMessageLabel: this.pageForm.locator("//input[@value='text-message']/following-sibling::label"),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'sponsor-contact-preferences', pageHeading: this.$static.pageHeading });
+  }
+
+  private async verifyAllTextOnPage(): Promise<void> {
+    await Promise.all([
+      expect(this.$static.contactDetailsHintText).toHaveText(
+        'Please provide an email address or phone number for your sponsor. Select at least one of option, or both.',
+      ),
+      expect(this.$static.contactDetailsHintText).toBeVisible(),
+
+      expect(this.$static.emailLabel).toHaveText('Email'),
+      expect(this.$static.emailLabel).toBeVisible(),
+
+      expect(this.$static.textMessageLabel).toHaveText('Text message'),
+      expect(this.$static.textMessageLabel).toBeVisible(),
+    ]);
   }
 
   /**
@@ -41,7 +59,12 @@ export class SponsorContactPreferencesPage extends CuiBase {
     contactPreference: 'Email' | 'Phone' | 'Email and Phone';
     sponsorEmail?: string;
     sponsorPhoneNumber?: string;
+    verifyAllTextOnPage?: boolean;
   }): Promise<void> {
+    if (options.verifyAllTextOnPage) {
+      await this.verifyAllTextOnPage();
+    }
+
     const fillEmail = async (email: string) => {
       await this.$interactive.emailCheckbox.check();
       await expect(this.$interactive.emailCheckbox).toBeChecked();

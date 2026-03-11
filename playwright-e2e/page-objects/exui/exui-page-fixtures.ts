@@ -1,10 +1,8 @@
-import { CaseOverviewPage } from './pages';
 import { ExuiPages } from './exui-pages';
 import { PageFixtures } from '../page.fixtures';
 
 export interface ExuiPageFixtures {
   exui_pages: ExuiPages;
-  exui_caseOverviewPage: CaseOverviewPage;
 }
 
 /* Instantiates pages and provides page to the test via use()

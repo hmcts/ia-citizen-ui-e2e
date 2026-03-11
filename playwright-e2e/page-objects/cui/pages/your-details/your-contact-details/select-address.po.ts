@@ -13,23 +13,45 @@ export class SelectAddressPage extends CuiBase {
     saveAndContinueButton: this.pageForm.locator('button', {
       hasText: 'Save and continue',
     }),
+    changeAddressLink: this.pageForm.getByRole('link', { name: 'Change', exact: true }),
+    cantFindMyAddressLink: this.pageForm.getByRole('link', { name: 'I cant find my address in the list', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
     pageHeading: this.pageForm.locator('h1', {
       hasText: 'What is your address?',
     }),
+    postCodeText: this.pageForm.getByText('Postcode', { exact: true }),
+    selectAddressLabel: this.pageForm.locator('label[for="address"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'select-address', pageHeading: this.$static.pageHeading });
   }
 
+  private async verifyAllTextOnPage(): Promise<void> {
+    await Promise.all([
+      expect(this.$static.postCodeText).toBeVisible(),
+
+      expect(this.$interactive.changeAddressLink).toBeVisible(),
+
+      expect(this.$static.selectAddressLabel).toHaveText('Select an address'),
+      expect(this.$static.selectAddressLabel).toBeVisible(),
+
+      expect(this.$interactive.cantFindMyAddressLink).toBeVisible(),
+    ]);
+  }
+
   public async completePageAndContinue(options: {
     preference: 'Select Address At Random' | 'Select Specific Address';
     houseNumber?: number;
     street?: string;
+    verifyAllTextOnPage?: boolean;
   }): Promise<string> {
+    if (options.verifyAllTextOnPage) {
+      await this.verifyAllTextOnPage();
+    }
+
     switch (options.preference) {
       case 'Select Address At Random':
         const addressOptions = await this.$interactive.selectAddressDropdown.locator('option').all();

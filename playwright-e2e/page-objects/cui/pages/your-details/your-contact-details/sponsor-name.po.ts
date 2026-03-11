@@ -23,13 +23,29 @@ export class SponsorNamePage extends CuiBase {
     pageHeading: this.pageForm.locator('h1', {
       hasText: `What is your sponsor's name?`,
     }),
+    givenNameLabel: this.pageForm.locator('label[for="sponsorGivenNames"]'),
+    familyNameLabel: this.pageForm.locator('label[for="sponsorFamilyName"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'sponsor-name', pageHeading: this.$static.pageHeading });
   }
 
-  public async completePageAndContinue(options: { givenNames: string | string[]; familyName: string }): Promise<void> {
+  private async verifyAllTextOnPage(): Promise<void> {
+    await Promise.all([
+      expect(this.$static.givenNameLabel).toHaveText('Given names'),
+      expect(this.$static.givenNameLabel).toBeVisible(),
+
+      expect(this.$static.familyNameLabel).toHaveText('Family name'),
+      expect(this.$static.familyNameLabel).toBeVisible(),
+    ]);
+  }
+
+  public async completePageAndContinue(options: { givenNames: string | string[]; familyName: string; verifyAllTextOnPage?: boolean }): Promise<void> {
+    if (options.verifyAllTextOnPage) {
+      await this.verifyAllTextOnPage();
+    }
+
     const givenNames = Array.isArray(options.givenNames) ? options.givenNames.join(' ') : options.givenNames;
     const familyName = options.familyName;
 

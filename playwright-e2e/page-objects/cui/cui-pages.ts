@@ -36,11 +36,20 @@ import {
   LocalAuthorityLetterPage,
   HelpWithFeesPage,
   LateAppealPage,
-  CheckAnswersPage,
+  NewAppealCheckAnswersPage,
   AppealDetailsSentPage,
   PaymentDetailsPage,
   ConfirmPaymentDetailsPage,
   ConfirmationOfPaymentPage,
+  HomeOfficeDecisionWrongPage,
+  SupportingEvidencePage,
+  ProvideSupportingEvidencePage,
+  AppealReasonsCheckAnswersPage,
+  AppealReasonsAnswerSentPage,
+  AskForMoreTimePage,
+  SupportingEvidenceMoreTimePage,
+  ProvideSupportingEvidenceMoreTimePage,
+  RequestMoreTimeSentPage,
 } from './pages/index';
 
 export class CuiPages {
@@ -81,11 +90,20 @@ export class CuiPages {
   public readonly localAuthorityLetterPage: LocalAuthorityLetterPage;
   public readonly helpWithFeesPage: HelpWithFeesPage;
   public readonly lateAppealPage: LateAppealPage;
-  public readonly checkAnswersPage: CheckAnswersPage;
+  public readonly newAppealCheckAnswersPage: NewAppealCheckAnswersPage;
   public readonly appealDetailsSentPage: AppealDetailsSentPage;
   public readonly paymentDetailsPage: PaymentDetailsPage;
   public readonly confirmPaymentDetailsPage: ConfirmPaymentDetailsPage;
   public readonly confirmationOfPaymentPage: ConfirmationOfPaymentPage;
+  public readonly homeOfficeDecisionWrongPage: HomeOfficeDecisionWrongPage;
+  public readonly supportingEvidencePage: SupportingEvidencePage;
+  public readonly provideSupportingEvidencePage: ProvideSupportingEvidencePage;
+  public readonly appealReasonsCheckAnswersPage: AppealReasonsCheckAnswersPage;
+  public readonly appealReasonsAnswerSentPage: AppealReasonsAnswerSentPage;
+  public readonly askForMoreTimePage: AskForMoreTimePage;
+  public readonly supportingEvidenceMoreTimePage: SupportingEvidenceMoreTimePage;
+  public readonly provideSupportingEvidenceMoreTimePage: ProvideSupportingEvidenceMoreTimePage;
+  public readonly requestMoreTimeSentPage: RequestMoreTimeSentPage;
 
   constructor(page: Page) {
     this.page = page;
@@ -125,11 +143,20 @@ export class CuiPages {
     this.localAuthorityLetterPage = new LocalAuthorityLetterPage(page);
     this.helpWithFeesPage = new HelpWithFeesPage(page);
     this.lateAppealPage = new LateAppealPage(page);
-    this.checkAnswersPage = new CheckAnswersPage(page);
+    this.newAppealCheckAnswersPage = new NewAppealCheckAnswersPage(page);
     this.appealDetailsSentPage = new AppealDetailsSentPage(page);
     this.paymentDetailsPage = new PaymentDetailsPage(page);
     this.confirmPaymentDetailsPage = new ConfirmPaymentDetailsPage(page);
     this.confirmationOfPaymentPage = new ConfirmationOfPaymentPage(page);
+    this.homeOfficeDecisionWrongPage = new HomeOfficeDecisionWrongPage(page);
+    this.supportingEvidencePage = new SupportingEvidencePage(page);
+    this.provideSupportingEvidencePage = new ProvideSupportingEvidencePage(page);
+    this.appealReasonsCheckAnswersPage = new AppealReasonsCheckAnswersPage(page);
+    this.appealReasonsAnswerSentPage = new AppealReasonsAnswerSentPage(page);
+    this.askForMoreTimePage = new AskForMoreTimePage(page);
+    this.supportingEvidenceMoreTimePage = new SupportingEvidenceMoreTimePage(page);
+    this.provideSupportingEvidenceMoreTimePage = new ProvideSupportingEvidenceMoreTimePage(page);
+    this.requestMoreTimeSentPage = new RequestMoreTimeSentPage(page);
   }
 
   /**

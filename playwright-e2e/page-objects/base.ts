@@ -13,7 +13,7 @@ export abstract class Base {
       if ((await elementToClickOn.isVisible()) && (await elementToClickOn.isEnabled())) {
         await elementToClickOn.click();
       }
-      await expect(elementToClickOn).toBeHidden({ timeout: 5_000 });
+      await expect(elementToClickOn, { message: `Verify element is now hidden: ${elementToClickOn}` }).toBeHidden({ timeout: 5_000 });
     }).toPass({ intervals: [1_000], timeout: 30_000 });
   }
 
@@ -21,10 +21,10 @@ export abstract class Base {
     const timeout = options.timeout ?? 15_000;
     await Promise.all([
       expect(async () => {
-        expect(this.page.url().includes(options.urlPath)).toBeTruthy();
+        expect(this.page.url().includes(options.urlPath), { message: `Verify URL contains (${options.urlPath})` }).toBeTruthy();
       }).toPass({ intervals: [100], timeout: timeout }),
 
-      expect(options.pageHeading).toBeVisible({ timeout: timeout }),
+      expect(options.pageHeading, { message: `Verify page heading is visible: ${options.pageHeading}` }).toBeVisible({ timeout: timeout }),
     ]);
   }
 }

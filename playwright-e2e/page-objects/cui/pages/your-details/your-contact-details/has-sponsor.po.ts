@@ -19,13 +19,33 @@ export class HasSponsorPage extends CuiBase {
     pageHeading: this.pageForm.locator('h1', {
       hasText: 'Do you have a sponsor?',
     }),
+    sponsorHintText: this.pageForm.locator('div[id="answer-hint"]'),
+    yesLabel: this.pageForm.locator("//input[@value='Yes']/following-sibling::label"),
+    noLabel: this.pageForm.locator("//input[@value='No']/following-sibling::label"),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'has-sponsor', pageHeading: this.$static.pageHeading });
   }
 
-  public async completePageAndContinue(option: { doesApplicantHaveASponsor: YesOrNoType }): Promise<void> {
+  private async verifyAllTextOnPage(): Promise<void> {
+    await Promise.all([
+      expect(this.$static.sponsorHintText).toHaveText('A sponsor is usually someone you want to join in the UK.'),
+      expect(this.$static.sponsorHintText).toBeVisible(),
+
+      expect(this.$static.yesLabel).toHaveText('Yes'),
+      expect(this.$static.yesLabel).toBeVisible(),
+
+      expect(this.$static.noLabel).toHaveText('No'),
+      expect(this.$static.noLabel).toBeVisible(),
+    ]);
+  }
+
+  public async completePageAndContinue(option: { doesApplicantHaveASponsor: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
+    if (option.verifyAllTextOnPage) {
+      await this.verifyAllTextOnPage();
+    }
+
     const element = this.pageForm.locator(`input[type="radio"][value="${option.doesApplicantHaveASponsor}"]`);
     await element.check();
     await expect(element).toBeChecked();
