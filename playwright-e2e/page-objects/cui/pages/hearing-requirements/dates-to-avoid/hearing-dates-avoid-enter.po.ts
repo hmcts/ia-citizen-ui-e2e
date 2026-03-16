@@ -1,0 +1,82 @@
+import { Page, Locator, expect } from '@playwright/test';
+import { CuiBase } from '../../../cui-base';
+import { DataUtils } from '../../../../../utils/data.utils';
+
+export class HearingDatesAvoidEnterPage extends CuiBase {
+  private dataUtils: DataUtils = new DataUtils();
+  constructor(page: Page) {
+    super(page);
+  }
+
+  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-dates-avoid-enter"])');
+
+  public readonly $inputs = {
+    day: this.pageForm.locator('input[name="day"]'),
+    month: this.pageForm.locator('input[name="month"]'),
+    year: this.pageForm.locator('input[name="year"]'),
+  } as const satisfies Record<string, Locator>;
+
+  public readonly $interactive = {
+    saveAndContinueButton: this.pageForm.locator('button', {
+      hasText: 'Save and continue',
+    }),
+  } as const satisfies Record<string, Locator>;
+
+  public readonly $static = {
+    pageHeading: this.pageForm.getByRole('heading', {
+      name: 'Enter the date you or any witnesses cannot go to the hearing',
+      level: 1,
+      exact: true,
+    }),
+    onlyIncludeDatesWithinRangeText: this.pageForm.getByText('Only include dates from'),
+    exampleDateHintText: this.pageForm.locator('div[id="date-hint"]'),
+    dayLabel: this.pageForm.locator('label[for="day"]'),
+    monthLabel: this.pageForm.locator('label[for="month"]'),
+    yearLabel: this.pageForm.locator('label[for="year"]'),
+  } as const satisfies Record<string, Locator>;
+
+  public async verifyUserIsOnPage(): Promise<void> {
+    await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-dates-avoid-enter', pageHeading: this.$static.pageHeading });
+  }
+
+  private async verifyAllTextOnPage(): Promise<void> {
+    const startOfDateRange = (await this.dataUtils.getDateFromToday({ dayOffset: 5 })).full;
+    const endOfDateRange = (await this.dataUtils.getDateFromToday({ dayOffset: 47 })).full;
+    await Promise.all([
+      expect(this.$static.onlyIncludeDatesWithinRangeText).toHaveText(`Only include dates from ${startOfDateRange} to ${endOfDateRange}.`),
+      expect(this.$static.onlyIncludeDatesWithinRangeText).toBeVisible(),
+
+      expect(this.$static.exampleDateHintText).toHaveText('For example, 12 11 2020'),
+      expect(this.$static.exampleDateHintText).toBeVisible(),
+
+      expect(this.$static.dayLabel).toHaveText('Day'),
+      expect(this.$static.dayLabel).toBeVisible(),
+
+      expect(this.$static.monthLabel).toHaveText('Month'),
+      expect(this.$static.monthLabel).toBeVisible(),
+
+      expect(this.$static.yearLabel).toHaveText('Year'),
+      expect(this.$static.yearLabel).toBeVisible(),
+    ]);
+  }
+
+  public async completePageAndContinue(dateToAvoid: { day: number; month: number; year: number; verifyAllTextOnPage?: boolean }): Promise<void> {
+    if (dateToAvoid.verifyAllTextOnPage) {
+      await this.verifyAllTextOnPage();
+    }
+
+    const day = dateToAvoid.day.toString();
+    const month = dateToAvoid.month.toString();
+    const year = dateToAvoid.year.toString();
+
+    await this.$inputs.day.fill(day);
+    await expect(this.$inputs.day).toHaveValue(day);
+
+    await this.$inputs.month.fill(month);
+    await expect(this.$inputs.month).toHaveValue(month);
+
+    await this.$inputs.year.fill(year);
+    await expect(this.$inputs.year).toHaveValue(year);
+    await this.navigationClick(this.$interactive.saveAndContinueButton);
+  }
+}

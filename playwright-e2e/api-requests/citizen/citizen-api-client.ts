@@ -119,33 +119,31 @@ export class CitizenApiClient {
     return applicantDetails;
   }
 
-  public async submitAppealReasonsFlowViaApi(appealReasonsFlowData: AppealReasonsFlowType): Promise<void> {
+  public async verifyAppealIsInExpectedStateViaAppealOverviewApi(options: { expectedTextToBeOnAppealOverview: string }): Promise<void> {
     await expect(async () => {
       await this.init();
       const appealOverviewResponse = await this.cui_appealOverviewApi.get();
 
-      expect(appealOverviewResponse, { message: 'Verify upon re-intialising user login, applicant is able to view next steps' }).toContain(
-        'Tell us why you think the Home Office decision to refuse your claim is wrong.',
-      );
+      expect(appealOverviewResponse, {
+        message: `Verify upon re-intialising user login, applicant is able to view next steps: ${options.expectedTextToBeOnAppealOverview}`,
+      }).toContain(options.expectedTextToBeOnAppealOverview);
     }).toPass({
       timeout: 30_000,
       intervals: [1_000],
+    });
+  }
+
+  public async completeAndSubmitAppealReasonsJourneyViaApi(appealReasonsFlowData: AppealReasonsFlowType): Promise<void> {
+    await this.verifyAppealIsInExpectedStateViaAppealOverviewApi({
+      expectedTextToBeOnAppealOverview: 'Tell us why you think the Home Office decision to refuse your claim is wrong.',
     });
 
     await this.cui_appealReasonsFlowApi.submitAppealReasonsFlowViaApi(appealReasonsFlowData);
   }
 
   public async submitHearingWitnessFlowViaApi(options: HearingRequestsFlowType): Promise<HearingWitnessFlowReturnType> {
-    await expect(async () => {
-      await this.init();
-      const appealOverviewResponse = await this.cui_appealOverviewApi.get();
-
-      expect(appealOverviewResponse, { message: 'Verify upon re-intialising user login, applicant is able to view next steps' }).toContain(
-        'Your appeal is going to hearing',
-      );
-    }).toPass({
-      timeout: 30_000,
-      intervals: [1_000],
+    await this.verifyAppealIsInExpectedStateViaAppealOverviewApi({
+      expectedTextToBeOnAppealOverview: 'Your appeal is going to hearing',
     });
 
     return this.cui_hearingWitnessUserFlowApi.submitHearingWitnessFlowViaApi(options);

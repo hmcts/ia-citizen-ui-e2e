@@ -27,7 +27,7 @@ export class AppealReasonsCheckAnswersPage extends CuiBase {
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(options: { urlPath: 'check-answer' | 'check-answer-more-time' }): Promise<void> {
-    await this.verifyUserIsOnExpectedPage({ urlPath: 'check-answer', pageHeading: this.$static.pageHeading });
+    await this.verifyUserIsOnExpectedPage({ urlPath: options.urlPath, pageHeading: this.$static.pageHeading });
   }
 
   public async submitAnswer(): Promise<void> {

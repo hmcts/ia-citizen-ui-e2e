@@ -50,6 +50,44 @@ import {
   SupportingEvidenceMoreTimePage,
   ProvideSupportingEvidenceMoreTimePage,
   RequestMoreTimeSentPage,
+  HearingNeedsPage,
+  HearingWitnessesPage,
+  HearingWitnessNamesPage,
+  HearingOutsideUKPage,
+  HearingAccessNeedsPage,
+  HearingInterpreterPage,
+  HearingInterpreterSupportAppellantWitnessesPage,
+  HearingInterpreterTypesPage,
+  HearingInterpreterSpokenLanguageSelectionPage,
+  HearingInterpreterSignLanguageSelectionPage,
+  HearingInterpreterTypesWitnessPage,
+  HearingInterpreterSpokenLanguageSelectionWitnessPage,
+  HearingInterpreterSignLanguageSelectionWitnessPage,
+  HearingStepFreeAccessPage,
+  HearingLoopPage,
+  HearingOtherNeedsPage,
+  HearingVideoAppointmentPage,
+  HearingVideoAppointmentReasonsPage,
+  HearingMultimediaEvidencePage,
+  HearingMultimediaEvidenceEquipmentPage,
+  HearingMultimediaEvidenceEquipmentReasonsPage,
+  HearingSingleSexPage,
+  HearingSingleSexTypePage,
+  HearingSingleSexTypeMalePage,
+  HearingSingleSexTypeFemalePage,
+  HearingPrivatePage,
+  HearingPrivateReasonPage,
+  HearingPhysicalMentalHealthPage,
+  HearingPhysicalMentalHealthReasonsPage,
+  HearingPastExperiencesPage,
+  HearingAnythingElseReasonsPage,
+  HearingAnythingElsePage,
+  HearingPastExperiencesReasonsPage,
+  HearingDatesAvoidPage,
+  HearingDatesAvoidEnterPage,
+  HearingDatesAvoidReasonsPage,
+  HearingCheckAnswersPage,
+  HearingSuccessPage,
 } from './pages/index';
 
 export class CuiPages {
@@ -104,6 +142,44 @@ export class CuiPages {
   public readonly supportingEvidenceMoreTimePage: SupportingEvidenceMoreTimePage;
   public readonly provideSupportingEvidenceMoreTimePage: ProvideSupportingEvidenceMoreTimePage;
   public readonly requestMoreTimeSentPage: RequestMoreTimeSentPage;
+  public readonly hearingNeedsPage: HearingNeedsPage;
+  public readonly hearingWitnessesPage: HearingWitnessesPage;
+  public readonly hearingWitnessNamesPage: HearingWitnessNamesPage;
+  public readonly hearingOutsideUKPage: HearingOutsideUKPage;
+  public readonly hearingAccessNeedsPage: HearingAccessNeedsPage;
+  public readonly hearingInterpreterPage: HearingInterpreterPage;
+  public readonly hearingInterpreterSupportAppellantWitnessesPage: HearingInterpreterSupportAppellantWitnessesPage;
+  public readonly hearingInterpreterTypesPage: HearingInterpreterTypesPage;
+  public readonly hearingInterpreterSpokenLanguageSelectionPage: HearingInterpreterSpokenLanguageSelectionPage;
+  public readonly hearingInterpreterSignLanguageSelectionPage: HearingInterpreterSignLanguageSelectionPage;
+  public readonly hearingInterpreterTypesWitnessPage: HearingInterpreterTypesWitnessPage;
+  public readonly hearingInterpreterSpokenLanguageSelectionWitnessPage: HearingInterpreterSpokenLanguageSelectionWitnessPage;
+  public readonly hearingInterpreterSignLanguageSelectionWitnessPage: HearingInterpreterSignLanguageSelectionWitnessPage;
+  public readonly hearingStepFreeAccessPage: HearingStepFreeAccessPage;
+  public readonly hearingLoopPage: HearingLoopPage;
+  public readonly hearingOtherNeedsPage: HearingOtherNeedsPage;
+  public readonly hearingVideoAppointmentPage: HearingVideoAppointmentPage;
+  public readonly hearingVideoAppointmentReasonsPage: HearingVideoAppointmentReasonsPage;
+  public readonly hearingMultimediaEvidencePage: HearingMultimediaEvidencePage;
+  public readonly hearingMultimediaEvidenceEquipmentPage: HearingMultimediaEvidenceEquipmentPage;
+  public readonly hearingMultimediaEvidenceEquipmentReasonsPage: HearingMultimediaEvidenceEquipmentReasonsPage;
+  public readonly hearingSingleSexPage: HearingSingleSexPage;
+  public readonly hearingSingleSexTypePage: HearingSingleSexTypePage;
+  public readonly hearingSingleSexTypeMalePage: HearingSingleSexTypeMalePage;
+  public readonly hearingSingleSexTypeFemalePage: HearingSingleSexTypeFemalePage;
+  public readonly hearingPrivatePage: HearingPrivatePage;
+  public readonly hearingPrivateReasonPage: HearingPrivateReasonPage;
+  public readonly hearingPhysicalMentalHealthPage: HearingPhysicalMentalHealthPage;
+  public readonly hearingPhysicalMentalHealthReasonsPage: HearingPhysicalMentalHealthReasonsPage;
+  public readonly hearingPastExperiencesPage: HearingPastExperiencesPage;
+  public readonly hearingAnythingElsePage: HearingAnythingElsePage;
+  public readonly hearingAnythingElseReasonsPage: HearingAnythingElseReasonsPage;
+  public readonly hearingPastExperiencesReasonsPage: HearingPastExperiencesReasonsPage;
+  public readonly hearingDatesAvoidPage: HearingDatesAvoidPage;
+  public readonly hearingDatesAvoidEnterPage: HearingDatesAvoidEnterPage;
+  public readonly hearingDatesAvoidReasonsPage: HearingDatesAvoidReasonsPage;
+  public readonly hearingCheckAnswersPage: HearingCheckAnswersPage;
+  public readonly hearingSuccessPage: HearingSuccessPage;
 
   constructor(page: Page) {
     this.page = page;
@@ -157,6 +233,44 @@ export class CuiPages {
     this.supportingEvidenceMoreTimePage = new SupportingEvidenceMoreTimePage(page);
     this.provideSupportingEvidenceMoreTimePage = new ProvideSupportingEvidenceMoreTimePage(page);
     this.requestMoreTimeSentPage = new RequestMoreTimeSentPage(page);
+    this.hearingNeedsPage = new HearingNeedsPage(page);
+    this.hearingWitnessesPage = new HearingWitnessesPage(page);
+    this.hearingWitnessNamesPage = new HearingWitnessNamesPage(page);
+    this.hearingOutsideUKPage = new HearingOutsideUKPage(page);
+    this.hearingAccessNeedsPage = new HearingAccessNeedsPage(page);
+    this.hearingInterpreterPage = new HearingInterpreterPage(page);
+    this.hearingInterpreterSupportAppellantWitnessesPage = new HearingInterpreterSupportAppellantWitnessesPage(page);
+    this.hearingInterpreterTypesPage = new HearingInterpreterTypesPage(page);
+    this.hearingInterpreterSpokenLanguageSelectionPage = new HearingInterpreterSpokenLanguageSelectionPage(page);
+    this.hearingInterpreterSignLanguageSelectionPage = new HearingInterpreterSignLanguageSelectionPage(page);
+    this.hearingInterpreterTypesWitnessPage = new HearingInterpreterTypesWitnessPage(page);
+    this.hearingInterpreterSpokenLanguageSelectionWitnessPage = new HearingInterpreterSpokenLanguageSelectionWitnessPage(page);
+    this.hearingInterpreterSignLanguageSelectionWitnessPage = new HearingInterpreterSignLanguageSelectionWitnessPage(page);
+    this.hearingStepFreeAccessPage = new HearingStepFreeAccessPage(page);
+    this.hearingLoopPage = new HearingLoopPage(page);
+    this.hearingOtherNeedsPage = new HearingOtherNeedsPage(page);
+    this.hearingVideoAppointmentPage = new HearingVideoAppointmentPage(page);
+    this.hearingVideoAppointmentReasonsPage = new HearingVideoAppointmentReasonsPage(page);
+    this.hearingMultimediaEvidencePage = new HearingMultimediaEvidencePage(page);
+    this.hearingMultimediaEvidenceEquipmentPage = new HearingMultimediaEvidenceEquipmentPage(page);
+    this.hearingMultimediaEvidenceEquipmentReasonsPage = new HearingMultimediaEvidenceEquipmentReasonsPage(page);
+    this.hearingSingleSexPage = new HearingSingleSexPage(page);
+    this.hearingSingleSexTypePage = new HearingSingleSexTypePage(page);
+    this.hearingSingleSexTypeMalePage = new HearingSingleSexTypeMalePage(page);
+    this.hearingSingleSexTypeFemalePage = new HearingSingleSexTypeFemalePage(page);
+    this.hearingPrivatePage = new HearingPrivatePage(page);
+    this.hearingPrivateReasonPage = new HearingPrivateReasonPage(page);
+    this.hearingPhysicalMentalHealthPage = new HearingPhysicalMentalHealthPage(page);
+    this.hearingPhysicalMentalHealthReasonsPage = new HearingPhysicalMentalHealthReasonsPage(page);
+    this.hearingPastExperiencesPage = new HearingPastExperiencesPage(page);
+    this.hearingAnythingElsePage = new HearingAnythingElsePage(page);
+    this.hearingAnythingElseReasonsPage = new HearingAnythingElseReasonsPage(page);
+    this.hearingPastExperiencesReasonsPage = new HearingPastExperiencesReasonsPage(page);
+    this.hearingDatesAvoidPage = new HearingDatesAvoidPage(page);
+    this.hearingDatesAvoidEnterPage = new HearingDatesAvoidEnterPage(page);
+    this.hearingDatesAvoidReasonsPage = new HearingDatesAvoidReasonsPage(page);
+    this.hearingCheckAnswersPage = new HearingCheckAnswersPage(page);
+    this.hearingSuccessPage = new HearingSuccessPage(page);
   }
 
   /**
