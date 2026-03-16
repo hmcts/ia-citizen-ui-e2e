@@ -2,7 +2,6 @@ import { test, expect } from '../../../fixtures.js';
 
 test.describe('Set of tests to verify user is able to submit answers to hearing requirements via UI', () => {
   test.beforeEach(async ({ citizenUser, cui_login, cui_apiClient, exui_caseOfficerApiClient, exui_homeOfficeUserApiClient }) => {
-    console.log('Citizen user email:', citizenUser.email);
     const detailsOfNewAppeal = await test.step('Submit a new appeal via Api', async () => {
       const appealDetails = await cui_apiClient.completeAndSubmitAppealJourneyViaApi({
         appealType: 'European Economic Area',
@@ -21,7 +20,6 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
 
     await test.step('Progress journey via citizen and exui api calls in order to allow appellant to submit their hearing requirements', async () => {
       const caseId = await exui_caseOfficerApiClient.fetchCaseId({ homeOfficeReferenceNumber: detailsOfNewAppeal.homeOfficeReference.toString() });
-      console.log('Fetched Case ID:', caseId);
 
       await exui_caseOfficerApiClient.submitRequestRespondentEvidenceEvent({ caseId: caseId });
 
