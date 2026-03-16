@@ -31,6 +31,12 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
       await exui_caseOfficerApiClient.submitRequestReasonsForAppealEvent({ caseId: caseId });
     });
 
+    await test.step('Verify application is in the correct state to submit response to appeal reasons before logging in', async () => {
+      await cui_apiClient.verifyAppealIsInExpectedStateViaAppealOverviewApi({
+        expectedTextToBeOnAppealOverview: 'Tell us why you think the Home Office decision to refuse your claim is wrong.',
+      });
+    });
+
     await test.step('Navigate to citizen UI and login', async () => {
       await cui_login({ email: citizenUser.email, password: citizenUser.password });
     });
