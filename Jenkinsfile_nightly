@@ -1,0 +1,80 @@
+#!groovy
+
+properties([
+  pipelineTriggers([cron('H 07 * * 1-5')]),
+  parameters([
+    choice(
+      name: 'ENVIRONMENT',
+      choices: ['aat', 'preview'],
+      description: 'Environment to run the test.'
+    )]) 
+])
+
+@Library("Infrastructure")
+
+def type = "nodejs"
+def product = "IA"
+def component = "Citizen-Frontend"
+
+def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
+
+static Map secret(String secretName, String envVariable) {
+  [$class     : 'AzureKeyVaultSecret',
+   secretType : 'Secret',
+   name       : secretName,
+   envVariable: envVariable
+  ]
+}
+def secrets = [
+]
+
+
+withNightlyPipeline(type, product, component) {
+  loadVaultSecrets(secrets)
+  handleEnvironmentSetting(yarnBuilder)
+  runE2ETests(yarnBuilder)
+}
+
+def handleEnvironmentSetting() {
+  yarnBuilder.yarn('load-secrets-aat')
+}
+
+def runE2ETests(yarnBuilder) {
+  def e2eMatrix = [
+    [flag: 'CHROME_TESTS', project: 'chrome', browser: 'Chrome', label: 'Desktop Chrome'],
+    [flag: 'FIREFOX_TESTS', project: 'firefox', browser: 'Firefox', label: 'Desktop Firefox'],
+    [flag: 'WEBKIT_TESTS', project: 'webkit', browser: 'Safari', label: 'Desktop Safari (WebKit)'],
+    [flag: 'EDGE_TESTS', project: 'edge', browser: 'Edge', label: 'Desktop Edge'],
+  ]
+  e2eMatrix.each { row ->
+    if (params[row.flag]) {
+      runE2eStage(yarnBuilder, row.project, row.browser, row.label)
+    }
+  }
+}
+
+def runE2eStage(yarnBuilder, String playwrightProject, String browser, String stageLabel) {
+  stage("E2E - ${stageLabel}") {
+    node {
+      checkout scm
+      sh 'rm -rf allure-results allure-report'
+      catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
+        withEnv(["PLAYWRIGHT_PROJECT=${playwrightProject}"]) {
+          yarnBuilder.yarn('test:e2e')
+        }
+      }
+      publishHTML([
+        allowMissing: true,
+        alwaysLinkToLastBuild: true,
+        keepAll: true,
+        reportDir: "allure-report",
+        reportFiles: 'index.html',
+        reportName: "Full ${browser} E2E Test Report"
+      ])
+      steps.archiveArtifacts(
+        allowEmptyArchive: true,
+        artifacts: 'definitions/test/playwright-report/**'
+      )    
+    }
+  }
+}
