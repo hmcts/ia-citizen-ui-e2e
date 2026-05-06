@@ -36,6 +36,7 @@ withNightlyPipeline(type, product, component) {
 }
 
 def handleEnvironmentSetting() {
+  yarnBuilder.yarn('setup')  
   yarnBuilder.yarn('load-secrets-aat')
 }
 
@@ -57,24 +58,11 @@ def runE2eStage(yarnBuilder, String playwrightProject, String browser, String st
   stage("E2E - ${stageLabel}") {
     node {
       checkout scm
-      sh 'rm -rf allure-results allure-report'
       catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
         withEnv(["PLAYWRIGHT_PROJECT=${playwrightProject}"]) {
           yarnBuilder.yarn('test:e2e')
         }
       }
-      publishHTML([
-        allowMissing: true,
-        alwaysLinkToLastBuild: true,
-        keepAll: true,
-        reportDir: "allure-report",
-        reportFiles: 'index.html',
-        reportName: "Full ${browser} E2E Test Report"
-      ])
-      steps.archiveArtifacts(
-        allowEmptyArchive: true,
-        artifacts: 'definitions/test/playwright-report/**'
-      )    
     }
   }
 }
