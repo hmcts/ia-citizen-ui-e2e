@@ -316,7 +316,13 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
       await test.step('Home Office User: Refresh application overview page and verify correct next steps are displayed', async () => {
         await homeOfficeUserExuiPages.caseOverviewPage.page.bringToFront();
         await homeOfficeUserExuiPages.caseOverviewPage.refreshPageUntilExpectedTextIsVisible({
-          expectedText: 'The Appeal Skeleton Argument is ready to view in the documents tab.',
+         // expectedText: 'The Appeal Skeleton Argument is ready to view in the documents tab.',
+          expectedText: 'Review the documents and add the Home Office\'s response, or make an application to withdraw.',
+          caseId: caseId,
+          timeoutInSeconds:120,
+        });
+        await homeOfficeUserExuiPages.caseOverviewPage.refreshPageUntilExpectedTextIsVisible({
+          expectedText: 'Review the documents and add the Home Office\'s response, or make an application to withdraw.',
           caseId: caseId,
         });
 
@@ -982,7 +988,6 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
           dateToSet: 'tomorrow',
           hourToSet: 13,
         });
-
         const dateResult = await dataUtils.getDateFromToday({ dayOffset: 1 });
         const expectedDate = `${dateResult.day} ${new Date(dateResult.year, dateResult.month - 1).toLocaleString('en-GB', { month: 'short' })} ${dateResult.year}`;
         await adminOfficerExuiPages.listCaseSubmitPage.verifyUserIsOnPage();

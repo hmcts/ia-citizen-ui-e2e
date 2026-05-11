@@ -45,7 +45,8 @@
     "start-container": "docker compose run --rm playwright",
     "test:visual": "yarn playwright test tests/ --grep @visual --project=chromium",
     "test:update-snapshots": "yarn playwright test tests/ --grep @visual --project=chromium --update-snapshots",
-    "test:e2e": "yarn setup && yarn setup:edge && yarn playwright test --project \"${PLAYWRIGHT_PROJECT:-chrome}\"; EXIT_CODE=$?; exit $EXIT_CODE"
+    "test:e2e": "yarn playwright test --project \"${PLAYWRIGHT_PROJECT:-chrome}\" --grep-invert='(@a11y)|(@performance)|(@visual)'; EXIT_CODE=$?; exit $EXIT_CODE"
+
   },
   "packageManager": "yarn@4.9.4",
   "dependencies": {

@@ -2,18 +2,39 @@
 
 properties([
   pipelineTriggers([cron('H 07 * * 1-5')]),
+  disableConcurrentBuilds(),
   parameters([
     choice(
       name: 'ENVIRONMENT',
       choices: ['aat', 'preview'],
       description: 'Environment to run the test.'
+    ),
+    booleanParam(
+      name: 'CHROME',
+      defaultValue: true,
+      description: 'Run E2E tests in Chrome (on by default).'
+    ),
+     booleanParam(
+      name: 'FIREFOX_TESTS',
+      defaultValue: false,
+      description: 'Run E2E tests in Firefox.'
+    ),
+     booleanParam(
+      name: 'WEBKIT_TESTS',
+      defaultValue: false,
+      description: 'Run E2E tests in Safari (WebKit).'
+    ),
+     booleanParam(
+      name: 'EDGE_TESTS',
+      defaultValue: false,
+      description: 'Run E2E tests in Edge.'
     )]) 
 ])
 
 @Library("Infrastructure")
 
 def type = "nodejs"
-def product = "IA"
+def product = "ia"
 def component = "Citizen-Frontend"
 
 def yarnBuilder = new uk.gov.hmcts.contino.YarnBuilder(this)
@@ -26,43 +47,78 @@ static Map secret(String secretName, String envVariable) {
   ]
 }
 def secrets = [
+        "ia-${params.ENVIRONMENT}": [
+                secret('github-branch-secret', 'GITHUB_TOKEN'),
+                secret('idam-client-id', 'IDAM_CLIENT_ID'),
+                secret('idam-secret', 'IDAM_SECRET'),
+                secret('test-caseofficer-username', 'CASE_OFFICER_USERNAME'),
+                secret('test-caseofficer-password', 'CASE_OFFICER_PASSWORD'),
+                secret('test-law-firm-a-username', 'LAW_FIRM_A_USERNAME'),
+                secret('test-law-firm-a-password', 'LAW_FIRM_A_PASSWORD'),
+                secret('test-law-firm-b-username', 'LAW_FIRM_B_USERNAME'),
+                secret('test-law-firm-b-password', 'LAW_FIRM_B_PASSWORD'),
+                secret('test-law-firm-c-username', 'TEST_LAW_FIRM_C_USERNAME'),
+                secret('test-law-firm-c-password', 'TEST_LAW_FIRM_C_PASSWORD'),
+                secret('test-adminofficer-username', 'ADMIN_OFFICER_USERNAME'),
+                secret('test-adminofficer-password', 'ADMIN_OFFICER_PASSWORD'),
+                secret('test-homeoffice-bail-username', 'HOME_OFFICE_USERNAME'),
+                secret('test-homeoffice-bail-password', 'HOME_OFFICE_PASSWORD'),
+                secret('test-judge-x-username', 'JUDGE_USERNAME'),
+                secret('test-judge-x-password', 'JUDGE_PASSWORD'),
+                secret('idam-citizen-user-password', 'IDAM_CITIZEN_USER_PASSWORD')
+        ]
 ]
 
 
 withNightlyPipeline(type, product, component) {
   loadVaultSecrets(secrets)
-  handleEnvironmentSetting(yarnBuilder)
-  runE2ETests(yarnBuilder)
+  environmentSetup(yarnBuilder)
+
+  afterAlways('DependencyCheckNightly') {
+    stage('Set up playwright') {
+      try { yarnBuilder.yarn('setup') }
+      catch (Error) { unstable("${STAGE_NAME} is unstable: ${Error}") }
+    }
+    runFunctionalTest(yarnBuilder)
+  }
 }
 
-def handleEnvironmentSetting() {
-  yarnBuilder.yarn('setup')  
-  yarnBuilder.yarn('load-secrets-aat')
+def environmentSetup(yarnBuilder) {
+  env.TEST_ENVIRONMENT = params.ENVIRONMENT
+  env.IDAM_WEB_URL = "https://idam-web-public.${env.TEST_ENVIRONMENT}.platform.hmcts.net/"
+  env.IDAM_TESTING_SUPPORT_URL = "https://idam-testing-support-api.${env.TEST_ENVIRONMENT}.platform.hmcts.net"
+  env.CITIZEN_FRONTEND_BASE_URL = "https://immigration-appeal.${env.TEST_ENVIRONMENT}.platform.hmcts.net/"
+  env.S2S_URL = "http://rpe-service-auth-provider-${env.TEST_ENVIRONMENT}.service.core-compute-aat.internal/lease"
 }
 
-def runE2ETests(yarnBuilder) {
+def runFunctionalTest(yarnBuilder) {
   def e2eMatrix = [
-    [flag: 'CHROME_TESTS', project: 'chrome', browser: 'Chrome', label: 'Desktop Chrome'],
+    [flag: 'CHROME', project: 'chrome', browser: 'Chrome', label: 'Desktop Chrome'],
     [flag: 'FIREFOX_TESTS', project: 'firefox', browser: 'Firefox', label: 'Desktop Firefox'],
     [flag: 'WEBKIT_TESTS', project: 'webkit', browser: 'Safari', label: 'Desktop Safari (WebKit)'],
     [flag: 'EDGE_TESTS', project: 'edge', browser: 'Edge', label: 'Desktop Edge'],
   ]
   e2eMatrix.each { row ->
     if (params[row.flag]) {
-      runE2eStage(yarnBuilder, row.project, row.browser, row.label)
+      runFunctionalStage(yarnBuilder, row.project, row.browser, row.label)
     }
   }
 }
 
-def runE2eStage(yarnBuilder, String playwrightProject, String browser, String stageLabel) {
+def runFunctionalStage(yarnBuilder, String playwrightProject, String browser, String stageLabel) {
   stage("E2E - ${stageLabel}") {
-    node {
-      checkout scm
       catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
         withEnv(["PLAYWRIGHT_PROJECT=${playwrightProject}"]) {
           yarnBuilder.yarn('test:e2e')
         }
       }
+      publishHTML([
+          allowMissing: false,
+          alwaysLinkToLastBuild: true,
+          keepAll: true,
+          reportDir: 'playwright-report',
+          reportFiles: 'index.html',
+          reportName: 'Test Report'
+        ])
     }
-  }
 }

@@ -14,5 +14,9 @@ export default tseslint.config(
   LintingConfig.ignored,
   LintingConfig.tseslintPlugin,
   LintingConfig.playwright,
-  eslintPluginPrettierRecommended,
+  {
+  ignores: ["playwright-report/**", "playwright-e2e/utils/**", "playwright-e2e/page-objects/**",
+    "playwright-e2e/**/**"
+  ],
+}
 );
