@@ -115,8 +115,6 @@ export class YourDetailsUserFlowApi {
         case 'European Economic Area':
           await this.cui_outOfCountryHrEeaApi.submitForm({ outsideUkWhenApplicationMade: 'No' });
           break;
-        default:
-          throw new Error(`Option not supported for appeal type: ${appealData.appealType}`);
       }
     }
 

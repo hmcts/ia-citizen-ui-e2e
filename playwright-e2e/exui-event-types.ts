@@ -1,6 +1,9 @@
 import { YesOrNoType } from './citizen-types';
 
 export type RemissionDecisionType = 'approved' | 'partiallyApproved' | 'rejected';
+export type HomeOfficeAppealReviewOutcomeType = 'Decision maintained' | 'Decision withdrawn';
+export type GrantedOrRefusedType = 'Granted' | 'Refused';
+export type HearingChannelType = 'In Person' | 'Not in Attendance' | 'On the Papers' | 'Telephone' | 'Video';
 
 export type RemissionDecisionEventType = {
   caseId: string;
@@ -32,7 +35,7 @@ export type UploadHomeOfficeBundleEventType = {
 
 export type UploadHomeOfficeAppealResponseEventType = {
   caseId: string;
-  appealReviewOutcome: 'Decision maintained' | 'Decision withdrawn';
+  appealReviewOutcome: HomeOfficeAppealReviewOutcomeType;
   nameOfFileToUpload?: string;
   homeOfficeAppealResponseDescription?: string;
 };
@@ -56,8 +59,8 @@ export type SendDirectionEventType = {
 
 export type ReviewHearingRequirementsEventType = {
   caseId: string;
-  isRemoteHearingAllowed: 'Granted' | 'Refused';
-  grantOrRefuseAnyAdjustmentsRequested: 'Granted' | 'Refused';
+  isRemoteHearingAllowed: GrantedOrRefusedType;
+  grantOrRefuseAnyAdjustmentsRequested: GrantedOrRefusedType;
 };
 
 export type RequestAHearingEventType = {

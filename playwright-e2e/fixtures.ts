@@ -1,4 +1,4 @@
-import { test as baseTest } from '@playwright/test';
+import { test as baseTest, expect as baseExpect } from '@playwright/test';
 import getPort from 'get-port';
 import { PageFixtures, pageFixtures } from './page-objects/page.fixtures';
 import { UtilsFixtures, utilsFixtures } from './utils';
@@ -24,5 +24,33 @@ export const test = baseTest.extend<CustomFixtures, { lighthousePort: number }>(
   ],
 });
 
-// If you were extending assertions, you would also import the "expect" property from this file
-export const expect = test.expect;
+const customExpect = baseExpect.extend({
+  async toFail(assertion, options: { bugId: string }) {
+    let failed = false;
+
+    try {
+      await assertion();
+    } catch {
+      failed = true;
+    }
+
+    if (failed) {
+      test.info().annotations.push({
+        type: 'bug',
+        description: options.bugId,
+      });
+
+      return {
+        pass: true,
+        message: () => `Expected failure occurred (bug: ${options.bugId})`,
+      };
+    } else {
+      return {
+        pass: false,
+        message: () => `Expected assertion to fail, but it passed (bug: ${options.bugId})`,
+      };
+    }
+  },
+});
+
+export const expect = customExpect;
