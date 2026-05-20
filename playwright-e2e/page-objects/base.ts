@@ -6,6 +6,7 @@ export abstract class Base {
   constructor(public readonly page: Page) {}
 
   public async navigationClick(elementToClickOn: Locator): Promise<void> {
+    const URLBeforeClick = this.page.url();
     await expect(elementToClickOn).toBeVisible();
     await expect(elementToClickOn).toBeEnabled();
 
@@ -13,7 +14,10 @@ export abstract class Base {
       if ((await elementToClickOn.isVisible()) && (await elementToClickOn.isEnabled())) {
         await elementToClickOn.click();
       }
-      await expect(elementToClickOn, { message: `Verify element is now hidden: ${elementToClickOn}` }).toBeHidden({ timeout: 5_000 });
+
+      await expect(this.page, {
+        message: `Verify URL (${URLBeforeClick}) has changed after clicking element (${elementToClickOn})`,
+      }).not.toHaveURL(URLBeforeClick, { timeout: 5_000 });
     }).toPass({ intervals: [1_000], timeout: 30_000 });
   }
 
