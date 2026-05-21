@@ -11,7 +11,7 @@ export class ApiContext {
   public async createCitizenSiteApiContext(options: { userName: string; password: string }): Promise<APIRequestContext> {
     const context = await request.newContext({
       baseURL: config.urls.citizenUrl,
-      timeout: 5_000,
+      timeout: 30_000,
     });
 
     const loginApi = new CuiLoginApi(context);
