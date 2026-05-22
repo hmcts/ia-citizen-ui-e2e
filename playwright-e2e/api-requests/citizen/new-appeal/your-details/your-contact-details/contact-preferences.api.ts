@@ -15,10 +15,10 @@ export class ContactPreferencesApi {
   }): Promise<void> {
     const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'contact-preferences' });
 
-    const form: Record<string, string> = {
-      _csrf: csrfToken,
-      saveAndContinue: '',
-    };
+    const form = new FormData();
+
+    form.append('_csrf', csrfToken);
+    form.append('saveAndContinue', '');
 
     switch (options.contactPreference) {
       case 'Email':
@@ -26,26 +26,30 @@ export class ContactPreferencesApi {
           throw new Error('applicantEmail is required when contactPreference is Email');
         }
 
-        form.selections = 'email';
-        form['email-value'] = options.applicantEmail;
+        form.append('selections', 'email');
+        form.append('email-value', options.applicantEmail);
         break;
+
       case 'Phone':
         if (!options.applicantPhoneNumber) {
           throw new Error('applicationPhoneNumber is required when contactPreference is Phone');
         }
 
-        form.selections = 'text-message';
-        form['text-message-value'] = options.applicantPhoneNumber;
+        form.append('selections', 'text-message');
+        form.append('text-message-value', options.applicantPhoneNumber);
         break;
+
       case 'Email and Phone':
         if (!options.applicantEmail || !options.applicantPhoneNumber) {
           throw new Error('Both applicantEmail and applicationPhoneNumber are required when contactPreference is Email and Phone');
         }
 
-        (form as any).selections = ['email', 'text-message'];
-        form['email-value'] = options.applicantEmail;
-        form['text-message-value'] = options.applicantPhoneNumber;
+        form.append('selections', 'email');
+        form.append('selections', 'text-message');
+        form.append('email-value', options.applicantEmail);
+        form.append('text-message-value', options.applicantPhoneNumber);
         break;
+
       default:
         throw new Error(`Invalid contact preference: ${options.contactPreference}`);
     }

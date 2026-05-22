@@ -21,7 +21,7 @@ export class GenerateHearingBundleApi {
       }
     }
 
-    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, any>, key) => {
+    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string>, key) => {
       acc[key] = triggerResponse.rawCaseData[key];
       return acc;
     }, {});

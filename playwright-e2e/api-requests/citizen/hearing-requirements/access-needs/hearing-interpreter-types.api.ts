@@ -16,29 +16,33 @@ export class HearingInterpreterTypesApi {
       params: options.applicantOrWitness === 'Witness' ? { selectedWitnesses: '0' } : undefined,
     });
 
-    const form: Record<string, string> = {
-      _csrf: csrfToken,
-      saveAndContinue: '',
-    };
+    const form = new FormData();
+
+    form.append('_csrf', csrfToken);
+    form.append('saveAndContinue', '');
 
     switch (options.typeOfInterpretor) {
       case 'Spoken language interpreter':
-        form.selections = 'spokenLanguageInterpreter';
+        form.append('selections', 'spokenLanguageInterpreter');
         break;
+
       case 'Sign language interpreter':
-        form.selections = 'signLanguageInterpreter';
+        form.append('selections', 'signLanguageInterpreter');
         break;
+
       case 'Spoken and sign language interpretor':
-        (form as any).selections = ['spokenLanguageInterpreter', 'signLanguageInterpreter'];
+        form.append('selections', 'spokenLanguageInterpreter');
+        form.append('selections', 'signLanguageInterpreter');
         break;
+
       default:
         throw new Error(`Invalid type of interpretor: ${options.typeOfInterpretor}`);
     }
 
     if (options.applicantOrWitness === 'Witness') {
-      form.selectedWitnessesList = '0';
+      form.append('selectedWitnessesList', '0');
     } else {
-      form.selectedWitnessesList = '';
+      form.append('selectedWitnessesList', '');
     }
 
     await cui_postForm({

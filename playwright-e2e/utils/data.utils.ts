@@ -1,7 +1,5 @@
 import { faker } from '@faker-js/faker';
-import fs from 'fs';
 import path from 'path';
-import mime from 'mime-types';
 
 export class DataUtils {
   /**

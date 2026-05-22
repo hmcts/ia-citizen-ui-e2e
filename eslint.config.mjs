@@ -1,5 +1,6 @@
 import { LintingConfig } from '@hmcts/playwright-common';
 import tseslint from 'typescript-eslint';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
 
 // If path to tests is different, directly overwride the path:
 // const tsConfig = LintingConfig.tseslintPlugin;
@@ -13,11 +14,5 @@ export default tseslint.config(
   LintingConfig.ignored,
   LintingConfig.tseslintPlugin,
   LintingConfig.playwright,
-  {
-    plugins: ['prettier'],
-    extends: ['plugin:prettier/recommended'],
-    rules: {
-      'prettier/prettier': 'error',
-    },
-  },
+  eslintPluginPrettierRecommended,
 );

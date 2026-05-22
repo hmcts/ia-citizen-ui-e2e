@@ -16,7 +16,7 @@ export class ReviewHearingRequirementsMultimediaEvidencePage extends ExuiBase {
 
   private $questionLocator = (questionKey: keyof typeof this.listOfQuestions): Locator => {
     const question = this.listOfQuestions[questionKey];
-    return this.page.getByText(question, { exact: !((question as any) instanceof RegExp) });
+    return this.page.getByText(question, { exact: !((question as string | RegExp) instanceof RegExp) });
   };
 
   private $questionValueLocator(questionKey: keyof typeof this.listOfQuestions): Locator {
@@ -83,14 +83,16 @@ export class ReviewHearingRequirementsMultimediaEvidencePage extends ExuiBase {
       throw new Error('detailOfRequest must be provided if doYouHaveMultimediaEvidence is Yes');
     } else if (options.doYouHaveMultimediaEvidence === 'Yes' && options.detailOfRequest) {
       assertionsToRun.push(
+        /* eslint-disable playwright/missing-playwright-await */
         expect(this.$questionLocator('explainWhyUnableToProvideEquipmentToPlayEvidence')).toBeVisible(),
         expect(this.$questionValueLocator('explainWhyUnableToProvideEquipmentToPlayEvidence')).toBeVisible(),
         expect(this.$questionValueLocator('explainWhyUnableToProvideEquipmentToPlayEvidence')).toHaveText(options.detailOfRequest),
+        /* eslint-disable playwright/missing-playwright-await */
       );
     } else {
       assertionsToRun.push(
-        expect(this.$questionLocator('explainWhyUnableToProvideEquipmentToPlayEvidence')).not.toBeVisible(),
-        expect(this.$questionValueLocator('explainWhyUnableToProvideEquipmentToPlayEvidence')).not.toBeVisible(),
+        expect(this.$questionLocator('explainWhyUnableToProvideEquipmentToPlayEvidence')).toBeHidden(),
+        expect(this.$questionValueLocator('explainWhyUnableToProvideEquipmentToPlayEvidence')).toBeHidden(),
       );
     }
 

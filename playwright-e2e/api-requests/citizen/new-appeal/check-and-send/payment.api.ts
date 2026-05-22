@@ -1,4 +1,4 @@
-import { APIRequestContext, expect, Page } from '@playwright/test';
+import { APIRequestContext, expect } from '@playwright/test';
 import { cui_postForm } from '../../../../utils/api-requests-utils';
 import { DataUtils } from '../../../../utils';
 

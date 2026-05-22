@@ -44,7 +44,7 @@ export class DecisionAndReasonsStartedApi {
       }
     }
 
-    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, any>, key) => {
+    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string>, key) => {
       if (key === 'caseIntroductionDescription' && options.caseIntro) acc[key] = options.caseIntro;
       else if (key === 'appellantCaseSummaryDescription' && options.caseSummary) acc[key] = options.caseSummary;
       else if (key === 'immigrationHistoryAgreement') acc[key] = options.doYouAgreeWithImmigrationHistory;

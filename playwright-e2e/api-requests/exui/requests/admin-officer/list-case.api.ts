@@ -31,7 +31,7 @@ export class ListCaseApi {
       }
     }
 
-    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, any>, key) => {
+    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string>, key) => {
       if (key === 'ariaListingReference') acc[key] = options.hearingId;
       else if (key === 'isRemoteHearing') acc[key] = options.isRemoteHearing;
       else if (key === 'listCaseHearingDate') {

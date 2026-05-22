@@ -94,6 +94,7 @@ export class HearingFacilitiesPage extends ExuiBase {
     const tableRowLocator = tableLocator.locator(`tr:has(:text-is("${options.requirementRequested}"))`);
 
     await Promise.all([
+      /* eslint-disable playwright/missing-playwright-await */
       expect(tableRowLocator.locator('td').nth(0)).toBeVisible(),
       expect(tableRowLocator.locator('td').nth(0)).toHaveText(options.requirementRequested),
       ...(options.comments

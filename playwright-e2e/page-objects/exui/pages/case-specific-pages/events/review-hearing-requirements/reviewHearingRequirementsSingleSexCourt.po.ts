@@ -17,7 +17,7 @@ export class ReviewHearingRequirementsSingleSexCourtPage extends ExuiBase {
 
   private $questionLocator = (questionKey: keyof typeof this.listOfQuestions): Locator => {
     const question = this.listOfQuestions[questionKey];
-    return this.page.getByText(question, { exact: !((question as any) instanceof RegExp) });
+    return this.page.getByText(question, { exact: !((question as string | RegExp) instanceof RegExp) });
   };
 
   private $questionValueLocator(questionKey: keyof typeof this.listOfQuestions): Locator {
@@ -88,6 +88,7 @@ export class ReviewHearingRequirementsSingleSexCourtPage extends ExuiBase {
       throw new Error('typeOfCourt and detailOfRequest must be provided if doesAppellantNeedSingleSexCourt is Yes');
     } else if (options.doesAppellantNeedSingleSexCourt === 'Yes' && options.typeOfCourt && options.detailOfRequest) {
       assertionsToRun.push(
+        /* eslint-disable playwright/missing-playwright-await */
         expect(this.$questionLocator('whatTypeOfCourtNeeded')).toBeVisible(),
         expect(this.$questionValueLocator('whatTypeOfCourtNeeded')).toBeVisible(),
         expect(this.$questionValueLocator('whatTypeOfCourtNeeded')).toHaveText(options.typeOfCourt),
@@ -95,14 +96,15 @@ export class ReviewHearingRequirementsSingleSexCourtPage extends ExuiBase {
         expect(this.$questionLocator('explainWhySingleSexCourtNeeded')).toBeVisible(),
         expect(this.$questionValueLocator('explainWhySingleSexCourtNeeded')).toBeVisible(),
         expect(this.$questionValueLocator('explainWhySingleSexCourtNeeded')).toHaveText(options.detailOfRequest),
+        /* eslint-disable playwright/missing-playwright-await */
       );
     } else {
       assertionsToRun.push(
-        expect(this.$questionLocator('whatTypeOfCourtNeeded')).not.toBeVisible(),
-        expect(this.$questionValueLocator('whatTypeOfCourtNeeded')).not.toBeVisible(),
+        expect(this.$questionLocator('whatTypeOfCourtNeeded')).toBeHidden(),
+        expect(this.$questionValueLocator('whatTypeOfCourtNeeded')).toBeHidden(),
 
-        expect(this.$questionLocator('explainWhySingleSexCourtNeeded')).not.toBeVisible(),
-        expect(this.$questionValueLocator('explainWhySingleSexCourtNeeded')).not.toBeVisible(),
+        expect(this.$questionLocator('explainWhySingleSexCourtNeeded')).toBeHidden(),
+        expect(this.$questionValueLocator('explainWhySingleSexCourtNeeded')).toBeHidden(),
       );
     }
 

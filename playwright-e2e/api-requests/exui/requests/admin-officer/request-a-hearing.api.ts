@@ -44,6 +44,7 @@ export class RequestAHearingApi {
 
       const selectedChannelCode = channelMap[options.hearingChannel];
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const mappedParties = template.parties.map((party: any) => {
         if (party.partyType === 'IND') {
           const d = party.individualDetails || {};

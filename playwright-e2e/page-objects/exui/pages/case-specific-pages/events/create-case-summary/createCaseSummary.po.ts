@@ -77,7 +77,9 @@ export class CreateCaseSummaryPage extends ExuiBase {
 
     await expect(uploadingText).not.toBeVisible({ timeout: 10_000 });
     await expect(this.$interactive.chooseAFileButton).toHaveValue(new RegExp(`${fileToUpload.replace('.', '\\.')}$`));
-    options.description ? await this.$inputs.documentDescriptionTextArea.fill(options.description) : null;
+    if (options.description) {
+      await this.$inputs.documentDescriptionTextArea.fill(options.description);
+    }
     await expect(this.$inputs.documentDescriptionTextArea).toHaveValue(options.description ? options.description : '');
 
     await this.navigationClick(this.$interactive.continueButton);

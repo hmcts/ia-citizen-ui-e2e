@@ -52,10 +52,12 @@ export class StartDecisionAndReasonsPage extends ExuiBase {
   public async completePageAndContinue(options?: { caseIntroduction: string }): Promise<void> {
     await this.verifyAllTextOnPage();
 
-    options?.caseIntroduction ? await this.$inputs.caseDescriptionTextarea.fill(options.caseIntroduction) : null;
-    options?.caseIntroduction
-      ? await expect(this.$inputs.caseDescriptionTextarea).toHaveValue(options.caseIntroduction)
-      : await expect(this.$inputs.caseDescriptionTextarea).toBeEmpty();
+    if (options?.caseIntroduction) {
+      await this.$inputs.caseDescriptionTextarea.fill(options.caseIntroduction);
+      await expect(this.$inputs.caseDescriptionTextarea).toHaveValue(options.caseIntroduction);
+    } else {
+      await expect(this.$inputs.caseDescriptionTextarea).toBeEmpty();
+    }
 
     await this.navigationClick(this.$interactive.continueButton);
   }

@@ -49,7 +49,7 @@ export class ReviewHearingRequirementsPage extends ExuiBase {
   public $questionLocator = (questionKey: keyof typeof this.listOfQuestions): Locator => {
     const question = this.listOfQuestions[questionKey];
     return this.page
-      .getByText(question, { exact: !((question as any) instanceof RegExp) })
+      .getByText(question, { exact: !((question as string | RegExp) instanceof RegExp) })
       .filter({ hasNot: this.page.locator('xpath=ancestor::div[@hidden]') });
   };
 

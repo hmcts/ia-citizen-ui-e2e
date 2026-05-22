@@ -54,11 +54,11 @@ export class RemissionDecisionApi {
       }
     }
 
-    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, any>, key) => {
+    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string>, key) => {
       if (key === 'remissionDecision') acc[key] = options.decision;
       else if (key === 'amountRemitted') acc[key] = this.formatMoney(options.amountRemitted!);
       else if (key === 'amountLeftToPay') acc[key] = this.formatMoney(options.amountLeftToPay!);
-      else if (key === 'remissionDecisionReason') acc[key] = options.reason;
+      else if (key === 'remissionDecisionReason' && options.reason) acc[key] = options.reason;
       else acc[key] = triggerResponse.rawCaseData[key];
 
       return acc;

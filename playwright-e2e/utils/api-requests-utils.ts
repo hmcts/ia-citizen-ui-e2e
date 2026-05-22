@@ -1,6 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { expect, APIRequestContext } from '@playwright/test';
 import { DataUtils } from './data.utils';
-import { ApiContext } from '../api-requests/api-context';
 import fs from 'fs';
 import mime from 'mime-types';
 
@@ -28,13 +28,19 @@ export async function cui_getCsrfToken(options: { apiContext: APIRequestContext;
   return csrfToken!;
 }
 
-export async function cui_postForm(options: { apiContext: APIRequestContext; path: string; form: Record<string, string> }): Promise<void> {
+export async function cui_postForm(options: {
+  apiContext: APIRequestContext;
+  path: string;
+  form: { [key: string]: string | number | boolean } | FormData;
+}): Promise<void> {
   await expect(async () => {
     const response = await options.apiContext.post(options.path, {
       form: options.form,
     });
 
-    await expect(response, { message: `Verify response is okay from ${options.path}` }).toBeOK();
+    await expect(response, {
+      message: `Verify response is okay from ${options.path}`,
+    }).toBeOK();
   }).toPass({
     timeout: 20_000,
     intervals: [1_000],
@@ -120,12 +126,10 @@ export async function exui_uploadDocument(options: {
   fileName: string;
   eventName: string;
 }): Promise<{ documentBinaryUrl: string; documentFilename: string; documentHash: string; documentUrl: string }> {
-  const apiRequestContext = new ApiContext();
-
   const filePath = await dataUtils.fetchDocumentUploadPath(options.fileName);
   const fileBuffer = fs.readFileSync(filePath);
   const mimeType = mime.lookup(filePath) || 'application/octet-stream';
-  let apiContext = options.apiContext;
+  const apiContext = options.apiContext;
 
   let documentBinaryUrl: string | undefined;
   let documentFilename: string | undefined;

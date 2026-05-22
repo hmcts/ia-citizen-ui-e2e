@@ -42,7 +42,7 @@ export class HearingWitnessNamesPage extends CuiBase {
       expect(this.$static.familyNameLabel).toHaveText('Witness family name'),
       expect(this.$static.familyNameLabel).toBeVisible(),
 
-      expect(this.$static.addedWitnessesHeading).not.toBeVisible(),
+      expect(this.$static.addedWitnessesHeading).toBeHidden(),
     ]);
   }
 

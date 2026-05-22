@@ -50,15 +50,19 @@ export class PrepareDecisionAndReasonsLegalRepresentativesPage extends ExuiBase 
   public async completePageAndContinue(options?: { appellantRepresentative: string; respondentRepresentative: string }): Promise<void> {
     await this.verifyAllTextOnPage();
 
-    options?.appellantRepresentative ? await this.$inputs.appellantRepresentativeInput.fill(options.appellantRepresentative) : null;
-    options?.appellantRepresentative
-      ? await expect(this.$inputs.appellantRepresentativeInput).toHaveValue(options.appellantRepresentative)
-      : await expect(this.$inputs.appellantRepresentativeInput).toBeEmpty();
+    if (options?.appellantRepresentative) {
+      await this.$inputs.appellantRepresentativeInput.fill(options.appellantRepresentative);
+      await expect(this.$inputs.appellantRepresentativeInput).toHaveValue(options.appellantRepresentative);
+    } else {
+      await expect(this.$inputs.appellantRepresentativeInput).toBeEmpty();
+    }
 
-    options?.respondentRepresentative ? await this.$inputs.respondentRepresentativeInput.fill(options.respondentRepresentative) : null;
-    options?.respondentRepresentative
-      ? await expect(this.$inputs.respondentRepresentativeInput).toHaveValue(options.respondentRepresentative)
-      : await expect(this.$inputs.respondentRepresentativeInput).toBeEmpty();
+    if (options?.respondentRepresentative) {
+      await this.$inputs.respondentRepresentativeInput.fill(options.respondentRepresentative);
+      await expect(this.$inputs.respondentRepresentativeInput).toHaveValue(options.respondentRepresentative);
+    } else {
+      await expect(this.$inputs.respondentRepresentativeInput).toBeEmpty();
+    }
 
     await this.navigationClick(this.$interactive.continueButton);
   }

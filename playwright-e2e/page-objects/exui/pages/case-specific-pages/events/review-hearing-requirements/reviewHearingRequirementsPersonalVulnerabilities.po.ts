@@ -15,7 +15,7 @@ export class ReviewHearingRequirementsPersonalVulnerabilitiesPage extends ExuiBa
 
   private $questionLocator = (questionKey: keyof typeof this.listOfQuestions): Locator => {
     const question = this.listOfQuestions[questionKey];
-    return this.page.getByText(question, { exact: !((question as any) instanceof RegExp) });
+    return this.page.getByText(question, { exact: !((question as string | RegExp) instanceof RegExp) });
   };
 
   private $questionValueLocator(questionKey: keyof typeof this.listOfQuestions): Locator {
@@ -95,14 +95,16 @@ export class ReviewHearingRequirementsPersonalVulnerabilitiesPage extends ExuiBa
       throw new Error('detailOfRequest must be provided if doesAppellantHavePhysicalOrMentalHealthIssues is Yes');
     } else if (options.doesAppellantHavePhysicalOrMentalHealthIssues === 'Yes' && options.detailOfRequest) {
       assertionsToRun.push(
+        /* eslint-disable playwright/missing-playwright-await */
         expect(this.$questionLocator('explainInDetailHowManyPhyscialOrMentalHealthIssues')).toBeVisible(),
         expect(this.$questionValueLocator('explainInDetailHowManyPhyscialOrMentalHealthIssues')).toBeVisible(),
         expect(this.$questionValueLocator('explainInDetailHowManyPhyscialOrMentalHealthIssues')).toHaveText(options.detailOfRequest),
+        /* eslint-disable playwright/missing-playwright-await */
       );
     } else {
       assertionsToRun.push(
-        expect(this.$questionLocator('explainInDetailHowManyPhyscialOrMentalHealthIssues')).not.toBeVisible(),
-        expect(this.$questionValueLocator('explainInDetailHowManyPhyscialOrMentalHealthIssues')).not.toBeVisible(),
+        expect(this.$questionLocator('explainInDetailHowManyPhyscialOrMentalHealthIssues')).toBeHidden(),
+        expect(this.$questionValueLocator('explainInDetailHowManyPhyscialOrMentalHealthIssues')).toBeHidden(),
       );
     }
 

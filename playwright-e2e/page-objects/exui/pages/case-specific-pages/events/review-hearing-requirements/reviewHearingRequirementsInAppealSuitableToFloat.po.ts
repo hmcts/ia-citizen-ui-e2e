@@ -41,7 +41,7 @@ export class ReviewHearingRequirementsAppealSuitableToFloatPage extends ExuiBase
   }
 
   public async completePageAndContinue(options: { isAppealSuitableToFloat: YesOrNoType }): Promise<void> {
-    this.verifyAllTextOnPage();
+    await this.verifyAllTextOnPage();
 
     const element = this.page.locator(`input[type="radio"][id*="${options.isAppealSuitableToFloat}"]`);
     await element.check();

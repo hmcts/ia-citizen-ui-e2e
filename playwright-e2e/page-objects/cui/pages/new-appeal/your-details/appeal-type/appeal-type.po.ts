@@ -77,7 +77,7 @@ export class AppealTypePage extends CuiBase {
       expect(this.$static.protectionAppealTypeSummary).toHaveText(
         'You might be afraid of the government, police or other groups in your home country because of your nationality, race, religion, political opinion or other reason.',
       ),
-      expect(this.$static.protectionAppealTypeSummary).not.toBeVisible(),
+      expect(this.$static.protectionAppealTypeSummary).toBeHidden(),
 
       // Verify Human Rights appeal type label text is correct and visible to the user
       expect(this.$static.humanRightsAppealTypeLabel).toHaveText(
@@ -88,7 +88,7 @@ export class AppealTypePage extends CuiBase {
       expect(this.$static.humanRightsAppealTypeSummary).toHaveText(
         'You might have a partner or children living in the UK, have lived or worked in the UK for a long time or have serious medical needs.',
       ),
-      expect(this.$static.humanRightsAppealTypeSummary).not.toBeVisible(),
+      expect(this.$static.humanRightsAppealTypeSummary).toBeHidden(),
 
       // Verify European Economic Area appeal type label text is correct and visible to the user
       expect(this.$static.europeanEconomicAreaAppealTypeLabel).toHaveText(
@@ -99,7 +99,7 @@ export class AppealTypePage extends CuiBase {
       expect(this.$static.europeanEconomicAreaAppealTypeSummary).toHaveText(
         'You might be, or have been, a family member or carer of an EEA/Swiss national, or have lived in another EEA country with a British family member, and want to either come to or stay in the UK.',
       ),
-      expect(this.$static.europeanEconomicAreaAppealTypeSummary).not.toBeVisible(),
+      expect(this.$static.europeanEconomicAreaAppealTypeSummary).toBeHidden(),
 
       // Verify Revocation of Protection appeal type label text is correct and visible to the user
       expect(this.$static.revocationOfProtectionAppealTypeLabel).toHaveText(
@@ -110,7 +110,7 @@ export class AppealTypePage extends CuiBase {
       expect(this.$static.revocationOfProtectionAppealTypeSummary).toHaveText(
         'Your protection status might have been taken away if it is believed you no longer need it, you didn’t tell the truth in your claim or you have committed a serious crime.',
       ),
-      expect(this.$static.revocationOfProtectionAppealTypeSummary).not.toBeVisible(),
+      expect(this.$static.revocationOfProtectionAppealTypeSummary).toBeHidden(),
 
       // Verify Deprivation of Citizenship appeal type label text is correct and visible to the user
       expect(this.$static.deprivationOfCitizenshipAppealTypeLabel).toHaveText('Deprivation of Citizenship (Your British citizenship was taken away)'),
@@ -119,7 +119,7 @@ export class AppealTypePage extends CuiBase {
       expect(this.$static.deprivationOfCitizenshipAppealTypeSummary).toHaveText(
         `Your British citizenship might have been taken away because it is believed you didn't tell the truth when claiming citizenship or have been involved in behaviours such as terrorism or serious organised crime.`,
       ),
-      expect(this.$static.deprivationOfCitizenshipAppealTypeSummary).not.toBeVisible(),
+      expect(this.$static.deprivationOfCitizenshipAppealTypeSummary).toBeHidden(),
 
       // Verify EU Settlement Scheme appeal type label text is correct and visible to the user
       expect(this.$static.eUSettlementSchemeAppealTypeLabel).toHaveText(
@@ -130,7 +130,7 @@ export class AppealTypePage extends CuiBase {
       expect(this.$static.eUSettlementSchemeAppealTypeSummary).toHaveText(
         'You have applied for settled status, or a family or travel permit, so that you can either remain within or enter the UK, and it has been refused. A decision has been made to change or cancel your settled status, or your family or travel permit, including a deportation order that requires you to leave the UK.',
       ),
-      expect(this.$static.eUSettlementSchemeAppealTypeSummary).not.toBeVisible(),
+      expect(this.$static.eUSettlementSchemeAppealTypeSummary).toBeHidden(),
     ]);
   }
 

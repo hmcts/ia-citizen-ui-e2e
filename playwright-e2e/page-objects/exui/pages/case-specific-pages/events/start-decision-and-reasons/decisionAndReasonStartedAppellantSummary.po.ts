@@ -47,10 +47,12 @@ export class DecisionAndReasonsStartedAppellantSummaryPage extends ExuiBase {
   public async completePageAndContinue(options?: { appellantCaseSummary: string }): Promise<void> {
     await this.verifyAllTextOnPage();
 
-    options?.appellantCaseSummary ? await this.$inputs.appellantCaseDescriptionTextarea.fill(options.appellantCaseSummary) : null;
-    options?.appellantCaseSummary
-      ? await expect(this.$inputs.appellantCaseDescriptionTextarea).toHaveValue(options.appellantCaseSummary)
-      : await expect(this.$inputs.appellantCaseDescriptionTextarea).toBeEmpty();
+    if (options?.appellantCaseSummary) {
+      await this.$inputs.appellantCaseDescriptionTextarea.fill(options.appellantCaseSummary);
+      await expect(this.$inputs.appellantCaseDescriptionTextarea).toHaveValue(options.appellantCaseSummary);
+    } else {
+      await expect(this.$inputs.appellantCaseDescriptionTextarea).toBeEmpty();
+    }
 
     await this.navigationClick(this.$interactive.continueButton);
   }

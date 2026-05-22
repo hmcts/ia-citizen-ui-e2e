@@ -34,6 +34,7 @@ setup.describe('Set up users and retrieve tokens', () => {
     await page.goto(config.urls.exuiDefaultUrl);
     await idam_signInPage.verifyUserIsOnPage();
     await idam_signInPage.signIn(user.username, user.password);
+    // eslint-disable-next-line playwright/no-standalone-expect
     await expect(page.locator('h3', { hasText: 'My work' })).toBeVisible({ timeout: 60_000 });
     await context.storageState({ path: user.sessionFile });
   });
@@ -47,6 +48,7 @@ setup.describe('Set up users and retrieve tokens', () => {
     await page.goto(config.urls.exuiDefaultUrl);
     await idam_signInPage.verifyUserIsOnPage();
     await idam_signInPage.signIn(user.username, user.password);
+    // eslint-disable-next-line playwright/no-standalone-expect
     await expect(page.locator('h3', { hasText: 'My work' })).toBeVisible({ timeout: 60_000 });
     await context.storageState({ path: user.sessionFile });
   });
@@ -60,6 +62,7 @@ setup.describe('Set up users and retrieve tokens', () => {
     await page.goto(config.urls.exuiDefaultUrl);
     await idam_signInPage.verifyUserIsOnPage();
     await idam_signInPage.signIn(user.username, user.password);
+    // eslint-disable-next-line playwright/no-standalone-expect
     await expect(page.locator('h1', { hasText: 'Case list' })).toBeVisible({ timeout: 60_000 });
     await context.storageState({ path: user.sessionFile });
   });
@@ -74,6 +77,7 @@ setup.describe('Set up users and retrieve tokens', () => {
     await page.goto(config.urls.exuiDefaultUrl);
     await idam_signInPage.verifyUserIsOnPage();
     await idam_signInPage.signIn(user.username, user.password);
+    // eslint-disable-next-line playwright/no-standalone-expect
     await expect(page.locator('h3', { hasText: 'My work' })).toBeVisible({ timeout: 60_000 });
     await context.storageState({ path: user.sessionFile });
   });

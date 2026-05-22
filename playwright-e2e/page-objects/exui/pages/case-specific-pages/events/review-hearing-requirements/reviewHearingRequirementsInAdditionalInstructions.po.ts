@@ -46,7 +46,7 @@ export class ReviewHearingRequirementsAdditionalIntructionsPage extends ExuiBase
   }
 
   public async completePageAndContinue(options: { anyAddtionalIntructions: YesOrNoType; instruction?: string }): Promise<void> {
-    this.verifyAllTextOnPage();
+    await this.verifyAllTextOnPage();
 
     const element = this.page.locator(`input[type="radio"][id*="${options.anyAddtionalIntructions}"]`);
     await element.check();

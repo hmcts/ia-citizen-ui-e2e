@@ -36,7 +36,7 @@ export class HearingInterpreterSignLanguageSelectionWitnessPage extends CuiBase 
       expect(this.$static.enterLanguageManuallyLabel).toHaveText('Enter the language manually'),
       expect(this.$static.enterLanguageManuallyLabel).toBeVisible(),
 
-      expect(this.$static.manuallyEnteredSignLanguageLabel).not.toBeVisible(),
+      expect(this.$static.manuallyEnteredSignLanguageLabel).toBeHidden(),
     ]);
   }
 

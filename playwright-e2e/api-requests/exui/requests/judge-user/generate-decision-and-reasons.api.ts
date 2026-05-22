@@ -22,7 +22,7 @@ export class GenerateDecisionAndReasonsApi {
       }
     }
 
-    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, any>, key) => {
+    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string>, key) => {
       if (key === 'anonymityOrder') acc[key] = options.anonymityOrder;
       else if (key === 'appellantRepresentative' && options.appellantRepresentative) acc[key] = options.appellantRepresentative;
       else if (key === 'respondentRepresentative' && options.respondentRepresentative) acc[key] = options.respondentRepresentative;
