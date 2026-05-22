@@ -1,7 +1,6 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { CuiBase } from '../../../cui-base';
 import { DataUtils } from '../../../../../utils';
-import path from 'path';
 
 export class LocalAuthorityLetterPage extends CuiBase {
   constructor(page: Page) {

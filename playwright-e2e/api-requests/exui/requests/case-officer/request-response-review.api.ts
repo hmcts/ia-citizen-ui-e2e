@@ -22,7 +22,7 @@ export class RequestResponseReviewApi {
       }
     }
 
-    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, any>, key) => {
+    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string>, key) => {
       if (key === 'sendDirectionDateDue' && options.sendDirectionDateDue) {
         const { day, month, year } = options.sendDirectionDateDue;
         const yyyy = year.toString();

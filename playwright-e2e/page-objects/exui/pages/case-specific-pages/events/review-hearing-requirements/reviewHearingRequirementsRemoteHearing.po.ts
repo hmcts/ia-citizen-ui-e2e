@@ -15,7 +15,7 @@ export class ReviewHearingRequirementsRemoteHearingPage extends ExuiBase {
 
   private $questionLocator = (questionKey: keyof typeof this.listOfQuestions): Locator => {
     const question = this.listOfQuestions[questionKey];
-    return this.page.getByText(question, { exact: !((question as any) instanceof RegExp) });
+    return this.page.getByText(question, { exact: !((question as string | RegExp) instanceof RegExp) });
   };
 
   private $questionValueLocator(questionKey: keyof typeof this.listOfQuestions): Locator {
@@ -87,14 +87,16 @@ export class ReviewHearingRequirementsRemoteHearingPage extends ExuiBase {
       throw new Error('detailOfRequest must be provided if anythingForTribunalToConsider is Yes');
     } else if (options.anythingForTribunalToConsider === 'Yes' && options.detailOfRequest) {
       assertionsToRun.push(
+        /* eslint-disable playwright/missing-playwright-await */
         expect(this.$questionLocator('explainInDetailWhatYouLikeTheTribunalToConsiderQuestion')).toBeVisible(),
         expect(this.$questionValueLocator('explainInDetailWhatYouLikeTheTribunalToConsiderQuestion')).toBeVisible(),
         expect(this.$questionValueLocator('explainInDetailWhatYouLikeTheTribunalToConsiderQuestion')).toHaveText(options.detailOfRequest),
+        /* eslint-disable playwright/missing-playwright-await */
       );
     } else {
       assertionsToRun.push(
-        expect(this.$questionLocator('explainInDetailWhatYouLikeTheTribunalToConsiderQuestion')).not.toBeVisible(),
-        expect(this.$questionValueLocator('explainInDetailWhatYouLikeTheTribunalToConsiderQuestion')).not.toBeVisible(),
+        expect(this.$questionLocator('explainInDetailWhatYouLikeTheTribunalToConsiderQuestion')).toBeHidden(),
+        expect(this.$questionValueLocator('explainInDetailWhatYouLikeTheTribunalToConsiderQuestion')).toBeHidden(),
       );
     }
     await Promise.all(assertionsToRun);

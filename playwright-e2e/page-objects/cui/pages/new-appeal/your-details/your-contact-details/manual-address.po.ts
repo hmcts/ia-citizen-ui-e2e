@@ -68,7 +68,7 @@ export class ManualAddressPage extends CuiBase {
     switch (options.preference) {
       case 'Address selected via postcode search':
         await expect(this.$inputs.postCode).toHaveValue(options.postCode);
-        this.navigationClick(this.$interactive.saveAndContinueButton);
+        await this.navigationClick(this.$interactive.saveAndContinueButton);
         break;
       case 'Manually enter address details':
         if (!options.addressLine1 || !options.townOrCity) {

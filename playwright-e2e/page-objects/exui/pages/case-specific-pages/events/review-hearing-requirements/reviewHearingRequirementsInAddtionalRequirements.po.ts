@@ -15,7 +15,7 @@ export class ReviewHearingRequirementsAddtionalRequirementsPage extends ExuiBase
 
   private $questionLocator = (questionKey: keyof typeof this.listOfQuestions): Locator => {
     const question = this.listOfQuestions[questionKey];
-    return this.page.getByText(question, { exact: !((question as any) instanceof RegExp) });
+    return this.page.getByText(question, { exact: !((question as string | RegExp) instanceof RegExp) });
   };
 
   private $questionValueLocator(questionKey: keyof typeof this.listOfQuestions): Locator {
@@ -85,14 +85,16 @@ export class ReviewHearingRequirementsAddtionalRequirementsPage extends ExuiBase
       throw new Error('detailOfRequest must be provided if wouldYouLikeToRequestAddtionalRequirements is Yes');
     } else if (options.wouldYouLikeToRequestAddtionalRequirements === 'Yes' && options.detailOfRequest) {
       assertionsToRun.push(
+        /* eslint-disable playwright/missing-playwright-await */
         expect(this.$questionLocator('provideDetailsOfAddtionalRequest')).toBeVisible(),
         expect(this.$questionValueLocator('provideDetailsOfAddtionalRequest')).toBeVisible(),
         expect(this.$questionValueLocator('provideDetailsOfAddtionalRequest')).toHaveText(options.detailOfRequest),
+        /* eslint-disable playwright/missing-playwright-await */
       );
     } else {
       assertionsToRun.push(
-        expect(this.$questionLocator('provideDetailsOfAddtionalRequest')).not.toBeVisible(),
-        expect(this.$questionValueLocator('provideDetailsOfAddtionalRequest')).not.toBeVisible(),
+        expect(this.$questionLocator('provideDetailsOfAddtionalRequest')).toBeHidden(),
+        expect(this.$questionValueLocator('provideDetailsOfAddtionalRequest')).toBeHidden(),
       );
     }
 

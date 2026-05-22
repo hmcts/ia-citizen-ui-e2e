@@ -100,7 +100,7 @@ export class ReviewHearingRequirementsApi {
     else if (rawCaseData.additionalRequests === 'Yes')
       expectedKeysInEventPayload.push('isAdditionalAdjustmentsAllowed', 'additionalTribunalResponse');
 
-    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, any>, key) => {
+    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string>, key) => {
       if (key === 'isRemoteHearingAllowed') acc[key] = options.isRemoteHearingAllowed;
       else if (key === 'remoteVideoCallTribunalResponse') acc[key] = `${options.isRemoteHearingAllowed} request for remote hearing`;
       else if (key === 'isVulnerabilitiesAllowed') acc[key] = options.grantOrRefuseAnyAdjustmentsRequested;

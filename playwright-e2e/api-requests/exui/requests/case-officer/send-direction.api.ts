@@ -32,7 +32,7 @@ export class SendDirectionApi {
       }
     }
 
-    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, any>, key) => {
+    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string>, key) => {
       if (key === 'sendDirectionDateDue' && options.dateDirectionIsDue) {
         const { day, month, year } = options.dateDirectionIsDue;
         const yyyy = year.toString();

@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { Base } from './base';
 
 export class IdamSignInPage extends Base {
@@ -26,6 +26,6 @@ export class IdamSignInPage extends Base {
     await this.$interactive.emailInput.fill(email);
     await this.$interactive.passwordInput.fill(password);
 
-    this.navigationClick(this.$interactive.signInButton);
+    await this.navigationClick(this.$interactive.signInButton);
   }
 }

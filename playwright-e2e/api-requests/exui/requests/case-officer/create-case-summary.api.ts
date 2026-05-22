@@ -30,7 +30,7 @@ export class CreateCaseSummaryApi {
       eventName: this.eventName,
     });
 
-    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, any>, key) => {
+    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string | object>, key) => {
       if (key === 'caseSummaryDescription' && options.description) acc[key] = options.description;
       else if (key === 'caseSummaryDocument') {
         acc[key] = {

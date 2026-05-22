@@ -1,8 +1,6 @@
-import { APIRequestContext, expect } from '@playwright/test';
+import { APIRequestContext } from '@playwright/test';
 import { DataUtils } from '../../../../utils/data.utils';
 import { SendDecisionAndReasonsEventType } from '../../../../exui-event-types';
-import * as fs from 'fs';
-import mime from 'mime-types';
 import { exui_triggerEvent, exui_uploadDocument, exui_submitEvent } from '../../../../utils/api-requests-utils';
 
 export class sendDecisionAndReasonsApi {
@@ -39,7 +37,7 @@ export class sendDecisionAndReasonsApi {
       eventName: this.eventName,
     });
 
-    const finalData = expectedKeysInSubmissionPayload.reduce((acc: Record<string, any>, key) => {
+    const finalData = expectedKeysInSubmissionPayload.reduce((acc: Record<string, string | object>, key) => {
       if (key === 'finalDecisionAndReasonsDocument') {
         acc[key] = {
           document_binary_url: documentUploadResponse.documentBinaryUrl,

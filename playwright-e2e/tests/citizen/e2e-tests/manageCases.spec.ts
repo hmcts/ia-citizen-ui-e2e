@@ -222,7 +222,7 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
         ]);
       });
 
-      await test.step('Case Officer: Select Aip - request appeal reasons from next steps dropdown and submit event ', async () => {
+      await test.step('Case Officer: Select Aip - request appeal reasons from next steps dropdown and submit event', async () => {
         await caseOfficerExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'AiP - Request Appeal Reasons' });
 
         await caseOfficerExuiPages.aipRequestAppealReasonsPage.verifyUserIsOnPage();
@@ -490,11 +490,11 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
 
         await expect(async () => {
           await Promise.all([
-            expect(caseOfficerExuiPages.reviewHearingRequirementsPage.$questionLocator('willTheAppellantAttendTheHearing')).not.toBeVisible(),
-            expect(caseOfficerExuiPages.reviewHearingRequirementsPage.$questionValueLocator('willTheAppellantAttendTheHearing')).not.toBeVisible(),
+            expect(caseOfficerExuiPages.reviewHearingRequirementsPage.$questionLocator('willTheAppellantAttendTheHearing')).toBeHidden(),
+            expect(caseOfficerExuiPages.reviewHearingRequirementsPage.$questionValueLocator('willTheAppellantAttendTheHearing')).toBeHidden(),
 
-            expect(caseOfficerExuiPages.reviewHearingRequirementsPage.$questionLocator('willAppellantGiveOralEvidence')).not.toBeVisible(),
-            expect(caseOfficerExuiPages.reviewHearingRequirementsPage.$questionValueLocator('willAppellantGiveOralEvidence')).not.toBeVisible(),
+            expect(caseOfficerExuiPages.reviewHearingRequirementsPage.$questionLocator('willAppellantGiveOralEvidence')).toBeHidden(),
+            expect(caseOfficerExuiPages.reviewHearingRequirementsPage.$questionValueLocator('willAppellantGiveOralEvidence')).toBeHidden(),
           ]);
         }).toFail({ bugId: 'To be raised' });
 

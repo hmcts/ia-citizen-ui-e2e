@@ -36,8 +36,10 @@ export class RecordRemissionDecisionConfirmPage extends ExuiBase {
 
     switch (options.remissionDecision) {
       case 'approved':
+        // eslint-disable-next-line playwright/missing-playwright-await
         expectations.push(expect(this.$static.youHaveApprovedRemissionHeading).toBeVisible());
         expectations.push(
+          // eslint-disable-next-line playwright/missing-playwright-await
           expect(this.$static.whatHappensNextParagraph1).toHaveText(
             'The appellant will be notified that you have approved this remission application. The appeal will progress as usual.',
           ),

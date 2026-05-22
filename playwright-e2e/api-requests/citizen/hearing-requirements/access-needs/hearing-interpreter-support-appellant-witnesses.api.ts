@@ -12,24 +12,29 @@ export class HearingInterpreterSupportAppellantWitnessesApi {
   public async submitForm(options: { typeOfSupport: WhoNeedsInterpretorType }): Promise<void> {
     const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'hearing-interpreter-support-appellant-Witnesses' });
 
-    const form: Record<string, string> = {
-      _csrf: csrfToken,
-      saveAndContinue: '',
-    };
+    const form = new FormData();
+
+    form.append('_csrf', csrfToken);
+    form.append('saveAndContinue', '');
 
     switch (options.typeOfSupport) {
       case 'Interpreter for applicant':
-        form.selections = 'isInterpreterServicesNeeded';
+        form.append('selections', 'isInterpreterServicesNeeded');
         break;
+
       case 'Interpreter for one or more witness':
-        form.selections = 'isAnyWitnessInterpreterRequired';
+        form.append('selections', 'isAnyWitnessInterpreterRequired');
         break;
+
       case 'Interpretor for applicant and witness':
-        (form as any).selections = ['isInterpreterServicesNeeded', 'isAnyWitnessInterpreterRequired'];
+        form.append('selections', 'isInterpreterServicesNeeded');
+        form.append('selections', 'isAnyWitnessInterpreterRequired');
         break;
+
       case 'No interpretor required':
-        form.selections = 'noInterpreterRequired';
+        form.append('selections', 'noInterpreterRequired');
         break;
+
       default:
         throw new Error(`Invalid type of support: ${options.typeOfSupport}`);
     }

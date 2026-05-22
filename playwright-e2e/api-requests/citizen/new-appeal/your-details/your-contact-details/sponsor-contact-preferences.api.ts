@@ -15,11 +15,10 @@ export class SponsorContactPreferencesApi {
   }): Promise<void> {
     const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'sponsor-contact-preferences' });
 
-    const form: Record<string, string> = {
-      _csrf: csrfToken,
-      saveAndContinue: '',
-      selections: '',
-    };
+    const form = new FormData();
+
+    form.append('_csrf', csrfToken);
+    form.append('saveAndContinue', '');
 
     switch (options.contactPreference) {
       case 'Email':
@@ -27,26 +26,30 @@ export class SponsorContactPreferencesApi {
           throw new Error('sponsorEmail is required when contactPreference is Email');
         }
 
-        form.selections = 'email';
-        form['email-value'] = options.sponsorEmail;
+        form.append('selections', 'email');
+        form.append('email-value', options.sponsorEmail);
         break;
+
       case 'Phone':
         if (!options.sponsorPhoneNumber) {
           throw new Error('sponsorPhoneNumber is required when contactPreference is Phone');
         }
 
-        form.selections = 'text-message';
-        form['text-message-value'] = options.sponsorPhoneNumber;
+        form.append('selections', 'text-message');
+        form.append('text-message-value', options.sponsorPhoneNumber);
         break;
+
       case 'Email and Phone':
         if (!options.sponsorEmail || !options.sponsorPhoneNumber) {
           throw new Error('Both sponsorEmail and sponsorPhoneNumber are required when contactPreference is Email and Phone');
         }
 
-        (form as any).selections = ['email', 'text-message'];
-        form['email-value'] = options.sponsorEmail;
-        form['text-message-value'] = options.sponsorPhoneNumber;
+        form.append('selections', 'email');
+        form.append('selections', 'text-message');
+        form.append('email-value', options.sponsorEmail);
+        form.append('text-message-value', options.sponsorPhoneNumber);
         break;
+
       default:
         throw new Error(`Invalid contact preference: ${options.contactPreference}`);
     }

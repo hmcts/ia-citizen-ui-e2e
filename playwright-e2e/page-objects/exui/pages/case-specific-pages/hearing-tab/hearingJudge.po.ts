@@ -1,6 +1,5 @@
 import { expect, Locator, Page } from '@playwright/test';
 import { ExuiBase } from '../../../exui-base';
-import { YesOrNoType } from '../../../../../citizen-types';
 
 type JudgeType = 'President of Tribunal' | 'Resident Immigration Judge' | 'Tribunal Judge';
 

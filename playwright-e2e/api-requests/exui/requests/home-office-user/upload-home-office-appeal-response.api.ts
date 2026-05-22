@@ -45,7 +45,7 @@ export class UploadHomeOfficeAppealResponseApi {
       eventName: this.eventName,
     });
 
-    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, any>, key) => {
+    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string | object>, key) => {
       if (key === 'appealReviewOutcome') acc[key] = appealReviewOutcomeApiMap[options.appealReviewOutcome];
       else if (key === 'homeOfficeAppealResponseDocument') {
         acc[key] = {

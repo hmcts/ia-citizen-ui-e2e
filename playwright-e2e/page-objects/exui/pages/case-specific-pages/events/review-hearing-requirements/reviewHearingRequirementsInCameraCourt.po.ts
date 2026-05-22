@@ -15,7 +15,7 @@ export class ReviewHearingRequirementsInCameraCourtPage extends ExuiBase {
 
   private $questionLocator = (questionKey: keyof typeof this.listOfQuestions): Locator => {
     const question = this.listOfQuestions[questionKey];
-    return this.page.getByText(question, { exact: !((question as any) instanceof RegExp) });
+    return this.page.getByText(question, { exact: !((question as string | RegExp) instanceof RegExp) });
   };
 
   private $questionValueLocator(questionKey: keyof typeof this.listOfQuestions): Locator {
@@ -82,14 +82,16 @@ export class ReviewHearingRequirementsInCameraCourtPage extends ExuiBase {
       throw new Error('detailOfRequest must be provided if doesAppellantNeedInCameraCourt is Yes');
     } else if (options.doesAppellantNeedInCameraCourt === 'Yes' && options.detailOfRequest) {
       assertionsToRun.push(
+        /* eslint-disable playwright/missing-playwright-await */
         expect(this.$questionLocator('explainWhyInCameraCourtNeeded')).toBeVisible(),
         expect(this.$questionValueLocator('explainWhyInCameraCourtNeeded')).toBeVisible(),
         expect(this.$questionValueLocator('explainWhyInCameraCourtNeeded')).toHaveText(options.detailOfRequest),
+        /* eslint-disable playwright/missing-playwright-await */
       );
     } else {
       assertionsToRun.push(
-        expect(this.$questionLocator('explainWhyInCameraCourtNeeded')).not.toBeVisible(),
-        expect(this.$questionValueLocator('explainWhyInCameraCourtNeeded')).not.toBeVisible(),
+        expect(this.$questionLocator('explainWhyInCameraCourtNeeded')).toBeHidden(),
+        expect(this.$questionValueLocator('explainWhyInCameraCourtNeeded')).toBeHidden(),
       );
     }
 

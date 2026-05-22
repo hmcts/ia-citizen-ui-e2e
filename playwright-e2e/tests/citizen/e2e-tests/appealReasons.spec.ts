@@ -235,9 +235,9 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
         expect(cui_pages.appealReasonsCheckAnswersPage.$interactive.changeAnswerLink).toContainText('Change'),
         expect(cui_pages.appealReasonsCheckAnswersPage.$interactive.changeAnswerLink).toBeVisible(),
 
-        expect(cui_pages.appealReasonsCheckAnswersPage.$static.supportingEvidenceTableRowLabel).not.toBeVisible(),
-        expect(cui_pages.appealReasonsCheckAnswersPage.$static.supportingEvidenceTableRowValue).not.toBeVisible(),
-        expect(cui_pages.appealReasonsCheckAnswersPage.$interactive.changeSupportingEvidenceLink).not.toBeVisible(),
+        expect(cui_pages.appealReasonsCheckAnswersPage.$static.supportingEvidenceTableRowLabel).toBeHidden(),
+        expect(cui_pages.appealReasonsCheckAnswersPage.$static.supportingEvidenceTableRowValue).toBeHidden(),
+        expect(cui_pages.appealReasonsCheckAnswersPage.$interactive.changeSupportingEvidenceLink).toBeHidden(),
       ]);
     });
 
@@ -283,9 +283,9 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
         expect(cui_pages.appealReasonsCheckAnswersPage.$interactive.changeAnswerLink).toContainText('Change'),
         expect(cui_pages.appealReasonsCheckAnswersPage.$interactive.changeAnswerLink).toBeVisible(),
 
-        expect(cui_pages.appealReasonsCheckAnswersPage.$static.supportingEvidenceTableRowLabel).not.toBeVisible(),
-        expect(cui_pages.appealReasonsCheckAnswersPage.$static.supportingEvidenceTableRowValue).not.toBeVisible(),
-        expect(cui_pages.appealReasonsCheckAnswersPage.$interactive.changeSupportingEvidenceLink).not.toBeVisible(),
+        expect(cui_pages.appealReasonsCheckAnswersPage.$static.supportingEvidenceTableRowLabel).toBeHidden(),
+        expect(cui_pages.appealReasonsCheckAnswersPage.$static.supportingEvidenceTableRowValue).toBeHidden(),
+        expect(cui_pages.appealReasonsCheckAnswersPage.$interactive.changeSupportingEvidenceLink).toBeHidden(),
       ]);
     });
 

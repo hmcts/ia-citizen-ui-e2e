@@ -31,7 +31,7 @@ export class UploadHomeOfficeBundleApi {
       eventName: this.eventName,
     });
 
-    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, any>, key) => {
+    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string | object>, key) => {
       if (key === 'homeOfficeBundle') {
         acc[key] = [
           {

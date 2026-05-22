@@ -108,7 +108,10 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
       await cui_pages.hearingOtherNeedsPage.continueOnToNextPage({ verifyAllTextOnPage: true });
 
       await cui_pages.hearingVideoAppointmentPage.verifyUserIsOnPage();
-      await cui_pages.hearingVideoAppointmentPage.completePageAndContinue({ areYouAbleToJoinHearingViaVideoCall: 'Yes', verifyAllTextOnPage: true });
+      await cui_pages.hearingVideoAppointmentPage.completePageAndContinue({
+        areYouAbleToJoinHearingViaVideoCall: 'Yes',
+        verifyAllTextOnPage: true,
+      });
 
       await cui_pages.hearingMultimediaEvidencePage.verifyUserIsOnPage();
       await cui_pages.hearingMultimediaEvidencePage.completePageAndContinue({ willYouBringVideoOrAudioEvidence: 'No', verifyAllTextOnPage: true });
@@ -364,7 +367,7 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
           verifyAllTextOnPage: true,
         });
 
-        cui_pages.hearingInterpreterSpokenLanguageSelectionPage.verifyUserIsOnPage();
+        await cui_pages.hearingInterpreterSpokenLanguageSelectionPage.verifyUserIsOnPage();
         await cui_pages.hearingInterpreterSpokenLanguageSelectionPage.completePageAndContinue({
           languageToInterpretPreference: 'Select language from dropdown',
           selectLanguageFromDropdown: 'Mandarin',

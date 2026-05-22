@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { ExuiBase } from '../../../../exui-base';
 
 type listOfQuestions = 'Listing reference' | 'Listing location' | 'Will the hearing be held remotely?' | 'Listing length' | 'Date and time';
