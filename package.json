@@ -47,7 +47,7 @@
     "test:e2e": "yarn setup && yarn setup:edge && yarn playwright test --project \"${PLAYWRIGHT_PROJECT:-chrome}\"; EXIT_CODE=$?; exit $EXIT_CODE"
 
   },
-  "packageManager": "yarn@4.9.4",
+  "packageManager": "yarn@4.15.0",
   "dependencies": {
     "i18n-iso-countries": "^7.14.0",
     "uuid": "^11.1.0"
