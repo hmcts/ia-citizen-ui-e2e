@@ -71,3 +71,12 @@ export * from './case-specific-pages/events/complete-decision-and-reasons/comple
 export * from './case-specific-pages/events/complete-decision-and-reasons/completeDecisionAndReasonsUploadDecision.po';
 export * from './case-specific-pages/events/complete-decision-and-reasons/completeDecisionAndReasonsSubmit.po';
 export * from './case-specific-pages/events/complete-decision-and-reasons/completeDecisionAndReasonsConfirm.po';
+export * from './case-specific-pages/events/decide-ftpa-application/decideFtpaApplication.po';
+export * from './case-specific-pages/events/decide-ftpa-application/decideFtpaApplicationAppellantOutcomeDecision.po';
+export * from './case-specific-pages/events/decide-ftpa-application/decideFtpaApplicationDecisionAndReasonsDocument.po';
+export * from './case-specific-pages/events/decide-ftpa-application/decideFtpaApplicationAppellantNoticeOfDecisionSetAside.po';
+export * from './case-specific-pages/events/decide-ftpa-application/decideFtpaApplicationAppellantDecisionReasonNotes.po';
+export * from './case-specific-pages/events/decide-ftpa-application/decideFtpaApplicationSubmit.po';
+export * from './case-specific-pages/events/decide-ftpa-application/decideFtpaApplicationConfirm.po';
+export * from './case-specific-pages/events/generate-upper-tribunal-bundle/generateUpperTribunalBundleSubmit.po';
+export * from './case-specific-pages/events/generate-upper-tribunal-bundle/generateUpperTribunalBundleConfirm.po';

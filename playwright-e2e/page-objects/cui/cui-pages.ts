@@ -88,6 +88,11 @@ import {
   HearingDatesAvoidReasonsPage,
   HearingCheckAnswersPage,
   HearingSuccessPage,
+  FtpaReasonPage,
+  FtpaEvidenceQuestionPage,
+  FtpaEvidencePage,
+  FtpaCheckAnswersPage,
+  FtpaConfirmationPage,
 } from './pages/index';
 
 export class CuiPages {
@@ -180,6 +185,11 @@ export class CuiPages {
   public readonly hearingDatesAvoidReasonsPage: HearingDatesAvoidReasonsPage;
   public readonly hearingCheckAnswersPage: HearingCheckAnswersPage;
   public readonly hearingSuccessPage: HearingSuccessPage;
+  public readonly ftpaReasonPage: FtpaReasonPage;
+  public readonly ftpaEvidenceQuestionPage: FtpaEvidenceQuestionPage;
+  public readonly ftpaEvidencePage: FtpaEvidencePage;
+  public readonly ftpaCheckAnswersPage: FtpaCheckAnswersPage;
+  public readonly ftpaConfirmationPage: FtpaConfirmationPage;
 
   constructor(page: Page) {
     this.page = page;
@@ -271,6 +281,11 @@ export class CuiPages {
     this.hearingDatesAvoidReasonsPage = new HearingDatesAvoidReasonsPage(page);
     this.hearingCheckAnswersPage = new HearingCheckAnswersPage(page);
     this.hearingSuccessPage = new HearingSuccessPage(page);
+    this.ftpaReasonPage = new FtpaReasonPage(page);
+    this.ftpaEvidenceQuestionPage = new FtpaEvidenceQuestionPage(page);
+    this.ftpaEvidencePage = new FtpaEvidencePage(page);
+    this.ftpaCheckAnswersPage = new FtpaCheckAnswersPage(page);
+    this.ftpaConfirmationPage = new FtpaConfirmationPage(page);
   }
 
   /**

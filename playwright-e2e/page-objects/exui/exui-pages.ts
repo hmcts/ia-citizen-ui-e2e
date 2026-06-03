@@ -73,6 +73,15 @@ import {
   CompleteDecisionAndReasonsUploadDecisionPage,
   CompleteDecisionAndReasonsSubmitPage,
   CompleteDecisionAndReasonsConfirmPage,
+  DecideFtpaApplicationPage,
+  DecideFtpaApplicationAppellantOutcomeDecisionPage,
+  DecideFtpaApplicationDecisionAndReasonsDocumentPage,
+  DecideFtpaApplicationAppellantNoticeOfDecisionSetAsidePage,
+  DecideFtpaApplicationAppellantDecisionReasonNotesPage,
+  DecideFtpaApplicationSubmitPage,
+  DecideFtpaApplicationConfirmPage,
+  GenerateUpperTribunalBundleSubmitPage,
+  GenerateUpperTribunalBundleConfirmPage,
 } from './pages/index';
 
 export class ExuiPages {
@@ -151,6 +160,15 @@ export class ExuiPages {
   public readonly completeDecisionAndReasonsUploadDecisionPage: CompleteDecisionAndReasonsUploadDecisionPage;
   public readonly completeDecisionAndReasonsSubmitPage: CompleteDecisionAndReasonsSubmitPage;
   public readonly completeDecisionAndReasonsConfirmPage: CompleteDecisionAndReasonsConfirmPage;
+  public readonly decideFtpaApplicationPage: DecideFtpaApplicationPage;
+  public readonly decideFtpaApplicationAppellantOutcomeDecisionPage: DecideFtpaApplicationAppellantOutcomeDecisionPage;
+  public readonly decideFtpaApplicationDecisionAndReasonsDocumentPage: DecideFtpaApplicationDecisionAndReasonsDocumentPage;
+  public readonly decideFtpaApplicationAppellantNoticeOfDecisionSetAsidePage: DecideFtpaApplicationAppellantNoticeOfDecisionSetAsidePage;
+  public readonly decideFtpaApplicationAppellantDecisionReasonNotesPage: DecideFtpaApplicationAppellantDecisionReasonNotesPage;
+  public readonly decideFtpaApplicationSubmitPage: DecideFtpaApplicationSubmitPage;
+  public readonly decideFtpaApplicationConfirmPage: DecideFtpaApplicationConfirmPage;
+  public readonly generateUpperTribunalBundleSubmitPage: GenerateUpperTribunalBundleSubmitPage;
+  public readonly generateUpperTribunalBundleConfirmPage: GenerateUpperTribunalBundleConfirmPage;
 
   constructor(page: Page) {
     this.page = page;
@@ -227,6 +245,15 @@ export class ExuiPages {
     this.completeDecisionAndReasonsUploadDecisionPage = new CompleteDecisionAndReasonsUploadDecisionPage(this.page);
     this.completeDecisionAndReasonsSubmitPage = new CompleteDecisionAndReasonsSubmitPage(this.page);
     this.completeDecisionAndReasonsConfirmPage = new CompleteDecisionAndReasonsConfirmPage(this.page);
+    this.decideFtpaApplicationPage = new DecideFtpaApplicationPage(this.page);
+    this.decideFtpaApplicationAppellantOutcomeDecisionPage = new DecideFtpaApplicationAppellantOutcomeDecisionPage(this.page);
+    this.decideFtpaApplicationDecisionAndReasonsDocumentPage = new DecideFtpaApplicationDecisionAndReasonsDocumentPage(this.page);
+    this.decideFtpaApplicationAppellantNoticeOfDecisionSetAsidePage = new DecideFtpaApplicationAppellantNoticeOfDecisionSetAsidePage(this.page);
+    this.decideFtpaApplicationAppellantDecisionReasonNotesPage = new DecideFtpaApplicationAppellantDecisionReasonNotesPage(this.page);
+    this.decideFtpaApplicationSubmitPage = new DecideFtpaApplicationSubmitPage(this.page);
+    this.decideFtpaApplicationConfirmPage = new DecideFtpaApplicationConfirmPage(this.page);
+    this.generateUpperTribunalBundleSubmitPage = new GenerateUpperTribunalBundleSubmitPage(this.page);
+    this.generateUpperTribunalBundleConfirmPage = new GenerateUpperTribunalBundleConfirmPage(this.page);
   }
 
   /**

@@ -85,3 +85,8 @@ export * from './hearing-requirements/dates-to-avoid/hearing-dates-avoid-enter.p
 export * from './hearing-requirements/dates-to-avoid/hearing-dates-avoid-reasons.po';
 export * from './hearing-requirements/check-and-send/hearing-check-answers.po';
 export * from './hearing-requirements/check-and-send/hearing-success.po';
+export * from './ftpa-reasons/ftpa-reason.po';
+export * from './ftpa-reasons/ftpa-evidence-question.po';
+export * from './ftpa-reasons/ftpa-evidence.po';
+export * from './ftpa-reasons/ftpa-check-answers.po';
+export * from './ftpa-reasons/ftpa-confirmation.po';
