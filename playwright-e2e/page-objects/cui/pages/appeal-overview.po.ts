@@ -16,12 +16,15 @@ export class AppealOverviewPage extends CuiBase {
       hasText: 'Continue',
     }),
     payForAppealLink: this.page.getByRole('link', { name: 'Pay for this appeal' }),
+    applyForPermissionToAppealUpperTribunalLink: this.page.getByRole('link', { name: 'Apply for permission to appeal to the Upper Tribunal' }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
     userNameHeading: this.page.locator('h1[class*="govuk-heading"]'),
     nothingToDoNextHeading: this.page.getByRole('heading', { name: 'Nothing to do next', level: 2, exact: true }),
+    doThisNextHeading: this.page.getByRole('heading', { name: 'Do this next', level: 2, exact: true }),
     completedHeading: this.page.getByRole('heading', { name: 'Completed', level: 2, exact: true }),
+    applicantInstructionsWindow: this.page.locator('div[class*="overview-banner"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $yourCaseInformation = {

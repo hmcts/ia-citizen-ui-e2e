@@ -17,7 +17,9 @@ type DropdownEventTypes =
   | 'Generate hearing bundle'
   | 'Start decision and reasons'
   | 'Prepare Decision and Reasons'
-  | 'Complete decision and reasons';
+  | 'Complete decision and reasons'
+  | 'Decide FTPA application'
+  | 'Generate Upper Tribunal bundle';
 
 type CaseOverviewTabsType =
   | 'Tasks'
@@ -63,6 +65,7 @@ export class CaseOverviewPage extends ExuiBase {
       .filter({ hasNot: this.page.locator('xpath=ancestor::div[@hidden]') }),
     doThisNextHeading: this.doThisNextHeadingLocator,
     doThisNextParagraph: this.doThisNextHeadingLocator.locator('~ p'),
+    doThisNextHeadingsLevel2: this.doThisNextHeadingLocator.locator('~ h2'),
     doThisNextBulletPoint: this.page.locator('markdown', { hasText: 'Do this next' }).filter({ visible: true }).locator('li'),
     whatHappensNextHeading: this.whatHappensNextHeadingLocator,
     whatHappensNextParagraph: this.whatHappensNextHeadingLocator.locator('~ p'),

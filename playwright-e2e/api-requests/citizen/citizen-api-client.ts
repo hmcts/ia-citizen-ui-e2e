@@ -11,6 +11,7 @@ import {
 } from '../../citizen-types';
 import { ApplicantDetailsType } from '../../user-flows/citizen/api';
 import { AppealOverviewApi, HearingCheckAnswersApi } from './index';
+import { load } from 'cheerio';
 
 import {
   YourDetailsUserFlowApi,
@@ -122,9 +123,14 @@ export class CitizenApiClient {
   public async verifyAppealIsInExpectedStateViaAppealOverviewApi(options: { expectedTextToBeOnAppealOverview: string }): Promise<void> {
     await expect(async () => {
       await this.init();
+
       const appealOverviewResponse = await this.cui_appealOverviewApi.get();
 
-      expect(appealOverviewResponse, {
+      const $ = load(appealOverviewResponse);
+
+      const textContent = $('body').text().replace(/\s+/g, ' ').trim();
+
+      expect(textContent, {
         message: `Verify upon re-intialising user login, applicant is able to view next steps: ${options.expectedTextToBeOnAppealOverview}`,
       }).toContain(options.expectedTextToBeOnAppealOverview);
     }).toPass({

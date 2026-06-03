@@ -25,7 +25,8 @@ export abstract class Base {
     const timeout = options.timeout ?? 15_000;
     await Promise.all([
       expect(async () => {
-        expect(this.page.url().includes(options.urlPath), { message: `Verify URL contains (${options.urlPath})` }).toBeTruthy();
+        const currentURL = this.page.url();
+        expect(currentURL.includes(options.urlPath), { message: `Verify page URL (${currentURL}) contains (${options.urlPath})` }).toBeTruthy();
       }).toPass({ intervals: [100], timeout: timeout }),
 
       expect(options.pageHeading, { message: `Verify page heading is visible: ${options.pageHeading}` }).toBeVisible({ timeout: timeout }),

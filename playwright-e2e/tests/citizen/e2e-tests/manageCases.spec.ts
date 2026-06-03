@@ -981,7 +981,8 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
           hourToSet: 13,
         });
 
-        const expectedDate = (await dataUtils.getDateFromToday({ dayOffset: 1 })).full;
+        const dateResult = await dataUtils.getDateFromToday({ dayOffset: 1 });
+        const expectedDate = `${dateResult.day} ${new Date(dateResult.year, dateResult.month - 1).toLocaleString('en-GB', { month: 'short' })} ${dateResult.year}`;
         await adminOfficerExuiPages.listCaseSubmitPage.verifyUserIsOnPage();
         await Promise.all([
           expect(adminOfficerExuiPages.listCaseSubmitPage.$static.caseRecordHeading).toBeVisible(),
