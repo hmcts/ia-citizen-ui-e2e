@@ -6,21 +6,19 @@ export class HearingAccessNeedsPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator("body:has(h1:has-text('Communication'))");
-
   public readonly $interactive = {
-    continueButton: this.pageForm.getByRole('button', { name: 'Continue', exact: true }),
+    continueButton: this.page.getByRole('button', { name: 'Continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', { name: 'Communication and access support', level: 1, exact: true }),
-    hearingAccessNeedsHintText1: this.pageForm.getByText('Use this form if you'),
-    bulletPoint1: this.pageForm.locator('p + ul li').nth(0),
-    bulletPoint2: this.pageForm.locator('p + ul li').nth(1),
-    bulletPoint3: this.pageForm.locator('p + ul li').nth(2),
-    bulletPoint4: this.pageForm.locator('p + ul li').nth(3),
-    hearingAccessNeedsHintText2: this.pageForm.getByText('You can request more'),
-    hearingAccessNeedsHintText3: this.pageForm.getByText('They will be provided'),
+    pageHeading: this.page.getByRole('heading', { name: 'Communication and access support', level: 1, exact: true }),
+    hearingAccessNeedsHintText1: this.page.getByText('Use this form if you'),
+    bulletPoint1: this.page.locator('p + ul li').nth(0),
+    bulletPoint2: this.page.locator('p + ul li').nth(1),
+    bulletPoint3: this.page.locator('p + ul li').nth(2),
+    bulletPoint4: this.page.locator('p + ul li').nth(3),
+    hearingAccessNeedsHintText2: this.page.getByText('You can request more'),
+    hearingAccessNeedsHintText3: this.page.getByText('They will be provided'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

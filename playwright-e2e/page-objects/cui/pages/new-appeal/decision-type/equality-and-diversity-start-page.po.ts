@@ -6,16 +6,14 @@ export class EqualityAndDiversityStartPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/start-page"])');
-
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'Equality and diversity questions',
     }),
-    optionalQuestionsText: this.pageForm.locator('div[class="govuk-panel__body"] p').nth(0),
-    answersWillNotAffectAppealText: this.pageForm.locator('div[class="govuk-panel__body"] p').nth(1),
-    yourAnswersWillHelpUsText: this.pageForm.locator('p', { hasText: 'Your answers will help us' }),
-    privacyPolicyText: this.pageForm.locator('p', { hasText: 'in our privacy policy' }),
+    optionalQuestionsText: this.page.locator('div[class="govuk-panel__body"] p').nth(0),
+    answersWillNotAffectAppealText: this.page.locator('div[class="govuk-panel__body"] p').nth(1),
+    yourAnswersWillHelpUsText: this.page.locator('p', { hasText: 'Your answers will help us' }),
+    privacyPolicyText: this.page.locator('p', { hasText: 'in our privacy policy' }),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
@@ -43,7 +41,7 @@ export class EqualityAndDiversityStartPage extends CuiBase {
       await this.verifyAllTextOnPage();
     }
 
-    const element = this.pageForm.locator('button[type="submit"]', { hasText: "I don't want to answer these questions" });
+    const element = this.page.locator('button[type="submit"]', { hasText: "I don't want to answer these questions" });
     await this.navigationClick(element);
   }
 }

@@ -68,7 +68,7 @@ export class FtpaEvidencePage extends CuiBase {
 
     await expect(async () => {
       await Promise.all([this.interceptNetworkRequestToVerifyFileUploadSucceeded({ timeoutMs: 15_000 }), this.$interactive.uploadFileButton.click()]);
-    }).toPass({ intervals: [100], timeout: 30_000 });
+    }).toPass({ intervals: [1_000], timeout: 30_000 });
 
     await expect(this.$static.fileUploadedTableRow.filter({ hasText: fileToUpload })).toBeVisible();
     await this.navigationClick(this.$interactive.continueButton);

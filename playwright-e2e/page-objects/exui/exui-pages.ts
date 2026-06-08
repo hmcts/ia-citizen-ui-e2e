@@ -260,7 +260,7 @@ export class ExuiPages {
    * Creates a new ExuiPages instance bound to another browser context or tab.
    * Allows multi-tab testing.
    */
-  public async newBrowserContext(options: { pageContext: Page }): Promise<ExuiPages> {
+  public async newPageContext(options: { pageContext: Page }): Promise<ExuiPages> {
     return new ExuiPages(options.pageContext);
   }
 }

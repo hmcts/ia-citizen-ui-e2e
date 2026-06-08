@@ -7,22 +7,20 @@ export class ApplicantNationalityPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/nationality"])');
-
   public readonly $interactive = {
-    nationalityDropdown: this.pageForm.locator('select[name="nationality"]'),
-    isStatelessCheckbox: this.pageForm.locator('input[value="isStateless"]'),
-    saveAndContinueButton: this.pageForm.locator('button', {
+    nationalityDropdown: this.page.locator('select[name="nationality"]'),
+    isStatelessCheckbox: this.page.locator('input[value="isStateless"]'),
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1 label', {
+    pageHeading: this.page.locator('h1 label', {
       hasText: 'What is your nationality?',
     }),
-    statelessLabel: this.pageForm.locator('label[for="stateless"]'),
-    statelessHint: this.pageForm.locator('div[id="stateless-item-hint"]'),
+    statelessLabel: this.page.locator('label[for="stateless"]'),
+    statelessHint: this.page.locator('div[id="stateless-item-hint"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

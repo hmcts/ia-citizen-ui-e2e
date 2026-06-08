@@ -7,26 +7,24 @@ export class DecisionTypePage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/decision-type"])');
-
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'How do you want your appeal to be decided?',
     }),
-    decisionHintFirstParagraph: this.pageForm.locator('div[id="answer-hint"] p').nth(0),
-    decisionHintFirstHeading: this.pageForm.locator('div[id="answer-hint"] h2').nth(0),
-    decisionHintSecondParagraph: this.pageForm.locator('div[id="answer-hint"] p').nth(1),
-    decisionHintSecondHeading: this.pageForm.locator('div[id="answer-hint"] h2').nth(1),
-    decisionHintThirdParagraph: this.pageForm.locator('div[id="answer-hint"] p').nth(2),
-    decisionHintFourthParagraph: this.pageForm.locator('div[id="answer-hint"] p').nth(3),
-    decisionWithHearingLabel: this.pageForm.locator("//input[@value='decisionWithHearing']/following-sibling::label"),
-    decisionWithoutHearingLabel: this.pageForm.locator("//input[@value='decisionWithoutHearing']/following-sibling::label"),
+    decisionHintFirstParagraph: this.page.locator('div[id="answer-hint"] p').nth(0),
+    decisionHintFirstHeading: this.page.locator('div[id="answer-hint"] h2').nth(0),
+    decisionHintSecondParagraph: this.page.locator('div[id="answer-hint"] p').nth(1),
+    decisionHintSecondHeading: this.page.locator('div[id="answer-hint"] h2').nth(1),
+    decisionHintThirdParagraph: this.page.locator('div[id="answer-hint"] p').nth(2),
+    decisionHintFourthParagraph: this.page.locator('div[id="answer-hint"] p').nth(3),
+    decisionWithHearingLabel: this.page.locator("//input[@value='decisionWithHearing']/following-sibling::label"),
+    decisionWithoutHearingLabel: this.page.locator("//input[@value='decisionWithoutHearing']/following-sibling::label"),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
@@ -75,7 +73,7 @@ export class DecisionTypePage extends CuiBase {
       await this.verifyAllTextOnPage();
     }
 
-    const element = this.pageForm.locator(`input[type="radio"][value="${options.decisionWithOrWithoutHearing}"]`);
+    const element = this.page.locator(`input[type="radio"][value="${options.decisionWithOrWithoutHearing}"]`);
     await element.check();
     await expect(element).toBeChecked();
     await this.navigationClick(this.$interactive.saveAndContinueButton);

@@ -6,15 +6,13 @@ export class NewAppealCheckAnswersPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/check-answers"])');
-
   public readonly $interactive = {
-    statementCheckbox: this.pageForm.locator('input[type="checkbox"][id="statement"]'),
-    submitAndContinueButton: this.pageForm.locator('button[type="submit"]:has-text("Submit")'),
+    statementCheckbox: this.page.locator('input[type="checkbox"][id="statement"]'),
+    submitAndContinueButton: this.page.locator('button[type="submit"]:has-text("Submit")'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'Check your answers',
     }),
   } as const satisfies Record<string, Locator>;

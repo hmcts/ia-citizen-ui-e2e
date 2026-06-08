@@ -6,30 +6,28 @@ export class ManualAddressPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/manual-address"])');
-
   public readonly $inputs = {
-    addressLine1: this.pageForm.locator('input[id="address-line-1"]'),
-    addressLine2: this.pageForm.locator('input[id="address-line-2"]'),
-    townOrCity: this.pageForm.locator('input[id="address-town"]'),
-    county: this.pageForm.locator('input[id="address-county"]'),
-    postCode: this.pageForm.locator('input[id="address-postcode"]'),
+    addressLine1: this.page.locator('input[id="address-line-1"]'),
+    addressLine2: this.page.locator('input[id="address-line-2"]'),
+    townOrCity: this.page.locator('input[id="address-town"]'),
+    county: this.page.locator('input[id="address-county"]'),
+    postCode: this.page.locator('input[id="address-postcode"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'What is your address?',
     }),
-    buildingAndStreetLabel: this.pageForm.locator('label[for="address-line-1"]'),
-    townOrCityLabel: this.pageForm.locator('label[for="address-town"]'),
-    countyLabel: this.pageForm.locator('label[for="address-county"]'),
-    postCodeLabel: this.pageForm.locator('label[for="address-postcode"]'),
+    buildingAndStreetLabel: this.page.locator('label[for="address-line-1"]'),
+    townOrCityLabel: this.page.locator('label[for="address-town"]'),
+    countyLabel: this.page.locator('label[for="address-county"]'),
+    postCodeLabel: this.page.locator('label[for="address-postcode"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

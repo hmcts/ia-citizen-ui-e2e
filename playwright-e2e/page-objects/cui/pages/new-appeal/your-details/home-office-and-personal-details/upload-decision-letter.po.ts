@@ -8,28 +8,27 @@ export class UploadDecisionLetterPage extends CuiBase {
   }
 
   private dataUtils = new DataUtils();
-  private readonly pageForm = this.page.locator('body:has(form[action="/home-office-upload-decision-letter"])');
 
   public readonly $interactive = {
-    chooseFileToUploadInput: this.pageForm.locator('input[id="file-upload"]'),
-    uploadFileButton: this.pageForm.locator('button[name="uploadFile"]'),
-    saveAndContinueButton: this.pageForm.locator('button', {
+    chooseFileToUploadInput: this.page.locator('input[id="file-upload"]'),
+    uploadFileButton: this.page.locator('button[name="uploadFile"]'),
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'Upload your Home Office decision letter',
     }),
-    fileUploadedTableRow: this.pageForm.locator('table[id="files-uploaded"] a[class="govuk-link"]').filter({ hasNotText: 'Delete' }),
-    decisionByEmailHeading: this.pageForm.getByRole('heading', { level: 2 }).filter({ hasText: 'email' }),
-    decisionByEmailText: this.pageForm.locator('p', { hasText: 'attached to the email.' }),
-    decisionByPostHeading: this.pageForm.getByRole('heading', { level: 2 }).filter({ hasText: 'post' }),
-    decisionByPostText: this.pageForm.locator('p', { hasText: 'If you have a smartphone' }),
-    uploadFileText: this.pageForm.getByText('Upload a file', { exact: true }),
-    uploadedFileText: this.pageForm.locator('table[id="files-uploaded"] [class="govuk-table__header"]'),
-    noFilesUploadedText: this.pageForm.locator('td[class="govuk-table__cell"]'),
+    fileUploadedTableRow: this.page.locator('table[id="files-uploaded"] a[class="govuk-link"]').filter({ hasNotText: 'Delete' }),
+    decisionByEmailHeading: this.page.getByRole('heading', { level: 2 }).filter({ hasText: 'email' }),
+    decisionByEmailText: this.page.locator('p', { hasText: 'attached to the email.' }),
+    decisionByPostHeading: this.page.getByRole('heading', { level: 2 }).filter({ hasText: 'post' }),
+    decisionByPostText: this.page.locator('p', { hasText: 'If you have a smartphone' }),
+    uploadFileText: this.page.getByText('Upload a file', { exact: true }),
+    uploadedFileText: this.page.locator('table[id="files-uploaded"] [class="govuk-table__header"]'),
+    noFilesUploadedText: this.page.locator('td[class="govuk-table__cell"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
@@ -78,7 +77,7 @@ export class UploadDecisionLetterPage extends CuiBase {
         this.interceptNetworkRequestToVerifyUploadDecisionLetterSucceeded({ timeoutMs: 15_000 }),
         this.$interactive.uploadFileButton.click(),
       ]);
-    }).toPass({ intervals: [100], timeout: 30_000 });
+    }).toPass({ intervals: [1_000], timeout: 30_000 });
 
     await expect(this.$static.fileUploadedTableRow.filter({ hasText: fileToUpload })).toBeVisible();
     await this.navigationClick(this.$interactive.saveAndContinueButton);

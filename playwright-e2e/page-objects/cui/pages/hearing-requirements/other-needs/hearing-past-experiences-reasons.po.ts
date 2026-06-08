@@ -6,18 +6,16 @@ export class HearingPastExperiencesReasonsPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-past-experiences-reasons"])');
-
   public readonly $inputs = {
-    howManyPastExpereincesThatMayAffectHearingTextarea: this.pageForm.locator('textarea[name="reason"]'),
+    howManyPastExpereincesThatMayAffectHearingTextarea: this.page.locator('textarea[name="reason"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', {
+    pageHeading: this.page.getByRole('heading', {
       name: 'Tell us how any past experiences may affect you at the hearing',
       level: 1,
       exact: true,

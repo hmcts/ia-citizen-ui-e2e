@@ -6,18 +6,16 @@ export class HearingVideoAppointmentReasonsPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-video-appointment-reasons"])');
-
   public readonly $inputs = {
-    reasonUnableToJoinVideoCallTextarea: this.pageForm.locator('textarea[name="reason"]'),
+    reasonUnableToJoinVideoCallTextarea: this.page.locator('textarea[name="reason"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', {
+    pageHeading: this.page.getByRole('heading', {
       name: 'Tell us the reasons you would not be able to join a video call',
       level: 1,
       exact: true,

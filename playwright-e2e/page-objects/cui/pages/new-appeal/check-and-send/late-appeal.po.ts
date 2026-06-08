@@ -8,33 +8,32 @@ export class LateAppealPage extends CuiBase {
   }
 
   private readonly dataUtils = new DataUtils();
-  private readonly pageForm = this.page.locator('body:has(form[action*="/late-appeal"])');
 
   public readonly $inputs = {
-    appealLateTextArea: this.pageForm.locator('textarea[id="appeal-late"]'),
+    appealLateTextArea: this.page.locator('textarea[id="appeal-late"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    chooseFileToUploadInput: this.pageForm.locator('input[id="file-upload"]'),
-    uploadFileButton: this.pageForm.locator('button[name="uploadFile"]'),
-    saveAndContinueButton: this.pageForm.locator('button', {
+    chooseFileToUploadInput: this.page.locator('input[id="file-upload"]'),
+    uploadFileButton: this.page.locator('button[name="uploadFile"]'),
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'Your appeal is late',
     }),
-    fileUploadedTableRow: this.pageForm.locator('table[id="files-uploaded"] a[class="govuk-link"]').filter({ hasNotText: 'Delete' }),
-    appealsToBeMadeWithin28DaysText: this.pageForm.getByText('Appeals should be made within 28 days'),
-    whyIsAppealLateLabel: this.pageForm.locator('label[for="appeal-late"]'),
-    supportingEvidenceHeading: this.pageForm.getByRole('heading', { level: 2, name: 'Supporting evidence' }),
-    uploadOnePieceOfEvidenceBulletPoint: this.pageForm.locator('li', { hasText: 'You can upload one piece of evidence' }),
-    provideEvidenceNotInEnglishBulletPoint: this.pageForm.locator('li', {
+    fileUploadedTableRow: this.page.locator('table[id="files-uploaded"] a[class="govuk-link"]').filter({ hasNotText: 'Delete' }),
+    appealsToBeMadeWithin28DaysText: this.page.getByText('Appeals should be made within 28 days'),
+    whyIsAppealLateLabel: this.page.locator('label[for="appeal-late"]'),
+    supportingEvidenceHeading: this.page.getByRole('heading', { level: 2, name: 'Supporting evidence' }),
+    uploadOnePieceOfEvidenceBulletPoint: this.page.locator('li', { hasText: 'You can upload one piece of evidence' }),
+    provideEvidenceNotInEnglishBulletPoint: this.page.locator('li', {
       hasText: 'If you provide evidence that is not in English',
     }),
-    uploadFileLabel: this.pageForm.locator('label[for="file-upload"]'),
+    uploadFileLabel: this.page.locator('label[for="file-upload"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

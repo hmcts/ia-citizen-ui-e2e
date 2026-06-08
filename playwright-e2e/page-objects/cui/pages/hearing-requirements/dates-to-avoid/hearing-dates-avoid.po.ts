@@ -10,31 +10,27 @@ export class HearingDatesAvoidPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page
-    .locator('body:has(form[action="/hearing-dates-avoid"])')
-    .or(this.page.locator('body:has(form[action="/hearing-dates-avoid-new"])'));
-
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm
+    pageHeading: this.page
       .getByRole('heading', {
         name: /Are there any dates between .+ and .+ that you or any witnesses cannot go to the hearing\?/,
         level: 1,
         exact: true,
       })
       .or(
-        this.pageForm.getByRole('heading', {
+        this.page.getByRole('heading', {
           name: /Is there another date between .+ and .+ that you or any witnesses cannot go to the hearing\?/,
           level: 1,
           exact: true,
         }),
       ),
-    datesToAvoidHintText: this.pageForm.locator('div[id="answer-hint"]'),
-    yesLabel: this.pageForm.locator('input[type="radio"][value="yes"] + label'),
-    noLabel: this.pageForm.locator('input[type="radio"][value="no"] + label'),
+    datesToAvoidHintText: this.page.locator('div[id="answer-hint"]'),
+    yesLabel: this.page.locator('input[type="radio"][value="yes"] + label'),
+    noLabel: this.page.locator('input[type="radio"][value="no"] + label'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(options: { urlPath: 'hearing-dates-avoid' | 'hearing-dates-avoid-new' }): Promise<void> {
@@ -74,7 +70,7 @@ export class HearingDatesAvoidPage extends CuiBase {
       await this.verifyAllTextOnPage();
     }
 
-    const element = this.pageForm.locator(`input[type="radio"][value="${option.anyDatesToAvoid.toLowerCase()}"]`);
+    const element = this.page.locator(`input[type="radio"][value="${option.anyDatesToAvoid.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();
 

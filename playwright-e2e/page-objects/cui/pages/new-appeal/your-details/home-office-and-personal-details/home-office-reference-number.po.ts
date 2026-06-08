@@ -6,29 +6,27 @@ export class HomeOfficeReferenceNumberPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/home-office-reference-number"])');
-
   public readonly $inputs = {
-    referenceNumber: this.pageForm.locator('input[name="homeOfficeRefNumber"]'),
+    referenceNumber: this.page.locator('input[name="homeOfficeRefNumber"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'What is your Home Office reference number?',
     }),
-    howToFindReferenceHeading: this.pageForm.getByRole('heading', { level: 2, name: 'reference number' }),
-    howToFindInstructionOne: this.pageForm.locator('ul[class*="govuk-list"] li').nth(0),
-    howToFindInstructionTwo: this.pageForm.locator('ul[class*="govuk-list"] li').nth(1),
-    howToFindInstructionThree: this.pageForm.locator('ul[class*="govuk-list"] li').nth(2),
-    howToFindInstructionFour: this.pageForm.locator('ul[class*="govuk-list"] li').nth(3),
-    homeOfficeContactDetails: this.pageForm.getByText('Call the Home Office on'),
-    enterReferenceLabel: this.pageForm.locator('label[for="homeOfficeRefNumber"]'),
+    howToFindReferenceHeading: this.page.getByRole('heading', { level: 2, name: 'reference number' }),
+    howToFindInstructionOne: this.page.locator('ul[class*="govuk-list"] li').nth(0),
+    howToFindInstructionTwo: this.page.locator('ul[class*="govuk-list"] li').nth(1),
+    howToFindInstructionThree: this.page.locator('ul[class*="govuk-list"] li').nth(2),
+    howToFindInstructionFour: this.page.locator('ul[class*="govuk-list"] li').nth(3),
+    homeOfficeContactDetails: this.page.getByText('Call the Home Office on'),
+    enterReferenceLabel: this.page.locator('label[for="homeOfficeRefNumber"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

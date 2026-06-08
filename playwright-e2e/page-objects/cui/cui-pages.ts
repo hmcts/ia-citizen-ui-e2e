@@ -292,7 +292,7 @@ export class CuiPages {
    * Creates a new CuiPages instance bound to another browser context or tab.
    * Allows multi-tab testing.
    */
-  public async newBrowserContext(options: { pageContext: Page }): Promise<CuiPages> {
+  public async newPageContext(options: { pageContext: Page }): Promise<CuiPages> {
     return new CuiPages(options.pageContext);
   }
 }

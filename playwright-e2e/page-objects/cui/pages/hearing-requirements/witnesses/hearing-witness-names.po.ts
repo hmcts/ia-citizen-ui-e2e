@@ -6,25 +6,23 @@ export class HearingWitnessNamesPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator("body:has(h1:has-text('Add witnesses names'))");
-
   public readonly $inputs = {
-    givenName: this.pageForm.locator('input[name="witnessName"]'),
-    familyName: this.pageForm.locator('input[name="witnessFamilyName"]'),
+    givenName: this.page.locator('input[name="witnessName"]'),
+    familyName: this.page.locator('input[name="witnessFamilyName"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
-    addAnotherWitnessButton: this.pageForm.getByRole('button', { name: 'Add another witness', exact: true }),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
+    addAnotherWitnessButton: this.page.getByRole('button', { name: 'Add another witness', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', { name: 'Add witnesses names', level: 1, exact: true }),
-    witnessHintText: this.pageForm.locator('p', { hasText: 'You can add' }),
-    givenNameLabel: this.pageForm.locator('label[for="witnessName"]'),
-    familyNameLabel: this.pageForm.locator('label[for="witnessFamilyName"]'),
-    addedWitnessesHeading: this.pageForm.getByRole('heading', { name: 'Added witnesses', level: 2, exact: true }),
-    witnessNameAddedRow: this.pageForm.locator('dt[class="govuk-summary-list__key"]'),
+    pageHeading: this.page.getByRole('heading', { name: 'Add witnesses names', level: 1, exact: true }),
+    witnessHintText: this.page.locator('p', { hasText: 'You can add' }),
+    givenNameLabel: this.page.locator('label[for="witnessName"]'),
+    familyNameLabel: this.page.locator('label[for="witnessFamilyName"]'),
+    addedWitnessesHeading: this.page.getByRole('heading', { name: 'Added witnesses', level: 2, exact: true }),
+    witnessNameAddedRow: this.page.locator('dt[class="govuk-summary-list__key"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

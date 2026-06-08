@@ -6,16 +6,14 @@ export class HelpWithFeesPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/help-with-fees"])');
-
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'Help with paying the fee',
     }),
   } as const satisfies Record<string, Locator>;
@@ -25,7 +23,7 @@ export class HelpWithFeesPage extends CuiBase {
   }
 
   public async completePageAndContinue(option: { helpWithFees: 'wantToApply' | 'alreadyApplied' | 'willPayForAppeal' }): Promise<void> {
-    const element = this.pageForm.locator(`input[type="radio"][value="${option.helpWithFees}"]`);
+    const element = this.page.locator(`input[type="radio"][value="${option.helpWithFees}"]`);
 
     await element.check();
     await expect(element).toBeChecked();

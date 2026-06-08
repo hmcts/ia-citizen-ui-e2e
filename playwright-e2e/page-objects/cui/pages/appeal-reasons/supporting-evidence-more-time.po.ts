@@ -7,14 +7,12 @@ export class SupportingEvidenceMoreTimePage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action*="/supporting-evidence-more-time"])');
-
   public readonly $interactive = {
-    continueButton: this.pageForm.getByRole('button', { name: 'Continue', exact: true }),
+    continueButton: this.page.getByRole('button', { name: 'Continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', {
+    pageHeading: this.page.getByRole('heading', {
       level: 1,
       name: 'Do you want to provide supporting evidence for why you need more time?',
       exact: true,
@@ -26,7 +24,7 @@ export class SupportingEvidenceMoreTimePage extends CuiBase {
   }
 
   public async completePageAndContinue(options: { doYouWishToProvideSupportingEvidence: YesOrNoType }): Promise<void> {
-    const element = this.pageForm.locator(`input[type="radio"][value="${options.doYouWishToProvideSupportingEvidence.toLowerCase()}"]`);
+    const element = this.page.locator(`input[type="radio"][value="${options.doYouWishToProvideSupportingEvidence.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();
 

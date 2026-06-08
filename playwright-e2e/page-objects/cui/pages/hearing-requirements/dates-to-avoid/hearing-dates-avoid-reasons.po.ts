@@ -6,18 +6,16 @@ export class HearingDatesAvoidReasonsPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-dates-avoid-reasons"])');
-
   public readonly $inputs = {
-    reasonForAvoidingDateTextarea: this.pageForm.locator('textarea[name="reason"]'),
+    reasonForAvoidingDateTextarea: this.page.locator('textarea[name="reason"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', {
+    pageHeading: this.page.getByRole('heading', {
       name: 'Why can you or any witnesses not go to the hearing on this date?',
       level: 1,
       exact: true,

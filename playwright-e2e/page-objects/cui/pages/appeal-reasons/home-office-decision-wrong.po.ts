@@ -6,28 +6,26 @@ export class HomeOfficeDecisionWrongPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body', { hasText: 'Home Office decision is wrong?' });
-
   public readonly $inputs = {
-    whyYouThinkHomeOfficeDecisionIsWrong: this.pageForm.locator('textarea[name="applicationReason"]'),
+    whyYouThinkHomeOfficeDecisionIsWrong: this.page.locator('textarea[name="applicationReason"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
-  private readonly howToAnswerQuestionHeading = this.pageForm.getByRole('heading', { level: 2, name: 'How to answer this question', exact: true });
-  private readonly needMoreTimeHeading = this.pageForm.getByRole('heading', { level: 2, name: 'Need more time?', exact: true });
-  private readonly ifYouNeedHelpHeading = this.pageForm.getByRole('heading', { level: 2, name: 'If you need help', exact: true });
+  private readonly howToAnswerQuestionHeading = this.page.getByRole('heading', { level: 2, name: 'How to answer this question', exact: true });
+  private readonly needMoreTimeHeading = this.page.getByRole('heading', { level: 2, name: 'Need more time?', exact: true });
+  private readonly ifYouNeedHelpHeading = this.page.getByRole('heading', { level: 2, name: 'If you need help', exact: true });
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'Why do you think the Home Office decision is wrong?',
     }),
-    helpfulInformationText: this.pageForm.getByText('It may be helpful to look at'),
-    reasonDecisionWrongLabel: this.pageForm.locator('label[for="applicationReason"]'),
+    helpfulInformationText: this.page.getByText('It may be helpful to look at'),
+    reasonDecisionWrongLabel: this.page.locator('label[for="applicationReason"]'),
     howToAnswerQuestionHeading: this.howToAnswerQuestionHeading,
     howToAnswerQuestionsBulletPoint1: this.howToAnswerQuestionHeading.locator('+ ul li').nth(0),
     howToAnswerQuestionsBulletPoint2: this.howToAnswerQuestionHeading.locator('+ ul li').nth(1),

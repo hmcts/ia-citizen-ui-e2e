@@ -6,25 +6,23 @@ export class SponsorNamePage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/sponsor-name"])');
-
   public readonly $inputs = {
-    givenName: this.pageForm.locator('input[name="sponsorGivenNames"]'),
-    familyName: this.pageForm.locator('input[name="sponsorFamilyName"]'),
+    givenName: this.page.locator('input[name="sponsorGivenNames"]'),
+    familyName: this.page.locator('input[name="sponsorFamilyName"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: `What is your sponsor's name?`,
     }),
-    givenNameLabel: this.pageForm.locator('label[for="sponsorGivenNames"]'),
-    familyNameLabel: this.pageForm.locator('label[for="sponsorFamilyName"]'),
+    givenNameLabel: this.page.locator('label[for="sponsorGivenNames"]'),
+    familyNameLabel: this.page.locator('label[for="sponsorFamilyName"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

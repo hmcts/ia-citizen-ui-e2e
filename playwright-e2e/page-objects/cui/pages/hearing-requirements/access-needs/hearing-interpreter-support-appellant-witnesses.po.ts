@@ -7,22 +7,20 @@ export class HearingInterpreterSupportAppellantWitnessesPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-interpreter-support-appellant-Witnesses"])');
-
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
-    interpreterForAppellantCheckbox: this.pageForm.locator('input[value="isInterpreterServicesNeeded"]'),
-    interpreterForWitnessCheckbox: this.pageForm.locator('input[value="isAnyWitnessInterpreterRequired"]'),
-    noInterpreterSupportRequiredCheckbox: this.pageForm.locator('input[value="noInterpreterRequired"]'),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
+    interpreterForAppellantCheckbox: this.page.locator('input[value="isInterpreterServicesNeeded"]'),
+    interpreterForWitnessCheckbox: this.page.locator('input[value="isAnyWitnessInterpreterRequired"]'),
+    noInterpreterSupportRequiredCheckbox: this.page.locator('input[value="noInterpreterRequired"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', { name: 'Who are you requesting support for?', level: 1, exact: true }),
-    hintText: this.pageForm.getByText('If you request an interpreter,'),
-    hintText2: this.pageForm.locator('div[id="interpreterSupport-hint"]'),
+    pageHeading: this.page.getByRole('heading', { name: 'Who are you requesting support for?', level: 1, exact: true }),
+    hintText: this.page.getByText('If you request an interpreter,'),
+    hintText2: this.page.locator('div[id="interpreterSupport-hint"]'),
     interpreterForAppellantLabel: this.$interactive.interpreterForAppellantCheckbox.locator('+ label'),
     interpreterForWitnessLabel: this.$interactive.interpreterForWitnessCheckbox.locator('+ label'),
-    orText: this.pageForm.getByText('or', { exact: true }),
+    orText: this.page.getByText('or', { exact: true }),
     noInterpreterSupportRequiredLabel: this.$interactive.noInterpreterSupportRequiredCheckbox.locator('+ label'),
   } as const satisfies Record<string, Locator>;
 

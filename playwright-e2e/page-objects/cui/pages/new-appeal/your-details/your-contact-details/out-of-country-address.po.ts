@@ -6,23 +6,21 @@ export class OutOfCountryAddressPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/out-of-country-address"])');
-
   public readonly $inputs = {
-    addressTextArea: this.pageForm.locator('textarea[id="outofcountry-address"]'),
+    addressTextArea: this.page.locator('textarea[id="outofcountry-address"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'What is your address?',
     }),
-    enterAddressText: this.pageForm.locator('label[for="outofcountry-address"]'),
+    enterAddressText: this.page.locator('label[for="outofcountry-address"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

@@ -122,7 +122,7 @@ export class DecideFtpaApplicationAppellantNoticeOfDecisionSetAsidePage extends 
             this.$interactive.chooseFileButton.setInputFiles(filePath),
             expect(uploadingText).toBeVisible({ timeout: 15_000 }),
           ]);
-        }).toPass({ intervals: [100], timeout: 30_000 });
+        }).toPass({ intervals: [1_000], timeout: 30_000 });
 
         await expect(uploadingText).not.toBeVisible({ timeout: 10_000 });
         await expect(this.$interactive.chooseFileButton).toHaveValue(new RegExp(`${fileToUpload.replace('.', '\\.')}$`));

@@ -6,18 +6,16 @@ export class HearingSingleSexTypeFemalePage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-single-sex-type-female"])');
-
   public readonly $inputs = {
-    reasonForSingleSextypeHearingTextarea: this.pageForm.locator('textarea[name="reason"]'),
+    reasonForSingleSextypeHearingTextarea: this.page.locator('textarea[name="reason"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', {
+    pageHeading: this.page.getByRole('heading', {
       name: 'Tell us why you need an all-female hearing',
       level: 1,
       exact: true,

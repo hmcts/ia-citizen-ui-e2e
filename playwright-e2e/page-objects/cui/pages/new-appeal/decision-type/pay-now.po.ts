@@ -7,16 +7,14 @@ export class PayNowPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/pay-now"])');
-
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'Do you want to pay for the appeal now?',
     }),
   } as const satisfies Record<string, Locator>;
@@ -26,7 +24,7 @@ export class PayNowPage extends CuiBase {
   }
 
   public async completePageAndContinue(option: { payNowOrLater: payForAppealNowOrLaterType }): Promise<void> {
-    const element = this.pageForm.locator(`input[type="radio"][value="${option.payNowOrLater}"]`);
+    const element = this.page.locator(`input[type="radio"][value="${option.payNowOrLater}"]`);
     await element.check();
     await expect(element).toBeChecked();
     await this.navigationClick(this.$interactive.saveAndContinueButton);

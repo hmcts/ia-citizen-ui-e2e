@@ -6,22 +6,20 @@ export class AskForMoreTimePage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action*="/ask-for-more-time"])');
-
   public readonly $inputs = {
-    askForMoreTime: this.pageForm.locator('textarea[name="askForMoreTime"]'),
+    askForMoreTime: this.page.locator('textarea[name="askForMoreTime"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    continueButton: this.pageForm.getByRole('button', { name: 'Continue', exact: true }),
+    continueButton: this.page.getByRole('button', { name: 'Continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
-  private readonly supportingEvidenceHeadingLocator = this.pageForm.getByRole('heading', { level: 2, name: 'Supporting evidence' });
+  private readonly supportingEvidenceHeadingLocator = this.page.getByRole('heading', { level: 2, name: 'Supporting evidence' });
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', { level: 1, name: 'Ask for more time', exact: true }),
-    howMuchTimeAndWhyYouNeedItText: this.pageForm.locator('p', { hasText: 'You must tell us how much time' }),
-    youMightNotGetMoreTimeText: this.pageForm.locator('div', { hasText: 'You might not get more time' }).last(),
-    askForMoreTimeLabel: this.pageForm.locator('label[for="askForMoreTime"]'),
+    pageHeading: this.page.getByRole('heading', { level: 1, name: 'Ask for more time', exact: true }),
+    howMuchTimeAndWhyYouNeedItText: this.page.locator('p', { hasText: 'You must tell us how much time' }),
+    youMightNotGetMoreTimeText: this.page.locator('div', { hasText: 'You might not get more time' }).last(),
+    askForMoreTimeLabel: this.page.locator('label[for="askForMoreTime"]'),
     supportingEvidenceHeading: this.supportingEvidenceHeadingLocator,
     supportingEvidenceBulletPoint1: this.supportingEvidenceHeadingLocator.locator('+ ul li').nth(0),
   } as const satisfies Record<string, Locator>;

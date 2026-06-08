@@ -7,16 +7,14 @@ export class OutOfCountryHrEeaPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/ooc-hr-eea"])');
-
   public readonly $interactive = {
-    continueButton: this.pageForm.getByRole('button', {
+    continueButton: this.page.getByRole('button', {
       name: 'Continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'Were you outside the UK when you made your application?',
     }),
   } as const satisfies Record<string, Locator>;
@@ -26,7 +24,7 @@ export class OutOfCountryHrEeaPage extends CuiBase {
   }
 
   public async completePageAndContinue(option: { outsideUkWhenApplicationMade: YesOrNoType }): Promise<void> {
-    const element = this.pageForm.locator(`input[type="radio"][value="${option.outsideUkWhenApplicationMade}"]`);
+    const element = this.page.locator(`input[type="radio"][value="${option.outsideUkWhenApplicationMade}"]`);
 
     await element.check();
     await expect(element).toBeChecked();

@@ -6,28 +6,26 @@ export class ApplicantDobPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/date-birth"])');
-
   public readonly $inputs = {
-    day: this.pageForm.locator('input[name="day"]'),
-    month: this.pageForm.locator('input[name="month"]'),
-    year: this.pageForm.locator('input[name="year"]'),
+    day: this.page.locator('input[name="day"]'),
+    month: this.page.locator('input[name="month"]'),
+    year: this.page.locator('input[name="year"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'What is your date of birth?',
     }),
-    dateHintText: this.pageForm.locator('div[id="date-hint"]'),
-    dayLabel: this.pageForm.locator('label[for="day"]'),
-    monthLabel: this.pageForm.locator('label[for="month"]'),
-    yearLabel: this.pageForm.locator('label[for="year"]'),
+    dateHintText: this.page.locator('div[id="date-hint"]'),
+    dayLabel: this.page.locator('label[for="day"]'),
+    monthLabel: this.page.locator('label[for="month"]'),
+    yearLabel: this.page.locator('label[for="year"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

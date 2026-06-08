@@ -7,16 +7,14 @@ export class InTheUkPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/in-the-uk"])');
-
   public readonly $interactive = {
-    continueButton: this.pageForm.locator('button[name="continue"]', {
+    continueButton: this.page.locator('button[name="continue"]', {
       hasText: 'Continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'Are you currently living in the United Kingdom?',
     }),
   } as const satisfies Record<string, Locator>;
@@ -26,7 +24,7 @@ export class InTheUkPage extends CuiBase {
   }
 
   public async completePageAndContinue(option: { isUserInTheUk: YesOrNoType }): Promise<void> {
-    const element = this.pageForm.locator(`input[type="radio"][value="${option.isUserInTheUk}"]`);
+    const element = this.page.locator(`input[type="radio"][value="${option.isUserInTheUk}"]`);
 
     switch (option.isUserInTheUk) {
       case 'Yes':

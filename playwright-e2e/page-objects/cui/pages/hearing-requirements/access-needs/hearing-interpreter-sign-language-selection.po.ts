@@ -7,25 +7,23 @@ export class HearingInterpreterSignLanguageSelectionPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-interpreter-sign-language-selection"])');
-
   public readonly $inputs = {
-    manuallyEnterSignLanguageInput: this.pageForm.locator('input[name="languageManualEntryDescription"]'),
+    manuallyEnterSignLanguageInput: this.page.locator('input[name="languageManualEntryDescription"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
-    selectSignLanguageDropdown: this.pageForm.locator('select[name="languageRefData"]'),
-    enterLanguageManuallyCheckbox: this.pageForm.locator('input[name="languageManualEntry"]'),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
+    selectSignLanguageDropdown: this.page.locator('select[name="languageRefData"]'),
+    enterLanguageManuallyCheckbox: this.page.locator('input[name="languageManualEntry"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', { name: 'Tell us about your sign language requirements', level: 1, exact: true }),
-    weWillProvideASignLanguageInterpreterText: this.pageForm.getByText('We will provide a sign language interpreter'),
-    selectSignLanguageLabel: this.pageForm.locator('label[for="languageRefData"]'),
-    orText: this.pageForm.getByText('Or', { exact: true }),
+    pageHeading: this.page.getByRole('heading', { name: 'Tell us about your sign language requirements', level: 1, exact: true }),
+    weWillProvideASignLanguageInterpreterText: this.page.getByText('We will provide a sign language interpreter'),
+    selectSignLanguageLabel: this.page.locator('label[for="languageRefData"]'),
+    orText: this.page.getByText('Or', { exact: true }),
     enterLanguageManuallyLabel: this.$interactive.enterLanguageManuallyCheckbox.locator('+ label'),
-    manuallyEnteredSignLanguageLabel: this.pageForm.locator('label[for="languageManualEntryDescription"]'),
+    manuallyEnteredSignLanguageLabel: this.page.locator('label[for="languageManualEntryDescription"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

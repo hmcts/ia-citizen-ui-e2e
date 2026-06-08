@@ -6,27 +6,25 @@ export class AsylumSupportPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/asylum-support"])');
-
   public readonly $inputs = {
-    asylumSupportReferenceNumberInput: this.pageForm.locator('input[id="asylumSupportRefNumber"]'),
+    asylumSupportReferenceNumberInput: this.page.locator('input[id="asylumSupportRefNumber"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'What is your asylum support reference number?',
     }),
-    asylumSupportFirstParagraph: this.pageForm.locator('fieldset[class="govuk-fieldset"] p').nth(0),
-    asylumSupportSecondParagraph: this.pageForm.locator('fieldset[class="govuk-fieldset"] p').nth(1),
-    asylumSupportWarningText: this.pageForm.locator('fieldset[class="govuk-fieldset"] [class="govuk-warning-text"]'),
-    asylumSupportrefLabel: this.pageForm.locator('label[for="asylumSupportRefNumber"]'),
-    asylumSupportDateHintText: this.pageForm.locator('div[id="asylumSupportRefNumber-hint"]'),
+    asylumSupportFirstParagraph: this.page.locator('fieldset[class="govuk-fieldset"] p').nth(0),
+    asylumSupportSecondParagraph: this.page.locator('fieldset[class="govuk-fieldset"] p').nth(1),
+    asylumSupportWarningText: this.page.locator('fieldset[class="govuk-fieldset"] [class="govuk-warning-text"]'),
+    asylumSupportrefLabel: this.page.locator('label[for="asylumSupportRefNumber"]'),
+    asylumSupportDateHintText: this.page.locator('div[id="asylumSupportRefNumber-hint"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

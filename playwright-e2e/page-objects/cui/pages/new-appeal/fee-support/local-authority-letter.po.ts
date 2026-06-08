@@ -8,21 +8,20 @@ export class LocalAuthorityLetterPage extends CuiBase {
   }
 
   private readonly dataUtils = new DataUtils();
-  private readonly pageForm = this.page.locator('body:has(form[action="/local-authority-letter"])');
 
   public readonly $interactive = {
-    chooseFileToUploadInput: this.pageForm.locator('input[id="file-upload"]'),
-    uploadFileButton: this.pageForm.locator('button[name="uploadFile"]'),
-    saveAndContinueButton: this.pageForm.locator('button', {
+    chooseFileToUploadInput: this.page.locator('input[id="file-upload"]'),
+    uploadFileButton: this.page.locator('button[name="uploadFile"]'),
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'Upload local authority letter',
     }),
-    fileUploadedTableRow: this.pageForm.locator('table[id="files-uploaded"] a[class="govuk-link"]').filter({ hasNotText: 'Delete' }),
+    fileUploadedTableRow: this.page.locator('table[id="files-uploaded"] a[class="govuk-link"]').filter({ hasNotText: 'Delete' }),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
@@ -41,7 +40,7 @@ export class LocalAuthorityLetterPage extends CuiBase {
         this.interceptNetworkRequestToVerifyUploadDecisionLetterSucceeded({ timeoutMs: 15_000 }),
         this.$interactive.uploadFileButton.click(),
       ]);
-    }).toPass({ intervals: [100], timeout: 30_000 });
+    }).toPass({ intervals: [1_000], timeout: 30_000 });
 
     await expect(this.$static.fileUploadedTableRow.filter({ hasText: fileToUpload })).toBeVisible();
     await this.navigationClick(this.$interactive.saveAndContinueButton);

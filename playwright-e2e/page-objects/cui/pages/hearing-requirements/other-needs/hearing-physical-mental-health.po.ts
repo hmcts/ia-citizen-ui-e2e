@@ -7,20 +7,18 @@ export class HearingPhysicalMentalHealthPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-physical-mental-health"])');
-
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', {
+    pageHeading: this.page.getByRole('heading', {
       name: 'Do you have any physical or mental health conditions that may affect you at the hearing?',
       level: 1,
       exact: true,
     }),
-    yesLabel: this.pageForm.locator('input[type="radio"][value="yes"] + label'),
-    noLabel: this.pageForm.locator('input[type="radio"][value="no"] + label'),
+    yesLabel: this.page.locator('input[type="radio"][value="yes"] + label'),
+    noLabel: this.page.locator('input[type="radio"][value="no"] + label'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
@@ -42,7 +40,7 @@ export class HearingPhysicalMentalHealthPage extends CuiBase {
       await this.verifyAllTextOnPage();
     }
 
-    const element = this.pageForm.locator(`input[type="radio"][value="${option.anyPhysicalOrMentalHealthConditions.toLowerCase()}"]`);
+    const element = this.page.locator(`input[type="radio"][value="${option.anyPhysicalOrMentalHealthConditions.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();
 
