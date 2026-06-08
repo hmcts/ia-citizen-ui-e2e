@@ -7,46 +7,44 @@ export class AppealTypePage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/appeal-type"])');
-
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
-    reasonsToSelectProtectionAppealTypeLink: this.pageForm.getByText('Reasons to select Protection', { exact: true }),
-    reasonsToSelectHumanRightsAppealTypeLink: this.pageForm.getByText('Reasons to select Human Rights', { exact: true }),
-    reasonsToSelectEuropeanEconomicAreaAppealTypeLink: this.pageForm.getByText('Reasons to select European Economic Area', { exact: true }),
-    reasonsToSelectRevocationOfProtectionAppealTypeLink: this.pageForm.getByText('Reasons to select Revocation of Protection Status', {
+    reasonsToSelectProtectionAppealTypeLink: this.page.getByText('Reasons to select Protection', { exact: true }),
+    reasonsToSelectHumanRightsAppealTypeLink: this.page.getByText('Reasons to select Human Rights', { exact: true }),
+    reasonsToSelectEuropeanEconomicAreaAppealTypeLink: this.page.getByText('Reasons to select European Economic Area', { exact: true }),
+    reasonsToSelectRevocationOfProtectionAppealTypeLink: this.page.getByText('Reasons to select Revocation of Protection Status', {
       exact: true,
     }),
-    reasonsToSelectDeprivationOfCitizenshipAppealTypeLink: this.pageForm.getByText('Reasons to select Deprivation of Citizenship', { exact: true }),
-    reasonsToSelectEuSettlementSchemeAppealTypeLink: this.pageForm.getByText('Reasons to select EU Settlement Scheme', { exact: true }),
+    reasonsToSelectDeprivationOfCitizenshipAppealTypeLink: this.page.getByText('Reasons to select Deprivation of Citizenship', { exact: true }),
+    reasonsToSelectEuSettlementSchemeAppealTypeLink: this.page.getByText('Reasons to select EU Settlement Scheme', { exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'What is your appeal type?',
     }),
-    appealTypeHintFirstParagraph: this.pageForm.locator('div[id="appealType-hint"] p').nth(0),
-    appealTypeHintSecondParagraph: this.pageForm.locator('div[id="appealType-hint"] p').nth(1),
-    protectionAppealTypeLabel: this.pageForm.locator('label', { hasText: /^\s*Protection/i }),
-    protectionAppealTypeSummary: this.pageForm.locator('details', { hasText: 'Reasons to select Protection' }).locator('div.govuk-details__text'),
-    humanRightsAppealTypeLabel: this.pageForm.locator('label', { hasText: /^\s*Human Rights/i }),
-    humanRightsAppealTypeSummary: this.pageForm.locator('details', { hasText: 'Reasons to select Human Rights' }).locator('div.govuk-details__text'),
-    europeanEconomicAreaAppealTypeLabel: this.pageForm.locator('label', { hasText: /^\s*European Economic Area/i }),
-    europeanEconomicAreaAppealTypeSummary: this.pageForm
+    appealTypeHintFirstParagraph: this.page.locator('div[id="appealType-hint"] p').nth(0),
+    appealTypeHintSecondParagraph: this.page.locator('div[id="appealType-hint"] p').nth(1),
+    protectionAppealTypeLabel: this.page.locator('label', { hasText: /^\s*Protection/i }),
+    protectionAppealTypeSummary: this.page.locator('details', { hasText: 'Reasons to select Protection' }).locator('div.govuk-details__text'),
+    humanRightsAppealTypeLabel: this.page.locator('label', { hasText: /^\s*Human Rights/i }),
+    humanRightsAppealTypeSummary: this.page.locator('details', { hasText: 'Reasons to select Human Rights' }).locator('div.govuk-details__text'),
+    europeanEconomicAreaAppealTypeLabel: this.page.locator('label', { hasText: /^\s*European Economic Area/i }),
+    europeanEconomicAreaAppealTypeSummary: this.page
       .locator('details', { hasText: 'Reasons to select European Economic Area' })
       .locator('div.govuk-details__text'),
-    revocationOfProtectionAppealTypeLabel: this.pageForm.locator('label', { hasText: /^\s*Revocation of Protection/i }),
-    revocationOfProtectionAppealTypeSummary: this.pageForm
+    revocationOfProtectionAppealTypeLabel: this.page.locator('label', { hasText: /^\s*Revocation of Protection/i }),
+    revocationOfProtectionAppealTypeSummary: this.page
       .locator('details', { hasText: 'Reasons to select Revocation of Protection Status' })
       .locator('div.govuk-details__text'),
-    deprivationOfCitizenshipAppealTypeLabel: this.pageForm.locator('label', { hasText: /^\s*Deprivation of Citizenship/i }),
-    deprivationOfCitizenshipAppealTypeSummary: this.pageForm
+    deprivationOfCitizenshipAppealTypeLabel: this.page.locator('label', { hasText: /^\s*Deprivation of Citizenship/i }),
+    deprivationOfCitizenshipAppealTypeSummary: this.page
       .locator('details', { hasText: 'Reasons to select Deprivation of Citizenship' })
       .locator('div.govuk-details__text'),
-    eUSettlementSchemeAppealTypeLabel: this.pageForm.locator('label', { hasText: /^\s*EU Settlement Scheme/i }),
-    eUSettlementSchemeAppealTypeSummary: this.pageForm
+    eUSettlementSchemeAppealTypeLabel: this.page.locator('label', { hasText: /^\s*EU Settlement Scheme/i }),
+    eUSettlementSchemeAppealTypeSummary: this.page
       .locator('details', { hasText: 'Reasons to select EU Settlement Scheme' })
       .locator('div.govuk-details__text'),
   } as const satisfies Record<string, Locator>;
@@ -140,7 +138,7 @@ export class AppealTypePage extends CuiBase {
     }
 
     const optionToSelect = options.appealType;
-    const element = this.pageForm.getByRole('radio', { name: new RegExp(`^${optionToSelect}`, 'i') });
+    const element = this.page.getByRole('radio', { name: new RegExp(`^${optionToSelect}`, 'i') });
 
     await element.check();
     await expect(element).toBeChecked();

@@ -20,7 +20,7 @@ export const cuiPageFixtures = {
   cui_login: async ({ idam_signInPage, cui_pages }: PageFixtures, use) => {
     let cuiPages: CuiPages;
     await use(async (options: { email: string; password: string; pageContext?: Page }) => {
-      cuiPages = options.pageContext ? await cui_pages.newBrowserContext({ pageContext: options.pageContext }) : cui_pages;
+      cuiPages = options.pageContext ? await cui_pages.newPageContext({ pageContext: options.pageContext }) : cui_pages;
 
       await cuiPages.startAppealPage.goTo();
       await cuiPages.startAppealPage.verifyUserIsOnPage();
@@ -35,7 +35,7 @@ export const cuiPageFixtures = {
   cui_signOutAndBackIn: async ({ idam_signInPage, cui_pages }: PageFixtures, use) => {
     let cuiPages: CuiPages;
     await use(async (options: { email: string; password: string; pageContext?: Page }) => {
-      cuiPages = options.pageContext ? await cui_pages.newBrowserContext({ pageContext: options.pageContext }) : cui_pages;
+      cuiPages = options.pageContext ? await cui_pages.newPageContext({ pageContext: options.pageContext }) : cui_pages;
 
       await cuiPages.appealOverviewPage.navigationClick(cuiPages.appealOverviewPage.$headerComponent.signOutLink);
       await cuiPages.startAppealPage.verifyUserIsOnPage();

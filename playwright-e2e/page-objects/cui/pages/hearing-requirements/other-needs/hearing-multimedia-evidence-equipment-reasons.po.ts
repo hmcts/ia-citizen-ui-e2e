@@ -6,18 +6,16 @@ export class HearingMultimediaEvidenceEquipmentReasonsPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-multimedia-evidence-equipment-reasons"])');
-
   public readonly $inputs = {
-    reasonUnableToBringEquipmentTextarea: this.pageForm.locator('textarea[name="reason"]'),
+    reasonUnableToBringEquipmentTextarea: this.page.locator('textarea[name="reason"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', {
+    pageHeading: this.page.getByRole('heading', {
       name: 'Tell us why it is not possible to bring the equipment to play this evidence and what you will need to play it',
       level: 1,
       exact: true,

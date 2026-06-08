@@ -7,16 +7,14 @@ export class HearingSingleSexPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-single-sex"])');
-
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', { name: 'Will you need an all-female or all-male hearing?', level: 1, exact: true }),
-    yesLabel: this.pageForm.locator('input[type="radio"][value="yes"] + label'),
-    noLabel: this.pageForm.locator('input[type="radio"][value="no"] + label'),
+    pageHeading: this.page.getByRole('heading', { name: 'Will you need an all-female or all-male hearing?', level: 1, exact: true }),
+    yesLabel: this.page.locator('input[type="radio"][value="yes"] + label'),
+    noLabel: this.page.locator('input[type="radio"][value="no"] + label'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
@@ -38,7 +36,7 @@ export class HearingSingleSexPage extends CuiBase {
       await this.verifyAllTextOnPage();
     }
 
-    const element = this.pageForm.locator(`input[type="radio"][value="${option.willYouNeedAllFemaleOrMaleHearing.toLowerCase()}"]`);
+    const element = this.page.locator(`input[type="radio"][value="${option.willYouNeedAllFemaleOrMaleHearing.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();
 

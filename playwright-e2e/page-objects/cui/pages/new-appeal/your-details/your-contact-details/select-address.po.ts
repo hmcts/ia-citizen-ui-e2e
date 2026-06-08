@@ -6,23 +6,21 @@ export class SelectAddressPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/select-address"])');
-
   public readonly $interactive = {
-    selectAddressDropdown: this.pageForm.locator('select[id="address"]'),
-    saveAndContinueButton: this.pageForm.locator('button', {
+    selectAddressDropdown: this.page.locator('select[id="address"]'),
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
-    changeAddressLink: this.pageForm.getByRole('link', { name: 'Change', exact: true }),
-    cantFindMyAddressLink: this.pageForm.getByRole('link', { name: 'I cant find my address in the list', exact: true }),
+    changeAddressLink: this.page.getByRole('link', { name: 'Change', exact: true }),
+    cantFindMyAddressLink: this.page.getByRole('link', { name: 'I cant find my address in the list', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'What is your address?',
     }),
-    postCodeText: this.pageForm.getByText('Postcode', { exact: true }),
-    selectAddressLabel: this.pageForm.locator('label[for="address"]'),
+    postCodeText: this.page.getByText('Postcode', { exact: true }),
+    selectAddressLabel: this.page.locator('label[for="address"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

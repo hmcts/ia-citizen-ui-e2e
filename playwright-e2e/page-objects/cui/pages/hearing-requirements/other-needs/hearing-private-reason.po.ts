@@ -6,18 +6,16 @@ export class HearingPrivateReasonPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-private-reason"])');
-
   public readonly $inputs = {
-    reasonForPrivateHearingTextarea: this.pageForm.locator('textarea[name="reason"]'),
+    reasonForPrivateHearingTextarea: this.page.locator('textarea[name="reason"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', {
+    pageHeading: this.page.getByRole('heading', {
       name: 'Tell us why you need a private hearing',
       level: 1,
       exact: true,

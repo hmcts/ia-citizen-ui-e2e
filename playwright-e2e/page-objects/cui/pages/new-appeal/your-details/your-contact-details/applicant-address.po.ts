@@ -6,25 +6,23 @@ export class ApplicantAddressPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/address"])');
-
   public readonly $inputs = {
-    postcode: this.pageForm.locator('input[id="postcode"]'),
-    enterAddressManuallyLink: this.pageForm.getByRole('link', { name: 'I want to enter my address manually', exact: true }),
+    postcode: this.page.locator('input[id="postcode"]'),
+    enterAddressManuallyLink: this.page.getByRole('link', { name: 'I want to enter my address manually', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    enterAddressManuallyLink: this.pageForm.locator('a[href="/manual-address"]'),
-    findAddressButton: this.pageForm.locator('button', {
+    enterAddressManuallyLink: this.page.locator('a[href="/manual-address"]'),
+    findAddressButton: this.page.locator('button', {
       hasText: 'Find address',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'What is your address?',
     }),
-    enterPostCodeLabel: this.pageForm.locator('label[for="postcode"]'),
+    enterPostCodeLabel: this.page.locator('label[for="postcode"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

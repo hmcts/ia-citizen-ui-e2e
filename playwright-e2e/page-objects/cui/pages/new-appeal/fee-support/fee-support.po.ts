@@ -7,27 +7,25 @@ export class FeeSupportPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/fee-support"])');
-
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'Do you have to pay the fee?',
     }),
-    feeForAppealText: this.pageForm.locator('p', { hasText: 'The fee for this appeal' }),
-    selectOneText: this.pageForm.getByText('Select one', { exact: true }),
-    iGetAsylumSupportLabel: this.pageForm.locator('label[for="asylumSupportFromHo"]'),
-    iGotAFeeWaiverLabel: this.pageForm.locator('label[for="feeWaiverFromHo"]'),
-    iAmUnder18Label: this.pageForm.locator('label[for="under18GetSupportFromLocalAuthority"]'),
-    iAmTheParentLabel: this.pageForm.locator('label[for="parentGetSupportFromLocalAuthority"]'),
-    orText: this.pageForm.getByText('or', { exact: true }),
-    statementDoNotApplyLabel: this.pageForm.locator('label[for="noneOfTheseStatements"]'),
-    statementsDoNotApplyHintText: this.pageForm
+    feeForAppealText: this.page.locator('p', { hasText: 'The fee for this appeal' }),
+    selectOneText: this.page.getByText('Select one', { exact: true }),
+    iGetAsylumSupportLabel: this.page.locator('label[for="asylumSupportFromHo"]'),
+    iGotAFeeWaiverLabel: this.page.locator('label[for="feeWaiverFromHo"]'),
+    iAmUnder18Label: this.page.locator('label[for="under18GetSupportFromLocalAuthority"]'),
+    iAmTheParentLabel: this.page.locator('label[for="parentGetSupportFromLocalAuthority"]'),
+    orText: this.page.getByText('or', { exact: true }),
+    statementDoNotApplyLabel: this.page.locator('label[for="noneOfTheseStatements"]'),
+    statementsDoNotApplyHintText: this.page
       .locator('div[class="govuk-radios__item"]')
       .filter({ has: this.page.locator('label[for="noneOfTheseStatements"]') })
       .locator('div[class*="govuk-hint"]'),
@@ -75,9 +73,7 @@ export class FeeSupportPage extends CuiBase {
       await this.verifyAllTextOnPage();
     }
 
-    const element = this.pageForm
-      .locator('div[class*="radios__item"]', { hasText: option.whetherApplicantHasToPayAFee })
-      .locator('input[type="radio"]');
+    const element = this.page.locator('div[class*="radios__item"]', { hasText: option.whetherApplicantHasToPayAFee }).locator('input[type="radio"]');
 
     await element.check();
     await expect(element).toBeChecked();

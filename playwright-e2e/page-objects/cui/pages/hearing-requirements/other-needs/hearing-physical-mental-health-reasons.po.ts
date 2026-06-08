@@ -6,18 +6,16 @@ export class HearingPhysicalMentalHealthReasonsPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-physical-mental-health-reasons"])');
-
   public readonly $inputs = {
-    howManyPhysicalOrMentalHealthConditionsTextarea: this.pageForm.locator('textarea[name="reason"]'),
+    howManyPhysicalOrMentalHealthConditionsTextarea: this.page.locator('textarea[name="reason"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', {
+    pageHeading: this.page.getByRole('heading', {
       name: 'Tell us how any physical or mental health conditions you have may affect you at the hearing',
       level: 1,
       exact: true,

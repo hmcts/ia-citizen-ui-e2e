@@ -7,17 +7,15 @@ export class HearingInterpreterTypesPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-interpreter-types"])');
-
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
-    spokenLanguageInterpreterCheckbox: this.pageForm.locator('input[value="spokenLanguageInterpreter"]'),
-    signLanguageInterpreterCheckbox: this.pageForm.locator('input[value="signLanguageInterpreter"]'),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
+    spokenLanguageInterpreterCheckbox: this.page.locator('input[value="spokenLanguageInterpreter"]'),
+    signLanguageInterpreterCheckbox: this.page.locator('input[value="signLanguageInterpreter"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', { name: 'What kind of interpreter do you need to request?', level: 1, exact: true }),
-    interpreterTypeHintText: this.pageForm.locator('div[id="interpreterType-hint"]'),
+    pageHeading: this.page.getByRole('heading', { name: 'What kind of interpreter do you need to request?', level: 1, exact: true }),
+    interpreterTypeHintText: this.page.locator('div[id="interpreterType-hint"]'),
     spokenLanguageInterpreterLabel: this.$interactive.spokenLanguageInterpreterCheckbox.locator('+ label'),
     spokenLanguageInterpreterHintText: this.$interactive.spokenLanguageInterpreterCheckbox.locator('+ label + div'),
     signLanguageInterpreterLabel: this.$interactive.signLanguageInterpreterCheckbox.locator('+ label'),

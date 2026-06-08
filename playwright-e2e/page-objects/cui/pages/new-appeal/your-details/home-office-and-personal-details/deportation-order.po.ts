@@ -7,21 +7,19 @@ export class DeportationOrderPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/deportation-order"])');
-
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'Has a deportation order been made against you?',
     }),
-    informationText: this.pageForm.locator('p', { hasText: 'This information' }),
-    yesLabel: this.pageForm.locator('label[for="answer"]'),
-    noLabel: this.pageForm.locator('label[for="answer-2"]'),
+    informationText: this.page.locator('p', { hasText: 'This information' }),
+    yesLabel: this.page.locator('label[for="answer"]'),
+    noLabel: this.page.locator('label[for="answer-2"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
@@ -46,7 +44,7 @@ export class DeportationOrderPage extends CuiBase {
       await this.verifyAllTextOnPage();
     }
 
-    const element = this.pageForm.locator(`input[type="radio"][value="${option.deportationOrderReceived}"]`);
+    const element = this.page.locator(`input[type="radio"][value="${option.deportationOrderReceived}"]`);
     await element.check();
     await expect(element).toBeChecked();
     await this.navigationClick(this.$interactive.saveAndContinueButton);

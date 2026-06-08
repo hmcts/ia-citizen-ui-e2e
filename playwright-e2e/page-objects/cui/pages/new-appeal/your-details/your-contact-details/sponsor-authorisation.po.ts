@@ -7,16 +7,14 @@ export class SponsorAuthorisationPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/sponsor-authorisation"])');
-
   public readonly $interactive = {
-    continueButton: this.pageForm.locator('button[name="continue"]', {
+    continueButton: this.page.locator('button[name="continue"]', {
       hasText: 'Continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'Do you agree to let your sponsor have access to information about your appeal?',
     }),
   } as const satisfies Record<string, Locator>;
@@ -26,7 +24,7 @@ export class SponsorAuthorisationPage extends CuiBase {
   }
 
   public async completePageAndContinue(option: { allowSponsorToSeeAppealInformation: YesOrNoType }): Promise<void> {
-    const element = this.pageForm.locator(`input[type="radio"][value="${option.allowSponsorToSeeAppealInformation}"]`);
+    const element = this.page.locator(`input[type="radio"][value="${option.allowSponsorToSeeAppealInformation}"]`);
     await element.check();
     await expect(element).toBeChecked();
     await this.navigationClick(this.$interactive.continueButton);

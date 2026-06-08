@@ -2,14 +2,14 @@ import { Page, Locator, expect } from '@playwright/test';
 import { ExuiBase } from '../../../../exui-base';
 import { DataUtils } from '../../../../../../utils';
 
-export class UploadHomeOfficeBundlePage extends ExuiBase {
+export class UploadHomeOfficeAppealResponsePage extends ExuiBase {
   private readonly dataUtils: DataUtils = new DataUtils();
   constructor(page: Page) {
     super(page);
   }
 
   public readonly $inputs = {
-    describeDocumentTextArea: this.page.locator('textarea[id^="homeOfficeBundle_"][id$="_description"]'),
+    describeDocumentTextArea: this.page.locator('textarea[id="homeOfficeAppealResponseDescription"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
@@ -18,12 +18,12 @@ export class UploadHomeOfficeBundlePage extends ExuiBase {
     cancelButton: this.$commonElements.cancelButton,
     addNewButton: this.page.getByRole('button', { name: 'Add new', exact: true }),
     removeButton: this.page.locator('button', { hasText: 'Remove' }),
-    chooseFileButton: this.page.locator('input[id^="homeOfficeBundle_"][id$="_document"]'),
+    chooseFileButton: this.page.locator('input[id="homeOfficeAppealResponseDocument"]'),
     cancelUploadButton: this.page.getByRole('button', { name: 'Cancel upload', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.page.getByRole('heading', { level: 1, name: 'Upload Home Office bundle', exact: true }),
+    pageHeading: this.page.getByRole('heading', { level: 1, name: 'Upload the appeal response', exact: true }),
     caseRecordHeading: this.page.getByRole('heading', { level: 1, name: 'Case record for' }),
     filesShouldBeHeading: this.page.getByRole('heading', { level: 4, name: 'Files should be:', exact: true }),
     filesShouldBeBulletPoint1: this.page.locator('markdown', { hasText: 'Files should be:' }).locator('li').nth(0),
@@ -31,16 +31,15 @@ export class UploadHomeOfficeBundlePage extends ExuiBase {
     filesShouldBeBulletPoint3: this.page.locator('markdown', { hasText: 'Files should be:' }).locator('li').nth(2),
     alreadyUploadedFilesLabel: this.page.locator('dt[class="case-field__label"]'),
     fileUploaded1: this.page.locator('dd[class="case-field__value"] span').nth(0),
-    uploadHomeOfficeBundleLevel2Heading: this.page.getByRole('heading', { level: 2, name: 'Upload Home Office bundle', exact: true }),
-    uploadHomeOfficeBundleLevel3Heading: this.page.getByRole('heading', { level: 3, name: 'Upload Home Office bundle', exact: true }),
-    homeOfficeBundleRequiredText: this.page.locator('div[id="homeOfficeBundle"] span'),
-    uploadFileText: this.page.locator('label[for^="homeOfficeBundle_"][for$="_document"]'),
-    describeDocumentLabel: this.page.locator('label[for^="homeOfficeBundle_"][for$="_description"]'),
+    documentLabel: this.page.locator('label[for="homeOfficeAppealResponseDocument"]'),
+    documentDesciptionLabel: this.page.locator('label[for="homeOfficeAppealResponseDescription"]'),
+    documentDescriptionHint: this.page.getByText('For example,'),
+    additionalEvidenceHeading: this.page.getByRole('heading', { level: 2, name: 'Add any additional evidence here (Optional)', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({
-      urlPath: 'trigger/uploadHomeOfficeBundle/uploadHomeOfficeBundleuploadHomeOfficeBundle',
+      urlPath: 'trigger/uploadHomeOfficeAppealResponse/uploadHomeOfficeAppealResponsehomeOfficeAppealResponse',
       pageHeading: this.$static.pageHeading,
     });
   }
@@ -51,7 +50,7 @@ export class UploadHomeOfficeBundlePage extends ExuiBase {
       expect(this.$static.filesShouldBeHeading).toBeVisible(),
       expect(this.$static.filesShouldBeBulletPoint1).toHaveText('a maximum of 100MB in size (larger files must be split)'),
       expect(this.$static.filesShouldBeBulletPoint1).toBeVisible(),
-      expect(this.$static.filesShouldBeBulletPoint2).toHaveText('labelled clearly, e.g. HObundle.pdf'),
+      expect(this.$static.filesShouldBeBulletPoint2).toHaveText('labelled clearly, e.g. HOappealresponse.pdf'),
       expect(this.$static.filesShouldBeBulletPoint2).toBeVisible(),
       expect(this.$static.filesShouldBeBulletPoint3).toHaveText(
         'in Word or PDF format - other file formats must be sent to both the appellant and Tribunal',
@@ -61,31 +60,21 @@ export class UploadHomeOfficeBundlePage extends ExuiBase {
       expect(this.$static.alreadyUploadedFilesLabel).toBeVisible(),
       expect(this.$static.fileUploaded1).toHaveText('- None'),
       expect(this.$static.fileUploaded1).toBeVisible(),
-      expect(this.$static.uploadHomeOfficeBundleLevel2Heading).toBeVisible(),
-      expect(this.$static.homeOfficeBundleRequiredText).toHaveText('Upload Home Office bundle is required'),
-      expect(this.$static.homeOfficeBundleRequiredText).toBeVisible(),
+      expect(this.$static.documentLabel).toHaveText('Upload the appeal response'),
+      expect(this.$static.documentLabel).toBeVisible(),
+      expect(this.$static.documentDesciptionLabel).toHaveText('Describe the document (Optional)'),
+      expect(this.$static.documentDesciptionLabel).toBeVisible(),
+      expect(this.$static.documentDescriptionHint).toHaveText('For example, Home Office response to appeal'),
+      expect(this.$static.documentDescriptionHint).toBeVisible(),
+      expect(this.$static.additionalEvidenceHeading).toBeVisible(),
     ]);
   }
 
-  public async completePageAndContinue(options: { description: string; nameOfFileToUpload?: string }): Promise<void> {
+  public async completePageAndContinue(options: { description?: string; nameOfFileToUpload?: string }): Promise<void> {
     await this.verifyAllTextOnPage();
 
-    const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Home_Office_Bundle.txt';
+    const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Home_Office_Appeal_Reason.txt';
     const filePath = await this.dataUtils.fetchDocumentUploadPath(fileToUpload);
-
-    await this.$interactive.addNewButton.click();
-
-    await Promise.all([
-      expect(this.$static.uploadHomeOfficeBundleLevel3Heading).toBeVisible(),
-      expect(this.$interactive.removeButton).toBeVisible(),
-      expect(this.$static.uploadFileText).toHaveText('Upload a file'),
-      expect(this.$static.uploadFileText).toBeVisible(),
-      expect(this.$interactive.chooseFileButton).toBeVisible(),
-      expect(this.$interactive.cancelUploadButton).toBeVisible(),
-      expect(this.$static.describeDocumentLabel).toHaveText('Describe the document'),
-      expect(this.$static.describeDocumentLabel).toBeVisible(),
-      expect(this.$inputs.describeDocumentTextArea).toBeVisible(),
-    ]);
 
     const uploadingText = this.page.locator('span[role="alert"]', { hasText: 'Uploading' });
 
@@ -95,12 +84,15 @@ export class UploadHomeOfficeBundlePage extends ExuiBase {
         this.$interactive.chooseFileButton.setInputFiles(filePath),
         expect(uploadingText).toBeVisible({ timeout: 15_000 }),
       ]);
-    }).toPass({ intervals: [100], timeout: 30_000 });
+    }).toPass({ intervals: [1_000], timeout: 30_000 });
 
     await expect(uploadingText).not.toBeVisible({ timeout: 10_000 });
     await expect(this.$interactive.chooseFileButton).toHaveValue(new RegExp(`${fileToUpload.replace('.', '\\.')}$`));
-    await this.$inputs.describeDocumentTextArea.fill(options.description);
-    await expect(this.$inputs.describeDocumentTextArea).toHaveValue(options.description);
+
+    if (options.description) {
+      await this.$inputs.describeDocumentTextArea.fill(options.description);
+      await expect(this.$inputs.describeDocumentTextArea).toHaveValue(options.description);
+    }
 
     await this.navigationClick(this.$interactive.continueButton);
   }

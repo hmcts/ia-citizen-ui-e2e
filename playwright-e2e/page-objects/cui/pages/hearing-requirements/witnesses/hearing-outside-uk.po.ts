@@ -7,21 +7,19 @@ export class HearingOutsideUKPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-outside-uk"])');
-
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', {
+    pageHeading: this.page.getByRole('heading', {
       name: 'Will you or any witnesses take part in the hearing from outside the UK?',
       level: 1,
       exact: true,
     }),
-    hearingOutsideUKHintText: this.pageForm.locator('div[id="answer-hint"]'),
-    yesLabel: this.pageForm.locator('input[type="radio"][value="yes"] + label'),
-    noLabel: this.pageForm.locator('input[type="radio"][value="no"] + label'),
+    hearingOutsideUKHintText: this.page.locator('div[id="answer-hint"]'),
+    yesLabel: this.page.locator('input[type="radio"][value="yes"] + label'),
+    noLabel: this.page.locator('input[type="radio"][value="no"] + label'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
@@ -48,7 +46,7 @@ export class HearingOutsideUKPage extends CuiBase {
       await this.verifyAllTextOnPage();
     }
 
-    const element = this.pageForm.locator(`input[type="radio"][value="${option.doesApplicantHaveAWitness.toLowerCase()}"]`);
+    const element = this.page.locator(`input[type="radio"][value="${option.doesApplicantHaveAWitness.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();
 

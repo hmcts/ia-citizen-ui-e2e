@@ -6,28 +6,26 @@ export class SponsorContactPreferencesPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/sponsor-contact-preferences"])');
-
   public readonly $inputs = {
-    emailInput: this.pageForm.locator('input[id="email-value"]'),
-    phoneNumberInput: this.pageForm.locator('input[id="text-message-value"]'),
+    emailInput: this.page.locator('input[id="email-value"]'),
+    phoneNumberInput: this.page.locator('input[id="text-message-value"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    emailCheckbox: this.pageForm.locator('input[type="checkbox"][value="email"]'),
-    mobilePhoneCheckbox: this.pageForm.locator('input[type="checkbox"][value="text-message"]'),
-    saveAndContinueButton: this.pageForm.locator('button', {
+    emailCheckbox: this.page.locator('input[type="checkbox"][value="email"]'),
+    mobilePhoneCheckbox: this.page.locator('input[type="checkbox"][value="text-message"]'),
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: `What are your sponsor's contact details?`,
     }),
-    contactDetailsHintText: this.pageForm.locator('div[id="sponsorContactDetails-hint"]'),
-    emailLabel: this.pageForm.locator("//input[@value='email']/following-sibling::label"),
-    textMessageLabel: this.pageForm.locator("//input[@value='text-message']/following-sibling::label"),
+    contactDetailsHintText: this.page.locator('div[id="sponsorContactDetails-hint"]'),
+    emailLabel: this.page.locator("//input[@value='email']/following-sibling::label"),
+    textMessageLabel: this.page.locator("//input[@value='text-message']/following-sibling::label"),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

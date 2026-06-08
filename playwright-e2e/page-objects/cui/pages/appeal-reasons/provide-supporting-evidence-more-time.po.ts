@@ -8,25 +8,24 @@ export class ProvideSupportingEvidenceMoreTimePage extends CuiBase {
   }
 
   private dataUtils = new DataUtils();
-  private readonly pageForm = this.page.locator('body:has(form[action*="/provide-supporting-evidence-more-time"])');
 
   public readonly $interactive = {
-    chooseFileToUploadInput: this.pageForm.locator('input[id="file-upload"]'),
-    uploadFileButton: this.pageForm.locator('button[name="uploadFile"]'),
-    continueButton: this.pageForm.getByRole('button', { name: 'Continue', exact: true }),
+    chooseFileToUploadInput: this.page.locator('input[id="file-upload"]'),
+    uploadFileButton: this.page.locator('button[name="uploadFile"]'),
+    continueButton: this.page.getByRole('button', { name: 'Continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
-  private readonly adviceForSupportingEvidenceText = this.pageForm.getByText('Advice');
+  private readonly adviceForSupportingEvidenceText = this.page.getByText('Advice');
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', { level: 1, name: 'Provide supporting evidence', exact: true }),
-    fileUploadedTableRow: this.pageForm.locator('table[id="files-uploaded"] a[class="govuk-link"]').filter({ hasNotText: 'Delete' }),
+    pageHeading: this.page.getByRole('heading', { level: 1, name: 'Provide supporting evidence', exact: true }),
+    fileUploadedTableRow: this.page.locator('table[id="files-uploaded"] a[class="govuk-link"]').filter({ hasNotText: 'Delete' }),
     adviceForSupportingEvidenceText: this.adviceForSupportingEvidenceText,
     adviceBulletPoint1: this.adviceForSupportingEvidenceText.locator('+ ul li').nth(0),
     adviceBulletPoint2: this.adviceForSupportingEvidenceText.locator('+ ul li').nth(1),
     adviceBulletPoint3: this.adviceForSupportingEvidenceText.locator('+ ul li').nth(2),
-    uploadFileText: this.pageForm.getByText('Upload a file', { exact: true }),
-    uploadedFileText: this.pageForm.locator('table[id="files-uploaded"] [class="govuk-table__header"]'),
-    noFilesUploadedText: this.pageForm.locator('td[class="govuk-table__cell"]'),
+    uploadFileText: this.page.getByText('Upload a file', { exact: true }),
+    uploadedFileText: this.page.locator('table[id="files-uploaded"] [class="govuk-table__header"]'),
+    noFilesUploadedText: this.page.locator('td[class="govuk-table__cell"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

@@ -216,7 +216,7 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
 
       const judgeExuiPages = await test.step('Judge user: Navigate to case overview page and verify the correct text is displayed', async () => {
         const judgeContext = await newBrowserContextAndPage({ user: 'judgeUser' });
-        const judgeExuiPages = await exui_pages.newBrowserContext({ pageContext: judgeContext });
+        const judgeExuiPages = await exui_pages.newPageContext({ pageContext: judgeContext });
 
         await judgeExuiPages.caseOverviewPage.goTo({ caseId: caseIdFromBeforeEach });
         await judgeExuiPages.caseOverviewPage.verifyUserIsOnPage({});

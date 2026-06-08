@@ -31,7 +31,7 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
       const adminOfficerExuiPages =
         await test.step('Admin User: Navigate to exui application overview page and verify correct next steps displayed', async () => {
           const adminOfficerNewBrowserContextAndPage = await newBrowserContextAndPage({ user: 'adminOfficer' });
-          const adminOfficerExuiPages = await exui_pages.newBrowserContext({ pageContext: adminOfficerNewBrowserContextAndPage });
+          const adminOfficerExuiPages = await exui_pages.newPageContext({ pageContext: adminOfficerNewBrowserContextAndPage });
 
           await adminOfficerExuiPages.caseOverviewPage.goTo({ caseId: caseId });
 
@@ -135,7 +135,7 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
       const homeOfficeUserExuiPages =
         await test.step('Home Office User: Navigate to exui application overview page and verify correct next steps displayed', async () => {
           const homeOfficeUserNewBrowserContextAndPage = await newBrowserContextAndPage({ user: 'homeOfficeUser' });
-          const homeOfficeUserExuiPages = await exui_pages.newBrowserContext({ pageContext: homeOfficeUserNewBrowserContextAndPage });
+          const homeOfficeUserExuiPages = await exui_pages.newPageContext({ pageContext: homeOfficeUserNewBrowserContextAndPage });
 
           await homeOfficeUserExuiPages.caseOverviewPage.goTo({ caseId: caseId });
 
@@ -1212,7 +1212,7 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
       const judgeUserExuiPages =
         await test.step('Judge User: Navigate to exui application overview page and verify correct next steps displayed', async () => {
           const juedgeUserNewBrowserContextAndPage = await newBrowserContextAndPage({ user: 'judgeUser' });
-          const judgeUserExuiPages = await exui_pages.newBrowserContext({ pageContext: juedgeUserNewBrowserContextAndPage });
+          const judgeUserExuiPages = await exui_pages.newPageContext({ pageContext: juedgeUserNewBrowserContextAndPage });
 
           await judgeUserExuiPages.caseOverviewPage.goTo({ caseId: caseId });
 

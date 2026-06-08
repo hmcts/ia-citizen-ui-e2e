@@ -6,22 +6,20 @@ export class OutOfCountryProtectionDepartureDatePage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/ooc-protection-departure-date"])');
-
   public readonly $inputs = {
-    day: this.pageForm.locator('input[name="day"]'),
-    month: this.pageForm.locator('input[name="month"]'),
-    year: this.pageForm.locator('input[name="year"]'),
+    day: this.page.locator('input[name="day"]'),
+    month: this.page.locator('input[name="month"]'),
+    year: this.page.locator('input[name="year"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'What date did you leave the UK after your Protection claim was refused?',
     }),
   } as const satisfies Record<string, Locator>;

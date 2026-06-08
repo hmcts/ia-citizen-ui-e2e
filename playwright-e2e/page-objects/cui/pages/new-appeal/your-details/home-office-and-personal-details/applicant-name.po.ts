@@ -6,25 +6,23 @@ export class ApplicantNamePage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/name"])');
-
   public readonly $inputs = {
-    givenName: this.pageForm.locator('input[name="givenNames"]'),
-    familyName: this.pageForm.locator('input[name="familyName"]'),
+    givenName: this.page.locator('input[name="givenNames"]'),
+    familyName: this.page.locator('input[name="familyName"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.locator('button', {
+    saveAndContinueButton: this.page.locator('button', {
       hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.locator('h1', {
+    pageHeading: this.page.locator('h1', {
       hasText: 'What is your name?',
     }),
-    givenNameLabel: this.pageForm.locator('label[for="givenNames"]'),
-    familyNameLabel: this.pageForm.locator('label[for="familyName"]'),
+    givenNameLabel: this.page.locator('label[for="givenNames"]'),
+    familyNameLabel: this.page.locator('label[for="familyName"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

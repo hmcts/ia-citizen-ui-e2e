@@ -6,15 +6,13 @@ export class HearingOtherNeedsPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator("body:has(h1:has-text('Other'))");
-
   public readonly $interactive = {
-    continueButton: this.pageForm.getByRole('button', { name: 'Continue', exact: true }),
+    continueButton: this.page.getByRole('button', { name: 'Continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', { name: 'Other needs', level: 1, exact: true }),
-    ifYouHaveAnyOtherNeedsText: this.pageForm.getByText('If you have any other needs,'),
+    pageHeading: this.page.getByRole('heading', { name: 'Other needs', level: 1, exact: true }),
+    ifYouHaveAnyOtherNeedsText: this.page.getByText('If you have any other needs,'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

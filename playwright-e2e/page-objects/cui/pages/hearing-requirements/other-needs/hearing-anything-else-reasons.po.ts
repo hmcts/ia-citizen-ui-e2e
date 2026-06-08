@@ -6,18 +6,16 @@ export class HearingAnythingElseReasonsPage extends CuiBase {
     super(page);
   }
 
-  private readonly pageForm = this.page.locator('body:has(form[action="/hearing-anything-else-reasons"])');
-
   public readonly $inputs = {
-    whatAndWhyYouNeedItTextarea: this.pageForm.locator('textarea[name="reason"]'),
+    whatAndWhyYouNeedItTextarea: this.page.locator('textarea[name="reason"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
-    saveAndContinueButton: this.pageForm.getByRole('button', { name: 'Save and continue', exact: true }),
+    saveAndContinueButton: this.page.getByRole('button', { name: 'Save and continue', exact: true }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.pageForm.getByRole('heading', {
+    pageHeading: this.page.getByRole('heading', {
       name: 'Tell us what you will need and why you need it',
       level: 1,
       exact: true,
