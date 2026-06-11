@@ -1,9 +1,9 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { ExuiBase } from '../../../../exui-base';
-import { DataUtils } from '../../../../../../utils';
+import { UiDocumentUploadHelper } from '../../../../../../utils/ui-document-upload-helper';
 
 export class DecideFtpaApplicationDecisionAndReasonsDocumentPage extends ExuiBase {
-  private readonly dataUtils: DataUtils = new DataUtils();
+  private uiDocumentUploadHelper = new UiDocumentUploadHelper(this.page);
   constructor(page: Page) {
     super(page);
   }
@@ -56,31 +56,12 @@ export class DecideFtpaApplicationDecisionAndReasonsDocumentPage extends ExuiBas
     await this.verifyAllTextOnPage();
 
     const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Ftpa_Decision_And_Reasons.txt';
-    const filePath = await this.dataUtils.fetchDocumentUploadPath(fileToUpload);
 
-    const uploadingText = this.page.locator('span[role="alert"]', { hasText: 'Uploading' });
-
-    await expect(async () => {
-      await Promise.all([
-        this.interceptNetworkRequestToVerifyUploadDocumentSucceeded({ timeoutMs: 15_000 }),
-        this.$interactive.chooseFileButton.setInputFiles(filePath),
-        expect(uploadingText).toBeVisible({ timeout: 15_000 }),
-      ]);
-    }).toPass({ intervals: [1_000], timeout: 30_000 });
-
-    await expect(uploadingText).not.toBeVisible({ timeout: 10_000 });
-    await expect(this.$interactive.chooseFileButton).toHaveValue(new RegExp(`${fileToUpload.replace('.', '\\.')}$`));
-
-    await this.navigationClick(this.$interactive.continueButton);
-  }
-
-  private async interceptNetworkRequestToVerifyUploadDocumentSucceeded(options: { timeoutMs: number }): Promise<void> {
-    const response = await this.page.waitForResponse((res) => res.request().method() === 'POST' && res.url().includes('documentsv2'), {
-      timeout: options.timeoutMs,
+    await this.uiDocumentUploadHelper.uploadExuiDocument({
+      fileInputElement: this.$interactive.chooseFileButton,
+      nameOfFileToUpload: fileToUpload,
     });
 
-    const status = response.status();
-    expect(status).toBeGreaterThanOrEqual(200);
-    expect(status).toBeLessThan(400);
+    await this.navigationClick(this.$interactive.continueButton);
   }
 }

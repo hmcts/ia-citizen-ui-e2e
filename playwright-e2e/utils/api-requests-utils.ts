@@ -170,7 +170,7 @@ export async function exui_uploadDocument(options: {
     expect(documentHash, `Document Store response missing hash token for event ${options.eventName}`).toBeDefined();
   }).toPass({
     timeout: 40_000,
-    intervals: [1_000],
+    intervals: [5_000],
   });
 
   return {

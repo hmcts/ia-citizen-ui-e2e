@@ -568,7 +568,9 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
         await caseOfficerExuiPages.reviewHearingRequirementsPage.continueOntoNextPage();
 
         await caseOfficerExuiPages.reviewHearingRequirementsRemoteHearingPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHearingRequirementsRemoteHearingPage.verifyAllTextAndAnswersOnPage({ anythingForTribunalToConsider: 'No' });
+        await caseOfficerExuiPages.reviewHearingRequirementsRemoteHearingPage.verifyAllTextAndAnswersOnPage({
+          anythingForTribunalToConsider: 'No',
+        });
         await caseOfficerExuiPages.reviewHearingRequirementsRemoteHearingPage.completePageAndContinue({
           isRemoteHearingAllowed: 'Granted',
           description: 'Granted request for remote hearing',
