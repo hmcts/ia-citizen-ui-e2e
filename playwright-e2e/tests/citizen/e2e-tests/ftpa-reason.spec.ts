@@ -134,7 +134,7 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
   test(
     'Verify citizen user is able to provide response to FTPA reason',
     { tag: ['@e2e'] },
-    async ({ cui_pages, dataUtils, newBrowserContextAndPage, exui_pages, cui_signOutAndBackIn, citizenUser }) => {
+    async ({ cui_pages, dataUtils, newBrowserContextAndPage, exui_pages, cui_signOutAndBackIn, citizenUser, cui_apiClient }) => {
       await test.step('Citizen User: Verify application is in the correct state', async () => {
         const expectedDate = (await dataUtils.getDateFromToday({ dayOffset: 14 })).full;
 
@@ -458,6 +458,10 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
       });
 
       await test.step('Citizen user: Verify judge has granted permission for application', async () => {
+        await cui_apiClient.verifyAppealIsInExpectedStateViaAppealOverviewApi({
+          expectedTextToBeOnAppealOverview: 'A judge has granted your application',
+        });
+
         await cui_pages.appealOverviewPage.page.bringToFront();
         await cui_signOutAndBackIn({ email: citizenUser.email, password: citizenUser.password });
 

@@ -1,20 +1,21 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { ExuiBase } from '../../../../exui-base';
 import { YesOrNoType } from '../../../../../../citizen-types';
-import { DataUtils } from '../../../../../../utils';
+import { UiDocumentUploadHelper } from '../../../../../../utils/ui-document-upload-helper';
 
 export class DecideFtpaApplicationAppellantNoticeOfDecisionSetAsidePage extends ExuiBase {
   constructor(page: Page) {
     super(page);
   }
 
-  private readonly dataUtils: DataUtils = new DataUtils();
+  private uiDocumentUploadHelper = new UiDocumentUploadHelper(this.page);
 
   public readonly $interactive = {
     continueButton: this.$commonElements.continueButton,
     previousButton: this.$commonElements.previousButton,
     cancelButton: this.$commonElements.cancelButton,
     addNewButton: this.page.getByRole('button', { name: 'Add new', exact: true }),
+    removeButton: this.page.getByRole('button', { name: 'Remove', exact: true }),
     chooseFileButton: this.page.locator('input[id*="ftpaAppellantNoticeDocument"]'),
     cancelUploadButton: this.page.getByRole('button', { name: 'Cancel upload', exact: true }),
   } as const satisfies Record<string, Locator>;
@@ -112,20 +113,11 @@ export class DecideFtpaApplicationAppellantNoticeOfDecisionSetAsidePage extends 
         const fileToUpload = options.optionallySpecifyNameOfFileToUpload
           ? options.optionallySpecifyNameOfFileToUpload
           : 'Ftpa_Notice_Of_Intention_To_Set_A_Side.txt';
-        const filePath = await this.dataUtils.fetchDocumentUploadPath(fileToUpload);
 
-        const uploadingText = this.page.locator('span[role="alert"]', { hasText: 'Uploading' });
-
-        await expect(async () => {
-          await Promise.all([
-            this.interceptNetworkRequestToVerifyUploadDocumentSucceeded({ timeoutMs: 15_000 }),
-            this.$interactive.chooseFileButton.setInputFiles(filePath),
-            expect(uploadingText).toBeVisible({ timeout: 15_000 }),
-          ]);
-        }).toPass({ intervals: [1_000], timeout: 30_000 });
-
-        await expect(uploadingText).not.toBeVisible({ timeout: 10_000 });
-        await expect(this.$interactive.chooseFileButton).toHaveValue(new RegExp(`${fileToUpload.replace('.', '\\.')}$`));
+        await this.uiDocumentUploadHelper.uploadExuiDocument({
+          fileInputElement: this.$interactive.chooseFileButton,
+          nameOfFileToUpload: fileToUpload,
+        });
 
         if (options.optionallyProvideDescriptionOfDocumentToUpload) {
           await this.$inputs.describeDocumentInput.fill(options.optionallyProvideDescriptionOfDocumentToUpload);
@@ -135,15 +127,5 @@ export class DecideFtpaApplicationAppellantNoticeOfDecisionSetAsidePage extends 
     }
 
     await this.navigationClick(this.$interactive.continueButton);
-  }
-
-  private async interceptNetworkRequestToVerifyUploadDocumentSucceeded(options: { timeoutMs: number }): Promise<void> {
-    const response = await this.page.waitForResponse((res) => res.request().method() === 'POST' && res.url().includes('documentsv2'), {
-      timeout: options.timeoutMs,
-    });
-
-    const status = response.status();
-    expect(status).toBeGreaterThanOrEqual(200);
-    expect(status).toBeLessThan(400);
   }
 }

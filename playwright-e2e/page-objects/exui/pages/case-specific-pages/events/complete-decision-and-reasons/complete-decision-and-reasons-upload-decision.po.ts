@@ -1,13 +1,13 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { ExuiBase } from '../../../../exui-base';
-import { DataUtils } from '../../../../../../utils/data.utils';
+import { UiDocumentUploadHelper } from '../../../../../../utils/ui-document-upload-helper';
 
 export class CompleteDecisionAndReasonsUploadDecisionPage extends ExuiBase {
   constructor(page: Page) {
     super(page);
   }
 
-  private readonly dataUtils = new DataUtils();
+  private uiDocumentUploadHelper = new UiDocumentUploadHelper(this.page);
 
   public readonly $interactive = {
     continueButton: this.$commonElements.continueButton,
@@ -58,20 +58,11 @@ export class CompleteDecisionAndReasonsUploadDecisionPage extends ExuiBase {
     await this.verifyAllTextOnPage();
 
     const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'SendDecisionAndReasons.pdf';
-    const filePath = await this.dataUtils.fetchDocumentUploadPath(fileToUpload);
 
-    const uploadingText = this.page.locator('span[role="alert"]', { hasText: 'Uploading' });
-
-    await expect(async () => {
-      await Promise.all([
-        this.interceptNetworkRequestToVerifyUploadDocumentSucceeded({ timeoutMs: 15_000 }),
-        this.$interactive.chooseFileButton.setInputFiles(filePath),
-        expect(uploadingText).toBeVisible({ timeout: 15_000 }),
-      ]);
-    }).toPass({ intervals: [1_000], timeout: 30_000 });
-
-    await expect(uploadingText).not.toBeVisible({ timeout: 10_000 });
-    await expect(this.$interactive.chooseFileButton).toHaveValue(new RegExp(`${fileToUpload.replace('.', '\\.')}$`));
+    await this.uiDocumentUploadHelper.uploadExuiDocument({
+      fileInputElement: this.$interactive.chooseFileButton,
+      nameOfFileToUpload: fileToUpload,
+    });
 
     await this.$interactive.confirmDocumentSignedTodayCheckbox.check();
     await expect(this.$interactive.confirmDocumentSignedTodayCheckbox).toBeChecked();
@@ -80,15 +71,5 @@ export class CompleteDecisionAndReasonsUploadDecisionPage extends ExuiBase {
     await expect(this.$interactive.feeAwardedIsConsistentWithDecisionCheckbox).toBeChecked();
 
     await this.navigationClick(this.$interactive.continueButton);
-  }
-
-  private async interceptNetworkRequestToVerifyUploadDocumentSucceeded(options: { timeoutMs: number }): Promise<void> {
-    const response = await this.page.waitForResponse((res) => res.request().method() === 'POST' && res.url().includes('documentsv2'), {
-      timeout: options.timeoutMs,
-    });
-
-    const status = response.status();
-    expect(status).toBeGreaterThanOrEqual(200);
-    expect(status).toBeLessThan(400);
   }
 }

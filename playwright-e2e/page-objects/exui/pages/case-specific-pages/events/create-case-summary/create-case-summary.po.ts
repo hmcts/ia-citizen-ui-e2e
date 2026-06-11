@@ -1,13 +1,13 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { ExuiBase } from '../../../../exui-base';
-import { DataUtils } from '../../../../../../utils/data.utils';
+import { UiDocumentUploadHelper } from '../../../../../../utils/ui-document-upload-helper';
 
 export class CreateCaseSummaryPage extends ExuiBase {
   constructor(page: Page) {
     super(page);
   }
 
-  private readonly dataUtils = new DataUtils();
+  private uiDocumentUploadHelper = new UiDocumentUploadHelper(this.page);
 
   public readonly $interactive = {
     continueButton: this.$commonElements.continueButton,
@@ -63,35 +63,17 @@ export class CreateCaseSummaryPage extends ExuiBase {
     await this.verifyAllTextOnPage();
 
     const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Create_Case_Summary.txt';
-    const filePath = await this.dataUtils.fetchDocumentUploadPath(fileToUpload);
 
-    const uploadingText = this.page.locator('span[role="alert"]', { hasText: 'Uploading' });
+    await this.uiDocumentUploadHelper.uploadExuiDocument({
+      fileInputElement: this.$interactive.chooseAFileButton,
+      nameOfFileToUpload: fileToUpload,
+    });
 
-    await expect(async () => {
-      await Promise.all([
-        this.interceptNetworkRequestToVerifyUploadDocumentSucceeded({ timeoutMs: 15_000 }),
-        this.$interactive.chooseAFileButton.setInputFiles(filePath),
-        expect(uploadingText).toBeVisible({ timeout: 15_000 }),
-      ]);
-    }).toPass({ intervals: [1_000], timeout: 30_000 });
-
-    await expect(uploadingText).not.toBeVisible({ timeout: 10_000 });
-    await expect(this.$interactive.chooseAFileButton).toHaveValue(new RegExp(`${fileToUpload.replace('.', '\\.')}$`));
     if (options.description) {
       await this.$inputs.documentDescriptionTextArea.fill(options.description);
     }
     await expect(this.$inputs.documentDescriptionTextArea).toHaveValue(options.description ? options.description : '');
 
     await this.navigationClick(this.$interactive.continueButton);
-  }
-
-  private async interceptNetworkRequestToVerifyUploadDocumentSucceeded(options: { timeoutMs: number }): Promise<void> {
-    const response = await this.page.waitForResponse((res) => res.request().method() === 'POST' && res.url().includes('documentsv2'), {
-      timeout: options.timeoutMs,
-    });
-
-    const status = response.status();
-    expect(status).toBeGreaterThanOrEqual(200);
-    expect(status).toBeLessThan(400);
   }
 }
