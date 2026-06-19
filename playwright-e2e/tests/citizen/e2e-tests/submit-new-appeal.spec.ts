@@ -63,7 +63,7 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
       });
 
       await cui_pages.applicantNationalityPage.verifyUserIsOnPage();
-      await cui_pages.applicantNationalityPage.completePageAndContinue({ nationality: 'China', stateless: false, verifyAllTextOnPage: true });
+      await cui_pages.applicantNationalityPage.completePageAndContinue({ nationality: 'Chinese', stateless: false, verifyAllTextOnPage: true });
 
       await cui_pages.decisionLetterReceivedPage.verifyUserIsOnPage();
       const dateLetterReceived = await dataUtils.getDateFromToday({ monthOffset: -2 });
