@@ -9,7 +9,7 @@ export class OutOfCountryHrEeaPage extends CuiBase {
 
   public readonly $interactive = {
     continueButton: this.page.getByRole('button', {
-      name: 'Continue',
+      name: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 

@@ -8,8 +8,8 @@ export class SponsorAuthorisationPage extends CuiBase {
   }
 
   public readonly $interactive = {
-    continueButton: this.page.locator('button[name="continue"]', {
-      hasText: 'Continue',
+    continueButton: this.page.locator('button[name="saveAndContinue"]', {
+      hasText: 'Save and continue',
     }),
   } as const satisfies Record<string, Locator>;
 
