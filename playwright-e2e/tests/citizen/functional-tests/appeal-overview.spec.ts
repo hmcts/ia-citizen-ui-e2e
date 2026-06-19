@@ -9,12 +9,12 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     dataUtils,
   }) => {
     await test.step('Submit an appeal via api', async () => {
-      await cui_apiClient.completeAndSubmitAppealJourneyViaApi({
+      await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
         isUserInTheUk: 'Yes',
         appealType: 'Human Rights',
         isApplicantStateless: false,
         isApplicationInTime: true,
-        nationality: 'China',
+        nationality: 'Sudanese',
         hasApplicantReceivedADeportationOrder: 'No',
         doesApplicantHaveASponsor: 'No',
         decisionWithOrWithoutHearing: 'decisionWithHearing',
@@ -65,12 +65,12 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     dataUtils,
   }) => {
     await test.step('Submit an appeal via api', async () => {
-      await cui_apiClient.completeAndSubmitAppealJourneyViaApi({
+      await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
         isUserInTheUk: 'Yes',
         appealType: 'Protection',
         isApplicantStateless: false,
         isApplicationInTime: true,
-        nationality: 'China',
+        nationality: 'Sri Lankan',
         payForAppealNowOrLater: 'payNow',
         hasApplicantReceivedADeportationOrder: 'No',
         doesApplicantHaveASponsor: 'No',
@@ -131,12 +131,12 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     dataUtils,
   }) => {
     await test.step('Submit an appeal via api', async () => {
-      await cui_apiClient.completeAndSubmitAppealJourneyViaApi({
+      await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
         isUserInTheUk: 'Yes',
         appealType: 'Deprivation of Citizenship',
         isApplicantStateless: false,
         isApplicationInTime: true,
-        nationality: 'China',
+        nationality: 'Surinamese',
         hasApplicantReceivedADeportationOrder: 'No',
         doesApplicantHaveASponsor: 'No',
         decisionWithOrWithoutHearing: 'decisionWithHearing',
@@ -187,7 +187,7 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
         appealType: 'Human Rights',
         isApplicantStateless: false,
         isApplicationInTime: false,
-        nationality: 'Turkey',
+        nationality: 'Swedish',
         hasApplicantReceivedADeportationOrder: 'No',
         doesApplicantHaveASponsor: 'Yes',
       });

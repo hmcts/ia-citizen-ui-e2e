@@ -1,13 +1,6 @@
 import { APIRequestContext } from '@playwright/test';
 import { Nationality } from '../../../../../citizen-types';
 import { cui_getCsrfToken, cui_postForm } from '../../../../../utils/api-requests-utils';
-import countries from 'i18n-iso-countries';
-import { createRequire } from 'node:module';
-
-const require = createRequire(import.meta.url);
-const en = require('i18n-iso-countries/langs/en.json');
-
-countries.registerLocale(en);
 
 export class ApplicantNationalityApi {
   private apiContext: APIRequestContext;
@@ -15,6 +8,43 @@ export class ApplicantNationalityApi {
   constructor(apiContext: APIRequestContext) {
     this.apiContext = apiContext;
   }
+  private readonly nationalityToCountryCode = {
+    Afghan: 'AF',
+    Albanian: 'AL',
+    Barbadian: 'BB',
+    Belarusian: 'BY',
+    Belgian: 'BE',
+    Belizean: 'BZ',
+    Beninese: 'BJ',
+    Bermudian: 'BM',
+    Bhutanese: 'BT',
+    Bolivian: 'BO',
+    'Citizen of Bosnia and Herzegovina': 'BA',
+    English: 'GB',
+    'Equatorial Guinean': 'GQ',
+    Singaporean: 'SG',
+    Slovak: 'SK',
+    Slovenian: 'SI',
+    'Solomon Islander': 'SB',
+    Somali: 'SO',
+    'South African': 'ZA',
+    'South Korean': 'KR',
+    'South Sudanese': 'SS',
+    Spanish: 'ES',
+    'Sri Lankan': 'LK',
+    'St Helenian': 'SH',
+    'St Lucian': 'LC',
+    Sudanese: 'SD',
+    Surinamese: 'SR',
+    Swazi: 'SZ',
+    Swedish: 'SE',
+    Swiss: 'CH',
+    Syrian: 'SY',
+    Taiwanese: 'TW',
+    Tajik: 'TJ',
+    Tanzanian: 'TZ',
+    Thai: 'TH',
+  } as const satisfies Record<Nationality, string>;
 
   public async submitForm(options: { stateless: boolean; nationality?: Nationality }): Promise<void> {
     const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'nationality' });
@@ -32,7 +62,7 @@ export class ApplicantNationalityApi {
         throw new Error('Nationality must be provided when stateless is false.');
       }
 
-      const countryCode = countries.getAlpha2Code(options.nationality, 'en');
+      const countryCode = this.nationalityToCountryCode[options.nationality];
       if (!countryCode) {
         throw new Error(`No ISO country code found for nationality: ${options.nationality}`);
       }

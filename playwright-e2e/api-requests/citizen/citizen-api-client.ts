@@ -32,6 +32,17 @@ import {
 export class CitizenApiClient {
   private readonly apiContext: ApiContext;
 
+  private newAppealDetails: ApplicantDetailsType | undefined;
+
+  private hearingRequirementDetails:
+    | {
+        hearingWitnessFlow: HearingWitnessFlowReturnType;
+        hearingAccessNeedsFlow: HearingAccessNeedsFlowReturnType;
+        hearingOtherNeedsFlow: HearingOtherNeedsFlowReturnType;
+        hearingDatesToAvoidFlow: HearingDatesToAvoidFlowReturnType;
+      }
+    | undefined;
+
   private cui_yourDetailsUserFlowApi!: YourDetailsUserFlowApi;
   private cui_decisionTypeUserFlowApi!: DecisionTypeUserFlowApi;
   private cui_feeSupportUserFlowApi!: FeeSupportUserFlowApi;
@@ -86,7 +97,7 @@ export class CitizenApiClient {
     await this.cui_checkAndSendUserFlowApi.submitCheckAndSendFlowViaApi(appealData);
   }
 
-  public async completeAndSubmitAppealJourneyViaApi(appealData: AppealData): Promise<ApplicantDetailsType> {
+  public async completeAndSubmitNewAppealJourneyViaApi(appealData: AppealData): Promise<ApplicantDetailsType> {
     const applicantDetails = await this.submitYourDetailsUserFlowViaApi({
       isUserInTheUk: appealData.isUserInTheUk,
       appealType: appealData.appealType,
@@ -117,6 +128,7 @@ export class CitizenApiClient {
       appealSubmissionType: appealData.appealSubmissionType,
     });
 
+    this.newAppealDetails = applicantDetails;
     return applicantDetails;
   }
 
@@ -179,11 +191,39 @@ export class CitizenApiClient {
     const hearingDatesToAvoidFlow = await this.submitHearingDatesToAvoidFlowViaApi(options);
     await this.cui_hearingCheckAnswersApi.submitForm();
 
+    this.hearingRequirementDetails = {
+      hearingWitnessFlow,
+      hearingAccessNeedsFlow,
+      hearingOtherNeedsFlow,
+      hearingDatesToAvoidFlow,
+    };
+
     return {
       hearingWitnessFlow,
       hearingAccessNeedsFlow,
       hearingOtherNeedsFlow,
       hearingDatesToAvoidFlow,
     };
+  }
+
+  public async getNewAppealDetails(): Promise<ApplicantDetailsType> {
+    if (!this.newAppealDetails) {
+      throw new Error('No appeal data submitted via api. Please submit appeal data via api before attempting to retrieve it.');
+    }
+    return this.newAppealDetails;
+  }
+
+  public async getHearingRequirementDetails(): Promise<{
+    hearingWitnessFlow: HearingWitnessFlowReturnType;
+    hearingAccessNeedsFlow: HearingAccessNeedsFlowReturnType;
+    hearingOtherNeedsFlow: HearingOtherNeedsFlowReturnType;
+    hearingDatesToAvoidFlow: HearingDatesToAvoidFlowReturnType;
+  }> {
+    if (!this.hearingRequirementDetails) {
+      throw new Error(
+        'No hearing requirement data submitted via api. Please submit hearing requirement data via api before attempting to retrieve it.',
+      );
+    }
+    return this.hearingRequirementDetails;
   }
 }
