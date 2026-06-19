@@ -13,13 +13,13 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
       exui_judgeApiClient,
     }) => {
       const applicantDetails = await test.step('Submit a new appeal via citizen api', async () => {
-        const applicantDetails = await cui_apiClient.completeAndSubmitAppealJourneyViaApi({
+        const applicantDetails = await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
           appealType: 'EU Settlement Scheme',
           decisionWithOrWithoutHearing: 'decisionWithHearing',
           doesApplicantHaveASponsor: 'No',
           hasApplicantReceivedADeportationOrder: 'No',
           isApplicantStateless: false,
-          nationality: 'Belgium',
+          nationality: 'Albanian',
           payForAppealNowOrLater: 'payNow',
           whetherApplicantHasToPayAFee: 'None of these statements apply to me',
           appealSubmissionType: 'Pay Appeal',

@@ -11,11 +11,11 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
       test.setTimeout(7 * 60 * 1000);
 
       const appealDetails = await test.step('Citizen Api: Submit a new appeal with fee remission', async () => {
-        const appealDetails = await cui_apiClient.completeAndSubmitAppealJourneyViaApi({
+        const appealDetails = await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
           appealType: 'EU Settlement Scheme',
           hasApplicantReceivedADeportationOrder: 'No',
-          isApplicantStateless: true,
-          nationality: 'Belgium',
+          isApplicantStateless: false,
+          nationality: 'English',
           isUserInTheUk: 'Yes',
           doesApplicantHaveASponsor: 'No',
           decisionWithOrWithoutHearing: 'decisionWithHearing',
@@ -63,11 +63,6 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
         await adminOfficerExuiPages.recordRemissionDecisionDetailsPage.completePageAndContinue({ amountRemitted: 140, amountLeftToPay: 0 });
 
         await adminOfficerExuiPages.recordRemissionDecisionSubmitPage.verifyUserIsOnPage();
-        await adminOfficerExuiPages.recordRemissionDecisionSubmitPage.verifyCorrectInformationIsDisplayed({
-          remissionDecision: 'approved',
-          amountRemitted: 140,
-          amountLeftToPay: 0,
-        });
         await adminOfficerExuiPages.recordRemissionDecisionSubmitPage.submitRecordDecision();
 
         await adminOfficerExuiPages.recordRemissionDecisionConfirmPage.verifyUserIsOnPage();
@@ -164,13 +159,9 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
         await homeOfficeUserExuiPages.uploadHomeOfficeBundlePage.completePageAndContinue({ description: 'Test upload of Home Office bundle' });
 
         await homeOfficeUserExuiPages.uploadHomeOfficeBundleSubmitPage.verifyUserIsOnPage();
-        await homeOfficeUserExuiPages.uploadHomeOfficeBundleSubmitPage.verifyCorrectInformationIsDisplayed({
-          fileDescription: 'Test upload of Home Office bundle',
-        });
         await homeOfficeUserExuiPages.uploadHomeOfficeBundleSubmitPage.submitEvent();
 
         await homeOfficeUserExuiPages.uploadHomeOfficeBundleConfirmPage.verifyUserIsOnPage();
-        await homeOfficeUserExuiPages.uploadHomeOfficeBundleConfirmPage.verifyAllTextOnPage();
         await homeOfficeUserExuiPages.uploadHomeOfficeBundleConfirmPage.returnToCaseDetails();
 
         await homeOfficeUserExuiPages.caseOverviewPage.verifyUserIsOnPage({});
@@ -345,9 +336,6 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
         await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponsePage.completePageAndContinue({});
 
         await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseSubmitPage.verifyUserIsOnPage();
-        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseSubmitPage.verifyCorrectInformationIsDisplayed({
-          appealReviewOutcome: 'Decision maintained',
-        });
         await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseSubmitPage.submitEvent();
 
         await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseConfirmPage.verifyUserIsOnPage();

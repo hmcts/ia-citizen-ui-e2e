@@ -130,6 +130,12 @@ export class YourDetailsUserFlowApi {
     const applicantDob = await this.dataUtils.getDateFromToday({ yearOffset: -35 });
     await this.cui_applicantDobApi.submitForm({ day: applicantDob.day, month: applicantDob.month, year: applicantDob.year });
 
+    if (appealData.isApplicantStateless && appealData.nationality) {
+      throw new Error(
+        'Applicant can not be stateless and have a nationality defined at the same time. Please provide either isApplicantStateless as true or nationality, but not both.',
+      );
+    }
+
     if (appealData.isApplicantStateless) {
       await this.cui_applicantNationalityApi.submitForm({ stateless: appealData.isApplicantStateless });
     } else {

@@ -3,11 +3,11 @@ import { test, expect } from '../../../fixtures.js';
 test.describe('Set of tests to verify user is able to submit answers to hearing requirements via UI', () => {
   test.beforeEach(async ({ citizenUser, cui_login, cui_apiClient, exui_caseOfficerApiClient, exui_homeOfficeUserApiClient }) => {
     const detailsOfNewAppeal = await test.step('Submit a new appeal via Api', async () => {
-      const appealDetails = await cui_apiClient.completeAndSubmitAppealJourneyViaApi({
+      const appealDetails = await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
         appealType: 'European Economic Area',
         hasApplicantReceivedADeportationOrder: 'No',
-        isApplicantStateless: true,
-        nationality: 'Belgium',
+        isApplicantStateless: false,
+        nationality: 'Bolivian',
         isUserInTheUk: 'Yes',
         doesApplicantHaveASponsor: 'No',
         decisionWithOrWithoutHearing: 'decisionWithHearing',
