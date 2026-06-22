@@ -316,10 +316,8 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
       await test.step('Home Office User: Refresh application overview page and verify correct next steps are displayed', async () => {
         await homeOfficeUserExuiPages.caseOverviewPage.page.bringToFront();
         await homeOfficeUserExuiPages.caseOverviewPage.refreshPageUntilExpectedTextIsVisible({
-         // expectedText: 'The Appeal Skeleton Argument is ready to view in the documents tab.',
-          expectedText: 'Review the documents and add the Home Office\'s response, or make an application to withdraw.',
+          expectedText: 'The Appeal Skeleton Argument is ready to view in the documents tab.',
           caseId: caseId,
-          timeoutInSeconds:120,
         });
         await homeOfficeUserExuiPages.caseOverviewPage.refreshPageUntilExpectedTextIsVisible({
           expectedText: 'Review the documents and add the Home Office\'s response, or make an application to withdraw.',

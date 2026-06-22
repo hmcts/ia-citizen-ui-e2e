@@ -38,48 +38,20 @@ export default defineConfig({
       dependencies: ['setup'],
     },
      {
-      name: 'chrome',
-      dependencies: ['setup'],  
-      use: {
-        ...devices['Desktop Chrome'],
-        channel: 'chrome',
-        javaScriptEnabled: true,
-        viewport: { width: 1920, height: 1080 },
-        headless: true
-      },
+      ...ProjectsConfig.chrome,
+      dependencies: ["setup"],
     },
-     {
-      name: 'firefox',
-      dependencies: ['setup'],  
-      use: {
-        ...devices['Desktop Firefox'],
-        channel: 'firefox',
-        javaScriptEnabled: true,
-        viewport: { width: 1920, height: 1080 },
-        headless: true
-      },
-    },
-     {
-      name: 'webkit',
-      dependencies: ['setup'],  
-      use: {
-        ...devices['Desktop Safari'],
-        channel: 'webkit',
-        javaScriptEnabled: true,
-        viewport: { width: 1920, height: 1080 },
-        headless: true
-      },
-    }, 
     {
-      name: 'edge',
-      dependencies: ['setup'],  
-      use: {
-        ...devices['Desktop Edge'],
-        channel: 'edge',
-        javaScriptEnabled: true,
-        viewport: { width: 1920, height: 1080 },
-        headless: true
-      },
-    }
+      ...ProjectsConfig.firefox,
+      dependencies: ["setup"],
+    },
+    {
+      ...ProjectsConfig.webkit,
+      dependencies: ["setup"],
+    },
+    {
+      ...ProjectsConfig.edge,
+      dependencies: ["setup"],
+    },
   ],
 });
