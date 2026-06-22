@@ -1,5 +1,5 @@
 import { CommonConfig, ProjectsConfig } from '@hmcts/playwright-common';
-import { defineConfig } from '@playwright/test';
+import { defineConfig,devices } from '@playwright/test';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -12,6 +12,7 @@ export default defineConfig({
   snapshotDir: './playwright-e2e/snapshots',
   reporter: [['list'], ['html', { outputFolder: 'playwright-report' }]],
   timeout: 180_000,
+  workers: Number(process.env.WORKERS) || 4,
   expect: {
     timeout: 5_000,
     toHaveScreenshot: {
@@ -35,6 +36,22 @@ export default defineConfig({
     {
       ...ProjectsConfig.chromium,
       dependencies: ['setup'],
+    },
+     {
+      ...ProjectsConfig.chrome,
+      dependencies: ["setup"],
+    },
+    {
+      ...ProjectsConfig.firefox,
+      dependencies: ["setup"],
+    },
+    {
+      ...ProjectsConfig.webkit,
+      dependencies: ["setup"],
+    },
+    {
+      ...ProjectsConfig.edge,
+      dependencies: ["setup"],
     },
   ],
 });

@@ -310,6 +310,10 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
           expectedText: 'The Appeal Skeleton Argument is ready to view in the documents tab.',
           caseId: caseId,
         });
+        await homeOfficeUserExuiPages.caseOverviewPage.refreshPageUntilExpectedTextIsVisible({
+          expectedText: 'Review the documents and add the Home Office\'s response, or make an application to withdraw.',
+          caseId: caseId,
+        });
 
         await Promise.all([
           expect(homeOfficeUserExuiPages.caseOverviewPage.$static.doThisNextHeading).toBeVisible(),
@@ -970,7 +974,6 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
           dateToSet: 'tomorrow',
           hourToSet: 13,
         });
-
         const dateResult = await dataUtils.getDateFromToday({ dayOffset: 1 });
         const expectedDate = `${dateResult.day} ${new Date(dateResult.year, dateResult.month - 1).toLocaleString('en-GB', { month: 'short' })} ${dateResult.year}`;
         await adminOfficerExuiPages.listCaseSubmitPage.verifyUserIsOnPage();
