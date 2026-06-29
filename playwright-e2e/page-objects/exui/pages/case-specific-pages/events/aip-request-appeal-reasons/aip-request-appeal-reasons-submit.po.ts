@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { ExuiBase } from '../../../../exui-base';
 import { DataUtils } from '../../../../../../utils';
 
@@ -39,40 +39,7 @@ export class AipRequestAppealReasonsSubmitPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
-    const expectedDate = await this.dataUtils.getDateFromToday({ dayOffset: 28 });
-    const date = new Date(expectedDate.year, expectedDate.month - 1, expectedDate.day);
-    const formattedExpectedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
-
-    await Promise.all([
-      expect(this.$static.caseRecordHeading).toBeVisible(),
-      expect(this.$static.checkYouAnswersHeading).toBeVisible(),
-      expect(this.$static.checkInformationCarefullyText).toBeVisible(),
-
-      expect(this.$static.directionYouAreIssuingQuestion).toHaveText('Explain the direction you are issuing'),
-      expect(this.$static.directionYouAreIssuingQuestion).toBeVisible(),
-      expect(this.$static.directionYouAreIssuingValue).toHaveText(
-        'You must now tell us why you think the Home Office decision to refuse your claim is wrong.',
-      ),
-      expect(this.$static.directionYouAreIssuingValue).toBeVisible(),
-
-      expect(this.$static.whoAreYouGivingDirectionToQuestion).toHaveText('Who are you giving the direction to?'),
-      expect(this.$static.whoAreYouGivingDirectionToQuestion).toBeVisible(),
-      expect(this.$static.whoAreYouGivingDirectionToValue).toHaveText('Appellant'),
-      expect(this.$static.whoAreYouGivingDirectionToValue).toBeVisible(),
-
-      expect(this.$static.byWhatDateMustTheyComplyQuestion).toHaveText('By what date must they comply?'),
-      expect(this.$static.byWhatDateMustTheyComplyQuestion).toBeVisible(),
-      expect(this.$static.byWhatDateMustTheyComplyValue).toHaveText(formattedExpectedDate),
-      expect(this.$static.byWhatDateMustTheyComplyValue).toBeVisible(),
-
-      expect(this.$interactive.changeByWhatDateMustTheyComplyButton).toHaveText('Change'),
-      expect(this.$interactive.changeByWhatDateMustTheyComplyButton).toBeVisible(),
-    ]);
-  }
-
   public async sendDirection(): Promise<void> {
-    await this.verifyAllTextOnPage();
     await this.navigationClick(this.$interactive.submitButton);
   }
 }

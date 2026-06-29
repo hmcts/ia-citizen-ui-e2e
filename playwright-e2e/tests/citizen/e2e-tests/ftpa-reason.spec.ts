@@ -11,6 +11,7 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
       exui_adminOfficerApiClient,
       exui_homeOfficeUserApiClient,
       exui_judgeApiClient,
+      dataUtils,
     }) => {
       const applicantDetails = await test.step('Submit a new appeal via citizen api', async () => {
         const applicantDetails = await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
@@ -79,16 +80,19 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
           caseId: caseId,
           isRemoteHearingAllowed: 'Granted',
           grantOrRefuseAnyAdjustmentsRequested: 'Granted',
+          isApplicationSuitableToFloat: 'No',
+          anyAdditionalInstructions: 'No',
+          hearingType: 'Video',
         });
 
+        const hearingDate = await dataUtils.getDateFromToday({ dayOffset: 1 });
         await exui_adminOfficerApiClient.submitListCaseEvent({
           caseId: caseId,
-          hearingId: '',
           isRemoteHearing: 'Yes',
           hearingDateAndTime: {
-            day: 21,
-            month: 5,
-            year: 2026,
+            day: hearingDate.day,
+            month: hearingDate.month,
+            year: hearingDate.year,
           },
         });
 

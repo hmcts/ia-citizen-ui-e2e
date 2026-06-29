@@ -28,7 +28,7 @@ export class DecisionAndReasonsStartedImmigrationHistoryPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.doBothPartiesAgreeToImmigrationHistoryText).toBeVisible(),
@@ -40,8 +40,6 @@ export class DecisionAndReasonsStartedImmigrationHistoryPage extends ExuiBase {
   }
 
   public async completePageAndContinue(options: { agreeToImmigrationHistory: YesOrNoType }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     await this.page.getByRole('radio', { name: options.agreeToImmigrationHistory, exact: true }).check();
     await expect(this.page.getByRole('radio', { name: options.agreeToImmigrationHistory, exact: true })).toBeChecked();
 

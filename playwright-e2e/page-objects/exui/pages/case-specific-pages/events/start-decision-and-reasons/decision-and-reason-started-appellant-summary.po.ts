@@ -31,7 +31,7 @@ export class DecisionAndReasonsStartedAppellantSummaryPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.addAppellantCaseSummaryHeading).toBeVisible(),
@@ -45,8 +45,6 @@ export class DecisionAndReasonsStartedAppellantSummaryPage extends ExuiBase {
   }
 
   public async completePageAndContinue(options?: { appellantCaseSummary: string }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     if (options?.appellantCaseSummary) {
       await this.$inputs.appellantCaseDescriptionTextarea.fill(options.appellantCaseSummary);
       await expect(this.$inputs.appellantCaseDescriptionTextarea).toHaveValue(options.appellantCaseSummary);

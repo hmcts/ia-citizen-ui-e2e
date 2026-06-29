@@ -61,6 +61,9 @@ export type ReviewHearingRequirementsEventType = {
   caseId: string;
   isRemoteHearingAllowed: GrantedOrRefusedType;
   grantOrRefuseAnyAdjustmentsRequested: GrantedOrRefusedType;
+  isApplicationSuitableToFloat: YesOrNoType;
+  anyAdditionalInstructions: YesOrNoType;
+  hearingType: HearingChannelType;
 };
 
 export type RequestAHearingEventType = {
@@ -73,7 +76,6 @@ export type RequestAHearingEventType = {
 
 export type ListCaseEventType = {
   caseId: string;
-  hearingId: string;
   isRemoteHearing: YesOrNoType;
   hearingDateAndTime: { day: number; month: number; year: number; hour?: number; minute?: number };
 };

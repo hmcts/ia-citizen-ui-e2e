@@ -28,7 +28,7 @@ export class ReviewHearingRequirementsAppealSuitableToFloatPage extends ExuiBase
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.isAppealSuitableToFloatText).toHaveText('Is the appeal suitable to float?'),
@@ -41,8 +41,6 @@ export class ReviewHearingRequirementsAppealSuitableToFloatPage extends ExuiBase
   }
 
   public async completePageAndContinue(options: { isAppealSuitableToFloat: YesOrNoType }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     const element = this.page.locator(`input[type="radio"][id*="${options.isAppealSuitableToFloat}"]`);
     await element.check();
     await expect(element).toBeChecked();

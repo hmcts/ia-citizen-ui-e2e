@@ -41,7 +41,7 @@ export class RequestRespondentEvidencePage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     const expectedDate = await this.dataUtils.getDateFromToday({ dayOffset: 14 });
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
@@ -107,7 +107,6 @@ Parties must ensure they conduct proceedings with procedural rigour. The Tribuna
   }
 
   public async continueOnToNextPage(): Promise<void> {
-    await this.verifyAllTextOnPage();
     await this.navigationClick(this.$interactive.continueButton);
   }
 }

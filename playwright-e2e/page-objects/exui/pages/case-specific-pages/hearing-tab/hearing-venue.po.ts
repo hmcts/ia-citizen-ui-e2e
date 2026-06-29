@@ -29,7 +29,7 @@ export class HearingVenuePage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextForApplicant(options: { applicantName: string }): Promise<void> {
+  public async verifyAllTextForApplicant(options: { applicantName: string }): Promise<void> {
     await Promise.all([
       expect(this.page.getByText(`Request a hearing for ${options.applicantName}`, { exact: true })).toBeVisible(),
       expect(this.$static.locationHintText).toHaveText(
@@ -45,9 +45,7 @@ export class HearingVenuePage extends ExuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { applicantName: string; location: string }): Promise<void> {
-    await this.verifyAllTextForApplicant({ applicantName: options.applicantName });
-
+  public async completePageAndContinue(options: { location: string }): Promise<void> {
     const locatorToSelect = this.page.locator('[role="listbox"] span', {
       hasText: new RegExp(`^\\s*${options.location}`),
     });

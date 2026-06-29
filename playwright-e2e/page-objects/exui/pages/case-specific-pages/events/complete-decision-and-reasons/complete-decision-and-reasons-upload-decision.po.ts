@@ -36,7 +36,7 @@ export class CompleteDecisionAndReasonsUploadDecisionPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.uploadDecisionAndReasonsHeading).toBeVisible(),
@@ -55,8 +55,6 @@ export class CompleteDecisionAndReasonsUploadDecisionPage extends ExuiBase {
   }
 
   public async completePageAndContinue(options: { nameOfFileToUpload?: string }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'SendDecisionAndReasons.pdf';
 
     await this.uiDocumentUploadHelper.uploadExuiDocument({

@@ -31,7 +31,7 @@ export class ReviewHearingRequirementsHearingChannelPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
 
@@ -56,8 +56,6 @@ export class ReviewHearingRequirementsHearingChannelPage extends ExuiBase {
   }
 
   public async completePageAndContinue(options: { hearingChannel: HearingChannelType }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     const element = this.page.getByRole('radio', { name: options.hearingChannel, exact: true });
     await element.check();
     await expect(element).toBeChecked();

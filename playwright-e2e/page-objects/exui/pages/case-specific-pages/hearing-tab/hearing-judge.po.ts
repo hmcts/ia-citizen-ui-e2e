@@ -37,7 +37,7 @@ export class HearingJudgePage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextForApplicant(options: { applicantName: string }): Promise<void> {
+  public async verifyAllTextForApplicant(options: { applicantName: string }): Promise<void> {
     await Promise.all([
       expect(this.page.getByText(`Request a hearing for ${options.applicantName}`, { exact: true })).toBeVisible(),
       expect(this.$static.specificJudgeYesLabel).toHaveText('Yes'),
@@ -56,9 +56,7 @@ export class HearingJudgePage extends ExuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { applicantName: string; judgeTypesToSelect?: JudgeType[] }): Promise<void> {
-    await this.verifyAllTextForApplicant({ applicantName: options.applicantName });
-
+  public async completePageAndContinue(options: { judgeTypesToSelect?: JudgeType[] }): Promise<void> {
     if (options.judgeTypesToSelect && options.judgeTypesToSelect.length > 0) {
       for (const judgeType of options.judgeTypesToSelect) {
         const judgeTypeLocator = this.page.getByLabel(judgeType);

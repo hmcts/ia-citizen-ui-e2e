@@ -121,4 +121,8 @@ export class ReviewHearingRequirementsPersonalVulnerabilitiesPage extends ExuiBa
 
     await this.navigationClick(this.$interactive.continueButton);
   }
+
+  public async continueOntoNextPage(): Promise<void> {
+    await this.navigationClick(this.$interactive.continueButton);
+  }
 }
