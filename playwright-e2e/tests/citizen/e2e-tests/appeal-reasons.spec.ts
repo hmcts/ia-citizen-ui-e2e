@@ -120,7 +120,7 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
 
   test('Verify user is able to ask for time when responding to appeal reasons', { tag: ['@e2e'] }, async ({ cui_pages }) => {
     await test.step('Ask for more time for appeal reasons', async () => {
-      await cui_pages.appealOverviewPage.navigationClick(cui_pages.appealOverviewPage.$yourCaseInformation.askForMoreTimeLink);
+      await cui_pages.appealOverviewPage.navigationClick(cui_pages.appealOverviewPage.$interactive.askForMoreTimeLink);
 
       await cui_pages.askForMoreTimePage.verifyUserIsOnPage();
       await cui_pages.askForMoreTimePage.completePageAndContinue({
@@ -203,7 +203,7 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
 
   test('Verify user is able to submit answers to appeal reasons after requesting for more time', { tag: ['@e2e'] }, async ({ cui_pages }) => {
     await test.step('Ask for more time for appeal reasons', async () => {
-      await cui_pages.appealOverviewPage.navigationClick(cui_pages.appealOverviewPage.$yourCaseInformation.askForMoreTimeLink);
+      await cui_pages.appealOverviewPage.navigationClick(cui_pages.appealOverviewPage.$interactive.askForMoreTimeLink);
 
       await cui_pages.askForMoreTimePage.verifyUserIsOnPage();
       await cui_pages.askForMoreTimePage.completePageAndContinue({

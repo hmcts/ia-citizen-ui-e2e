@@ -32,28 +32,31 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Verify text on application overview page has been updated to reflect details have been sent', async () => {
-      await expect(cui_pages.appealOverviewPage.$yourCaseInformation.detailsSentToTribunalParagraph).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourCaseInformation.thereIsAFeeForThisAppealParagraph).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourCaseInformation.tribunalWillCheckInformationSentParagraph).toBeVisible();
       const formattedExpectedDate = (await dataUtils.getDateFromToday({ dayOffset: 14 })).full;
-      await expect(
-        cui_pages.appealOverviewPage.page.getByText(`This should be by ${formattedExpectedDate} but it might take longer than that.`, {
-          exact: true,
-        }),
-      ).toBeVisible();
+
+      await expect(cui_pages.appealOverviewPage.$static.applicantInstructionsWindow).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.applicantInstructionsWindow).toHaveText(
+        `Your appeal details have been sent to the Tribunal.
+        There is a fee for this appeal. You told the Tribunal that you believe you do not have to pay some or all of the fee.
+        The Tribunal will check the information you sent and let you know if you need to pay a fee.
+        This should be by ${formattedExpectedDate} but it might take longer than that.`,
+        { useInnerText: true },
+      );
     });
 
     await test.step('Verify appeal details section of appeal overview page', async () => {
-      await expect(cui_pages.appealOverviewPage.$static.completedHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.yourAppealDetailsHeading).toBeVisible();
       const formattedTodaysDate = (await dataUtils.getDateFromToday({})).full;
-      await expect(
-        cui_pages.appealOverviewPage.page.getByText(`${formattedTodaysDate} - You sent your appeal details to the Tribunal.`, { exact: true }),
-      ).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.whatYouSentHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.yourAppealDetailsLink).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.helpfulInformationHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.whatIsATribunalCaseWorkerLink).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.completedHeading).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsHeading).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsTimeLine).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsTimeLine).toHaveText(
+        `${formattedTodaysDate} - You sent your appeal details to the Tribunal.
+        What you sent
+        Your appeal details
+        Helpful information
+        What is a Tribunal Caseworker?`,
+        { useInnerText: true },
+      );
     });
   });
 
@@ -89,37 +92,43 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Verify text on application overview page has been updated to reflect details have been sent', async () => {
-      await expect(cui_pages.appealOverviewPage.$yourCaseInformation.detailsSentToTribunalParagraph).toBeVisible();
       const formattedExpectedDate = (await dataUtils.getDateFromToday({ dayOffset: 14 })).full;
-      await expect(
-        cui_pages.appealOverviewPage.page.getByText(
-          `A Tribunal Caseworker will contact you to tell you what happens next. This should be by ${formattedExpectedDate}  but it might take longer than that.`,
-          { exact: true },
-        ),
-      ).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourCaseInformation.helpfulInformationHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourCaseInformation.whatIsATribunalCaseWorkerLink).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.applicantInstructionsWindow).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.applicantInstructionsWindow).toHaveText(
+        `Your appeal details have been sent to the Tribunal.
+        A Tribunal Caseworker will contact you to tell you what happens next.
+        This should be by ${formattedExpectedDate} but it might take longer than that.
+        Helpful Information
+        What is a Tribunal Caseworker?`,
+        { useInnerText: true },
+      );
     });
 
     await test.step('Verify appeal argument section of appeal overview page', async () => {
-      await expect(cui_pages.appealOverviewPage.$yourAppealArgument.yourAppealArgumentHeading).toBeVisible();
       const formattedTodaysDate = (await dataUtils.getDateFromToday({})).full;
-      await expect(cui_pages.appealOverviewPage.page.getByText(`${formattedTodaysDate} - You paid for your appeal`, { exact: true })).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealArgument.whatYouSentHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealArgument.yourAppealDetailsLink).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.completedHeading).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.yourAppealArgumentHeading).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.yourAppealArgumentTimeLine).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.yourAppealArgumentTimeLine).toHaveText(
+        `${formattedTodaysDate} - You paid for your appeal
+        What you sent
+        Your appeal details`,
+        { useInnerText: true },
+      );
     });
 
     await test.step('Verify appeal details section of appeal overview page', async () => {
-      await expect(cui_pages.appealOverviewPage.$static.completedHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.yourAppealDetailsHeading).toBeVisible();
       const formattedTodaysDate = (await dataUtils.getDateFromToday({})).full;
-      await expect(
-        cui_pages.appealOverviewPage.page.getByText(`${formattedTodaysDate} - You sent your appeal details to the Tribunal.`, { exact: true }),
-      ).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.whatYouSentHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.yourAppealDetailsLink).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.helpfulInformationHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.whatIsATribunalCaseWorkerLink).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsHeading).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsTimeLine).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsTimeLine).toHaveText(
+        `${formattedTodaysDate} - You sent your appeal details to the Tribunal.
+        What you sent
+        Your appeal details
+        Helpful information
+        What is a Tribunal Caseworker?`,
+        { useInnerText: true },
+      );
     });
   });
 
@@ -153,69 +162,31 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Verify text on application overview page has been updated to reflect details have been sent', async () => {
-      await expect(cui_pages.appealOverviewPage.$yourCaseInformation.detailsSentToTribunalParagraph).toBeVisible();
       const formattedExpectedDate = (await dataUtils.getDateFromToday({ dayOffset: 14 })).full;
-      await expect(
-        cui_pages.appealOverviewPage.page.getByText(
-          `A Tribunal Caseworker will contact you to tell you what happens next. This should be by ${formattedExpectedDate}  but it might take longer than that.`,
-          { exact: true },
-        ),
-      ).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourCaseInformation.helpfulInformationHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourCaseInformation.whatIsATribunalCaseWorkerLink).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.applicantInstructionsWindow).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.applicantInstructionsWindow).toHaveText(
+        `Your appeal details have been sent to the Tribunal.
+        A Tribunal Caseworker will contact you to tell you what happens next.
+        This should be by ${formattedExpectedDate} but it might take longer than that.
+        Helpful Information
+        What is a Tribunal Caseworker?`,
+        { useInnerText: true },
+      );
     });
 
     await test.step('Verify appeal details section of appeal overview page', async () => {
-      await expect(cui_pages.appealOverviewPage.$static.completedHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.yourAppealDetailsHeading).toBeVisible();
       const formattedTodaysDate = (await dataUtils.getDateFromToday({})).full;
-      await expect(
-        cui_pages.appealOverviewPage.page.getByText(`${formattedTodaysDate} - You sent your appeal details to the Tribunal.`, { exact: true }),
-      ).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.whatYouSentHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.yourAppealDetailsLink).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.helpfulInformationHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$yourAppealDetails.whatIsATribunalCaseWorkerLink).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.completedHeading).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsHeading).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsTimeLine).toBeVisible();
+      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsTimeLine).toHaveText(
+        `${formattedTodaysDate} - You sent your appeal details to the Tribunal.
+        What you sent
+        Your appeal details
+        Helpful information
+        What is a Tribunal Caseworker?`,
+        { useInnerText: true },
+      );
     });
-  });
-
-  test('Verify check and send screen displays correct information', async ({ cui_apiClient, citizenUser, cui_login, cui_pages }) => {
-    let applicantDetails;
-    await test.step('Fill in your details section of journey via api', async () => {
-      applicantDetails = await cui_apiClient.submitYourDetailsUserFlowViaApi({
-        isUserInTheUk: 'No',
-        appealType: 'Human Rights',
-        isApplicantStateless: false,
-        isApplicationInTime: false,
-        nationality: 'Swedish',
-        hasApplicantReceivedADeportationOrder: 'No',
-        doesApplicantHaveASponsor: 'Yes',
-      });
-    });
-
-    await test.step('Fill in decision type section of journey via api', async () => {
-      await cui_apiClient.submitDecisionTypeUserFlowViaApi({
-        appealType: 'Protection',
-        decisionWithOrWithoutHearing: 'decisionWithHearing',
-        payForAppealNowOrLater: 'payNow',
-      });
-    });
-
-    await test.step('Fill in fee support section of journey via api', async () => {
-      await cui_apiClient.submitFeeSupportUserFlowViaApi({
-        whetherApplicantHasToPayAFee: 'None of these statements apply to me',
-      });
-    });
-
-    await test.step('Navigate to citizen UI and login', async () => {
-      await cui_login({ email: citizenUser.email, password: citizenUser.password });
-    });
-
-    await test.step('Navigate to about appeal page', async () => {
-      await cui_pages.appealOverviewPage.navigationClick(cui_pages.appealOverviewPage.$interactive.continueButton);
-      await cui_pages.aboutAppealPage.verifyUserIsOnPage();
-    });
-    console.log(applicantDetails);
-    // WIP - continue from here to verify check and send page details
   });
 });
