@@ -27,7 +27,7 @@ export class ApplicantNationalityPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'nationality', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     const defaultDropDownText = await this.$interactive.nationalityDropdown.locator('option:checked').textContent();
     await Promise.all([
       expect(defaultDropDownText?.trim()).toBe('Please select a nationality'),
@@ -45,11 +45,7 @@ export class ApplicantNationalityPage extends CuiBase {
    * @param options - Object containing stateless boolean and nationality string
    * If stateless is false, nationality must be provided.
    */
-  public async completePageAndContinue(options: { stateless: boolean; nationality?: Nationality; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { stateless: boolean; nationality?: Nationality }): Promise<void> {
     if (!options.stateless) {
       if (!options.nationality) {
         throw new Error('Nationality must be provided when stateless is false.');

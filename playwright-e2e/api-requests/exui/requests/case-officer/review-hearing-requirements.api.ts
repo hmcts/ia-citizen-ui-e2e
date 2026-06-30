@@ -14,6 +14,14 @@ export class ReviewHearingRequirementsApi {
   public async submitEvent(options: ReviewHearingRequirementsEventType): Promise<void> {
     const triggerResponse = await exui_triggerEvent({ apiContext: this.apiContext, caseId: options.caseId, eventName: this.eventName });
 
+    const hearingChannelCode: Record<ReviewHearingRequirementsEventType['hearingType'], string> = {
+      'In Person': 'INTER"',
+      'Not in Attendance': 'NA',
+      'On the Papers': 'ONPPRS',
+      Telephone: 'TEL',
+      Video: 'VID',
+    };
+
     const expectedKeysInEventPayload = [
       'appealOutOfCountry',
       'witness2InterpreterLanguageCategory',
@@ -75,6 +83,7 @@ export class ReviewHearingRequirementsApi {
       'multimediaEvidenceDescription',
       'singleSexCourt',
       'singleSexCourtType',
+      'singleSexCourtTypeDescription',
       'inCameraCourt',
       'inCameraCourtDescription',
       'additionalRequests',
@@ -82,7 +91,6 @@ export class ReviewHearingRequirementsApi {
       'hearingChannel',
       'isAppealSuitableToFloat',
       'isAdditionalInstructionAllowed',
-      'additionalInstructionsTribunalResponse',
     ];
 
     const rawCaseData = triggerResponse.rawCaseData;
@@ -94,13 +102,13 @@ export class ReviewHearingRequirementsApi {
 
     if (rawCaseData.physicalOrMentalHealthIssues === 'Yes')
       expectedKeysInEventPayload.push('isVulnerabilitiesAllowed', 'vulnerabilitiesTribunalResponse');
-    else if (rawCaseData.multimediaEvidence === 'Yes') expectedKeysInEventPayload.push('isMultimediaAllowed', 'multimediaTribunalResponse');
-    else if (rawCaseData.singleSexCourt === 'Yes') expectedKeysInEventPayload.push('isSingleSexCourtAllowed', 'singleSexCourtTribunalResponse');
-    else if (rawCaseData.inCameraCourt === 'Yes') expectedKeysInEventPayload.push('isInCameraCourtAllowed', 'inCameraCourtTribunalResponse');
-    else if (rawCaseData.additionalRequests === 'Yes')
-      expectedKeysInEventPayload.push('isAdditionalAdjustmentsAllowed', 'additionalTribunalResponse');
+    if (rawCaseData.multimediaEvidence === 'Yes') expectedKeysInEventPayload.push('isMultimediaAllowed', 'multimediaTribunalResponse');
+    if (rawCaseData.singleSexCourt === 'Yes') expectedKeysInEventPayload.push('isSingleSexCourtAllowed', 'singleSexCourtTribunalResponse');
+    if (rawCaseData.inCameraCourt === 'Yes') expectedKeysInEventPayload.push('isInCameraCourtAllowed', 'inCameraCourtTribunalResponse');
+    if (rawCaseData.additionalRequests === 'Yes') expectedKeysInEventPayload.push('isAdditionalAdjustmentsAllowed', 'additionalTribunalResponse');
+    if (options.anyAdditionalInstructions === 'Yes') expectedKeysInEventPayload.push('additionalInstructionsTribunalResponse');
 
-    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string>, key) => {
+    const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string | object>, key) => {
       if (key === 'isRemoteHearingAllowed') acc[key] = options.isRemoteHearingAllowed;
       else if (key === 'remoteVideoCallTribunalResponse') acc[key] = `${options.isRemoteHearingAllowed} request for remote hearing`;
       else if (key === 'isVulnerabilitiesAllowed') acc[key] = options.grantOrRefuseAnyAdjustmentsRequested;
@@ -117,6 +125,11 @@ export class ReviewHearingRequirementsApi {
         acc[key] = `${options.grantOrRefuseAnyAdjustmentsRequested} request for in camera court adjustment`;
       else if (key === 'isAdditionalAdjustmentsAllowed') acc[key] = options.grantOrRefuseAnyAdjustmentsRequested;
       else if (key === 'additionalTribunalResponse') acc[key] = `${options.grantOrRefuseAnyAdjustmentsRequested} request for additional adjustment`;
+      else if (key === 'hearingChannel') {
+        acc[key] = { value: { code: hearingChannelCode[options.hearingType], label: options.hearingType } };
+      } else if (key === 'isAppealSuitableToFloat') acc[key] = options.isApplicationSuitableToFloat;
+      else if (key === 'isAdditionalInstructionAllowed') acc[key] = options.anyAdditionalInstructions;
+      else if (key === 'additionalInstructionsTribunalResponse') acc[key] = 'Please ensure the hearing is listed in a building with step free access';
       else acc[key] = rawCaseData[key];
       return acc;
     }, {});

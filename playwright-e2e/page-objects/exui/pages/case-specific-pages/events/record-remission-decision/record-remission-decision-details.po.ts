@@ -38,7 +38,7 @@ export class RecordRemissionDecisionDetailsPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.feeParagraph).toBeVisible(),
@@ -60,8 +60,6 @@ export class RecordRemissionDecisionDetailsPage extends ExuiBase {
   public async completePageAndContinue(options: { amountRemitted: number; amountLeftToPay: number }): Promise<void> {
     const amountRemitted = options.amountRemitted.toString();
     const amountLeftToPay = options.amountLeftToPay.toString();
-
-    await this.verifyAllTextOnPage();
 
     await this.$inputs.amountRemittedInput.fill(amountRemitted);
     await expect(this.$inputs.amountRemittedInput).toHaveValue(amountRemitted);

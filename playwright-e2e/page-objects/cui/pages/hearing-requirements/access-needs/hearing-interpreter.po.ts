@@ -22,7 +22,7 @@ export class HearingInterpreterPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-interpreter', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.hearingInterpreterHintText).toHaveText('We will provide an interpreter for you. You cannot bring your own.'),
       expect(this.$static.hearingInterpreterHintText).toBeVisible(),
@@ -35,11 +35,7 @@ export class HearingInterpreterPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { doYouRequireAInterpreterAtHearing: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { doYouRequireAInterpreterAtHearing: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.doYouRequireAInterpreterAtHearing.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();

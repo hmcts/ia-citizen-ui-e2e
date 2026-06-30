@@ -46,7 +46,7 @@ export class UploadHomeOfficeBundlePage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.filesShouldBeHeading).toBeVisible(),
@@ -69,8 +69,6 @@ export class UploadHomeOfficeBundlePage extends ExuiBase {
   }
 
   public async completePageAndContinue(options: { description: string; nameOfFileToUpload?: string }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Home_Office_Bundle.txt';
 
     await this.$interactive.addNewButton.click();

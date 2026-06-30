@@ -22,7 +22,7 @@ export class HearingWitnessesPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-witnesses', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.witnessHintText).toHaveText('A witness is someone who will speak on your behalf on the hearing.'),
       expect(this.$static.witnessHintText).toBeVisible(),
@@ -35,11 +35,7 @@ export class HearingWitnessesPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { doesApplicantHaveAWitness: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { doesApplicantHaveAWitness: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.doesApplicantHaveAWitness.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();

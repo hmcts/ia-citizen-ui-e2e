@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { ExuiBase } from '../../../exui-base';
 
 export class HearingsPage extends ExuiBase {
@@ -23,6 +23,17 @@ export class HearingsPage extends ExuiBase {
   }
 
   public async navigateToRequestHearingPage(): Promise<void> {
-    await this.navigationClick(this.$interactive.requestHearingButton);
+    const elementToClickOn = this.$interactive.requestHearingButton;
+
+    await expect(elementToClickOn).toBeVisible();
+    await expect(elementToClickOn).toBeEnabled();
+
+    await expect(async () => {
+      if ((await elementToClickOn.isVisible()) && (await elementToClickOn.isEnabled())) {
+        await elementToClickOn.click();
+      }
+
+      await expect(elementToClickOn).not.toBeVisible({ timeout: 5_000 });
+    }).toPass({ intervals: [1_000], timeout: 30_000 });
   }
 }

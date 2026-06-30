@@ -49,7 +49,7 @@ export class HearingAttendancePage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(options: { applicantName: string; witnessNames?: string[] }): Promise<void> {
+  public async verifyAllTextOnPage(options: { applicantName: string; witnessNames?: string[] }): Promise<void> {
     await Promise.all([
       expect(this.page.getByText(`Request a hearing for ${options.applicantName}`, { exact: true })).toBeVisible(),
       expect(this.$static.contactDetailsText).toBeVisible(),
@@ -79,8 +79,6 @@ export class HearingAttendancePage extends ExuiBase {
     howWillEachParticipantAttend: MethodsOfAttendanceType | 'Not in Attendance';
     numberOfPeopleAttendingInPerson: number;
   }): Promise<void> {
-    await this.verifyAllTextOnPage({ applicantName: options.applicantName, witnessNames: options.witnessNames });
-
     if (options.paperHearing) {
       await this.page.getByLabel(options.paperHearing, { exact: true }).click();
     }

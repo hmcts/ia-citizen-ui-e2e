@@ -33,7 +33,7 @@ export class OutOfCountryHrInsidePage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'ooc-hr-inside', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.enterDateText).toBeVisible(),
 
@@ -51,16 +51,7 @@ export class OutOfCountryHrInsidePage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(dateApplicantLeftUk: {
-    day: number;
-    month: number;
-    year: number;
-    verifyAllTextOnPage?: boolean;
-  }): Promise<void> {
-    if (dateApplicantLeftUk.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(dateApplicantLeftUk: { day: number; month: number; year: number }): Promise<void> {
     const day = dateApplicantLeftUk.day.toString();
     const month = dateApplicantLeftUk.month.toString();
     const year = dateApplicantLeftUk.year.toString();

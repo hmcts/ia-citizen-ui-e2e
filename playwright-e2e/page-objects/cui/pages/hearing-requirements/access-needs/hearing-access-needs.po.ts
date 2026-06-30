@@ -25,7 +25,7 @@ export class HearingAccessNeedsPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-access-needs', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.hearingAccessNeedsHintText1).toHaveText('Use this form if you or anyone with you needs to request:'),
       expect(this.$static.hearingAccessNeedsHintText1).toBeVisible(),
@@ -50,11 +50,7 @@ export class HearingAccessNeedsPage extends CuiBase {
     ]);
   }
 
-  public async continueOnToNextPage(options: { verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async continueOnToNextPage(): Promise<void> {
     await this.navigationClick(this.$interactive.continueButton);
   }
 }

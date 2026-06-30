@@ -30,7 +30,7 @@ export class HearingInterpreterSpokenLanguageSelectionPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-interpreter-spoken-language-selection', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.weWillProvideAnInterpreterText).toHaveText('We will provide an interpreter for you to understand spoken communication.'),
       expect(this.$static.weWillProvideAnInterpreterText).toBeVisible(),
@@ -51,12 +51,7 @@ export class HearingInterpreterSpokenLanguageSelectionPage extends CuiBase {
     languageToInterpretPreference: 'Select language from dropdown' | 'Enter language manualy';
     selectLanguageFromDropdown?: LanguagesType;
     enterLanguageManually?: string;
-    verifyAllTextOnPage?: boolean;
   }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
     switch (options.languageToInterpretPreference) {
       case 'Select language from dropdown':
         if (!options.selectLanguageFromDropdown) {

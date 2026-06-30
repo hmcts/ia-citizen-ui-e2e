@@ -19,7 +19,8 @@ type DropdownEventTypes =
   | 'Prepare Decision and Reasons'
   | 'Complete decision and reasons'
   | 'Decide FTPA application'
-  | 'Generate Upper Tribunal bundle';
+  | 'Generate Upper Tribunal bundle'
+  | 'Request Home Office data';
 
 type CaseOverviewTabsType =
   | 'Tasks'
@@ -36,7 +37,8 @@ type CaseOverviewTabsType =
   | 'Linked Cases'
   | 'Payment history'
   | 'Case history'
-  | 'Hearings';
+  | 'Hearings'
+  | 'Validation';
 
 export class CaseOverviewPage extends ExuiBase {
   constructor(page: Page) {

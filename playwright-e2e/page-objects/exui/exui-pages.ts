@@ -82,6 +82,10 @@ import {
   DecideFtpaApplicationConfirmPage,
   GenerateUpperTribunalBundleSubmitPage,
   GenerateUpperTribunalBundleConfirmPage,
+  RequestHomeOfficeDataPage,
+  RequestHomeOfficeDataSubmitPage,
+  RequestHomeOfficeDataConfirmPage,
+  ValidationPage,
 } from './pages/index';
 
 export class ExuiPages {
@@ -169,6 +173,10 @@ export class ExuiPages {
   public readonly decideFtpaApplicationConfirmPage: DecideFtpaApplicationConfirmPage;
   public readonly generateUpperTribunalBundleSubmitPage: GenerateUpperTribunalBundleSubmitPage;
   public readonly generateUpperTribunalBundleConfirmPage: GenerateUpperTribunalBundleConfirmPage;
+  public readonly requestHomeOfficeDataPage: RequestHomeOfficeDataPage;
+  public readonly requestHomeOfficeDataSubmitPage: RequestHomeOfficeDataSubmitPage;
+  public readonly requestHomeOfficeDataConfirmPage: RequestHomeOfficeDataConfirmPage;
+  public readonly validationPage: ValidationPage;
 
   constructor(page: Page) {
     this.page = page;
@@ -254,6 +262,10 @@ export class ExuiPages {
     this.decideFtpaApplicationConfirmPage = new DecideFtpaApplicationConfirmPage(this.page);
     this.generateUpperTribunalBundleSubmitPage = new GenerateUpperTribunalBundleSubmitPage(this.page);
     this.generateUpperTribunalBundleConfirmPage = new GenerateUpperTribunalBundleConfirmPage(this.page);
+    this.requestHomeOfficeDataPage = new RequestHomeOfficeDataPage(this.page);
+    this.requestHomeOfficeDataSubmitPage = new RequestHomeOfficeDataSubmitPage(this.page);
+    this.requestHomeOfficeDataConfirmPage = new RequestHomeOfficeDataConfirmPage(this.page);
+    this.validationPage = new ValidationPage(this.page);
   }
 
   /**

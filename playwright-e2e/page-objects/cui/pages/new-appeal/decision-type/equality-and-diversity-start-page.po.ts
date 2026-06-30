@@ -20,7 +20,7 @@ export class EqualityAndDiversityStartPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'start-page', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.optionalQuestionsText).toHaveText('These are optional questions about you.'),
       expect(this.$static.optionalQuestionsText).toBeVisible(),
@@ -36,11 +36,7 @@ export class EqualityAndDiversityStartPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(): Promise<void> {
     const element = this.page.locator('button[type="submit"]', { hasText: "I don't want to answer these questions" });
     await this.navigationClick(element);
   }

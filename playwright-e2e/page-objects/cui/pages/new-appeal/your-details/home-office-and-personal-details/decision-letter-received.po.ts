@@ -33,7 +33,7 @@ export class DecisionLetterReceivedPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'date-letter-received', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.enterDateText).toBeVisible(),
 
@@ -51,16 +51,7 @@ export class DecisionLetterReceivedPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(dateDecisionLetterReceived: {
-    day: number;
-    month: number;
-    year: number;
-    verifyAllTextOnPage?: boolean;
-  }): Promise<void> {
-    if (dateDecisionLetterReceived.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(dateDecisionLetterReceived: { day: number; month: number; year: number }): Promise<void> {
     const day = dateDecisionLetterReceived.day.toString();
     const month = dateDecisionLetterReceived.month.toString();
     const year = dateDecisionLetterReceived.year.toString();

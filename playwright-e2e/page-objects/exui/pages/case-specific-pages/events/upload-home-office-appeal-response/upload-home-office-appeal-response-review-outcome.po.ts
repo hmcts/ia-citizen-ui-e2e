@@ -29,7 +29,7 @@ export class UploadHomeOfficeAppealResponseReviewOutcomePage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.whatWasOutcomeOfReviewHeading).toBeVisible(),
@@ -46,8 +46,6 @@ export class UploadHomeOfficeAppealResponseReviewOutcomePage extends ExuiBase {
   }
 
   public async completePageAndContinue(options: { appealReviewOutcome: HomeOfficeAppealReviewOutcomeType }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     const element = this.page.locator('div', { hasText: options.appealReviewOutcome }).last().locator('input[type="radio"]');
     await element.check();
     await expect(element).toBeChecked();

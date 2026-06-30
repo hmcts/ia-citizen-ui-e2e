@@ -26,7 +26,7 @@ export class HearingOutsideUKPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-outside-uk', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.hearingOutsideUKHintText).toHaveText(
         'If you answer yes, a Tribunal Caseworker will contact you to ask for more information about where you or any witnesses will be for the hearing.',
@@ -41,11 +41,7 @@ export class HearingOutsideUKPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { doesApplicantHaveAWitness: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { doesApplicantHaveAWitness: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.doesApplicantHaveAWitness.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();

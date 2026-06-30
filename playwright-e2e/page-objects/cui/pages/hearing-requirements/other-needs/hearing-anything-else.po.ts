@@ -25,7 +25,7 @@ export class HearingAnythingElsePage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-anything-else', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.yesLabel).toHaveText('Yes'),
       expect(this.$static.yesLabel).toBeVisible(),
@@ -35,11 +35,7 @@ export class HearingAnythingElsePage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { needAnythingElse: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { needAnythingElse: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.needAnythingElse.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();

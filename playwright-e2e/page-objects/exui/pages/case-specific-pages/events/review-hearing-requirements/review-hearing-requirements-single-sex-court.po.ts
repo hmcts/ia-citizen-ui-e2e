@@ -121,4 +121,8 @@ export class ReviewHearingRequirementsSingleSexCourtPage extends ExuiBase {
 
     await this.navigationClick(this.$interactive.continueButton);
   }
+
+  public async continueOntoNextPage(): Promise<void> {
+    await this.navigationClick(this.$interactive.continueButton);
+  }
 }

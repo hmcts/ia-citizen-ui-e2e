@@ -33,7 +33,7 @@ export class ReviewHearingRequirementsAdditionalIntructionsPage extends ExuiBase
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.addtionalIntructionsText).toHaveText('Are there any additional instructions for the hearing?'),
@@ -46,8 +46,6 @@ export class ReviewHearingRequirementsAdditionalIntructionsPage extends ExuiBase
   }
 
   public async completePageAndContinue(options: { anyAddtionalIntructions: YesOrNoType; instruction?: string }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     const element = this.page.locator(`input[type="radio"][id*="${options.anyAddtionalIntructions}"]`);
     await element.check();
     await expect(element).toBeChecked();

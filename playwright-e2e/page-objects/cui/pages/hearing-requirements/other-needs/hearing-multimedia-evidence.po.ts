@@ -22,7 +22,7 @@ export class HearingMultimediaEvidencePage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-multimedia-evidence', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.videoAndAudioEvidenceHintText).toHaveText('For example, video or sound recordings.'),
       expect(this.$static.videoAndAudioEvidenceHintText).toBeVisible(),
@@ -35,11 +35,7 @@ export class HearingMultimediaEvidencePage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { willYouBringVideoOrAudioEvidence: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { willYouBringVideoOrAudioEvidence: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.willYouBringVideoOrAudioEvidence.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();

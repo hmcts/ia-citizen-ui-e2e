@@ -31,7 +31,7 @@ export class AsylumSupportPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'asylum-support', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.asylumSupportFirstParagraph).toHaveText(
         'The Tribunal will check your reference number is valid after you submit your appeal.',
@@ -54,11 +54,7 @@ export class AsylumSupportPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { asylumSupportRefNumber: number; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { asylumSupportRefNumber: number }): Promise<void> {
     const refNumber = option.asylumSupportRefNumber.toString();
     await this.$inputs.asylumSupportReferenceNumberInput.fill(refNumber);
     await expect(this.$inputs.asylumSupportReferenceNumberInput).toHaveValue(refNumber);

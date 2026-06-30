@@ -34,7 +34,7 @@ export class SponsorAddressPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'sponsor-address', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.buildingAndStreetLabel).toContainText('Building and street'),
       expect(this.$static.buildingAndStreetLabel).toBeVisible(),
@@ -56,12 +56,7 @@ export class SponsorAddressPage extends CuiBase {
     townOrCity: string;
     county?: string;
     postCode: string;
-    verifyAllTextOnPage?: boolean;
   }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
     await this.$inputs.addressLine1.fill(options.addressLine1);
     await expect(this.$inputs.addressLine1).toHaveValue(options.addressLine1);
 

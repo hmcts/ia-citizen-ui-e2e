@@ -27,7 +27,7 @@ export class HearingWelshPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextForApplicant(options: { applicantName: string }): Promise<void> {
+  public async verifyAllTextForApplicant(options: { applicantName: string }): Promise<void> {
     await Promise.all([
       expect(this.page.getByText(`Request a hearing for ${options.applicantName}`, { exact: true })).toBeVisible(),
       expect(this.$static.welshHearingHintText).toHaveText('This means the entire hearing will be carried out in Welsh.'),
@@ -39,9 +39,7 @@ export class HearingWelshPage extends ExuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { applicantName: string; isWelshHearingRequired: YesOrNoType }): Promise<void> {
-    await this.verifyAllTextForApplicant({ applicantName: options.applicantName });
-
+  public async completePageAndContinue(options: { isWelshHearingRequired: YesOrNoType }): Promise<void> {
     if (options.isWelshHearingRequired === 'Yes') {
       await this.$interactive.hearingWelshYesRadio.click();
       await expect(this.$interactive.hearingWelshYesRadio).toBeChecked();

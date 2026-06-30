@@ -22,7 +22,7 @@ export class HearingStepFreeAccessPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-step-free-access', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.stepFreeAccessHintText).toHaveText(
         'If you or any witnesses are in a wheelchair or have any other mobility issues, we will provide step-free access at the hearing.',
@@ -37,11 +37,7 @@ export class HearingStepFreeAccessPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { willYouOrWitnessRequireStepFreeAccess: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { willYouOrWitnessRequireStepFreeAccess: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.willYouOrWitnessRequireStepFreeAccess.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();

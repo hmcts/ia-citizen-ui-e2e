@@ -20,7 +20,7 @@ export class HearingInterpreterTypesWitnessPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-interpreter-types?selectedWitnesses', pageHeading: pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.spokenLanguageInterpreterLabel).toHaveText('I need a spoken language interpreter'),
       expect(this.$static.spokenLanguageInterpreterLabel).toBeVisible(),
@@ -36,11 +36,7 @@ export class HearingInterpreterTypesWitnessPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { typeOfInterpretor: InterpretorSupportType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { typeOfInterpretor: InterpretorSupportType }): Promise<void> {
     switch (options.typeOfInterpretor) {
       case 'Spoken language interpreter':
         await this.$interactive.spokenLanguageInterpreterCheckbox.check();

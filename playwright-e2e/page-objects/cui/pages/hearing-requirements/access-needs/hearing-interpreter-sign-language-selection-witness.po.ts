@@ -26,7 +26,7 @@ export class HearingInterpreterSignLanguageSelectionWitnessPage extends CuiBase 
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.selectSignLanguageLabel).toHaveText('Select sign language'),
       expect(this.$static.selectSignLanguageLabel).toBeVisible(),
@@ -44,12 +44,7 @@ export class HearingInterpreterSignLanguageSelectionWitnessPage extends CuiBase 
     languageToInterpretPreference: 'Select sign language from dropdown' | 'Enter sign language manualy';
     selectSignLanguageFromDropdown?: SignLanguagesType;
     enterSignLanguageManually?: string;
-    verifyAllTextOnPage?: boolean;
   }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
     switch (options.languageToInterpretPreference) {
       case 'Select sign language from dropdown':
         if (!options.selectSignLanguageFromDropdown) {

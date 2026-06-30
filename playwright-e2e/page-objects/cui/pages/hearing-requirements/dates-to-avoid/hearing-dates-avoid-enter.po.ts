@@ -37,7 +37,7 @@ export class HearingDatesAvoidEnterPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-dates-avoid-enter', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     const startOfDateRange = (await this.dataUtils.getDateFromToday({ dayOffset: 5 })).full;
     const endOfDateRange = (await this.dataUtils.getDateFromToday({ dayOffset: 47 })).full;
     await Promise.all([
@@ -58,11 +58,7 @@ export class HearingDatesAvoidEnterPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(dateToAvoid: { day: number; month: number; year: number; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (dateToAvoid.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(dateToAvoid: { day: number; month: number; year: number }): Promise<void> {
     const day = dateToAvoid.day.toString();
     const month = dateToAvoid.month.toString();
     const year = dateToAvoid.year.toString();

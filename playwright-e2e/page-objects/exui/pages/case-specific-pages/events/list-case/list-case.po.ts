@@ -59,7 +59,7 @@ export class ListCasePage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.addHearingDetailsBelowText).toBeVisible(),
@@ -104,8 +104,6 @@ export class ListCasePage extends ExuiBase {
     dateToSet: 'tomorrow';
     hourToSet: number;
   }): Promise<string> {
-    await this.verifyAllTextOnPage();
-
     const listingReference = `LP/${await this.dataUtils.generateRandomNumber({ digitLength: 5 })}/${new Date().getFullYear()}`;
     await this.$inputs.listingReferenceInput.fill(listingReference);
     await expect(this.$inputs.listingReferenceInput).toHaveValue(listingReference);

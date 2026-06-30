@@ -36,7 +36,7 @@ export class PrepareDecisionAndReasonsLegalRepresentativesPage extends ExuiBase 
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.namesOflegalRepresentativesHeading).toBeVisible(),
@@ -48,8 +48,6 @@ export class PrepareDecisionAndReasonsLegalRepresentativesPage extends ExuiBase 
   }
 
   public async completePageAndContinue(options?: { appellantRepresentative: string; respondentRepresentative: string }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     if (options?.appellantRepresentative) {
       await this.$inputs.appellantRepresentativeInput.fill(options.appellantRepresentative);
       await expect(this.$inputs.appellantRepresentativeInput).toHaveValue(options.appellantRepresentative);

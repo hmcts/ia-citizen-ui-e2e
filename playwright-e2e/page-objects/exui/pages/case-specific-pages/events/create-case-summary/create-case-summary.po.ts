@@ -37,7 +37,7 @@ export class CreateCaseSummaryPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.createACaseSummaryHeading).toBeVisible(),
@@ -60,8 +60,6 @@ export class CreateCaseSummaryPage extends ExuiBase {
   }
 
   public async completePageAndContinue(options: { description?: string; nameOfFileToUpload?: string }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Create_Case_Summary.txt';
 
     await this.uiDocumentUploadHelper.uploadExuiDocument({
