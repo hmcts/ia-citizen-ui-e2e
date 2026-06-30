@@ -53,7 +53,7 @@ export class AppealTypePage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'appeal-type', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       // Verify appeal type hint text is correct and visible to the user
       expect(this.$static.appealTypeHintFirstParagraph).toHaveText(
@@ -132,11 +132,7 @@ export class AppealTypePage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { appealType: AppealType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { appealType: AppealType }): Promise<void> {
     const optionToSelect = options.appealType;
     const element = this.page.getByRole('radio', { name: new RegExp(`^${optionToSelect}`, 'i') });
 

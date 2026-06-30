@@ -75,10 +75,12 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
       await cui_pages.hearingNeedsPage.navigationClick(cui_pages.hearingNeedsPage.$interactive.witnessLink);
 
       await cui_pages.hearingWitnessesPage.verifyUserIsOnPage();
-      await cui_pages.hearingWitnessesPage.completePageAndContinue({ doesApplicantHaveAWitness: 'No', verifyAllTextOnPage: true });
+      await cui_pages.hearingWitnessesPage.verifyAllTextOnPage();
+      await cui_pages.hearingWitnessesPage.completePageAndContinue({ doesApplicantHaveAWitness: 'No' });
 
       await cui_pages.hearingOutsideUKPage.verifyUserIsOnPage();
-      await cui_pages.hearingOutsideUKPage.completePageAndContinue({ doesApplicantHaveAWitness: 'No', verifyAllTextOnPage: true });
+      await cui_pages.hearingOutsideUKPage.verifyAllTextOnPage();
+      await cui_pages.hearingOutsideUKPage.completePageAndContinue({ doesApplicantHaveAWitness: 'No' });
 
       await cui_pages.hearingNeedsPage.verifyUserIsOnPage();
     });
@@ -87,16 +89,20 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
       await cui_pages.hearingNeedsPage.navigationClick(cui_pages.hearingNeedsPage.$interactive.accessNeedsLink);
 
       await cui_pages.hearingAccessNeedsPage.verifyUserIsOnPage();
-      await cui_pages.hearingAccessNeedsPage.continueOnToNextPage({ verifyAllTextOnPage: true });
+      await cui_pages.hearingAccessNeedsPage.verifyAllTextOnPage();
+      await cui_pages.hearingAccessNeedsPage.continueOnToNextPage();
 
       await cui_pages.hearingInterpreterPage.verifyUserIsOnPage();
-      await cui_pages.hearingInterpreterPage.completePageAndContinue({ doYouRequireAInterpreterAtHearing: 'No', verifyAllTextOnPage: true });
+      await cui_pages.hearingInterpreterPage.verifyAllTextOnPage();
+      await cui_pages.hearingInterpreterPage.completePageAndContinue({ doYouRequireAInterpreterAtHearing: 'No' });
 
       await cui_pages.hearingStepFreeAccessPage.verifyUserIsOnPage();
-      await cui_pages.hearingStepFreeAccessPage.completePageAndContinue({ willYouOrWitnessRequireStepFreeAccess: 'No', verifyAllTextOnPage: true });
+      await cui_pages.hearingStepFreeAccessPage.verifyAllTextOnPage();
+      await cui_pages.hearingStepFreeAccessPage.completePageAndContinue({ willYouOrWitnessRequireStepFreeAccess: 'No' });
 
       await cui_pages.hearingLoopPage.verifyUserIsOnPage();
-      await cui_pages.hearingLoopPage.completePageAndContinue({ willYouOrWitnessNeedHearingLoop: 'No', verifyAllTextOnPage: true });
+      await cui_pages.hearingLoopPage.verifyAllTextOnPage();
+      await cui_pages.hearingLoopPage.completePageAndContinue({ willYouOrWitnessNeedHearingLoop: 'No' });
 
       await cui_pages.hearingNeedsPage.verifyUserIsOnPage();
     });
@@ -105,37 +111,42 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
       await cui_pages.hearingNeedsPage.navigationClick(cui_pages.hearingNeedsPage.$interactive.otherNeedsLink);
 
       await cui_pages.hearingOtherNeedsPage.verifyUserIsOnPage();
-      await cui_pages.hearingOtherNeedsPage.continueOnToNextPage({ verifyAllTextOnPage: true });
+      await cui_pages.hearingOtherNeedsPage.verifyAllTextOnPage();
+      await cui_pages.hearingOtherNeedsPage.continueOnToNextPage();
 
       await cui_pages.hearingVideoAppointmentPage.verifyUserIsOnPage();
+      await cui_pages.hearingVideoAppointmentPage.verifyAllTextOnPage();
       await cui_pages.hearingVideoAppointmentPage.completePageAndContinue({
         areYouAbleToJoinHearingViaVideoCall: 'Yes',
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.hearingMultimediaEvidencePage.verifyUserIsOnPage();
-      await cui_pages.hearingMultimediaEvidencePage.completePageAndContinue({ willYouBringVideoOrAudioEvidence: 'No', verifyAllTextOnPage: true });
+      await cui_pages.hearingMultimediaEvidencePage.verifyAllTextOnPage();
+      await cui_pages.hearingMultimediaEvidencePage.completePageAndContinue({ willYouBringVideoOrAudioEvidence: 'No' });
 
       await cui_pages.hearingSingleSexPage.verifyUserIsOnPage();
-      await cui_pages.hearingSingleSexPage.completePageAndContinue({ willYouNeedAllFemaleOrMaleHearing: 'No', verifyAllTextOnPage: true });
+      await cui_pages.hearingSingleSexPage.verifyAllTextOnPage();
+      await cui_pages.hearingSingleSexPage.completePageAndContinue({ willYouNeedAllFemaleOrMaleHearing: 'No' });
 
       await cui_pages.hearingPrivatePage.verifyUserIsOnPage();
-      await cui_pages.hearingPrivatePage.completePageAndContinue({ willYouNeedAPrivateHearing: 'No', verifyAllTextOnPage: true });
+      await cui_pages.hearingPrivatePage.verifyAllTextOnPage();
+      await cui_pages.hearingPrivatePage.completePageAndContinue({ willYouNeedAPrivateHearing: 'No' });
 
       await cui_pages.hearingPhysicalMentalHealthPage.verifyUserIsOnPage();
+      await cui_pages.hearingPhysicalMentalHealthPage.verifyAllTextOnPage();
       await cui_pages.hearingPhysicalMentalHealthPage.completePageAndContinue({
         anyPhysicalOrMentalHealthConditions: 'No',
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.hearingPastExperiencesPage.verifyUserIsOnPage();
+      await cui_pages.hearingPastExperiencesPage.verifyAllTextOnPage();
       await cui_pages.hearingPastExperiencesPage.completePageAndContinue({
         anyPastExperienceThatMayAffectHearing: 'No',
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.hearingAnythingElsePage.verifyUserIsOnPage();
-      await cui_pages.hearingAnythingElsePage.completePageAndContinue({ needAnythingElse: 'No', verifyAllTextOnPage: true });
+      await cui_pages.hearingAnythingElsePage.verifyAllTextOnPage();
+      await cui_pages.hearingAnythingElsePage.completePageAndContinue({ needAnythingElse: 'No' });
 
       await cui_pages.hearingNeedsPage.verifyUserIsOnPage();
     });
@@ -144,7 +155,8 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
       await cui_pages.hearingNeedsPage.navigationClick(cui_pages.hearingNeedsPage.$interactive.datesToAvoidLink);
 
       await cui_pages.hearingDatesAvoidPage.verifyUserIsOnPage({ urlPath: 'hearing-dates-avoid' });
-      await cui_pages.hearingDatesAvoidPage.completePageAndContinue({ anyDatesToAvoid: 'No', verifyAllTextOnPage: true });
+      await cui_pages.hearingDatesAvoidPage.verifyAllTextOnPage();
+      await cui_pages.hearingDatesAvoidPage.completePageAndContinue({ anyDatesToAvoid: 'No' });
 
       await cui_pages.hearingNeedsPage.verifyUserIsOnPage();
     });
@@ -336,10 +348,10 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
 
         const witnessName = await dataUtils.generateRandomFirstAndLastNames({ countOfFirstNamesToGenerate: 1, countOfLastNamesToGenerate: 1 });
         await cui_pages.hearingWitnessNamesPage.verifyUserIsOnPage();
+        await cui_pages.hearingWitnessNamesPage.verifyAllTextOnPage();
         await cui_pages.hearingWitnessNamesPage.completePageAndContinue({
           givenNames: witnessName.firstNames[0],
           familyName: witnessName.lastNames[0],
-          verifyAllTextOnPage: true,
         });
 
         await cui_pages.hearingOutsideUKPage.verifyUserIsOnPage();
@@ -353,52 +365,52 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
         await cui_pages.hearingNeedsPage.navigationClick(cui_pages.hearingNeedsPage.$interactive.accessNeedsLink);
 
         await cui_pages.hearingAccessNeedsPage.verifyUserIsOnPage();
-        await cui_pages.hearingAccessNeedsPage.continueOnToNextPage({});
+        await cui_pages.hearingAccessNeedsPage.continueOnToNextPage();
 
         await cui_pages.hearingInterpreterSupportAppellantWitnessesPage.verifyUserIsOnPage();
+        await cui_pages.hearingInterpreterSupportAppellantWitnessesPage.verifyAllTextOnPage();
         await cui_pages.hearingInterpreterSupportAppellantWitnessesPage.completePageAndContinue({
           typeOfSupport: 'Interpretor for applicant and witness',
-          verifyAllTextOnPage: true,
         });
 
         await cui_pages.hearingInterpreterTypesPage.verifyUserIsOnPage();
+        await cui_pages.hearingInterpreterTypesPage.verifyAllTextOnPage();
         await cui_pages.hearingInterpreterTypesPage.completePageAndContinue({
           typeOfInterpretor: 'Spoken and sign language interpretor',
-          verifyAllTextOnPage: true,
         });
 
         await cui_pages.hearingInterpreterSpokenLanguageSelectionPage.verifyUserIsOnPage();
+        await cui_pages.hearingInterpreterSpokenLanguageSelectionPage.verifyAllTextOnPage();
         await cui_pages.hearingInterpreterSpokenLanguageSelectionPage.completePageAndContinue({
           languageToInterpretPreference: 'Select language from dropdown',
           selectLanguageFromDropdown: 'Mandarin',
-          verifyAllTextOnPage: true,
         });
 
         await cui_pages.hearingInterpreterSignLanguageSelectionPage.verifyUserIsOnPage();
+        await cui_pages.hearingInterpreterSignLanguageSelectionPage.verifyAllTextOnPage();
         await cui_pages.hearingInterpreterSignLanguageSelectionPage.completePageAndContinue({
           languageToInterpretPreference: 'Select sign language from dropdown',
           selectSignLanguageFromDropdown: 'British Sign Language (BSL)',
-          verifyAllTextOnPage: true,
         });
 
         await cui_pages.hearingInterpreterTypesWitnessPage.verifyUserIsOnPage();
+        await cui_pages.hearingInterpreterTypesWitnessPage.verifyAllTextOnPage();
         await cui_pages.hearingInterpreterTypesWitnessPage.completePageAndContinue({
           typeOfInterpretor: 'Spoken and sign language interpretor',
-          verifyAllTextOnPage: true,
         });
 
         await cui_pages.hearingInterpreterSpokenLanguageSelectionWitnessPage.verifyUserIsOnPage();
+        await cui_pages.hearingInterpreterSpokenLanguageSelectionWitnessPage.verifyAllTextOnPage();
         await cui_pages.hearingInterpreterSpokenLanguageSelectionWitnessPage.completePageAndContinue({
           languageToInterpretPreference: 'Select language from dropdown',
           selectLanguageFromDropdown: 'Portuguese',
-          verifyAllTextOnPage: true,
         });
 
         await cui_pages.hearingInterpreterSignLanguageSelectionWitnessPage.verifyUserIsOnPage();
+        await cui_pages.hearingInterpreterSignLanguageSelectionWitnessPage.verifyAllTextOnPage();
         await cui_pages.hearingInterpreterSignLanguageSelectionWitnessPage.completePageAndContinue({
           languageToInterpretPreference: 'Select sign language from dropdown',
           selectSignLanguageFromDropdown: 'Visual frame signing',
-          verifyAllTextOnPage: true,
         });
 
         await cui_pages.hearingStepFreeAccessPage.verifyUserIsOnPage();
@@ -414,7 +426,7 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
         await cui_pages.hearingNeedsPage.navigationClick(cui_pages.hearingNeedsPage.$interactive.otherNeedsLink);
 
         await cui_pages.hearingOtherNeedsPage.verifyUserIsOnPage();
-        await cui_pages.hearingOtherNeedsPage.continueOnToNextPage({});
+        await cui_pages.hearingOtherNeedsPage.continueOnToNextPage();
 
         await cui_pages.hearingVideoAppointmentPage.verifyUserIsOnPage();
         await cui_pages.hearingVideoAppointmentPage.completePageAndContinue({ areYouAbleToJoinHearingViaVideoCall: 'No' });
@@ -428,9 +440,9 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
         await cui_pages.hearingMultimediaEvidencePage.completePageAndContinue({ willYouBringVideoOrAudioEvidence: 'Yes' });
 
         await cui_pages.hearingMultimediaEvidenceEquipmentPage.verifyUserIsOnPage();
+        await cui_pages.hearingMultimediaEvidenceEquipmentPage.verifyAllTextOnPage();
         await cui_pages.hearingMultimediaEvidenceEquipmentPage.completePageAndContinue({
           willYouBringEquipmentToPlayEvidence: 'No',
-          verifyAllTextOnPage: true,
         });
 
         await cui_pages.hearingMultimediaEvidenceEquipmentReasonsPage.verifyUserIsOnPage();
@@ -442,7 +454,8 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
         await cui_pages.hearingSingleSexPage.completePageAndContinue({ willYouNeedAllFemaleOrMaleHearing: 'Yes' });
 
         await cui_pages.hearingSingleSexTypePage.verifyUserIsOnPage();
-        await cui_pages.hearingSingleSexTypePage.completePageAndContinue({ typeOfHearing: 'All male', verifyAllTextOnPage: true });
+        await cui_pages.hearingSingleSexTypePage.verifyAllTextOnPage();
+        await cui_pages.hearingSingleSexTypePage.completePageAndContinue({ typeOfHearing: 'All male' });
 
         await cui_pages.hearingSingleSexTypeMalePage.verifyUserIsOnPage();
         await cui_pages.hearingSingleSexTypeMalePage.completePageAndContinue({
@@ -496,11 +509,11 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
 
         const dateToAvoid = await dataUtils.getDateFromToday({ dayOffset: 10 });
         await cui_pages.hearingDatesAvoidEnterPage.verifyUserIsOnPage();
+        await cui_pages.hearingDatesAvoidEnterPage.verifyAllTextOnPage();
         await cui_pages.hearingDatesAvoidEnterPage.completePageAndContinue({
           day: dateToAvoid.day,
           month: dateToAvoid.month,
           year: dateToAvoid.year,
-          verifyAllTextOnPage: true,
         });
 
         await cui_pages.hearingDatesAvoidReasonsPage.verifyUserIsOnPage();

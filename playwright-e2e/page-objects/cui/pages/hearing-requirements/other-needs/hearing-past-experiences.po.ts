@@ -26,7 +26,7 @@ export class HearingPastExperiencesPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-past-experiences', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.pastExperienceHintText).toHaveText('This might be experience of physical or sexual abuse, trafficking or torture.'),
       expect(this.$static.pastExperienceHintText).toBeVisible(),
@@ -39,11 +39,7 @@ export class HearingPastExperiencesPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { anyPastExperienceThatMayAffectHearing: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { anyPastExperienceThatMayAffectHearing: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.anyPastExperienceThatMayAffectHearing.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();

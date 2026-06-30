@@ -37,7 +37,7 @@ export class HearingDatesAvoidPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: options.urlPath, pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     const startOfPageHeadingDateRange = (await this.dataUtils.getDateFromToday({ dayOffset: 5 })).full;
     const endOfPageHeadingDateRange = (await this.dataUtils.getDateFromToday({ dayOffset: 47 })).full;
     let pageHeadingText: string;
@@ -65,11 +65,7 @@ export class HearingDatesAvoidPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { anyDatesToAvoid: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { anyDatesToAvoid: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.anyDatesToAvoid.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();

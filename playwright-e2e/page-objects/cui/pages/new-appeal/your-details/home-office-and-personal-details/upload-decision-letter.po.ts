@@ -35,7 +35,7 @@ export class UploadDecisionLetterPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'home-office-upload-decision-letter', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.decisionByEmailHeading).toHaveText('If you got your decision by email'),
       expect(this.$static.decisionByEmailHeading).toBeVisible(),
@@ -61,11 +61,7 @@ export class UploadDecisionLetterPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { nameOfFileToUpload?: string; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { nameOfFileToUpload?: string }): Promise<void> {
     const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Decision_Letter.txt';
     const filePath = await this.dataUtils.fetchDocumentUploadPath(fileToUpload);
 

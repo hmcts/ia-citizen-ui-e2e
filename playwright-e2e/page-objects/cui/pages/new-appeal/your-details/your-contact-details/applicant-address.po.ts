@@ -29,7 +29,7 @@ export class ApplicantAddressPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'address', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.enterPostCodeLabel).toHaveText('Enter a UK postcode'),
       expect(this.$static.enterPostCodeLabel).toBeVisible(),
@@ -41,12 +41,7 @@ export class ApplicantAddressPage extends CuiBase {
   public async completePageAndContinue(options: {
     addressPreference: 'Post Code Search' | 'Enter Address Manually';
     postCode?: string;
-    verifyAllTextOnPage?: boolean;
   }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
     switch (options.addressPreference) {
       case 'Enter Address Manually':
         await this.navigationClick(this.$interactive.enterAddressManuallyLink);

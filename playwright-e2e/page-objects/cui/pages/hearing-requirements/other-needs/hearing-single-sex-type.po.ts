@@ -21,7 +21,7 @@ export class HearingSingleSexTypePage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-single-sex-type', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.allMaleLabel).toHaveText('All male'),
       expect(this.$static.allMaleLabel).toBeVisible(),
@@ -31,11 +31,7 @@ export class HearingSingleSexTypePage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { typeOfHearing: AllMaleOrFemaleHearingType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { typeOfHearing: AllMaleOrFemaleHearingType }): Promise<void> {
     const answerValue = option.typeOfHearing === 'All male' ? 'yes' : 'no';
 
     const element = this.page.locator(`input[type="radio"][value="${answerValue}"]`);

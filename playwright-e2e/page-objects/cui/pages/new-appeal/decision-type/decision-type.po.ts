@@ -31,7 +31,7 @@ export class DecisionTypePage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'decision-type', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.decisionHintFirstParagraph).toHaveText(
         'You can choose to have a judge decide your appeal with or without a hearing. You may be able to get help to pay the fee.',
@@ -65,14 +65,7 @@ export class DecisionTypePage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: {
-    decisionWithOrWithoutHearing: decisionWithOrWithoutHearingType;
-    verifyAllTextOnPage?: boolean;
-  }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { decisionWithOrWithoutHearing: decisionWithOrWithoutHearingType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${options.decisionWithOrWithoutHearing}"]`);
     await element.check();
     await expect(element).toBeChecked();

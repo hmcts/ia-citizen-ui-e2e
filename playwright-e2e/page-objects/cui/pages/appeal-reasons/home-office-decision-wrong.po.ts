@@ -42,7 +42,7 @@ export class HomeOfficeDecisionWrongPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'home-office-decision-wrong', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.helpfulInformationText).toHaveText(
         'It may be helpful to look at the Home Office documents (opens in a new window). They include your decision letter and other information about your case.',
@@ -83,11 +83,7 @@ export class HomeOfficeDecisionWrongPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { reasonWhyHomeOfficeDecisionIsWrong: string; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { reasonWhyHomeOfficeDecisionIsWrong: string }): Promise<void> {
     await this.$inputs.whyYouThinkHomeOfficeDecisionIsWrong.fill(options.reasonWhyHomeOfficeDecisionIsWrong);
     await expect(this.$inputs.whyYouThinkHomeOfficeDecisionIsWrong).toHaveValue(options.reasonWhyHomeOfficeDecisionIsWrong);
     await this.navigationClick(this.$interactive.saveAndContinueButton);

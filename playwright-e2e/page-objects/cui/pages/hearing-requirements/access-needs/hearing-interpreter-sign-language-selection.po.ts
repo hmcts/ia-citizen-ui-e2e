@@ -30,7 +30,7 @@ export class HearingInterpreterSignLanguageSelectionPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-interpreter-sign-language-selection', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.weWillProvideASignLanguageInterpreterText).toHaveText(
         'We will provide a sign language interpreter for you to understand spoken communication.',
@@ -53,12 +53,7 @@ export class HearingInterpreterSignLanguageSelectionPage extends CuiBase {
     languageToInterpretPreference: 'Select sign language from dropdown' | 'Enter sign language manualy';
     selectSignLanguageFromDropdown?: SignLanguagesType;
     enterSignLanguageManually?: string;
-    verifyAllTextOnPage?: boolean;
   }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
     switch (options.languageToInterpretPreference) {
       case 'Select sign language from dropdown':
         if (!options.selectSignLanguageFromDropdown) {

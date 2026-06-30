@@ -22,7 +22,7 @@ export class HearingPrivatePage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-private', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.privateHearingHintText).toHaveText('A private hearing means the public will not be allowed to attend.'),
       expect(this.$static.privateHearingHintText).toBeVisible(),
@@ -35,11 +35,7 @@ export class HearingPrivatePage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { willYouNeedAPrivateHearing: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { willYouNeedAPrivateHearing: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.willYouNeedAPrivateHearing.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();

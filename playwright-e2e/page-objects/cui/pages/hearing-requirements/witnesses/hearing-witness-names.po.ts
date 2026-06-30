@@ -29,7 +29,7 @@ export class HearingWitnessNamesPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-witness-names', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.witnessHintText).toHaveText('You can add up to 10 witnesses.'),
       expect(this.$static.witnessHintText).toBeVisible(),
@@ -44,11 +44,7 @@ export class HearingWitnessNamesPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { givenNames: string | string[]; familyName: string; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { givenNames: string | string[]; familyName: string }): Promise<void> {
     const givenNames = Array.isArray(option.givenNames) ? option.givenNames.join(' ') : option.givenNames;
     const familyName = option.familyName;
 

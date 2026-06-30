@@ -24,7 +24,7 @@ export class SupportingEvidencePage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'supporting-evidence', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.needMoreTimeHeading).toBeVisible(),
 
@@ -35,11 +35,7 @@ export class SupportingEvidencePage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { doYouWishToProvideSupportingEvidence: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { doYouWishToProvideSupportingEvidence: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${options.doYouWishToProvideSupportingEvidence.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();

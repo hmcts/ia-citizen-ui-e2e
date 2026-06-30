@@ -47,16 +47,18 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
       await cui_pages.appealOverviewPage.navigationClick(cui_pages.appealOverviewPage.$interactive.continueButton);
 
       await cui_pages.homeOfficeDecisionWrongPage.verifyUserIsOnPage();
+      await cui_pages.homeOfficeDecisionWrongPage.verifyAllTextOnPage();
       await cui_pages.homeOfficeDecisionWrongPage.completePageAndContinue({
         reasonWhyHomeOfficeDecisionIsWrong: 'The home office is wrong test reason',
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.supportingEvidencePage.verifyUserIsOnPage();
-      await cui_pages.supportingEvidencePage.completePageAndContinue({ doYouWishToProvideSupportingEvidence: 'Yes', verifyAllTextOnPage: true });
+      await cui_pages.supportingEvidencePage.verifyAllTextOnPage();
+      await cui_pages.supportingEvidencePage.completePageAndContinue({ doYouWishToProvideSupportingEvidence: 'Yes' });
 
       await cui_pages.provideSupportingEvidencePage.verifyUserIsOnPage();
-      await cui_pages.provideSupportingEvidencePage.completePageAndContinue({ verifyAllTextOnPage: true });
+      await cui_pages.provideSupportingEvidencePage.verifyAllTextOnPage();
+      await cui_pages.provideSupportingEvidencePage.completePageAndContinue({});
     });
 
     await test.step('Verify user is able to see their answers on the check your answers page', async () => {
@@ -123,16 +125,17 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
       await cui_pages.appealOverviewPage.navigationClick(cui_pages.appealOverviewPage.$interactive.askForMoreTimeLink);
 
       await cui_pages.askForMoreTimePage.verifyUserIsOnPage();
+      await cui_pages.askForMoreTimePage.verifyAllTextOnPage();
       await cui_pages.askForMoreTimePage.completePageAndContinue({
         howMuchAndWhyMoreTimeNeeded: 'Test reason for why more time is needed and how much time is needed.',
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.supportingEvidenceMoreTimePage.verifyUserIsOnPage();
       await cui_pages.supportingEvidenceMoreTimePage.completePageAndContinue({ doYouWishToProvideSupportingEvidence: 'Yes' });
 
       await cui_pages.provideSupportingEvidenceMoreTimePage.verifyUserIsOnPage();
-      await cui_pages.provideSupportingEvidenceMoreTimePage.completePageAndContinue({ verifyAllTextOnPage: true });
+      await cui_pages.provideSupportingEvidenceMoreTimePage.verifyAllTextOnPage();
+      await cui_pages.provideSupportingEvidenceMoreTimePage.completePageAndContinue({});
     });
 
     await test.step('Verify user is able to see their request for more time answer on the check your answers page', async () => {

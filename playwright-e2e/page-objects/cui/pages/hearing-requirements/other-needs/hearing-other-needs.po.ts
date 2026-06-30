@@ -19,7 +19,7 @@ export class HearingOtherNeedsPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-other-needs', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.ifYouHaveAnyOtherNeedsText).toHaveText(
         'If you have any other needs, they will be considered but it might not be possible to provide for them at the appointment.',
@@ -28,11 +28,7 @@ export class HearingOtherNeedsPage extends CuiBase {
     ]);
   }
 
-  public async continueOnToNextPage(options: { verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async continueOnToNextPage(): Promise<void> {
     await this.navigationClick(this.$interactive.continueButton);
   }
 }

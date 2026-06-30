@@ -35,7 +35,7 @@ export class FeeSupportPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'fee-support', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.feeForAppealText).toHaveText(
         'The fee for this appeal is £140. You do not have to pay the fee if one of the following statements applies to you.',
@@ -68,11 +68,7 @@ export class FeeSupportPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { whetherApplicantHasToPayAFee: FeeSupportType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { whetherApplicantHasToPayAFee: FeeSupportType }): Promise<void> {
     const element = this.page.locator('div[class*="radios__item"]', { hasText: option.whetherApplicantHasToPayAFee }).locator('input[type="radio"]');
 
     await element.check();

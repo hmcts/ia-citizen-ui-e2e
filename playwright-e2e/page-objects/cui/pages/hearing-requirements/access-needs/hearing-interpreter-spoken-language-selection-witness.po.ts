@@ -26,7 +26,7 @@ export class HearingInterpreterSpokenLanguageSelectionWitnessPage extends CuiBas
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.selectLanguageLabel).toHaveText('Select language'),
       expect(this.$static.selectLanguageLabel).toBeVisible(),
@@ -44,12 +44,7 @@ export class HearingInterpreterSpokenLanguageSelectionWitnessPage extends CuiBas
     languageToInterpretPreference: 'Select language from dropdown' | 'Enter language manualy';
     selectLanguageFromDropdown?: LanguagesType;
     enterLanguageManually?: string;
-    verifyAllTextOnPage?: boolean;
   }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
     switch (options.languageToInterpretPreference) {
       case 'Select language from dropdown':
         if (!options.selectLanguageFromDropdown) {

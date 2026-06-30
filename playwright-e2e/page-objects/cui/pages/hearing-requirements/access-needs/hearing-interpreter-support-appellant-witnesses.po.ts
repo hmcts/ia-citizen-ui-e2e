@@ -28,7 +28,7 @@ export class HearingInterpreterSupportAppellantWitnessesPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-interpreter-support-appellant-Witnesses', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.hintText).toHaveText(
         'If you request an interpreter, they will be provided by the court. You cannot bring your own.You will be able to request step-free access or hearing loop later.',
@@ -51,11 +51,7 @@ export class HearingInterpreterSupportAppellantWitnessesPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { typeOfSupport: WhoNeedsInterpretorType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { typeOfSupport: WhoNeedsInterpretorType }): Promise<void> {
     switch (options.typeOfSupport) {
       case 'Interpreter for applicant':
         await this.$interactive.interpreterForAppellantCheckbox.check();

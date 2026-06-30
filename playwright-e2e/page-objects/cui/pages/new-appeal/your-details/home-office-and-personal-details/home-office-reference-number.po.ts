@@ -33,7 +33,7 @@ export class HomeOfficeReferenceNumberPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'home-office-reference-number', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.howToFindReferenceHeading).toHaveText('How to find your Office reference number'),
       expect(this.$static.howToFindReferenceHeading).toBeVisible(),
@@ -66,11 +66,7 @@ export class HomeOfficeReferenceNumberPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { homeOfficeReference: number; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { homeOfficeReference: number }): Promise<void> {
     const homeOfficeReference = option.homeOfficeReference.toString();
 
     await this.$inputs.referenceNumber.fill(homeOfficeReference);
