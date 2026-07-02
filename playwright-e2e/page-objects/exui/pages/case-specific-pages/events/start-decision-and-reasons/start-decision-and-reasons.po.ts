@@ -32,7 +32,7 @@ export class StartDecisionAndReasonsPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.writeABriefIntroductionHeading).toBeVisible(),
@@ -50,8 +50,6 @@ export class StartDecisionAndReasonsPage extends ExuiBase {
   }
 
   public async completePageAndContinue(options?: { caseIntroduction: string }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     if (options?.caseIntroduction) {
       await this.$inputs.caseDescriptionTextarea.fill(options.caseIntroduction);
       await expect(this.$inputs.caseDescriptionTextarea).toHaveValue(options.caseIntroduction);

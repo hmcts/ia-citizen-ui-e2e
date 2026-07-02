@@ -26,7 +26,7 @@ export class HasSponsorPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'has-sponsor', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.sponsorHintText).toHaveText('A sponsor is usually someone you want to join in the UK.'),
       expect(this.$static.sponsorHintText).toBeVisible(),
@@ -39,11 +39,7 @@ export class HasSponsorPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { doesApplicantHaveASponsor: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { doesApplicantHaveASponsor: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.doesApplicantHaveASponsor}"]`);
     await element.check();
     await expect(element).toBeChecked();

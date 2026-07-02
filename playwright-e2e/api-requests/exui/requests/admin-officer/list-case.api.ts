@@ -1,9 +1,11 @@
 import { APIRequestContext } from '@playwright/test';
 import { ListCaseEventType } from '../../../../exui-event-types';
 import { exui_triggerEvent, exui_submitEvent } from '../../../../utils/api-requests-utils';
+import { DataUtils } from '../../../../utils/data.utils';
 
 export class ListCaseApi {
   private apiContext: APIRequestContext;
+  private readonly dataUtils = new DataUtils();
 
   constructor(apiContext: APIRequestContext) {
     this.apiContext = apiContext;
@@ -13,6 +15,7 @@ export class ListCaseApi {
 
   public async submitEvent(options: ListCaseEventType): Promise<void> {
     const triggerResponse = await exui_triggerEvent({ apiContext: this.apiContext, caseId: options.caseId, eventName: this.eventName });
+    const listingReference = `LP/${await this.dataUtils.generateRandomNumber({ digitLength: 5 })}/${new Date().getFullYear()}`;
 
     const expectedKeysInEventPayload = [
       'ariaListingReference',
@@ -32,7 +35,7 @@ export class ListCaseApi {
     }
 
     const finalData = expectedKeysInEventPayload.reduce((acc: Record<string, string>, key) => {
-      if (key === 'ariaListingReference') acc[key] = options.hearingId;
+      if (key === 'ariaListingReference') acc[key] = listingReference;
       else if (key === 'isRemoteHearing') acc[key] = options.isRemoteHearing;
       else if (key === 'listCaseHearingDate') {
         const { day, month, year, hour, minute } = options.hearingDateAndTime;

@@ -27,7 +27,7 @@ export class SelectAddressPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'select-address', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.postCodeText).toBeVisible(),
 
@@ -44,12 +44,7 @@ export class SelectAddressPage extends CuiBase {
     preference: 'Select Address At Random' | 'Select Specific Address';
     houseNumber?: number;
     street?: string;
-    verifyAllTextOnPage?: boolean;
   }): Promise<string> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
     switch (options.preference) {
       case 'Select Address At Random':
         const addressOptions = await this.$interactive.selectAddressDropdown.locator('option').all();

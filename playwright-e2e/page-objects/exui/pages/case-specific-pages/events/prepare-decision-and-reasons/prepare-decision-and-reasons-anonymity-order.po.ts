@@ -29,7 +29,7 @@ export class PrepareDecisionAndReasonsAnonymityOrderPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.givingAnonymityOrderHeading).toBeVisible(),
@@ -42,8 +42,6 @@ export class PrepareDecisionAndReasonsAnonymityOrderPage extends ExuiBase {
   }
 
   public async completePageAndContinue(options: { anonymityOrderDirection: YesOrNoType }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     await this.page.getByRole('radio', { name: options.anonymityOrderDirection, exact: true }).check();
     await expect(this.page.getByRole('radio', { name: options.anonymityOrderDirection, exact: true })).toBeChecked();
 

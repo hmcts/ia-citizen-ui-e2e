@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { ExuiBase } from '../../../../exui-base';
 
 export class RequestHearingRequirementsPage extends ExuiBase {
@@ -24,12 +24,7 @@ export class RequestHearingRequirementsPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
-    await Promise.all([expect(this.$static.caseRecordHeading).toBeVisible()]);
-  }
-
   public async submitEvent(): Promise<void> {
-    await this.verifyAllTextOnPage();
     await this.navigationClick(this.$interactive.submitButton);
   }
 }

@@ -22,7 +22,7 @@ export class HearingLoopPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-hearing-loop', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.stepFreeAccessHintText).toHaveText('A hearing loop is a sound system designed to help people who use hearing aids.'),
       expect(this.$static.stepFreeAccessHintText).toBeVisible(),
@@ -35,11 +35,7 @@ export class HearingLoopPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { willYouOrWitnessNeedHearingLoop: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { willYouOrWitnessNeedHearingLoop: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.willYouOrWitnessNeedHearingLoop.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();

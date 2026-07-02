@@ -32,7 +32,7 @@ export class SponsorContactPreferencesPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'sponsor-contact-preferences', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.contactDetailsHintText).toHaveText(
         'Please provide an email address or phone number for your sponsor. Select at least one of option, or both.',
@@ -57,12 +57,7 @@ export class SponsorContactPreferencesPage extends CuiBase {
     contactPreference: 'Email' | 'Phone' | 'Email and Phone';
     sponsorEmail?: string;
     sponsorPhoneNumber?: string;
-    verifyAllTextOnPage?: boolean;
   }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
     const fillEmail = async (email: string) => {
       await this.$interactive.emailCheckbox.check();
       await expect(this.$interactive.emailCheckbox).toBeChecked();

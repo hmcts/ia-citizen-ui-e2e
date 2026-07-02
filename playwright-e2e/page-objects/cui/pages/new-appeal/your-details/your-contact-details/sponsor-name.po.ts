@@ -29,7 +29,7 @@ export class SponsorNamePage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'sponsor-name', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.givenNameLabel).toHaveText('Given names'),
       expect(this.$static.givenNameLabel).toBeVisible(),
@@ -39,11 +39,7 @@ export class SponsorNamePage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { givenNames: string | string[]; familyName: string; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { givenNames: string | string[]; familyName: string }): Promise<void> {
     const givenNames = Array.isArray(options.givenNames) ? options.givenNames.join(' ') : options.givenNames;
     const familyName = options.familyName;
 

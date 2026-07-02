@@ -32,7 +32,7 @@ export class HearingVideoAppointmentPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-video-appointment', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.videoHearingHintText).toHaveText(
         'The Tribunal may decide to have the hearing by video call.  Answer no if there are reasonsyou would not be able to join a video call.',
@@ -67,11 +67,7 @@ export class HearingVideoAppointmentPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { areYouAbleToJoinHearingViaVideoCall: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { areYouAbleToJoinHearingViaVideoCall: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.areYouAbleToJoinHearingViaVideoCall.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();

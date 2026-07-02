@@ -27,13 +27,9 @@ export class OutOfCountryAddressPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'out-of-country-address', pageHeading: this.$static.pageHeading });
   }
 
-  public async completePageAndContinue(options: { applicantAddress: string; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await Promise.all([
-        expect(this.$static.enterAddressText).toHaveText('Enter your address'),
-        expect(this.$static.enterAddressText).toBeVisible(),
-      ]);
-    }
+  public async completePageAndContinue(options: { applicantAddress: string }): Promise<void> {
+    await expect(this.$static.enterAddressText).toHaveText('Enter your address');
+    await expect(this.$static.enterAddressText).toBeVisible();
 
     await this.$inputs.addressTextArea.fill(options.applicantAddress);
     await expect(this.$inputs.addressTextArea).toHaveValue(options.applicantAddress);

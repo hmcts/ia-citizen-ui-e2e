@@ -28,7 +28,7 @@ export class AskForMoreTimePage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'ask-for-more-time', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.howMuchTimeAndWhyYouNeedItText).toHaveText(
         'You must tell us how much time you need and why you need it. You should provide supporting evidence for your answer if you have any.',
@@ -53,11 +53,7 @@ export class AskForMoreTimePage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { howMuchAndWhyMoreTimeNeeded: string; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { howMuchAndWhyMoreTimeNeeded: string }): Promise<void> {
     await this.$inputs.askForMoreTime.fill(options.howMuchAndWhyMoreTimeNeeded);
     await expect(this.$inputs.askForMoreTime).toHaveValue(options.howMuchAndWhyMoreTimeNeeded);
     await this.navigationClick(this.$interactive.continueButton);

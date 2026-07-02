@@ -31,7 +31,7 @@ export class AppealTypePage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'appeal-type', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.appealTypeHintFirstParagraph).toHaveText(
         'Select one appeal type. If you are unsure, the first page of your decision letter should include the type of decision you are appealing.',
@@ -52,11 +52,7 @@ export class AppealTypePage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { appealType: AppealType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { appealType: AppealType }): Promise<void> {
     const optionToSelect = options.appealType;
     const element = this.page.getByRole('radio', { name: new RegExp(`^${optionToSelect}`, 'i') });
 

@@ -21,18 +21,19 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
       await cui_pages.inTheUkPage.completePageAndContinue({ isUserInTheUk: 'No' });
 
       await cui_pages.appealTypePage.verifyUserIsOnPage();
-      await cui_pages.appealTypePage.completePageAndContinue({ appealType: 'Human Rights', verifyAllTextOnPage: true });
+      await cui_pages.appealTypePage.verifyAllTextOnPage();
+      await cui_pages.appealTypePage.completePageAndContinue({ appealType: 'Human Rights' });
 
       await cui_pages.outOfCountryHrEeaPage.verifyUserIsOnPage();
       await cui_pages.outOfCountryHrEeaPage.completePageAndContinue({ outsideUkWhenApplicationMade: 'No' });
 
       await cui_pages.outOfCountryHrInsidePage.verifyUserIsOnPage();
+      await cui_pages.outOfCountryHrInsidePage.verifyAllTextOnPage();
       const dateLeftUk = await dataUtils.getDateFromToday({ yearOffset: -4 });
       await cui_pages.outOfCountryHrInsidePage.completePageAndContinue({
         day: dateLeftUk.day,
         month: dateLeftUk.month,
         year: dateLeftUk.year,
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.aboutAppealPage.verifyUserIsOnPage();
@@ -42,43 +43,47 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
       await cui_pages.aboutAppealPage.navigationClick(cui_pages.aboutAppealPage.$interactive.homeOfficeAndPersonalDetailsLink);
 
       await cui_pages.homeOfficeReferenceNumberPage.verifyUserIsOnPage();
+      await cui_pages.homeOfficeReferenceNumberPage.verifyAllTextOnPage();
       const homeOfficeReference = await dataUtils.generateRandomNumber({ digitLength: 9 });
-      await cui_pages.homeOfficeReferenceNumberPage.completePageAndContinue({ homeOfficeReference: homeOfficeReference, verifyAllTextOnPage: true });
+      await cui_pages.homeOfficeReferenceNumberPage.completePageAndContinue({ homeOfficeReference: homeOfficeReference });
 
       await cui_pages.applicantNamePage.verifyUserIsOnPage();
+      await cui_pages.applicantNamePage.verifyAllTextOnPage();
       const applicantName = await dataUtils.generateRandomFirstAndLastNames({ countOfFirstNamesToGenerate: 1, countOfLastNamesToGenerate: 1 });
       await cui_pages.applicantNamePage.completePageAndContinue({
         givenNames: applicantName.firstNames[0],
         familyName: applicantName.lastNames[0],
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.applicantDobPage.verifyUserIsOnPage();
+      await cui_pages.applicantDobPage.verifyAllTextOnPage();
       const applicantDob = await dataUtils.getDateFromToday({ yearOffset: -30 });
       await cui_pages.applicantDobPage.completePageAndContinue({
         day: applicantDob.day,
         month: applicantDob.month,
         year: applicantDob.year,
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.applicantNationalityPage.verifyUserIsOnPage();
-      await cui_pages.applicantNationalityPage.completePageAndContinue({ nationality: 'Singaporean', stateless: false, verifyAllTextOnPage: true });
+      await cui_pages.applicantNationalityPage.verifyAllTextOnPage();
+      await cui_pages.applicantNationalityPage.completePageAndContinue({ nationality: 'Singaporean', stateless: false });
 
       await cui_pages.decisionLetterReceivedPage.verifyUserIsOnPage();
+      await cui_pages.decisionLetterReceivedPage.verifyAllTextOnPage();
       const dateLetterReceived = await dataUtils.getDateFromToday({ monthOffset: -2 });
       await cui_pages.decisionLetterReceivedPage.completePageAndContinue({
         day: dateLetterReceived.day,
         month: dateLetterReceived.month,
         year: dateLetterReceived.year,
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.uploadDecisionLetterPage.verifyUserIsOnPage();
-      await cui_pages.uploadDecisionLetterPage.completePageAndContinue({ verifyAllTextOnPage: true });
+      await cui_pages.uploadDecisionLetterPage.verifyAllTextOnPage();
+      await cui_pages.uploadDecisionLetterPage.completePageAndContinue({});
 
       await cui_pages.deportationOrderPage.verifyUserIsOnPage();
-      await cui_pages.deportationOrderPage.completePageAndContinue({ deportationOrderReceived: 'Yes', verifyAllTextOnPage: true });
+      await cui_pages.deportationOrderPage.verifyAllTextOnPage();
+      await cui_pages.deportationOrderPage.completePageAndContinue({ deportationOrderReceived: 'Yes' });
 
       await cui_pages.aboutAppealPage.verifyUserIsOnPage();
     });
@@ -87,46 +92,46 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
       await cui_pages.aboutAppealPage.navigationClick(cui_pages.aboutAppealPage.$interactive.yourContactDetailsLink);
 
       await cui_pages.contactPreferencesPage.verifyUserIsOnPage();
+      await cui_pages.contactPreferencesPage.verifyAllTextOnPage();
       const contactDetails = await dataUtils.generateContactDetails('Email and Phone');
       await cui_pages.contactPreferencesPage.completePageAndContinue({
         contactPreference: 'Email and Phone',
         applicantEmail: contactDetails.email,
         applicantPhoneNumber: contactDetails.phone,
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.outOfCountryAddressPage.verifyUserIsOnPage();
       await cui_pages.outOfCountryAddressPage.completePageAndContinue({
         applicantAddress: 'Flat 1, 1 Test Street, Test Town, TE1 1ST, United Kingdom',
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.hasSponsorPage.verifyUserIsOnPage();
-      await cui_pages.hasSponsorPage.completePageAndContinue({ doesApplicantHaveASponsor: 'Yes', verifyAllTextOnPage: true });
+      await cui_pages.hasSponsorPage.verifyAllTextOnPage();
+      await cui_pages.hasSponsorPage.completePageAndContinue({ doesApplicantHaveASponsor: 'Yes' });
 
       await cui_pages.sponsorNamePage.verifyUserIsOnPage();
+      await cui_pages.sponsorNamePage.verifyAllTextOnPage();
       const sponsorName = await dataUtils.generateRandomFirstAndLastNames({ countOfFirstNamesToGenerate: 1, countOfLastNamesToGenerate: 1 });
       await cui_pages.sponsorNamePage.completePageAndContinue({
         givenNames: sponsorName.firstNames[0],
         familyName: sponsorName.lastNames[0],
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.sponsorAddressPage.verifyUserIsOnPage();
+      await cui_pages.sponsorAddressPage.verifyAllTextOnPage();
       await cui_pages.sponsorAddressPage.completePageAndContinue({
         addressLine1: '123 Fake Street',
         townOrCity: 'Faketown',
         postCode: 'FK1 1FK',
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.sponsorContactPreferencesPage.verifyUserIsOnPage();
+      await cui_pages.sponsorContactPreferencesPage.verifyAllTextOnPage();
       const sponsorContactDetails = await dataUtils.generateContactDetails('Email and Phone');
       await cui_pages.sponsorContactPreferencesPage.completePageAndContinue({
         contactPreference: 'Email and Phone',
         sponsorEmail: sponsorContactDetails.email,
         sponsorPhoneNumber: sponsorContactDetails.phone,
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.sponsorAuthorisationPage.verifyUserIsOnPage();
@@ -139,10 +144,12 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
       await cui_pages.aboutAppealPage.navigationClick(cui_pages.aboutAppealPage.$interactive.decisionWithOrWithoutHearingLink);
 
       await cui_pages.decisionTypePage.verifyUserIsOnPage();
-      await cui_pages.decisionTypePage.completePageAndContinue({ decisionWithOrWithoutHearing: 'decisionWithHearing', verifyAllTextOnPage: true });
+      await cui_pages.decisionTypePage.verifyAllTextOnPage();
+      await cui_pages.decisionTypePage.completePageAndContinue({ decisionWithOrWithoutHearing: 'decisionWithHearing' });
 
       await cui_pages.equalityAndDiversityStartPage.verifyUserIsOnPage();
-      await cui_pages.equalityAndDiversityStartPage.completePageAndContinue({ verifyAllTextOnPage: true });
+      await cui_pages.equalityAndDiversityStartPage.verifyAllTextOnPage();
+      await cui_pages.equalityAndDiversityStartPage.completePageAndContinue();
 
       await cui_pages.aboutAppealPage.verifyUserIsOnPage();
     });
@@ -151,14 +158,15 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
       await cui_pages.aboutAppealPage.navigationClick(cui_pages.aboutAppealPage.$interactive.supportToPayTheFeeLink);
 
       await cui_pages.feeSupportPage.verifyUserIsOnPage();
+      await cui_pages.feeSupportPage.verifyAllTextOnPage();
       await cui_pages.feeSupportPage.completePageAndContinue({
         whetherApplicantHasToPayAFee: 'I get asylum support from the Home Office',
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.asylumSupportPage.verifyUserIsOnPage();
+      await cui_pages.asylumSupportPage.verifyAllTextOnPage();
       const asylumSupportRefNumber = await dataUtils.generateRandomNumber({ digitLength: 8 });
-      await cui_pages.asylumSupportPage.completePageAndContinue({ asylumSupportRefNumber: asylumSupportRefNumber, verifyAllTextOnPage: true });
+      await cui_pages.asylumSupportPage.completePageAndContinue({ asylumSupportRefNumber: asylumSupportRefNumber });
 
       await cui_pages.aboutAppealPage.verifyUserIsOnPage();
     });
@@ -167,9 +175,9 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
       await cui_pages.aboutAppealPage.navigationClick(cui_pages.aboutAppealPage.$interactive.checkAndSendYourAppealDetailsLink);
 
       await cui_pages.lateAppealPage.verifyUserIsOnPage();
+      await cui_pages.lateAppealPage.verifyAllTextOnPage();
       await cui_pages.lateAppealPage.completePageAndContinue({
         reasonForLateAppeal: 'Apologies for the late appeal submission',
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.newAppealCheckAnswersPage.verifyUserIsOnPage();
@@ -300,12 +308,12 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
       await cui_pages.applicantNationalityPage.completePageAndContinue({ stateless: true });
 
       await cui_pages.decisionLetterSentPage.verifyUserIsOnPage();
+      await cui_pages.decisionLetterSentPage.verifyAllTextOnPage();
       const dateLetterSent = await dataUtils.getDateFromToday({ dayOffset: -10 });
       await cui_pages.decisionLetterSentPage.completePageAndContinue({
         day: dateLetterSent.day,
         month: dateLetterSent.month,
         year: dateLetterSent.year,
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.uploadDecisionLetterPage.verifyUserIsOnPage();
@@ -329,20 +337,21 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
       });
 
       await cui_pages.applicantAddressPage.verifyUserIsOnPage();
+      await cui_pages.applicantAddressPage.verifyAllTextOnPage();
       await cui_pages.applicantAddressPage.completePageAndContinue({
         addressPreference: 'Post Code Search',
         postCode: 'N1 7DA',
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.selectAddressPage.verifyUserIsOnPage();
-      await cui_pages.selectAddressPage.completePageAndContinue({ preference: 'Select Address At Random', verifyAllTextOnPage: true });
+      await cui_pages.selectAddressPage.verifyAllTextOnPage();
+      await cui_pages.selectAddressPage.completePageAndContinue({ preference: 'Select Address At Random' });
 
       await cui_pages.manualAddressPage.verifyUserIsOnPage();
+      await cui_pages.manualAddressPage.verifyAllTextOnPage();
       await cui_pages.manualAddressPage.completePageAndContinue({
         preference: 'Address selected via postcode search',
         postCode: 'N1 7DA',
-        verifyAllTextOnPage: true,
       });
 
       await cui_pages.hasSponsorPage.verifyUserIsOnPage();
@@ -358,7 +367,7 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
       await cui_pages.decisionTypePage.completePageAndContinue({ decisionWithOrWithoutHearing: 'decisionWithoutHearing' });
 
       await cui_pages.equalityAndDiversityStartPage.verifyUserIsOnPage();
-      await cui_pages.equalityAndDiversityStartPage.completePageAndContinue({});
+      await cui_pages.equalityAndDiversityStartPage.completePageAndContinue();
 
       await cui_pages.aboutAppealPage.verifyUserIsOnPage();
     });

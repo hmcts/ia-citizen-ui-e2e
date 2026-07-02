@@ -29,7 +29,7 @@ export class CompleteDecisionAndReasonsPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
       expect(this.$static.whatIsYourDecisionHeading).toBeVisible(),
@@ -46,8 +46,6 @@ export class CompleteDecisionAndReasonsPage extends ExuiBase {
   }
 
   public async completePageAndContinue(options: { decision: 'Allowed' | 'Dismissed on all grounds' }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     await this.page.getByRole('radio', { name: options.decision, exact: true }).check();
     await expect(this.page.getByRole('radio', { name: options.decision, exact: true })).toBeChecked();
 

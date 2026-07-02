@@ -6,17 +6,13 @@ export class AppealOverviewPage extends CuiBase {
     super(page);
   }
 
-  // Due to lack of unique identifiers, using the following elements to scope specific areas of the page
-  private readonly caseInformationArea = this.page.locator('div[class*="overview-banner"]');
-  private readonly yourAppealArgumentArea = this.page.locator("//h3[normalize-space()='Your appeal argument']/parent::div");
-  private readonly yourAppealDetailsArea = this.page.locator("//h3[normalize-space()='Your appeal details']/parent::div");
-
   public readonly $interactive = {
     continueButton: this.page.locator('a[role="button"]', {
       hasText: 'Continue',
     }),
     payForAppealLink: this.page.getByRole('link', { name: 'Pay for this appeal' }),
     applyForPermissionToAppealUpperTribunalLink: this.page.getByRole('link', { name: 'Apply for permission to appeal to the Upper Tribunal' }),
+    askForMoreTimeLink: this.page.getByRole('link', { name: 'Ask for more time' }),
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
@@ -25,35 +21,14 @@ export class AppealOverviewPage extends CuiBase {
     doThisNextHeading: this.page.getByRole('heading', { name: 'Do this next', level: 2, exact: true }),
     completedHeading: this.page.getByRole('heading', { name: 'Completed', level: 2, exact: true }),
     applicantInstructionsWindow: this.page.locator('div[class*="overview-banner"]'),
-  } as const satisfies Record<string, Locator>;
-
-  public readonly $yourCaseInformation = {
-    detailsSentToTribunalParagraph: this.caseInformationArea.getByText('Your appeal details have been sent to the Tribunal.', { exact: true }),
-    thereIsAFeeForThisAppealParagraph: this.caseInformationArea.getByText(
-      'There is a fee for this appeal. You told the Tribunal that you believe you do not have to pay some or all of the fee.',
-      { exact: true },
-    ),
-    tribunalWillCheckInformationSentParagraph: this.caseInformationArea.getByText(
-      'The Tribunal will check the information you sent and let you know if you need to pay a fee.',
-      { exact: true },
-    ),
-    helpfulInformationHeading: this.caseInformationArea.getByText('Helpful Information', { exact: true }),
-    whatIsATribunalCaseWorkerLink: this.caseInformationArea.getByText('What is a Tribunal Caseworker?', { exact: true }),
-    askForMoreTimeLink: this.caseInformationArea.getByRole('link', { name: 'Ask for more time', exact: true }),
-  } as const satisfies Record<string, Locator>;
-
-  public readonly $yourAppealArgument = {
-    yourAppealArgumentHeading: this.page.getByRole('heading', { name: 'Your appeal argument', level: 3, exact: true }),
-    whatYouSentHeading: this.yourAppealArgumentArea.getByRole('heading', { name: 'What you sent', level: 4, exact: true }),
-    yourAppealDetailsLink: this.yourAppealArgumentArea.getByRole('link', { name: 'Your appeal details', exact: true }),
-  } as const satisfies Record<string, Locator>;
-
-  public readonly $yourAppealDetails = {
     yourAppealDetailsHeading: this.page.getByRole('heading', { name: 'Your appeal details', level: 3, exact: true }),
-    whatYouSentHeading: this.yourAppealDetailsArea.getByRole('heading', { name: 'What you sent', level: 4, exact: true }),
-    yourAppealDetailsLink: this.yourAppealDetailsArea.getByRole('link', { name: 'Your appeal details', exact: true }),
-    helpfulInformationHeading: this.yourAppealDetailsArea.getByRole('heading', { name: 'Helpful information', level: 4, exact: true }),
-    whatIsATribunalCaseWorkerLink: this.yourAppealDetailsArea.getByRole('link', { name: 'What is a Tribunal Caseworker?', exact: true }),
+    yourAppealDetailsTimeLine: this.page
+      .getByRole('heading', { name: 'Your appeal details', level: 3, exact: true })
+      .locator('~ [class="timeline-section"]'),
+    yourAppealArgumentHeading: this.page.getByRole('heading', { name: 'Your appeal argument', level: 3, exact: true }),
+    yourAppealArgumentTimeLine: this.page
+      .getByRole('heading', { name: 'Your appeal argument', level: 3, exact: true })
+      .locator('~ [class="timeline-section"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {

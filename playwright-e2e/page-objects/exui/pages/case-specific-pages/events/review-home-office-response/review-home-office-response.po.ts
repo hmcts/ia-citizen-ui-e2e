@@ -41,7 +41,7 @@ export class ReviewHomeOfficeResponsePage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     const expectedDate = await this.dataUtils.getDateFromToday({ dayOffset: 5 });
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
@@ -86,7 +86,6 @@ If you do not respond by the date indicated below, the case will automatically g
   }
 
   public async continueOnToNextPage(): Promise<void> {
-    await this.verifyAllTextOnPage();
     await this.navigationClick(this.$interactive.continueButton);
   }
 }

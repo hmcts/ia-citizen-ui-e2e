@@ -26,7 +26,7 @@ export class DeportationOrderPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'deportation-order', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.informationText).toHaveText('This information helps the tribunal manage your appeal'),
       expect(this.$static.informationText).toBeVisible(),
@@ -39,11 +39,7 @@ export class DeportationOrderPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { deportationOrderReceived: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { deportationOrderReceived: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.deportationOrderReceived}"]`);
     await element.check();
     await expect(element).toBeChecked();

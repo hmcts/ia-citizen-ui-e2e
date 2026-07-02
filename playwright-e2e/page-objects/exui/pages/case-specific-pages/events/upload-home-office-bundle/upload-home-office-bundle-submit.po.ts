@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { ExuiBase } from '../../../../exui-base';
 
 export class UploadHomeOfficeBundleSubmitPage extends ExuiBase {
@@ -30,33 +30,6 @@ export class UploadHomeOfficeBundleSubmitPage extends ExuiBase {
       urlPath: 'trigger/uploadHomeOfficeBundle/submit',
       pageHeading: this.$static.pageHeading,
     });
-  }
-
-  public async verifyCorrectInformationIsDisplayed(options: { fileDescription: string; nameOfFileUploaded?: string }): Promise<void> {
-    const uploadedFile = options.nameOfFileUploaded ? options.nameOfFileUploaded : 'Home_Office_Bundle.txt';
-
-    await Promise.all([
-      expect(this.$static.caseRecordHeading).toBeVisible(),
-      expect(this.$static.checkYourAnswersHeading).toBeVisible(),
-
-      expect(this.$static.checkInformationText).toHaveText('Check the information below carefully.'),
-      expect(this.$static.checkInformationText).toBeVisible(),
-
-      expect(this.$static.uploadHomeOfficeBundleText).toBeVisible(),
-
-      expect(this.$static.tableTitle).toHaveText('Upload Home Office bundle 1'),
-      expect(this.$static.tableTitle).toBeVisible(),
-
-      expect(this.$static.uploadAFileLabel).toBeVisible(),
-      expect(this.page.getByRole('button', { name: uploadedFile, exact: true })).toBeVisible(),
-
-      expect(this.$static.describeTheDocumentLabel).toBeVisible(),
-      expect(this.$static.describeTheDocumentValue).toHaveText(options.fileDescription),
-      expect(this.$static.describeTheDocumentValue).toBeVisible(),
-
-      expect(this.$interactive.changeUplaodHomeOfficeBundleButton).toHaveText('Change'),
-      expect(this.$interactive.changeUplaodHomeOfficeBundleButton).toBeVisible(),
-    ]);
   }
 
   public async submitEvent(): Promise<void> {

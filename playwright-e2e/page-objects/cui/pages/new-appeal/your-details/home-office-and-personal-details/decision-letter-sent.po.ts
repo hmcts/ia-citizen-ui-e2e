@@ -37,7 +37,7 @@ export class DecisionLetterSentPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'date-letter-sent', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.decisionByEmailHeading).toHaveText('If you got your decision by email'),
       expect(this.$static.decisionByEmailHeading).toBeVisible(),
@@ -70,16 +70,7 @@ export class DecisionLetterSentPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(dateDecisionLetterSent: {
-    day: number;
-    month: number;
-    year: number;
-    verifyAllTextOnPage?: boolean;
-  }): Promise<void> {
-    if (dateDecisionLetterSent.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(dateDecisionLetterSent: { day: number; month: number; year: number }): Promise<void> {
     const day = dateDecisionLetterSent.day.toString();
     const month = dateDecisionLetterSent.month.toString();
     const year = dateDecisionLetterSent.year.toString();

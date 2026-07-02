@@ -34,7 +34,7 @@ export class ManualAddressPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'manual-address', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.buildingAndStreetLabel).toContainText('Building and street'),
       expect(this.$static.buildingAndStreetLabel).toBeVisible(),
@@ -57,12 +57,7 @@ export class ManualAddressPage extends CuiBase {
     townOrCity?: string;
     county?: string;
     postCode: string;
-    verifyAllTextOnPage?: boolean;
   }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
     switch (options.preference) {
       case 'Address selected via postcode search':
         await expect(this.$inputs.postCode).toHaveValue(options.postCode);

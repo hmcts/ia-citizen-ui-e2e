@@ -32,7 +32,7 @@ export class ProvideSupportingEvidenceMoreTimePage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'provide-supporting-evidence-more-time', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.adviceForSupportingEvidenceText).toHaveText('Advice on providing supporting evidence'),
       expect(this.$static.adviceForSupportingEvidenceText).toBeVisible(),
@@ -60,11 +60,7 @@ export class ProvideSupportingEvidenceMoreTimePage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { nameOfFileToUpload?: string; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { nameOfFileToUpload?: string }): Promise<void> {
     const fileToUpload = options.nameOfFileToUpload ? options.nameOfFileToUpload : 'Provide_Supporting_Evidence_For_More_Time.txt';
     const filePath = await this.dataUtils.fetchDocumentUploadPath(fileToUpload);
 

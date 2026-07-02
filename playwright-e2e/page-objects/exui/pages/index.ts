@@ -80,3 +80,7 @@ export * from './case-specific-pages/events/decide-ftpa-application/decide-ftpa-
 export * from './case-specific-pages/events/decide-ftpa-application/decide-ftpa-application-confirm.po';
 export * from './case-specific-pages/events/generate-upper-tribunal-bundle/generate-upper-tribunal-bundle-submit.po';
 export * from './case-specific-pages/events/generate-upper-tribunal-bundle/generate-upper-tribunal-bundle-confirm.po';
+export * from './case-specific-pages/events/request-home-office-data/request-home-office-data.po';
+export * from './case-specific-pages/events/request-home-office-data/request-home-office-data-submit.po';
+export * from './case-specific-pages/events/request-home-office-data/request-home-office-data-confirm.po';
+export * from './case-specific-pages/validation-tab/validation.po';

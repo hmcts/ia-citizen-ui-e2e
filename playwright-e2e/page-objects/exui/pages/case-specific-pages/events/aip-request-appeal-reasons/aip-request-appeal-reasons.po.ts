@@ -40,7 +40,7 @@ export class AipRequestAppealReasonsPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     const expectedDate = await this.dataUtils.getDateFromToday({ dayOffset: 28 });
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
@@ -77,7 +77,6 @@ export class AipRequestAppealReasonsPage extends ExuiBase {
   }
 
   public async continueOnToNextPage(): Promise<void> {
-    await this.verifyAllTextOnPage();
     await this.navigationClick(this.$interactive.continueButton);
   }
 }

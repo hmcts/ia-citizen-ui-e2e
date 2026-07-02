@@ -22,7 +22,7 @@ export class HearingMultimediaEvidenceEquipmentPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-multimedia-evidence-equipment', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.evidenceEquipmentHintText).toHaveText('For example, a laptop computer or DVD player'),
       expect(this.$static.evidenceEquipmentHintText).toBeVisible(),
@@ -35,11 +35,7 @@ export class HearingMultimediaEvidenceEquipmentPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { willYouBringEquipmentToPlayEvidence: YesOrNoType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (option.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(option: { willYouBringEquipmentToPlayEvidence: YesOrNoType }): Promise<void> {
     const element = this.page.locator(`input[type="radio"][value="${option.willYouBringEquipmentToPlayEvidence.toLowerCase()}"]`);
     await element.check();
     await expect(element).toBeChecked();

@@ -32,7 +32,7 @@ export class ApplicantDobPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'date-birth', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.dateHintText).toHaveText('For example, 31 3 1980'),
       expect(this.$static.dateHintText).toBeVisible(),
@@ -48,11 +48,7 @@ export class ApplicantDobPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(dateOfBirth: { day: number; month: number; year: number; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (dateOfBirth.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(dateOfBirth: { day: number; month: number; year: number }): Promise<void> {
     const day = dateOfBirth.day.toString();
     const month = dateOfBirth.month.toString();
     const year = dateOfBirth.year.toString();

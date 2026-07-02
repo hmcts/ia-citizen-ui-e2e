@@ -29,7 +29,7 @@ export class RecordRemissionDecisionPage extends ExuiBase {
     });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.caseRecordHeading).toBeVisible(),
 
@@ -48,8 +48,6 @@ export class RecordRemissionDecisionPage extends ExuiBase {
   }
 
   public async completePageAndContinue(options: { remissionDecision: RemissionDecisionType }): Promise<void> {
-    await this.verifyAllTextOnPage();
-
     const element = this.page.locator(`input[type="radio"][id*="${options.remissionDecision}"]`);
     await element.check();
     await expect(element).toBeChecked();

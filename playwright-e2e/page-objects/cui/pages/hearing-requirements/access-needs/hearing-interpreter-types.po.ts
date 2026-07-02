@@ -26,7 +26,7 @@ export class HearingInterpreterTypesPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'hearing-interpreter-types', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.interpreterTypeHintText).toHaveText('Select all that apply'),
       expect(this.$static.interpreterTypeHintText).toBeVisible(),
@@ -45,11 +45,7 @@ export class HearingInterpreterTypesPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { typeOfInterpretor: InterpretorSupportType; verifyAllTextOnPage?: boolean }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { typeOfInterpretor: InterpretorSupportType }): Promise<void> {
     switch (options.typeOfInterpretor) {
       case 'Spoken language interpreter':
         await this.$interactive.spokenLanguageInterpreterCheckbox.check();

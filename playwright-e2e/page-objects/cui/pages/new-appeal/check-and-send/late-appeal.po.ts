@@ -40,7 +40,7 @@ export class LateAppealPage extends CuiBase {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'late-appeal', pageHeading: this.$static.pageHeading });
   }
 
-  private async verifyAllTextOnPage(): Promise<void> {
+  public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
       expect(this.$static.appealsToBeMadeWithin28DaysText).toHaveText(
         'Appeals should be made within 28 days of the date the decision letter was received. You may still be able to appeal. Please tell us why your appeal is late, and provide supporting evidence if you have it.',
@@ -68,15 +68,7 @@ export class LateAppealPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: {
-    reasonForLateAppeal: string;
-    nameOfFileToUpload?: string;
-    verifyAllTextOnPage?: boolean;
-  }): Promise<void> {
-    if (options.verifyAllTextOnPage) {
-      await this.verifyAllTextOnPage();
-    }
-
+  public async completePageAndContinue(options: { reasonForLateAppeal: string; nameOfFileToUpload?: string }): Promise<void> {
     await this.$inputs.appealLateTextArea.fill(options.reasonForLateAppeal);
     await expect(this.$inputs.appealLateTextArea).toHaveValue(options.reasonForLateAppeal);
 

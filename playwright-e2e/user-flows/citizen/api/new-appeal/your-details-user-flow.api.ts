@@ -30,9 +30,17 @@ export type ApplicantDetailsType = {
   applicantDetails: {
     givenNames: string[];
     familyName: string;
-    dob: string;
+    dob: {
+      day: number;
+      month: number;
+      year: number;
+    };
     dateLeftUk?: string;
-    decisionLetterDate: string;
+    decisionLetterDate: {
+      day: number;
+      month: number;
+      year: number;
+    };
     address: string;
     email?: string;
     phoneNumber?: string;
@@ -231,9 +239,13 @@ export class YourDetailsUserFlowApi {
       applicantDetails: {
         givenNames: ApplicantName.firstNames,
         familyName: ApplicantName.lastNames[0],
-        dob: `${applicantDob.day}/${applicantDob.month}/${applicantDob.year}`,
+        dob: {
+          day: applicantDob.day,
+          month: applicantDob.month,
+          year: applicantDob.year,
+        },
         dateLeftUk: appealData.isUserInTheUk === 'No' && dateLeftUk ? `${dateLeftUk.day}/${dateLeftUk.month}/${dateLeftUk.year}` : undefined,
-        decisionLetterDate: `${decisionLetterDate.day}/${decisionLetterDate.month}/${decisionLetterDate.year}`,
+        decisionLetterDate: decisionLetterDate,
         address: applicantAddress,
         email: applicantContactDetails.email,
         phoneNumber: applicantContactDetails.phone,
