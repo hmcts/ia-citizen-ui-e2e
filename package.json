@@ -10,10 +10,10 @@
     "@eslint/js": "^9.11.1",
     "@faker-js/faker": "^10.1.0",
     "@hmcts/playwright-common": "^1.0.36",
-    "@playwright/test": "^1.48.2",
+    "@playwright/test": "^1.61.1",
     "@types/node": "^22.15.34",
     "@typescript-eslint/eslint-plugin": "^8.8.0",
-    "axios": "^1.7.4",
+    "axios": "^1.18.1",
     "cheerio": "^1.2.0",
     "dotenv": "^17.0.0",
     "eslint": "^9.11.1",
@@ -23,8 +23,8 @@
     "get-port": "^7.1.0",
     "globals": "^16.0.0",
     "lighthouse": "^12.2.1",
-    "playwright": "^1.48.2",
-    "playwright-core": "^1.48.2",
+    "playwright": "^1.61.1",
+    "playwright-core": "^1.61.1",
     "playwright-lighthouse": "^4.0.0",
     "prettier": "^3.7.4",
     "typescript": "^5.6.2",
@@ -46,11 +46,10 @@
     "test:visual": "yarn playwright test tests/ --grep @visual --project=chromium",
     "test:update-snapshots": "yarn playwright test tests/ --grep @visual --project=chromium --update-snapshots",
     "test:e2e": "yarn playwright test --project \"${PLAYWRIGHT_PROJECT:-chrome}\" --grep-invert='(@a11y)|(@performance)|(@visual)'; EXIT_CODE=$?; exit $EXIT_CODE"
-
   },
   "packageManager": "yarn@4.9.4",
   "dependencies": {
     "i18n-iso-countries": "^7.14.0",
-    "uuid": "^11.1.0"
+    "uuid": "^14.0.1"
   }
 }
