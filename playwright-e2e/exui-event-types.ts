@@ -100,3 +100,25 @@ export type SendDecisionAndReasonsEventType = {
   isDecisionAllowed: 'Allowed' | 'Dismissed';
   nameOfFileToUpload?: string;
 };
+
+export type ExuiCreateCaseType = 'Appeal* master' | 'Bail* master' | 'Appeal-864' | 'AppealDIAC-864-hmc-pre' | 'Asylum-hmc-int-spike';
+export type DetentionFacilityType = 'Immigration removal centre' | 'Prison' | 'Other';
+export type ImmigrationRemovalCentreNameType =
+  | 'Brook House'
+  | 'Campsfield House'
+  | 'Colnbrook'
+  | 'Derwentside'
+  | 'Dungavel'
+  | 'Harmondsworth'
+  | 'Swinderby'
+  | 'Tinsley House'
+  | "Yarl's Wood";
+export type PendingBailApplicationType = 'Yes' | 'Yes, but the bail application number was not provided' | 'No' | "I'm not sure";
+export type ExuiAppealType =
+  | 'Refusal of a human rights claim'
+  | 'Refusal of application under the EEA regulations'
+  | 'Deprivation of citizenship'
+  | 'Refusal of protection claim'
+  | 'Revocation of a protection status'
+  | 'Refusal of application under the EU Settlement Scheme';
+export type ExuiAppealGroundsHumanRightsRefusalType = 'The decision is unlawful under section 6 of the Human Rights Act 1998';

@@ -1,6 +1,19 @@
 import { Page } from '@playwright/test';
 import {
+  CaseListPage,
   CaseOverviewPage,
+  CreateCasePage,
+  StartAppealAppealType,
+  StartAppealAppealGroundsHumanRightsRefusal,
+  StartAppealOutOfCountry,
+  StartAppealDetention,
+  StartAppealDetentionFacility,
+  StartAppealIrcName,
+  StartAppealAppellantBailApplication,
+  StartAppealAppellantBasicDetails,
+  StartAppealAppellantNationalities,
+  StartAppealHomeOfficeReferenceNumber,
+  StartAppealHomeOfficeDecisionLetter,
   RecordRemissionDecisionPage,
   RecordRemissionDecisionDetailsPage,
   RecordRemissionDecisionSubmitPage,
@@ -91,7 +104,20 @@ import {
 export class ExuiPages {
   private readonly page: Page;
 
+  public readonly caseListPage: CaseListPage;
   public readonly caseOverviewPage: CaseOverviewPage;
+  public readonly createCasePage: CreateCasePage;
+  public readonly startAppealAppealType: StartAppealAppealType;
+  public readonly startAppealAppealGroundsHumanRightsRefusal: StartAppealAppealGroundsHumanRightsRefusal;
+  public readonly startAppealOutOfCountry: StartAppealOutOfCountry;
+  public readonly startAppealDetention: StartAppealDetention;
+  public readonly startAppealDetentionFacility: StartAppealDetentionFacility;
+  public readonly startAppealIrcName: StartAppealIrcName;
+  public readonly startAppealAppellantBailApplication: StartAppealAppellantBailApplication;
+  public readonly startAppealAppellantBasicDetails: StartAppealAppellantBasicDetails;
+  public readonly startAppealAppellantNationalities: StartAppealAppellantNationalities;
+  public readonly startAppealHomeOfficeReferenceNumber: StartAppealHomeOfficeReferenceNumber;
+  public readonly startAppealHomeOfficeDecisionLetter: StartAppealHomeOfficeDecisionLetter;
   public readonly recordRemissionDecisionPage: RecordRemissionDecisionPage;
   public readonly recordRemissionDecisionDetailsPage: RecordRemissionDecisionDetailsPage;
   public readonly recordRemissionDecisionSubmitPage: RecordRemissionDecisionSubmitPage;
@@ -180,7 +206,20 @@ export class ExuiPages {
 
   constructor(page: Page) {
     this.page = page;
+    this.caseListPage = new CaseListPage(this.page);
     this.caseOverviewPage = new CaseOverviewPage(this.page);
+    this.createCasePage = new CreateCasePage(this.page);
+    this.startAppealAppealType = new StartAppealAppealType(this.page);
+    this.startAppealAppealGroundsHumanRightsRefusal = new StartAppealAppealGroundsHumanRightsRefusal(this.page);
+    this.startAppealOutOfCountry = new StartAppealOutOfCountry(this.page);
+    this.startAppealDetention = new StartAppealDetention(this.page);
+    this.startAppealDetentionFacility = new StartAppealDetentionFacility(this.page);
+    this.startAppealIrcName = new StartAppealIrcName(this.page);
+    this.startAppealAppellantBailApplication = new StartAppealAppellantBailApplication(this.page);
+    this.startAppealAppellantBasicDetails = new StartAppealAppellantBasicDetails(this.page);
+    this.startAppealAppellantNationalities = new StartAppealAppellantNationalities(this.page);
+    this.startAppealHomeOfficeReferenceNumber = new StartAppealHomeOfficeReferenceNumber(this.page);
+    this.startAppealHomeOfficeDecisionLetter = new StartAppealHomeOfficeDecisionLetter(this.page);
     this.recordRemissionDecisionPage = new RecordRemissionDecisionPage(this.page);
     this.recordRemissionDecisionDetailsPage = new RecordRemissionDecisionDetailsPage(this.page);
     this.recordRemissionDecisionSubmitPage = new RecordRemissionDecisionSubmitPage(this.page);
