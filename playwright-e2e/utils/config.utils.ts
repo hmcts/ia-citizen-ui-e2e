@@ -23,6 +23,7 @@ export interface Config {
     adminOfficer: UserCredentials;
     homeOfficeUser: UserCredentials;
     judgeUser: UserCredentials;
+    legalRepUser: UserCredentials;
   };
   urls: Urls;
 }
@@ -51,6 +52,12 @@ export const config: Config = {
       username: getEnvVar('JUDGE_USERNAME'),
       password: getEnvVar('JUDGE_PASSWORD'),
       sessionFile: pathToFile('.sessions/', `${getEnvVar('JUDGE_USERNAME')}.json`),
+      cookieName: 'xui-webapp',
+    },
+    legalRepUser: {
+      username: getEnvVar('LEGAL_REP_USERNAME'),
+      password: getEnvVar('LEGAL_REP_PASSWORD'),
+      sessionFile: pathToFile('.sessions/', `${getEnvVar('LEGAL_REP_USERNAME')}.json`),
       cookieName: 'xui-webapp',
     },
   },

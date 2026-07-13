@@ -249,7 +249,13 @@ test.describe('Set of tests to verify admin user is able to request a hearing on
         await expect(exui_pages.hearingCreateEditSummaryPage.$questionLocator('Reasonable adjustments')).toBeVisible(),
         await expect(exui_pages.hearingCreateEditSummaryPage.$questionValueLocator('Reasonable adjustments')).toBeVisible(),
         await expect(exui_pages.hearingCreateEditSummaryPage.$questionValueLocator('Reasonable adjustments')).toHaveText(
-          `${applicantName} Step free / wheelchair access Hearing loop (hearing enhancement system) Sign Language Interpreter ${witnessName} Sign Language Interpreter`,
+          `${applicantName}
+          Step free / wheelchair access
+          Hearing loop (hearing enhancement system)
+          Sign Language Interpreter
+          Evidence given in private
+          ${witnessName}
+          Sign Language Interpreter`,
           { useInnerText: true },
         ),
         await expect(exui_pages.hearingCreateEditSummaryPage.$changeAnswerToQuestionLocator('Reasonable adjustments')).toBeVisible(),
