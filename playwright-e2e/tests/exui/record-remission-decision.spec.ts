@@ -53,7 +53,7 @@ test.describe('Set of tests to verify admin user is able to record a remission d
 
       await exui_pages.recordRemissionDecisionDetailsPage.verifyUserIsOnPage();
       await exui_pages.recordRemissionDecisionDetailsPage.verifyAllTextOnPage();
-      await exui_pages.recordRemissionDecisionDetailsPage.completePageAndContinue({ amountRemitted: 140, amountLeftToPay: 0 });
+      await exui_pages.recordRemissionDecisionDetailsPage.completePageAndContinue({ amountRemitted: 144, amountLeftToPay: 0 });
 
       await exui_pages.recordRemissionDecisionSubmitPage.verifyUserIsOnPage();
       await Promise.all([
@@ -68,7 +68,7 @@ test.describe('Set of tests to verify admin user is able to record a remission d
         await expect(exui_pages.recordRemissionDecisionSubmitPage.$changeAnswerToQuestionLocator('Decision')).toBeVisible(),
         // Verify amount remitted question and answer are displayed correctly on check your answers page
         await expect(exui_pages.recordRemissionDecisionSubmitPage.$questionLocator('Amount remitted')).toBeVisible(),
-        await expect(exui_pages.recordRemissionDecisionSubmitPage.$questionValueLocator('Amount remitted')).toHaveText('£140.00'),
+        await expect(exui_pages.recordRemissionDecisionSubmitPage.$questionValueLocator('Amount remitted')).toHaveText('£144.00'),
         await expect(exui_pages.recordRemissionDecisionSubmitPage.$questionValueLocator('Amount remitted')).toBeVisible(),
         await expect(exui_pages.recordRemissionDecisionSubmitPage.$changeAnswerToQuestionLocator('Amount remitted')).toHaveText('Change'),
         await expect(exui_pages.recordRemissionDecisionSubmitPage.$changeAnswerToQuestionLocator('Amount remitted')).toBeVisible(),
