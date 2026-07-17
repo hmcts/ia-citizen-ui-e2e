@@ -35,8 +35,6 @@ export * from './new-appeal/fee-support/local-authority-letter.po';
 export * from './new-appeal/check-and-send/late-appeal.po';
 export * from './new-appeal/check-and-send/new-appeal-check-answers.po';
 export * from './new-appeal/check-and-send/appeal-details-sent.po';
-export * from './new-appeal/check-and-send/payment-details.po';
-export * from './new-appeal/check-and-send/confirm-payment-details.po';
 export * from './new-appeal/check-and-send/confirmation-of-payment.po';
 export * from './appeal-reasons/home-office-decision-wrong.po';
 export * from './appeal-reasons/supporting-evidence.po';

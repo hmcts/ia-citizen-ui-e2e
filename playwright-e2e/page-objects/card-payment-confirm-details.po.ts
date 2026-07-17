@@ -1,7 +1,7 @@
 import { Page, Locator } from '@playwright/test';
-import { CuiBase } from '../../../cui-base';
+import { Base } from './base';
 
-export class ConfirmPaymentDetailsPage extends CuiBase {
+export class CardPaymentConfirmDetailsPage extends Base {
   constructor(page: Page) {
     super(page);
   }
@@ -17,5 +17,9 @@ export class ConfirmPaymentDetailsPage extends CuiBase {
 
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({ urlPath: 'confirm', pageHeading: this.$static.pageHeading });
+  }
+
+  public async confirmPayment(): Promise<void> {
+    await this.navigationClick(this.$interactive.confirmPaymentButton);
   }
 }
