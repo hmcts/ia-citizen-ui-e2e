@@ -4,7 +4,7 @@ import { Nationality } from '../../../../citizen-types';
 
 export type AppellantNationalityStatusType = 'Stateless' | 'Has a nationality';
 
-export class StartAppealAppellantNationalities extends ExuiBase {
+export class StartAppealAppellantNationalitiesPage extends ExuiBase {
   constructor(page: Page) {
     super(page);
   }

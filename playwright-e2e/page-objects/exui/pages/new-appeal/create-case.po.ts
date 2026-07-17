@@ -39,11 +39,12 @@ export class CreateCasePage extends ExuiBase {
     ]);
   }
 
-  public async completePageAndContinue(options: { caseType: ExuiCreateCaseType }): Promise<void> {
-    await expect(this.$interactive.jurisdictionDropdown.locator('option:checked')).toHaveText('Immigration & Asylum', { timeout: 10_000 });
+  public async completePageAndContinue(options: ExuiCreateCaseType): Promise<void> {
+    await this.$interactive.jurisdictionDropdown.selectOption({ label: options.jurisdiction }, { timeout: 10_000 });
+    await expect(this.$interactive.jurisdictionDropdown.locator('option:checked')).toHaveText(options.jurisdiction);
 
     await this.$interactive.caseTypeDropdown.selectOption({ label: options.caseType });
-    expect(await this.$interactive.caseTypeDropdown.locator('option:checked').textContent()).toBe(options.caseType);
+    await expect(this.$interactive.caseTypeDropdown.locator('option:checked')).toHaveText(options.caseType);
 
     await expect(this.$interactive.eventDropdown).toBeEnabled();
     if (options.caseType === 'Bail* master') {

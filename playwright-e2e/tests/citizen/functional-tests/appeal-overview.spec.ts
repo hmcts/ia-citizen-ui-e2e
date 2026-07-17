@@ -28,14 +28,14 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Verify applicant no longer has anything remaining to fulfil on their application', async () => {
-      await expect(cui_pages.appealOverviewPage.$static.nothingToDoNextHeading).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.nothingToDoNextHeading).toBeVisible();
     });
 
     await test.step('Verify text on application overview page has been updated to reflect details have been sent', async () => {
       const formattedExpectedDate = (await dataUtils.getDateFromToday({ dayOffset: 14 })).full;
 
-      await expect(cui_pages.appealOverviewPage.$static.applicantInstructionsWindow).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.applicantInstructionsWindow).toHaveText(
+      await expect(cui_pages.appealOverview.$static.applicantInstructionsWindow).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.applicantInstructionsWindow).toHaveText(
         `Your appeal details have been sent to the Tribunal.
         There is a fee for this appeal. You told the Tribunal that you believe you do not have to pay some or all of the fee.
         The Tribunal will check the information you sent and let you know if you need to pay a fee.
@@ -46,10 +46,10 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
 
     await test.step('Verify appeal details section of appeal overview page', async () => {
       const formattedTodaysDate = (await dataUtils.getDateFromToday({})).full;
-      await expect(cui_pages.appealOverviewPage.$static.completedHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsTimeLine).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsTimeLine).toHaveText(
+      await expect(cui_pages.appealOverview.$static.completedHeading).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.yourAppealDetailsHeading).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.yourAppealDetailsTimeLine).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.yourAppealDetailsTimeLine).toHaveText(
         `${formattedTodaysDate} - You sent your appeal details to the Tribunal.
         What you sent
         Your appeal details
@@ -88,13 +88,13 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Verify applicant no longer has anything remaining to fulfil on their application', async () => {
-      await expect(cui_pages.appealOverviewPage.$static.nothingToDoNextHeading).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.nothingToDoNextHeading).toBeVisible();
     });
 
     await test.step('Verify text on application overview page has been updated to reflect details have been sent', async () => {
       const formattedExpectedDate = (await dataUtils.getDateFromToday({ dayOffset: 14 })).full;
-      await expect(cui_pages.appealOverviewPage.$static.applicantInstructionsWindow).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.applicantInstructionsWindow).toHaveText(
+      await expect(cui_pages.appealOverview.$static.applicantInstructionsWindow).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.applicantInstructionsWindow).toHaveText(
         `Your appeal details have been sent to the Tribunal.
         A Tribunal Caseworker will contact you to tell you what happens next.
         This should be by ${formattedExpectedDate} but it might take longer than that.
@@ -106,10 +106,10 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
 
     await test.step('Verify appeal argument section of appeal overview page', async () => {
       const formattedTodaysDate = (await dataUtils.getDateFromToday({})).full;
-      await expect(cui_pages.appealOverviewPage.$static.completedHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.yourAppealArgumentHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.yourAppealArgumentTimeLine).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.yourAppealArgumentTimeLine).toHaveText(
+      await expect(cui_pages.appealOverview.$static.completedHeading).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.yourAppealArgumentHeading).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.yourAppealArgumentTimeLine).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.yourAppealArgumentTimeLine).toHaveText(
         `${formattedTodaysDate} - You paid for your appeal
         What you sent
         Your appeal details`,
@@ -119,9 +119,9 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
 
     await test.step('Verify appeal details section of appeal overview page', async () => {
       const formattedTodaysDate = (await dataUtils.getDateFromToday({})).full;
-      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsTimeLine).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsTimeLine).toHaveText(
+      await expect(cui_pages.appealOverview.$static.yourAppealDetailsHeading).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.yourAppealDetailsTimeLine).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.yourAppealDetailsTimeLine).toHaveText(
         `${formattedTodaysDate} - You sent your appeal details to the Tribunal.
         What you sent
         Your appeal details
@@ -158,13 +158,13 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Verify applicant no longer has anything remaining to fulfil on their application', async () => {
-      await expect(cui_pages.appealOverviewPage.$static.nothingToDoNextHeading).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.nothingToDoNextHeading).toBeVisible();
     });
 
     await test.step('Verify text on application overview page has been updated to reflect details have been sent', async () => {
       const formattedExpectedDate = (await dataUtils.getDateFromToday({ dayOffset: 14 })).full;
-      await expect(cui_pages.appealOverviewPage.$static.applicantInstructionsWindow).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.applicantInstructionsWindow).toHaveText(
+      await expect(cui_pages.appealOverview.$static.applicantInstructionsWindow).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.applicantInstructionsWindow).toHaveText(
         `Your appeal details have been sent to the Tribunal.
         A Tribunal Caseworker will contact you to tell you what happens next.
         This should be by ${formattedExpectedDate} but it might take longer than that.
@@ -176,10 +176,10 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
 
     await test.step('Verify appeal details section of appeal overview page', async () => {
       const formattedTodaysDate = (await dataUtils.getDateFromToday({})).full;
-      await expect(cui_pages.appealOverviewPage.$static.completedHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsHeading).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsTimeLine).toBeVisible();
-      await expect(cui_pages.appealOverviewPage.$static.yourAppealDetailsTimeLine).toHaveText(
+      await expect(cui_pages.appealOverview.$static.completedHeading).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.yourAppealDetailsHeading).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.yourAppealDetailsTimeLine).toBeVisible();
+      await expect(cui_pages.appealOverview.$static.yourAppealDetailsTimeLine).toHaveText(
         `${formattedTodaysDate} - You sent your appeal details to the Tribunal.
         What you sent
         Your appeal details
