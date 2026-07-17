@@ -1,4 +1,4 @@
-# page-object-agent (v2)
+# page-object-agent
 
 ## Project Context
 
