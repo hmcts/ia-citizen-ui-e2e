@@ -80,9 +80,7 @@ test.describe('Set of tests to verify case officer is able to request appeal rea
         expect(exui_pages.aipRequestAppealReasonsSubmit.$static.checkYouAnswersHeading).toBeVisible(),
         expect(exui_pages.aipRequestAppealReasonsSubmit.$static.checkInformationCarefullyText).toBeVisible(),
 
-        expect(exui_pages.aipRequestAppealReasonsSubmit.$static.directionYouAreIssuingQuestion).toHaveText(
-          'Explain the direction you are issuing',
-        ),
+        expect(exui_pages.aipRequestAppealReasonsSubmit.$static.directionYouAreIssuingQuestion).toHaveText('Explain the direction you are issuing'),
         expect(exui_pages.aipRequestAppealReasonsSubmit.$static.directionYouAreIssuingQuestion).toBeVisible(),
         expect(exui_pages.aipRequestAppealReasonsSubmit.$static.directionYouAreIssuingValue).toHaveText(
           'You must now tell us why you think the Home Office decision to refuse your claim is wrong.',

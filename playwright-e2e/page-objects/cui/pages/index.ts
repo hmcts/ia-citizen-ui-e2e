@@ -1,5 +1,6 @@
 export * from './start-appeal-page.po';
 export * from './appeal-overview.po';
+export * from './case-list.po';
 export * from './new-appeal/about-appeal.po';
 export * from './new-appeal/your-details/appeal-type/in-the-uk.po';
 export * from './new-appeal/your-details/appeal-type/out-of-country-protection-departure-date.po';

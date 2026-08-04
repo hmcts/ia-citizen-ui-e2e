@@ -46,6 +46,7 @@ test.describe('Set of tests to verify case officer is able to request respondent
           doYouWishToProvideSupportingEvidence: 'No',
           reasonWhyHomeOfficeDecisionIsWrong: 'Test reason why the Home Office decision is wrong',
         },
+        caseId: caseId,
       });
     });
 
@@ -95,9 +96,7 @@ test.describe('Set of tests to verify case officer is able to request respondent
         expect(exui_pages.requestRespondentReviewSubmit.$static.checkYouAnswersHeading).toBeVisible(),
         expect(exui_pages.requestRespondentReviewSubmit.$static.checkInformationCarefullyText).toBeVisible(),
 
-        expect(exui_pages.requestRespondentReviewSubmit.$static.directionYouAreIssuingQuestion).toHaveText(
-          'Explain the direction you are issuing',
-        ),
+        expect(exui_pages.requestRespondentReviewSubmit.$static.directionYouAreIssuingQuestion).toHaveText('Explain the direction you are issuing'),
         expect(exui_pages.requestRespondentReviewSubmit.$static.directionYouAreIssuingQuestion).toBeVisible(),
         expect(exui_pages.requestRespondentReviewSubmit.$static.directionYouAreIssuingValue)
           .toHaveText(`By the date below you must review the appellant’s ASA and bundle.

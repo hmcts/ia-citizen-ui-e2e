@@ -29,7 +29,7 @@ export const cuiPageFixtures = {
       await idam_signInPage.verifyUserIsOnPage();
       await idam_signInPage.signIn(options.email, options.password);
 
-      await cuiPages.appealOverview.verifyUserIsOnPage();
+      await cuiPages.caseList.verifyUserIsOnPage();
     });
   },
   cui_signOutAndBackIn: async ({ idam_signInPage, cui_pages }: PageFixtures, use) => {
@@ -44,7 +44,7 @@ export const cuiPageFixtures = {
       await idam_signInPage.verifyUserIsOnPage();
       await idam_signInPage.signIn(options.email, options.password);
 
-      await cuiPages.appealOverview.verifyUserIsOnPage();
+      await cuiPages.caseList.verifyUserIsOnPage();
     });
   },
 };

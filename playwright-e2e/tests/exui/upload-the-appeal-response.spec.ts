@@ -46,6 +46,7 @@ test.describe('Set of tests to verify home office user is able to upload appeal 
           doYouWishToProvideSupportingEvidence: 'No',
           reasonWhyHomeOfficeDecisionIsWrong: 'Test reason why the Home Office decision is wrong',
         },
+        caseId: caseId,
       });
 
       await exui_caseOfficerApiClient.submitRequestRespondentReviewEvent({

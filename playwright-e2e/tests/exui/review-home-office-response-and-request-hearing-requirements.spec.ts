@@ -46,6 +46,7 @@ test.describe('Set of tests to verify case officer is able to review home office
           doYouWishToProvideSupportingEvidence: 'No',
           reasonWhyHomeOfficeDecisionIsWrong: 'Test reason why the Home Office decision is wrong',
         },
+        caseId: caseId,
       });
 
       await exui_caseOfficerApiClient.submitRequestRespondentReviewEvent({
@@ -111,17 +112,13 @@ Review the Home Office response. If you want to respond to what they have said, 
 
 If you do not respond by the date indicated below, the case will automatically go to hearing.`),
         await expect(exui_pages.reviewHomeOfficeResponseSubmit.$questionValueLocator('Explain the direction you are issuing')).toBeVisible(),
-        await expect(
-          exui_pages.reviewHomeOfficeResponseSubmit.$changeAnswerToQuestionLocator('Explain the direction you are issuing'),
-        ).toHaveText('Change'),
-        await expect(
-          exui_pages.reviewHomeOfficeResponseSubmit.$changeAnswerToQuestionLocator('Explain the direction you are issuing'),
-        ).toBeVisible(),
+        await expect(exui_pages.reviewHomeOfficeResponseSubmit.$changeAnswerToQuestionLocator('Explain the direction you are issuing')).toHaveText(
+          'Change',
+        ),
+        await expect(exui_pages.reviewHomeOfficeResponseSubmit.$changeAnswerToQuestionLocator('Explain the direction you are issuing')).toBeVisible(),
         // Verify who are you issuing the direction to question and answer are displayed correctly on check your answers page
         await expect(exui_pages.reviewHomeOfficeResponseSubmit.$questionLocator('Who are you giving the direction to?')).toBeVisible(),
-        await expect(exui_pages.reviewHomeOfficeResponseSubmit.$questionValueLocator('Who are you giving the direction to?')).toHaveText(
-          'Appellant',
-        ),
+        await expect(exui_pages.reviewHomeOfficeResponseSubmit.$questionValueLocator('Who are you giving the direction to?')).toHaveText('Appellant'),
         await expect(exui_pages.reviewHomeOfficeResponseSubmit.$questionValueLocator('Who are you giving the direction to?')).toBeVisible(),
         // Verify by what date must they comply question and answer are displayed correctly on check your answers page
         await expect(exui_pages.reviewHomeOfficeResponseSubmit.$questionLocator('By what date must they comply?')).toBeVisible(),
@@ -129,9 +126,7 @@ If you do not respond by the date indicated below, the case will automatically g
           formattedExpectedDate,
         ),
         await expect(exui_pages.reviewHomeOfficeResponseSubmit.$questionValueLocator('By what date must they comply?')).toBeVisible(),
-        await expect(exui_pages.reviewHomeOfficeResponseSubmit.$changeAnswerToQuestionLocator('By what date must they comply?')).toHaveText(
-          'Change',
-        ),
+        await expect(exui_pages.reviewHomeOfficeResponseSubmit.$changeAnswerToQuestionLocator('By what date must they comply?')).toHaveText('Change'),
         await expect(exui_pages.reviewHomeOfficeResponseSubmit.$changeAnswerToQuestionLocator('By what date must they comply?')).toBeVisible(),
       ]);
 

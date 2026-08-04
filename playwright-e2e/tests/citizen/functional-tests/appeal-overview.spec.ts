@@ -1,6 +1,6 @@
 import { test, expect } from '../../../fixtures.js';
 
-test.describe('Set of tests to verify functionality of citizen UI using Api fixtures', () => {
+test.describe('Set of tests to verify functionality of application overview page on citizen ui', () => {
   test('Verify application overview page displays correct information for a paid application that has not received any payment', async ({
     cui_apiClient,
     citizenUser,
@@ -8,8 +8,8 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     cui_pages,
     dataUtils,
   }) => {
-    await test.step('Submit an appeal via api', async () => {
-      await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
+    const appealDetails = await test.step('Submit an appeal via api', async () => {
+      return await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
         isUserInTheUk: 'Yes',
         appealType: 'Human Rights',
         isApplicantStateless: false,
@@ -28,6 +28,10 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Verify applicant no longer has anything remaining to fulfil on their application', async () => {
+      const applicantName = `${appealDetails.applicantDetails.givenNames.join(' ')} ${appealDetails.applicantDetails.familyName}`;
+      await cui_pages.caseList.viewExistingApplication({ searchTerm: applicantName });
+
+      await cui_pages.appealOverview.verifyUserIsOnPage();
       await expect(cui_pages.appealOverview.$static.nothingToDoNextHeading).toBeVisible();
     });
 
@@ -67,8 +71,8 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     cui_pages,
     dataUtils,
   }) => {
-    await test.step('Submit an appeal via api', async () => {
-      await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
+    const appealDetails = await test.step('Submit an appeal via api', async () => {
+      return await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
         isUserInTheUk: 'Yes',
         appealType: 'Protection',
         isApplicantStateless: false,
@@ -88,6 +92,10 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Verify applicant no longer has anything remaining to fulfil on their application', async () => {
+      const applicantName = `${appealDetails.applicantDetails.givenNames.join(' ')} ${appealDetails.applicantDetails.familyName}`;
+      await cui_pages.caseList.viewExistingApplication({ searchTerm: applicantName });
+
+      await cui_pages.appealOverview.verifyUserIsOnPage();
       await expect(cui_pages.appealOverview.$static.nothingToDoNextHeading).toBeVisible();
     });
 
@@ -139,8 +147,8 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     cui_pages,
     dataUtils,
   }) => {
-    await test.step('Submit an appeal via api', async () => {
-      await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
+    const appealDetails = await test.step('Submit an appeal via api', async () => {
+      return await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
         isUserInTheUk: 'Yes',
         appealType: 'Deprivation of Citizenship',
         isApplicantStateless: false,
@@ -158,6 +166,10 @@ test.describe('Set of tests to verify functionality of citizen UI using Api fixt
     });
 
     await test.step('Verify applicant no longer has anything remaining to fulfil on their application', async () => {
+      const applicantName = `${appealDetails.applicantDetails.givenNames.join(' ')} ${appealDetails.applicantDetails.familyName}`;
+      await cui_pages.caseList.viewExistingApplication({ searchTerm: applicantName });
+
+      await cui_pages.appealOverview.verifyUserIsOnPage();
       await expect(cui_pages.appealOverview.$static.nothingToDoNextHeading).toBeVisible();
     });
 
