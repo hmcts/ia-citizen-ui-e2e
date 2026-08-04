@@ -7,8 +7,12 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
 
   // The following test covers a late appeal that also has a sponsor and fee support.
   test('Verify user is able to submit a paid appeal via the UI', { tag: ['@e2e'] }, async ({ cui_pages, dataUtils }) => {
-    await test.step('Navigate to about appeals page', async () => {
+    await test.step('Navigate to appeal overview page', async () => {
+      await cui_pages.caseList.createNewAppeal();
       await cui_pages.appealOverview.verifyUserIsOnPage();
+    });
+
+    await test.step('Navigate to about appeals page', async () => {
       await cui_pages.appealOverview.navigationClick(cui_pages.appealOverview.$interactive.continueButton);
 
       await cui_pages.aboutAppeal.verifyUserIsOnPage();
@@ -263,8 +267,12 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
 
   // The following test covers an alternative path i.e an application that is in time and does not require any payment nor has a sponsor
   test('Verify user is able to submit a non paid appeal via the UI', { tag: ['@e2e'] }, async ({ cui_pages, dataUtils }) => {
-    await test.step('Navigate to about appeals page', async () => {
+    await test.step('Navigate to appeal overview page', async () => {
+      await cui_pages.caseList.createNewAppeal();
       await cui_pages.appealOverview.verifyUserIsOnPage();
+    });
+
+    await test.step('Navigate to about appeals page', async () => {
       await cui_pages.appealOverview.navigationClick(cui_pages.appealOverview.$interactive.continueButton);
 
       await cui_pages.aboutAppeal.verifyUserIsOnPage();

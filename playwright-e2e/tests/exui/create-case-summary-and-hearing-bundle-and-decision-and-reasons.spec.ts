@@ -24,7 +24,9 @@ test.describe('Set of tests to verify citizen user is able to create a case summ
       });
 
       const caseId = await test.step(`Fetch exui case id via api call`, async () => {
-        const caseId = await exui_caseOfficerApiClient.fetchCaseId({ homeOfficeReferenceNumber: appealDetails.homeOfficeReference.toString() });
+        const caseId = await exui_caseOfficerApiClient.fetchCaseId({
+          homeOfficeReferenceNumber: appealDetails.homeOfficeReference.toString(),
+        });
         return caseId;
       });
 
@@ -48,6 +50,7 @@ test.describe('Set of tests to verify citizen user is able to create a case summ
             doYouWishToProvideSupportingEvidence: 'No',
             reasonWhyHomeOfficeDecisionIsWrong: 'Test reason why the Home Office decision is wrong',
           },
+          caseId: caseId,
         });
 
         await exui_caseOfficerApiClient.submitRequestRespondentReviewEvent({
@@ -69,6 +72,7 @@ test.describe('Set of tests to verify citizen user is able to create a case summ
 
         await cui_apiClient.commpleteAndSubmitHearingRequirementsJourneyViaApi({
           pathToTake: 'Minimal Path',
+          caseId: caseId,
         });
 
         await exui_caseOfficerApiClient.submitReviewHearingRequirementsEvent({
@@ -206,9 +210,7 @@ test.describe('Set of tests to verify citizen user is able to create a case summ
       await Promise.all([
         expect(exui_pages.caseOverview.$static.doThisNextHeading).toBeVisible(),
         expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(0)).toBeVisible(),
-        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(0)).toHaveText(
-          'You can start to create the decision and reasons document.',
-        ),
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(0)).toHaveText('You can start to create the decision and reasons document.'),
         expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(1)).toBeVisible(),
         expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(1)).toHaveText('Start decision and reasons'),
       ]);
@@ -249,16 +251,12 @@ test.describe('Set of tests to verify citizen user is able to create a case summ
         ),
         expect(exui_pages.decisionAndReasonsStartedSubmit.$changeAnswerToQuestionLocator("Appellant's case summary")).toBeVisible(),
         expect(exui_pages.decisionAndReasonsStartedSubmit.$questionLocator('Do both parties agree the immigration history?')).toBeVisible(),
-        expect(exui_pages.decisionAndReasonsStartedSubmit.$questionValueLocator('Do both parties agree the immigration history?')).toHaveText(
-          'Yes',
-        ),
+        expect(exui_pages.decisionAndReasonsStartedSubmit.$questionValueLocator('Do both parties agree the immigration history?')).toHaveText('Yes'),
         expect(
           exui_pages.decisionAndReasonsStartedSubmit.$changeAnswerToQuestionLocator('Do both parties agree the immigration history?'),
         ).toBeVisible(),
         expect(exui_pages.decisionAndReasonsStartedSubmit.$questionLocator('Do both parties agree the schedule of issues?')).toBeVisible(),
-        expect(exui_pages.decisionAndReasonsStartedSubmit.$questionValueLocator('Do both parties agree the schedule of issues?')).toHaveText(
-          'Yes',
-        ),
+        expect(exui_pages.decisionAndReasonsStartedSubmit.$questionValueLocator('Do both parties agree the schedule of issues?')).toHaveText('Yes'),
         expect(
           exui_pages.decisionAndReasonsStartedSubmit.$changeAnswerToQuestionLocator('Do both parties agree the schedule of issues?'),
         ).toBeVisible(),

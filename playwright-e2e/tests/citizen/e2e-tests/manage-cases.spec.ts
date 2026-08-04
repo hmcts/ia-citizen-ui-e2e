@@ -105,6 +105,7 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
             reasonWhyHomeOfficeDecisionIsWrong: 'The home office decision is wrong test reason ',
             doYouWishToProvideSupportingEvidence: 'No',
           },
+          caseId: caseId,
         });
       });
 
@@ -195,7 +196,7 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
       });
 
       await test.step('Citizen Api: Submit hearing requirements', async () => {
-        await cui_apiClient.commpleteAndSubmitHearingRequirementsJourneyViaApi({ pathToTake: 'Minimal Path' });
+        await cui_apiClient.commpleteAndSubmitHearingRequirementsJourneyViaApi({ pathToTake: 'Minimal Path', caseId: caseId });
       });
 
       await test.step('Case Officer: Refresh application overview page until expected next step is shown', async () => {

@@ -99,9 +99,7 @@ Parties must ensure they conduct proceedings with procedural rigour. The Tribuna
         expect(exui_pages.requestRespondentEvidenceSubmit.$questionValueLocator('Who are you giving the direction to?')).toBeVisible(),
         // Verify by what date must they comply question and answer is correct
         expect(exui_pages.requestRespondentEvidenceSubmit.$questionLocator('By what date must they comply?')).toBeVisible(),
-        expect(exui_pages.requestRespondentEvidenceSubmit.$questionValueLocator('By what date must they comply?')).toHaveText(
-          formattedExpectedDate,
-        ),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$questionValueLocator('By what date must they comply?')).toHaveText(formattedExpectedDate),
         expect(exui_pages.requestRespondentEvidenceSubmit.$questionValueLocator('By what date must they comply?')).toBeVisible(),
         expect(exui_pages.requestRespondentEvidenceSubmit.$changeAnswerToQuestionLocator('By what date must they comply?')).toHaveText('Change'),
         expect(exui_pages.requestRespondentEvidenceSubmit.$changeAnswerToQuestionLocator('By what date must they comply?')).toBeVisible(),

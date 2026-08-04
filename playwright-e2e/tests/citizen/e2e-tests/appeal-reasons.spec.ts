@@ -1,7 +1,7 @@
 import { test, expect } from '../../../fixtures.js';
 
 test.describe('Set of tests to verify user is able to submit answers to appeal reasons via UI', () => {
-  test.beforeEach(async ({ citizenUser, cui_login, cui_apiClient, exui_caseOfficerApiClient, exui_homeOfficeUserApiClient }) => {
+  test.beforeEach(async ({ citizenUser, cui_login, cui_apiClient, exui_caseOfficerApiClient, exui_homeOfficeUserApiClient, cui_pages }) => {
     const detailsOfNewAppeal = await test.step('Submit a new appeal via Api', async () => {
       const appealDetails = await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
         appealType: 'European Economic Area',
@@ -18,9 +18,11 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
       return appealDetails;
     });
 
-    await test.step('Progress journey via exui api calls in order to allow appellant to submit their appeal reasons', async () => {
-      const caseId = await exui_caseOfficerApiClient.fetchCaseId({ homeOfficeReferenceNumber: detailsOfNewAppeal.homeOfficeReference.toString() });
+    const caseId = await exui_caseOfficerApiClient.fetchCaseId({
+      homeOfficeReferenceNumber: detailsOfNewAppeal.homeOfficeReference.toString(),
+    });
 
+    await test.step('Progress journey via exui api calls in order to allow appellant to submit their appeal reasons', async () => {
       await exui_caseOfficerApiClient.submitRequestRespondentEvidenceEvent({ caseId: caseId });
 
       await exui_homeOfficeUserApiClient.submitUploadHomeOfficeBundleEvent({
@@ -34,11 +36,16 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
     await test.step('Verify application is in the correct state to submit response to appeal reasons before logging in', async () => {
       await cui_apiClient.verifyAppealIsInExpectedStateViaAppealOverviewApi({
         expectedTextToBeOnAppealOverview: 'Tell us why you think the Home Office decision to refuse your claim is wrong.',
+        caseId: caseId,
       });
     });
 
     await test.step('Navigate to citizen UI and login', async () => {
       await cui_login({ email: citizenUser.email, password: citizenUser.password });
+    });
+
+    await test.step('Navigate to appeal overview page', async () => {
+      await cui_pages.caseList.viewExistingApplication({ searchTerm: caseId });
     });
   });
 
@@ -68,9 +75,7 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
         expect(cui_pages.appealReasonsCheckAnswers.$static.questionTableRowLabel).toHaveText('Question'),
         expect(cui_pages.appealReasonsCheckAnswers.$static.questionTableRowLabel).toBeVisible(),
 
-        expect(cui_pages.appealReasonsCheckAnswers.$static.questionTableRowValue).toHaveText(
-          'Why do you think the Home Office decision is wrong?',
-        ),
+        expect(cui_pages.appealReasonsCheckAnswers.$static.questionTableRowValue).toHaveText('Why do you think the Home Office decision is wrong?'),
         expect(cui_pages.appealReasonsCheckAnswers.$static.questionTableRowValue).toBeVisible(),
 
         expect(cui_pages.appealReasonsCheckAnswers.$static.answerTableRowLabel).toHaveText('Answer'),
@@ -272,9 +277,7 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
         expect(cui_pages.appealReasonsCheckAnswers.$static.questionTableRowLabel).toHaveText('Question'),
         expect(cui_pages.appealReasonsCheckAnswers.$static.questionTableRowLabel).toBeVisible(),
 
-        expect(cui_pages.appealReasonsCheckAnswers.$static.questionTableRowValue).toHaveText(
-          'Why do you think the Home Office decision is wrong?',
-        ),
+        expect(cui_pages.appealReasonsCheckAnswers.$static.questionTableRowValue).toHaveText('Why do you think the Home Office decision is wrong?'),
         expect(cui_pages.appealReasonsCheckAnswers.$static.questionTableRowValue).toBeVisible(),
 
         expect(cui_pages.appealReasonsCheckAnswers.$static.answerTableRowLabel).toHaveText('Answer'),

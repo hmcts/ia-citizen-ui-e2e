@@ -1,7 +1,7 @@
 import { test, expect } from '../../../fixtures.js';
 
 test.describe('Set of tests to verify user is able to submit answers to hearing requirements via UI', () => {
-  test.beforeEach(async ({ citizenUser, cui_login, cui_apiClient, exui_caseOfficerApiClient, exui_homeOfficeUserApiClient }) => {
+  test.beforeEach(async ({ citizenUser, cui_login, cui_apiClient, exui_caseOfficerApiClient, exui_homeOfficeUserApiClient, cui_pages }) => {
     const detailsOfNewAppeal = await test.step('Submit a new appeal via Api', async () => {
       const appealDetails = await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
         appealType: 'European Economic Area',
@@ -18,9 +18,11 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
       return appealDetails;
     });
 
-    await test.step('Progress journey via citizen and exui api calls in order to allow appellant to submit their hearing requirements', async () => {
-      const caseId = await exui_caseOfficerApiClient.fetchCaseId({ homeOfficeReferenceNumber: detailsOfNewAppeal.homeOfficeReference.toString() });
+    const caseId = await exui_caseOfficerApiClient.fetchCaseId({
+      homeOfficeReferenceNumber: detailsOfNewAppeal.homeOfficeReference.toString(),
+    });
 
+    await test.step('Progress journey via citizen and exui api calls in order to allow appellant to submit their hearing requirements', async () => {
       await exui_caseOfficerApiClient.submitRequestRespondentEvidenceEvent({ caseId: caseId });
 
       await exui_homeOfficeUserApiClient.submitUploadHomeOfficeBundleEvent({
@@ -36,6 +38,7 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
           reasonWhyHomeOfficeDecisionIsWrong: 'Test reason why Home Office decision is wrong',
           doYouWishToProvideSupportingEvidence: 'No',
         },
+        caseId: caseId,
       });
 
       await exui_caseOfficerApiClient.submitRequestRespondentReviewEvent({
@@ -59,11 +62,17 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
     await test.step('Verify application is in the correct state to submit hearing requirements before logging in', async () => {
       await cui_apiClient.verifyAppealIsInExpectedStateViaAppealOverviewApi({
         expectedTextToBeOnAppealOverview: 'Your appeal is going to hearing',
+        caseId: caseId,
       });
     });
 
     await test.step('Navigate to citizen UI and login', async () => {
       await cui_login({ email: citizenUser.email, password: citizenUser.password });
+    });
+
+    await test.step('Navigate to appeal overview page', async () => {
+      await cui_pages.caseList.viewExistingApplication({ searchTerm: caseId });
+      await cui_pages.appealOverview.verifyUserIsOnPage();
     });
   });
 
@@ -589,9 +598,7 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
           expect(cui_pages.hearingCheckAnswers.$questionValueLocator('applicantSpokenLanguageRequirement')).toBeVisible(),
           // Verify 4th question and answer pair within acesss needs section
           expect(cui_pages.hearingCheckAnswers.$questionLocator('applicantSignLanguageRequirement')).toBeVisible(),
-          expect(cui_pages.hearingCheckAnswers.$questionValueLocator('applicantSignLanguageRequirement')).toHaveText(
-            'British Sign Language (BSL)',
-          ),
+          expect(cui_pages.hearingCheckAnswers.$questionValueLocator('applicantSignLanguageRequirement')).toHaveText('British Sign Language (BSL)'),
           expect(cui_pages.hearingCheckAnswers.$questionValueLocator('applicantSignLanguageRequirement')).toBeVisible(),
           // Verify 5th question and answer pair within acesss needs section
           expect(cui_pages.hearingCheckAnswers.$questionLocator('whatKindOfInterpreterWillWitnessNeed')).toBeVisible(),

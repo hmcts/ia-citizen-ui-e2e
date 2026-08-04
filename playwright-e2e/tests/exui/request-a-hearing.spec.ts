@@ -47,6 +47,7 @@ test.describe('Set of tests to verify admin user is able to request a hearing on
           doYouWishToProvideSupportingEvidence: 'No',
           reasonWhyHomeOfficeDecisionIsWrong: 'Test reason why the Home Office decision is wrong',
         },
+        caseId: caseId,
       });
 
       await exui_caseOfficerApiClient.submitRequestRespondentReviewEvent({
@@ -68,6 +69,7 @@ test.describe('Set of tests to verify admin user is able to request a hearing on
 
       await cui_apiClient.commpleteAndSubmitHearingRequirementsJourneyViaApi({
         pathToTake: 'Maximum Path',
+        caseId: caseId,
       });
 
       await exui_caseOfficerApiClient.submitReviewHearingRequirementsEvent({
@@ -271,9 +273,7 @@ test.describe('Set of tests to verify admin user is able to request a hearing on
         await expect(exui_pages.hearingCreateEditSummary.$questionLocator('Select any additional facilities required')).toBeVisible(),
         await expect(exui_pages.hearingCreateEditSummary.$questionValueLocator('Select any additional facilities required')).toBeVisible(),
         await expect(exui_pages.hearingCreateEditSummary.$questionValueLocator('Select any additional facilities required')).toBeEmpty(),
-        await expect(
-          exui_pages.hearingCreateEditSummary.$changeAnswerToQuestionLocator('Select any additional facilities required'),
-        ).toBeVisible(),
+        await expect(exui_pages.hearingCreateEditSummary.$changeAnswerToQuestionLocator('Select any additional facilities required')).toBeVisible(),
 
         // Verify stage questions and answers are displayed correctly on check your answers page
         await expect(exui_pages.hearingCreateEditSummary.$static.stageHeading).toBeVisible(),
@@ -291,9 +291,7 @@ test.describe('Set of tests to verify admin user is able to request a hearing on
         await expect(exui_pages.hearingCreateEditSummary.$questionValueLocator('Will this be a paper hearing?')).toHaveText('No'),
         await expect(exui_pages.hearingCreateEditSummary.$changeAnswerToQuestionLocator('Will this be a paper hearing?')).toBeVisible(),
 
-        await expect(
-          exui_pages.hearingCreateEditSummary.$questionLocator('What will be the methods of attendance for this hearing?'),
-        ).toBeVisible(),
+        await expect(exui_pages.hearingCreateEditSummary.$questionLocator('What will be the methods of attendance for this hearing?')).toBeVisible(),
         await expect(
           exui_pages.hearingCreateEditSummary.$questionValueLocator('What will be the methods of attendance for this hearing?'),
         ).toBeVisible(),
@@ -315,12 +313,8 @@ test.describe('Set of tests to verify admin user is able to request a hearing on
         ).toBeVisible(),
 
         await expect(exui_pages.hearingCreateEditSummary.$questionLocator('How many people will attend the hearing in person?')).toBeVisible(),
-        await expect(
-          exui_pages.hearingCreateEditSummary.$questionValueLocator('How many people will attend the hearing in person?'),
-        ).toBeVisible(),
-        await expect(exui_pages.hearingCreateEditSummary.$questionValueLocator('How many people will attend the hearing in person?')).toHaveText(
-          '4',
-        ),
+        await expect(exui_pages.hearingCreateEditSummary.$questionValueLocator('How many people will attend the hearing in person?')).toBeVisible(),
+        await expect(exui_pages.hearingCreateEditSummary.$questionValueLocator('How many people will attend the hearing in person?')).toHaveText('4'),
         await expect(
           exui_pages.hearingCreateEditSummary.$changeAnswerToQuestionLocator('How many people will attend the hearing in person?'),
         ).toBeVisible(),
@@ -357,9 +351,7 @@ test.describe('Set of tests to verify admin user is able to request a hearing on
         await expect(exui_pages.hearingCreateEditSummary.$questionLocator('Do you require a panel for this hearing?')).toBeVisible(),
         await expect(exui_pages.hearingCreateEditSummary.$questionValueLocator('Do you require a panel for this hearing?')).toBeVisible(),
         await expect(exui_pages.hearingCreateEditSummary.$questionValueLocator('Do you require a panel for this hearing?')).toHaveText('No'),
-        await expect(
-          exui_pages.hearingCreateEditSummary.$changeAnswerToQuestionLocator('Do you require a panel for this hearing?'),
-        ).toBeVisible(),
+        await expect(exui_pages.hearingCreateEditSummary.$changeAnswerToQuestionLocator('Do you require a panel for this hearing?')).toBeVisible(),
 
         // Verify length, date and priority questions and answers are displayed correctly on check your answers page
         await expect(exui_pages.hearingCreateEditSummary.$static.lengthDateAndPriorityHeading).toBeVisible(),
@@ -369,15 +361,13 @@ test.describe('Set of tests to verify admin user is able to request a hearing on
         await expect(exui_pages.hearingCreateEditSummary.$questionValueLocator('Length of hearing')).toHaveText('2 Hours'),
         await expect(exui_pages.hearingCreateEditSummary.$changeAnswerToQuestionLocator('Length of hearing')).toBeVisible(),
 
-        await expect(
-          exui_pages.hearingCreateEditSummary.$questionLocator('Does the hearing need to take place on a specific date?'),
-        ).toBeVisible(),
+        await expect(exui_pages.hearingCreateEditSummary.$questionLocator('Does the hearing need to take place on a specific date?')).toBeVisible(),
         await expect(
           exui_pages.hearingCreateEditSummary.$questionValueLocator('Does the hearing need to take place on a specific date?'),
         ).toBeVisible(),
-        await expect(
-          exui_pages.hearingCreateEditSummary.$questionValueLocator('Does the hearing need to take place on a specific date?'),
-        ).toHaveText('No'),
+        await expect(exui_pages.hearingCreateEditSummary.$questionValueLocator('Does the hearing need to take place on a specific date?')).toHaveText(
+          'No',
+        ),
         await expect(
           exui_pages.hearingCreateEditSummary.$changeAnswerToQuestionLocator('Does the hearing need to take place on a specific date?'),
         ).toBeVisible(),
@@ -390,15 +380,13 @@ test.describe('Set of tests to verify admin user is able to request a hearing on
         // Verify linked hearing questions and answers are displayed correctly on check your answers page
         await expect(exui_pages.hearingCreateEditSummary.$static.linkedHearingsHeading).toBeVisible(),
 
-        await expect(
-          exui_pages.hearingCreateEditSummary.$questionLocator('Will this hearing need to be linked to other hearings?'),
-        ).toBeVisible(),
+        await expect(exui_pages.hearingCreateEditSummary.$questionLocator('Will this hearing need to be linked to other hearings?')).toBeVisible(),
         await expect(
           exui_pages.hearingCreateEditSummary.$questionValueLocator('Will this hearing need to be linked to other hearings?'),
         ).toBeVisible(),
-        await expect(
-          exui_pages.hearingCreateEditSummary.$questionValueLocator('Will this hearing need to be linked to other hearings?'),
-        ).toHaveText('No'),
+        await expect(exui_pages.hearingCreateEditSummary.$questionValueLocator('Will this hearing need to be linked to other hearings?')).toHaveText(
+          'No',
+        ),
         await expect(
           exui_pages.hearingCreateEditSummary.$changeAnswerToQuestionLocator('Will this hearing need to be linked to other hearings?'),
         ).toBeVisible(),
@@ -407,9 +395,7 @@ test.describe('Set of tests to verify admin user is able to request a hearing on
         await expect(exui_pages.hearingCreateEditSummary.$static.additionalInstructionsHeading).toBeVisible(),
 
         await expect(exui_pages.hearingCreateEditSummary.$questionLocator('Enter any additional instructions for the hearing')).toBeVisible(),
-        await expect(
-          exui_pages.hearingCreateEditSummary.$questionValueLocator('Enter any additional instructions for the hearing'),
-        ).toBeVisible(),
+        await expect(exui_pages.hearingCreateEditSummary.$questionValueLocator('Enter any additional instructions for the hearing')).toBeVisible(),
         await expect(exui_pages.hearingCreateEditSummary.$questionValueLocator('Enter any additional instructions for the hearing')).toHaveText(
           'Please ensure the hearing is listed in a building with step free access;Adjustments to accommodate vulnerabilities: Granted request to accommodate vulnerabilities as a result of physical or mental health issues;Multimedia equipment: Granted request for multi media adjustment;Other adjustments: Granted request for additional adjustment;',
         ),

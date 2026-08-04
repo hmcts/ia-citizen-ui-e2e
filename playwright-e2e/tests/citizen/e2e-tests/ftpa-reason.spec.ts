@@ -12,6 +12,7 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
       exui_homeOfficeUserApiClient,
       exui_judgeApiClient,
       dataUtils,
+      cui_pages,
     }) => {
       const applicantDetails = await test.step('Submit a new appeal via citizen api', async () => {
         const applicantDetails = await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
@@ -31,7 +32,9 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
         return applicantDetails;
       });
 
-      const caseId = await exui_caseOfficerApiClient.fetchCaseId({ homeOfficeReferenceNumber: applicantDetails.homeOfficeReference.toString() });
+      const caseId = await exui_caseOfficerApiClient.fetchCaseId({
+        homeOfficeReferenceNumber: applicantDetails.homeOfficeReference.toString(),
+      });
 
       await test.step('Progress jounrey to the point the judge has made a decision', async () => {
         await exui_caseOfficerApiClient.submitRequestRespondentEvidenceEvent({
@@ -53,6 +56,7 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
             reasonWhyHomeOfficeDecisionIsWrong: 'Test reason',
             doYouWishToProvideSupportingEvidence: 'No',
           },
+          caseId: caseId,
         });
 
         await exui_caseOfficerApiClient.submitRequestRespondentReviewEvent({
@@ -74,6 +78,7 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
 
         await cui_apiClient.commpleteAndSubmitHearingRequirementsJourneyViaApi({
           pathToTake: 'Maximum Path',
+          caseId: caseId,
         });
 
         await exui_caseOfficerApiClient.submitReviewHearingRequirementsEvent({
@@ -124,11 +129,17 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
       await test.step('Verify application is in the correct state to submit FTPA response before logging in', async () => {
         await cui_apiClient.verifyAppealIsInExpectedStateViaAppealOverviewApi({
           expectedTextToBeOnAppealOverview: 'A judge has dismissed your appeal.',
+          caseId: caseId,
         });
       });
 
       await test.step('Navigate to citizen UI and login', async () => {
         await cui_login({ email: citizenUser.email, password: citizenUser.password });
+      });
+
+      await test.step('Navigate to appeal overview page', async () => {
+        await cui_pages.caseList.viewExistingApplication({ searchTerm: caseId });
+        await cui_pages.appealOverview.verifyUserIsOnPage();
       });
 
       caseIdFromBeforeEach = caseId;
@@ -153,9 +164,7 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
           /*         expect(cui_pages.appealOverview.$static.applicantInstructionsWindow).toContainText(
           `If you disagree with this decision, you have until ${expectedDate} to apply for permission to appeal to the Upper Tribunal.`,
         ), */
-          expect(cui_pages.appealOverview.$static.applicantInstructionsWindow).toContainText(
-            'Apply for permission to appeal to the Upper Tribunal',
-          ),
+          expect(cui_pages.appealOverview.$static.applicantInstructionsWindow).toContainText('Apply for permission to appeal to the Upper Tribunal'),
         ]);
 
         await expect(async () => {
@@ -298,13 +307,9 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
           //Verify table row for The outcome of the application
           expect(judgeExuiPages.decideFtpaApplicationSubmit.$questionLocator('The outcome of the application')).toBeVisible(),
           expect(judgeExuiPages.decideFtpaApplicationSubmit.$questionValueLocator('The outcome of the application')).toBeVisible(),
-          expect(judgeExuiPages.decideFtpaApplicationSubmit.$questionValueLocator('The outcome of the application')).toHaveText(
-            'Permission granted',
-          ),
+          expect(judgeExuiPages.decideFtpaApplicationSubmit.$questionValueLocator('The outcome of the application')).toHaveText('Permission granted'),
           expect(judgeExuiPages.decideFtpaApplicationSubmit.$changeAnswerToQuestionLocator('The outcome of the application')).toBeVisible(),
-          expect(judgeExuiPages.decideFtpaApplicationSubmit.$changeAnswerToQuestionLocator('The outcome of the application')).toHaveText(
-            'Change',
-          ),
+          expect(judgeExuiPages.decideFtpaApplicationSubmit.$changeAnswerToQuestionLocator('The outcome of the application')).toHaveText('Change'),
           //Verify table row for Document
           expect(judgeExuiPages.decideFtpaApplicationSubmit.$questionLocator('Document')).toBeVisible(),
           expect(judgeExuiPages.decideFtpaApplicationSubmit.$questionValueLocator('Document')).toBeVisible(),
@@ -315,9 +320,7 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
           expect(judgeExuiPages.decideFtpaApplicationSubmit.$questionLocator('Notice of Intention to Set Aside sent?')).toBeVisible(),
           expect(judgeExuiPages.decideFtpaApplicationSubmit.$questionValueLocator('Notice of Intention to Set Aside sent?')).toBeVisible(),
           expect(judgeExuiPages.decideFtpaApplicationSubmit.$questionValueLocator('Notice of Intention to Set Aside sent?')).toHaveText('Yes'),
-          expect(
-            judgeExuiPages.decideFtpaApplicationSubmit.$changeAnswerToQuestionLocator('Notice of Intention to Set Aside sent?'),
-          ).toBeVisible(),
+          expect(judgeExuiPages.decideFtpaApplicationSubmit.$changeAnswerToQuestionLocator('Notice of Intention to Set Aside sent?')).toBeVisible(),
           expect(judgeExuiPages.decideFtpaApplicationSubmit.$changeAnswerToQuestionLocator('Notice of Intention to Set Aside sent?')).toHaveText(
             'Change',
           ),
@@ -332,14 +335,10 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
             judgeExuiPages.decideFtpaApplicationSubmit.$questionValueLocator('List any objections to the draft Notice from either party'),
           ).toHaveText('Test reason to object draft notice of intention to set aside'),
           expect(
-            judgeExuiPages.decideFtpaApplicationSubmit.$changeAnswerToQuestionLocator(
-              'List any objections to the draft Notice from either party',
-            ),
+            judgeExuiPages.decideFtpaApplicationSubmit.$changeAnswerToQuestionLocator('List any objections to the draft Notice from either party'),
           ).toBeVisible(),
           expect(
-            judgeExuiPages.decideFtpaApplicationSubmit.$changeAnswerToQuestionLocator(
-              'List any objections to the draft Notice from either party',
-            ),
+            judgeExuiPages.decideFtpaApplicationSubmit.$changeAnswerToQuestionLocator('List any objections to the draft Notice from either party'),
           ).toHaveText('Change'),
           //Verify table row for Notice communication
           expect(judgeExuiPages.decideFtpaApplicationSubmit.$questionLocator('Notice communication')).toBeVisible(),
@@ -378,9 +377,7 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
           expect(judgeExuiPages.decideFtpaApplicationSubmit.$changeAnswerToQuestionLocator('Tick any applicable points')).toHaveText('Change'),
           //Verify table row for Provide any information that may be helpful to the Upper Tribunal judge
           expect(
-            judgeExuiPages.decideFtpaApplicationSubmit.$questionLocator(
-              'Provide any information that may be helpful to the Upper Tribunal judge',
-            ),
+            judgeExuiPages.decideFtpaApplicationSubmit.$questionLocator('Provide any information that may be helpful to the Upper Tribunal judge'),
           ).toBeVisible(),
           expect(
             judgeExuiPages.decideFtpaApplicationSubmit.$questionValueLocator(
@@ -464,10 +461,14 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
       await test.step('Citizen user: Verify judge has granted permission for application', async () => {
         await cui_apiClient.verifyAppealIsInExpectedStateViaAppealOverviewApi({
           expectedTextToBeOnAppealOverview: 'A judge has granted your application',
+          caseId: caseIdFromBeforeEach,
         });
 
         await cui_pages.appealOverview.page.bringToFront();
         await cui_signOutAndBackIn({ email: citizenUser.email, password: citizenUser.password });
+
+        await cui_pages.caseList.viewExistingApplication({ searchTerm: caseIdFromBeforeEach });
+        await cui_pages.appealOverview.verifyUserIsOnPage();
 
         await Promise.all([
           expect(cui_pages.appealOverview.$static.doThisNextHeading).toBeVisible(),

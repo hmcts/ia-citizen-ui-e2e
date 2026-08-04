@@ -3,6 +3,7 @@ import { Page } from '@playwright/test';
 import {
   StartAppealPage,
   AppealOverviewPage,
+  CaseListPage,
   AboutAppealPage,
   InTheUkPage,
   OutOfCountryProtectionDepartureDatePage,
@@ -101,6 +102,7 @@ export class CuiPages {
 
   public readonly startAppeal: StartAppealPage;
   public readonly appealOverview: AppealOverviewPage;
+  public readonly caseList: CaseListPage;
   public readonly aboutAppeal: AboutAppealPage;
   public readonly inTheUk: InTheUkPage;
   public readonly outOfCountryProtectionDepartureDate: OutOfCountryProtectionDepartureDatePage;
@@ -197,6 +199,7 @@ export class CuiPages {
 
     this.startAppeal = new StartAppealPage(page);
     this.appealOverview = new AppealOverviewPage(page);
+    this.caseList = new CaseListPage(page);
     this.aboutAppeal = new AboutAppealPage(page);
     this.inTheUk = new InTheUkPage(page);
     this.outOfCountryProtectionDepartureDate = new OutOfCountryProtectionDepartureDatePage(page);

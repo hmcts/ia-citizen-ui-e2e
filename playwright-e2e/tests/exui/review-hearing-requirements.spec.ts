@@ -46,6 +46,7 @@ test.describe('Set of tests to verify case officer is able to review hearing req
           doYouWishToProvideSupportingEvidence: 'No',
           reasonWhyHomeOfficeDecisionIsWrong: 'Test reason why the Home Office decision is wrong',
         },
+        caseId: caseId,
       });
 
       await exui_caseOfficerApiClient.submitRequestRespondentReviewEvent({
@@ -67,6 +68,7 @@ test.describe('Set of tests to verify case officer is able to review hearing req
 
       await cui_apiClient.commpleteAndSubmitHearingRequirementsJourneyViaApi({
         pathToTake: 'Maximum Path',
+        caseId: caseId,
       });
     });
 
@@ -288,9 +290,7 @@ test.describe('Set of tests to verify case officer is able to review hearing req
 
         expect(exui_pages.reviewHearingRequirementsSubmit.$questionLocator('Remote hearing')).toBeVisible(),
         expect(exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('Remote hearing')).toBeVisible(),
-        expect(exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('Remote hearing')).toHaveText(
-          'Granted request for remote hearing',
-        ),
+        expect(exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('Remote hearing')).toHaveText('Granted request for remote hearing'),
         expect(exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('Remote hearing')).toBeVisible(),
         expect(exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('Remote hearing')).toHaveText('Change'),
 
@@ -305,12 +305,10 @@ test.describe('Set of tests to verify case officer is able to review hearing req
         expect(exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('Adjustments to accommodate vulnerabilities')).toHaveText(
           'Granted request for vulnerabilities',
         ),
-        expect(
-          exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('Adjustments to accommodate vulnerabilities'),
-        ).toBeVisible(),
-        expect(
-          exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('Adjustments to accommodate vulnerabilities'),
-        ).toHaveText('Change'),
+        expect(exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('Adjustments to accommodate vulnerabilities')).toBeVisible(),
+        expect(exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('Adjustments to accommodate vulnerabilities')).toHaveText(
+          'Change',
+        ),
 
         expect(exui_pages.reviewHearingRequirementsSubmit.$questionLocator('Multimedia decision')).toBeVisible(),
         expect(exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('Multimedia decision')).toBeVisible(),
@@ -348,9 +346,7 @@ test.describe('Set of tests to verify case officer is able to review hearing req
 
         expect(exui_pages.reviewHearingRequirementsSubmit.$questionLocator('In camera court')).toBeVisible(),
         expect(exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('In camera court')).toBeVisible(),
-        expect(exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('In camera court')).toHaveText(
-          'Granted request for in camera court',
-        ),
+        expect(exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('In camera court')).toHaveText('Granted request for in camera court'),
         expect(exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('In camera court')).toBeVisible(),
         expect(exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('In camera court')).toHaveText('Change'),
 
@@ -372,27 +368,21 @@ test.describe('Set of tests to verify case officer is able to review hearing req
         expect(exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('What type of hearing is required?')).toBeVisible(),
         expect(exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('What type of hearing is required?')).toHaveText('Video'),
         expect(exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('What type of hearing is required?')).toBeVisible(),
-        expect(exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('What type of hearing is required?')).toHaveText(
-          'Change',
-        ),
+        expect(exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('What type of hearing is required?')).toHaveText('Change'),
 
         expect(exui_pages.reviewHearingRequirementsSubmit.$questionLocator('Is the appeal suitable to float?')).toBeVisible(),
         expect(exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('Is the appeal suitable to float?')).toBeVisible(),
         expect(exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('Is the appeal suitable to float?')).toHaveText('Yes'),
         expect(exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('Is the appeal suitable to float?')).toBeVisible(),
-        expect(exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('Is the appeal suitable to float?')).toHaveText(
-          'Change',
-        ),
+        expect(exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('Is the appeal suitable to float?')).toHaveText('Change'),
 
-        expect(
-          exui_pages.reviewHearingRequirementsSubmit.$questionLocator('Are there any additional instructions for the hearing?'),
-        ).toBeVisible(),
+        expect(exui_pages.reviewHearingRequirementsSubmit.$questionLocator('Are there any additional instructions for the hearing?')).toBeVisible(),
         expect(
           exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('Are there any additional instructions for the hearing?'),
         ).toBeVisible(),
-        expect(
-          exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('Are there any additional instructions for the hearing?'),
-        ).toHaveText('Yes'),
+        expect(exui_pages.reviewHearingRequirementsSubmit.$questionValueLocator('Are there any additional instructions for the hearing?')).toHaveText(
+          'Yes',
+        ),
         expect(
           exui_pages.reviewHearingRequirementsSubmit.$changeAnswerToQuestionLocator('Are there any additional instructions for the hearing?'),
         ).toBeVisible(),

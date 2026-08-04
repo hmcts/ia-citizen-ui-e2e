@@ -46,6 +46,7 @@ test.describe('Set of tests to verify admin user is able to list a case for hear
           doYouWishToProvideSupportingEvidence: 'No',
           reasonWhyHomeOfficeDecisionIsWrong: 'Test reason why the Home Office decision is wrong',
         },
+        caseId: caseId,
       });
 
       await exui_caseOfficerApiClient.submitRequestRespondentReviewEvent({
@@ -67,6 +68,7 @@ test.describe('Set of tests to verify admin user is able to list a case for hear
 
       await cui_apiClient.commpleteAndSubmitHearingRequirementsJourneyViaApi({
         pathToTake: 'Minimal Path',
+        caseId: caseId,
       });
 
       await exui_caseOfficerApiClient.submitReviewHearingRequirementsEvent({

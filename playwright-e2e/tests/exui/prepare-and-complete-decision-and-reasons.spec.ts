@@ -23,7 +23,9 @@ test.describe('Set of tests to verify judge user is able to prepare and complete
       });
 
       const caseId = await test.step(`Fetch exui case id via api call`, async () => {
-        const caseId = await exui_caseOfficerApiClient.fetchCaseId({ homeOfficeReferenceNumber: appealDetails.homeOfficeReference.toString() });
+        const caseId = await exui_caseOfficerApiClient.fetchCaseId({
+          homeOfficeReferenceNumber: appealDetails.homeOfficeReference.toString(),
+        });
         return caseId;
       });
 
@@ -47,6 +49,7 @@ test.describe('Set of tests to verify judge user is able to prepare and complete
             doYouWishToProvideSupportingEvidence: 'No',
             reasonWhyHomeOfficeDecisionIsWrong: 'Test reason why the Home Office decision is wrong',
           },
+          caseId: caseId,
         });
 
         await exui_caseOfficerApiClient.submitRequestRespondentReviewEvent({
@@ -68,6 +71,7 @@ test.describe('Set of tests to verify judge user is able to prepare and complete
 
         await cui_apiClient.commpleteAndSubmitHearingRequirementsJourneyViaApi({
           pathToTake: 'Minimal Path',
+          caseId: caseId,
         });
 
         await exui_caseOfficerApiClient.submitReviewHearingRequirementsEvent({
@@ -158,9 +162,7 @@ test.describe('Set of tests to verify judge user is able to prepare and complete
         expect(exui_pages.prepareDecisionAndReasonsSubmit.$questionValueLocator('Legal representative for the respondent')).toHaveText(
           `${RespondentRepresentative.firstNames[0]} ${RespondentRepresentative.lastNames[0]}`,
         ),
-        expect(
-          exui_pages.prepareDecisionAndReasonsSubmit.$changeAnswerToQuestionLocator('Legal representative for the respondent'),
-        ).toBeVisible(),
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$changeAnswerToQuestionLocator('Legal representative for the respondent')).toBeVisible(),
       ]);
       await exui_pages.prepareDecisionAndReasonsSubmit.generateDecisionAndReasons();
 
@@ -205,9 +207,7 @@ test.describe('Set of tests to verify judge user is able to prepare and complete
         expect(exui_pages.completeDecisionAndReasonsSubmit.$changeAnswerToQuestionLocator('Decision')).toBeVisible(),
         expect(exui_pages.completeDecisionAndReasonsSubmit.$questionLocator('Decision and reasons')).toBeVisible(),
         expect(exui_pages.completeDecisionAndReasonsSubmit.$questionValueLocator('Decision and reasons')).toBeVisible(),
-        expect(exui_pages.completeDecisionAndReasonsSubmit.$questionValueLocator('Decision and reasons')).toHaveText(
-          'SendDecisionAndReasons.pdf',
-        ),
+        expect(exui_pages.completeDecisionAndReasonsSubmit.$questionValueLocator('Decision and reasons')).toHaveText('SendDecisionAndReasons.pdf'),
         expect(exui_pages.completeDecisionAndReasonsSubmit.$changeAnswerToQuestionLocator('Decision and reasons')).toBeVisible(),
       ]);
       await exui_pages.completeDecisionAndReasonsSubmit.uploadDecisionAndReasons();
