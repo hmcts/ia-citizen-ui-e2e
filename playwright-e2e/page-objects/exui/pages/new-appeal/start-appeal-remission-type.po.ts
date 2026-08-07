@@ -1,11 +1,6 @@
 import { Locator, Page, expect } from '@playwright/test';
 import { ExuiBase } from '../../exui-base';
-
-type RemissionTypeOption =
-  | 'The appellant is not eligible for a fee remission'
-  | 'The appellant has a remission, e.g. Asylum support, Legal Aid, Home Office waiver, Section 17/20'
-  | 'The appellant has applied for help with fees'
-  | 'The appellant wants to apply for an Exceptional Circumstances Remission';
+import { RemissionTypeOption } from '../../../../exui-event-types';
 
 export class StartAppealRemissionTypePage extends ExuiBase {
   constructor(page: Page) {
