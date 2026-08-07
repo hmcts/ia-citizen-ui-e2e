@@ -1,9 +1,6 @@
 import { Locator, Page, expect } from '@playwright/test';
 import { ExuiBase } from '../../exui-base';
-
-type HearingFeeDecisionType =
-  | 'Decision with a hearing. The fee for this type of appeal is £144'
-  | 'Decision without a hearing. The fee for this type of appeal is £82';
+import { HearingFeeDecisionType } from '../../../../exui-event-types';
 
 export class StartAppealHearingFeeDecisionPage extends ExuiBase {
   constructor(page: Page) {

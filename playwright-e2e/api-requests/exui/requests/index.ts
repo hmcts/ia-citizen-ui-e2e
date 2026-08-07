@@ -17,3 +17,4 @@ export * from './case-officer/generate-hearing-bundle.api';
 export * from './case-officer/decision-and-reasons-started.api';
 export * from './judge-user/generate-decision-and-reasons.api';
 export * from './judge-user/send-decision-and-reasons.api';
+export * from './legal-rep/start-appeal.api';

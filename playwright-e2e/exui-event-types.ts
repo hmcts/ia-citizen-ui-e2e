@@ -1,4 +1,4 @@
-import { YesOrNoType } from './citizen-types';
+import { AppealType, Nationality, YesOrNoType } from './citizen-types';
 
 export type RemissionDecisionType = 'approved' | 'partiallyApproved' | 'rejected';
 export type HomeOfficeAppealReviewOutcomeType = 'Decision maintained' | 'Decision withdrawn';
@@ -191,3 +191,13 @@ export type OutOfCountryDecisionType =
   | 'A decision either 1) to remove your client from the UK under the Immigration (European Economic Area) Regulations 2016, where they are currently outside the UK or 2) to deprive your client of British citizenship, where they are currently outside the UK'
   | 'A decision to refuse a permit to enter the UK or entry clearance under the immigration rules and/or the EU Settlement Scheme.';
 export type SponsorContactPreferenceType = 'Email' | 'Text message';
+export type HasOtherAppealsType = 'Yes' | 'Yes, but an appeal number was not provided' | 'No' | "I'm not sure";
+export type HearingFeeDecisionType =
+  | 'Decision with a hearing. The fee for this type of appeal is £144'
+  | 'Decision without a hearing. The fee for this type of appeal is £82';
+export type HearingWihtoutFeeDecisionType = 'Decision with a hearing' | 'Decision without a hearing';
+export type RemissionTypeOption =
+  | 'The appellant is not eligible for a fee remission'
+  | 'The appellant has a remission, e.g. Asylum support, Legal Aid, Home Office waiver, Section 17/20'
+  | 'The appellant has applied for help with fees'
+  | 'The appellant wants to apply for an Exceptional Circumstances Remission';
