@@ -1,7 +1,7 @@
 import { Locator, Page, expect } from '@playwright/test';
 import { ExuiBase } from '../../exui-base';
 
-export class StartAppealHomeOfficeDecisionLetter extends ExuiBase {
+export class StartAppealHomeOfficeDecisionLetterPage extends ExuiBase {
   constructor(page: Page) {
     super(page);
   }

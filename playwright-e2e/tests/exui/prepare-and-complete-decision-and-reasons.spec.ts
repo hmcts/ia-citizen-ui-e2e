@@ -23,7 +23,9 @@ test.describe('Set of tests to verify judge user is able to prepare and complete
       });
 
       const caseId = await test.step(`Fetch exui case id via api call`, async () => {
-        const caseId = await exui_caseOfficerApiClient.fetchCaseId({ homeOfficeReferenceNumber: appealDetails.homeOfficeReference.toString() });
+        const caseId = await exui_caseOfficerApiClient.fetchCaseId({
+          homeOfficeReferenceNumber: appealDetails.homeOfficeReference.toString(),
+        });
         return caseId;
       });
 
@@ -47,6 +49,7 @@ test.describe('Set of tests to verify judge user is able to prepare and complete
             doYouWishToProvideSupportingEvidence: 'No',
             reasonWhyHomeOfficeDecisionIsWrong: 'Test reason why the Home Office decision is wrong',
           },
+          caseId: caseId,
         });
 
         await exui_caseOfficerApiClient.submitRequestRespondentReviewEvent({
@@ -68,6 +71,7 @@ test.describe('Set of tests to verify judge user is able to prepare and complete
 
         await cui_apiClient.commpleteAndSubmitHearingRequirementsJourneyViaApi({
           pathToTake: 'Minimal Path',
+          caseId: caseId,
         });
 
         await exui_caseOfficerApiClient.submitReviewHearingRequirementsEvent({
@@ -102,7 +106,7 @@ test.describe('Set of tests to verify judge user is able to prepare and complete
       });
 
       await test.step(`Judge user: Navigate to case overview page on exui`, async () => {
-        await exui_pages.caseOverviewPage.goTo({ caseId: caseId });
+        await exui_pages.caseOverview.goTo({ caseId: caseId });
       });
     },
   );
@@ -110,18 +114,18 @@ test.describe('Set of tests to verify judge user is able to prepare and complete
   test('Verify judge user is able to prepare and complete decision and reasons', async ({ exui_pages, dataUtils }) => {
     await test.step('Verify correct next steps are displayed on case overview page', async () => {
       await Promise.all([
-        expect(exui_pages.caseOverviewPage.$static.doThisNextHeading).toBeVisible(),
-        expect(exui_pages.caseOverviewPage.$static.doThisNextParagraph).toHaveText('Prepare the Decision and Reasons document'),
-        expect(exui_pages.caseOverviewPage.$static.doThisNextParagraph).toBeVisible(),
+        expect(exui_pages.caseOverview.$static.doThisNextHeading).toBeVisible(),
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph).toHaveText('Prepare the Decision and Reasons document'),
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph).toBeVisible(),
       ]);
     });
 
     await test.step('Select Prepare Decision and Reasons from next steps dropdown and submit event', async () => {
-      await exui_pages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Prepare Decision and Reasons' });
+      await exui_pages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Prepare Decision and Reasons' });
 
-      await exui_pages.prepareDecisionAndReasonsAnonymityOrderPage.verifyUserIsOnPage();
-      await exui_pages.prepareDecisionAndReasonsAnonymityOrderPage.verifyAllTextOnPage();
-      await exui_pages.prepareDecisionAndReasonsAnonymityOrderPage.completePageAndContinue({ anonymityOrderDirection: 'Yes' });
+      await exui_pages.prepareDecisionAndReasonsAnonymityOrder.verifyUserIsOnPage();
+      await exui_pages.prepareDecisionAndReasonsAnonymityOrder.verifyAllTextOnPage();
+      await exui_pages.prepareDecisionAndReasonsAnonymityOrder.completePageAndContinue({ anonymityOrderDirection: 'Yes' });
 
       const AppellantRepresentative = await dataUtils.generateRandomFirstAndLastNames({
         countOfFirstNamesToGenerate: 1,
@@ -132,98 +136,94 @@ test.describe('Set of tests to verify judge user is able to prepare and complete
         countOfLastNamesToGenerate: 1,
       });
 
-      await exui_pages.prepareDecisionAndReasonsLegalRepresentativesPage.verifyUserIsOnPage();
-      await exui_pages.prepareDecisionAndReasonsLegalRepresentativesPage.verifyAllTextOnPage();
-      await exui_pages.prepareDecisionAndReasonsLegalRepresentativesPage.completePageAndContinue({
+      await exui_pages.prepareDecisionAndReasonsLegalRepresentatives.verifyUserIsOnPage();
+      await exui_pages.prepareDecisionAndReasonsLegalRepresentatives.verifyAllTextOnPage();
+      await exui_pages.prepareDecisionAndReasonsLegalRepresentatives.completePageAndContinue({
         appellantRepresentative: `${AppellantRepresentative.firstNames[0]} ${AppellantRepresentative.lastNames[0]}`,
         respondentRepresentative: `${RespondentRepresentative.firstNames[0]} ${RespondentRepresentative.lastNames[0]}`,
       });
 
-      await exui_pages.prepareDecisionAndReasonsSubmitPage.verifyUserIsOnPage();
+      await exui_pages.prepareDecisionAndReasonsSubmit.verifyUserIsOnPage();
       await Promise.all([
-        expect(exui_pages.prepareDecisionAndReasonsSubmitPage.$static.caseRecordHeading).toBeVisible(),
-        expect(exui_pages.prepareDecisionAndReasonsSubmitPage.$static.checkYouAnswersHeading).toBeVisible(),
-        expect(exui_pages.prepareDecisionAndReasonsSubmitPage.$static.checkInformationCarefullyText).toBeVisible(),
-        expect(exui_pages.prepareDecisionAndReasonsSubmitPage.$static.anonymityDirectionHeading).toBeVisible(),
-        expect(exui_pages.prepareDecisionAndReasonsSubmitPage.$static.legalRepresentativesHeading).toBeVisible(),
-        expect(exui_pages.prepareDecisionAndReasonsSubmitPage.$questionLocator('Anonymity direction')).toBeVisible(),
-        expect(exui_pages.prepareDecisionAndReasonsSubmitPage.$questionValueLocator('Anonymity direction')).toHaveText('Yes'),
-        expect(exui_pages.prepareDecisionAndReasonsSubmitPage.$changeAnswerToQuestionLocator('Anonymity direction')).toBeVisible(),
-        expect(exui_pages.prepareDecisionAndReasonsSubmitPage.$questionLocator('Legal representative for the appellant')).toBeVisible(),
-        expect(exui_pages.prepareDecisionAndReasonsSubmitPage.$questionValueLocator('Legal representative for the appellant')).toHaveText(
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$static.caseRecordHeading).toBeVisible(),
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$static.checkYouAnswersHeading).toBeVisible(),
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$static.checkInformationCarefullyText).toBeVisible(),
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$static.anonymityDirectionHeading).toBeVisible(),
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$static.legalRepresentativesHeading).toBeVisible(),
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$questionLocator('Anonymity direction')).toBeVisible(),
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$questionValueLocator('Anonymity direction')).toHaveText('Yes'),
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$changeAnswerToQuestionLocator('Anonymity direction')).toBeVisible(),
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$questionLocator('Legal representative for the appellant')).toBeVisible(),
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$questionValueLocator('Legal representative for the appellant')).toHaveText(
           `${AppellantRepresentative.firstNames[0]} ${AppellantRepresentative.lastNames[0]}`,
         ),
-        expect(exui_pages.prepareDecisionAndReasonsSubmitPage.$changeAnswerToQuestionLocator('Legal representative for the appellant')).toBeVisible(),
-        expect(exui_pages.prepareDecisionAndReasonsSubmitPage.$questionLocator('Legal representative for the respondent')).toBeVisible(),
-        expect(exui_pages.prepareDecisionAndReasonsSubmitPage.$questionValueLocator('Legal representative for the respondent')).toHaveText(
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$changeAnswerToQuestionLocator('Legal representative for the appellant')).toBeVisible(),
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$questionLocator('Legal representative for the respondent')).toBeVisible(),
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$questionValueLocator('Legal representative for the respondent')).toHaveText(
           `${RespondentRepresentative.firstNames[0]} ${RespondentRepresentative.lastNames[0]}`,
         ),
-        expect(
-          exui_pages.prepareDecisionAndReasonsSubmitPage.$changeAnswerToQuestionLocator('Legal representative for the respondent'),
-        ).toBeVisible(),
+        expect(exui_pages.prepareDecisionAndReasonsSubmit.$changeAnswerToQuestionLocator('Legal representative for the respondent')).toBeVisible(),
       ]);
-      await exui_pages.prepareDecisionAndReasonsSubmitPage.generateDecisionAndReasons();
+      await exui_pages.prepareDecisionAndReasonsSubmit.generateDecisionAndReasons();
 
-      await exui_pages.prepareDecisionAndReasonsConfirmPage.verifyUserIsOnPage();
-      await exui_pages.prepareDecisionAndReasonsConfirmPage.verifyAllTextOnPage();
-      await exui_pages.prepareDecisionAndReasonsConfirmPage.returnToCaseDetails();
+      await exui_pages.prepareDecisionAndReasonsConfirm.verifyUserIsOnPage();
+      await exui_pages.prepareDecisionAndReasonsConfirm.verifyAllTextOnPage();
+      await exui_pages.prepareDecisionAndReasonsConfirm.returnToCaseDetails();
     });
 
     await test.step('Verify correct next steps are displayed once prepare decision and reasons event has been submitted', async () => {
-      await exui_pages.caseOverviewPage.verifyUserIsOnPage({});
-      await exui_pages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Prepare Decision and Reasons' });
+      await exui_pages.caseOverview.verifyUserIsOnPage({});
+      await exui_pages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Prepare Decision and Reasons' });
       await Promise.all([
-        expect(exui_pages.caseOverviewPage.$static.doThisNextHeading).toBeVisible(),
-        expect(exui_pages.caseOverviewPage.$static.doThisNextParagraph.nth(0)).toBeVisible(),
-        expect(exui_pages.caseOverviewPage.$static.doThisNextParagraph.nth(0)).toHaveText(
+        expect(exui_pages.caseOverview.$static.doThisNextHeading).toBeVisible(),
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(0)).toBeVisible(),
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(0)).toHaveText(
           'Go to the Documents tab to download and complete the Decision and Reasons document.',
         ),
-        expect(exui_pages.caseOverviewPage.$static.doThisNextParagraph.nth(1)).toBeVisible(),
-        expect(exui_pages.caseOverviewPage.$static.doThisNextParagraph.nth(1)).toHaveText('You should then upload and send the completed document.'),
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(1)).toBeVisible(),
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(1)).toHaveText('You should then upload and send the completed document.'),
       ]);
     });
 
     await test.step('Select Complete decision and reasons from next steps dropdown and submit event', async () => {
-      await exui_pages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Complete decision and reasons' });
+      await exui_pages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Complete decision and reasons' });
 
-      await exui_pages.completeDecisionAndReasonsPage.verifyUserIsOnPage();
-      await exui_pages.completeDecisionAndReasonsPage.verifyAllTextOnPage();
-      await exui_pages.completeDecisionAndReasonsPage.completePageAndContinue({ decision: 'Allowed' });
+      await exui_pages.completeDecisionAndReasons.verifyUserIsOnPage();
+      await exui_pages.completeDecisionAndReasons.verifyAllTextOnPage();
+      await exui_pages.completeDecisionAndReasons.completePageAndContinue({ decision: 'Allowed' });
 
-      await exui_pages.completeDecisionAndReasonsUploadDecisionPage.verifyUserIsOnPage();
-      await exui_pages.completeDecisionAndReasonsUploadDecisionPage.verifyAllTextOnPage();
-      await exui_pages.completeDecisionAndReasonsUploadDecisionPage.completePageAndContinue({});
+      await exui_pages.completeDecisionAndReasonsUploadDecision.verifyUserIsOnPage();
+      await exui_pages.completeDecisionAndReasonsUploadDecision.verifyAllTextOnPage();
+      await exui_pages.completeDecisionAndReasonsUploadDecision.completePageAndContinue({});
 
-      await exui_pages.completeDecisionAndReasonsSubmitPage.verifyUserIsOnPage();
+      await exui_pages.completeDecisionAndReasonsSubmit.verifyUserIsOnPage();
       await Promise.all([
-        expect(exui_pages.completeDecisionAndReasonsSubmitPage.$static.caseRecordHeading).toBeVisible(),
-        expect(exui_pages.completeDecisionAndReasonsSubmitPage.$static.checkYouAnswersHeading).toBeVisible(),
-        expect(exui_pages.completeDecisionAndReasonsSubmitPage.$static.checkInformationCarefullyText).toBeVisible(),
-        expect(exui_pages.completeDecisionAndReasonsSubmitPage.$questionLocator('Decision')).toBeVisible(),
-        expect(exui_pages.completeDecisionAndReasonsSubmitPage.$questionValueLocator('Decision')).toBeVisible(),
-        expect(exui_pages.completeDecisionAndReasonsSubmitPage.$questionValueLocator('Decision')).toHaveText('Allowed'),
-        expect(exui_pages.completeDecisionAndReasonsSubmitPage.$changeAnswerToQuestionLocator('Decision')).toBeVisible(),
-        expect(exui_pages.completeDecisionAndReasonsSubmitPage.$questionLocator('Decision and reasons')).toBeVisible(),
-        expect(exui_pages.completeDecisionAndReasonsSubmitPage.$questionValueLocator('Decision and reasons')).toBeVisible(),
-        expect(exui_pages.completeDecisionAndReasonsSubmitPage.$questionValueLocator('Decision and reasons')).toHaveText(
-          'SendDecisionAndReasons.pdf',
-        ),
-        expect(exui_pages.completeDecisionAndReasonsSubmitPage.$changeAnswerToQuestionLocator('Decision and reasons')).toBeVisible(),
+        expect(exui_pages.completeDecisionAndReasonsSubmit.$static.caseRecordHeading).toBeVisible(),
+        expect(exui_pages.completeDecisionAndReasonsSubmit.$static.checkYouAnswersHeading).toBeVisible(),
+        expect(exui_pages.completeDecisionAndReasonsSubmit.$static.checkInformationCarefullyText).toBeVisible(),
+        expect(exui_pages.completeDecisionAndReasonsSubmit.$questionLocator('Decision')).toBeVisible(),
+        expect(exui_pages.completeDecisionAndReasonsSubmit.$questionValueLocator('Decision')).toBeVisible(),
+        expect(exui_pages.completeDecisionAndReasonsSubmit.$questionValueLocator('Decision')).toHaveText('Allowed'),
+        expect(exui_pages.completeDecisionAndReasonsSubmit.$changeAnswerToQuestionLocator('Decision')).toBeVisible(),
+        expect(exui_pages.completeDecisionAndReasonsSubmit.$questionLocator('Decision and reasons')).toBeVisible(),
+        expect(exui_pages.completeDecisionAndReasonsSubmit.$questionValueLocator('Decision and reasons')).toBeVisible(),
+        expect(exui_pages.completeDecisionAndReasonsSubmit.$questionValueLocator('Decision and reasons')).toHaveText('SendDecisionAndReasons.pdf'),
+        expect(exui_pages.completeDecisionAndReasonsSubmit.$changeAnswerToQuestionLocator('Decision and reasons')).toBeVisible(),
       ]);
-      await exui_pages.completeDecisionAndReasonsSubmitPage.uploadDecisionAndReasons();
+      await exui_pages.completeDecisionAndReasonsSubmit.uploadDecisionAndReasons();
 
-      await exui_pages.completeDecisionAndReasonsConfirmPage.verifyUserIsOnPage();
-      await exui_pages.completeDecisionAndReasonsConfirmPage.verifyAllTextOnPage();
-      await exui_pages.completeDecisionAndReasonsConfirmPage.returnToCaseDetails();
+      await exui_pages.completeDecisionAndReasonsConfirm.verifyUserIsOnPage();
+      await exui_pages.completeDecisionAndReasonsConfirm.verifyAllTextOnPage();
+      await exui_pages.completeDecisionAndReasonsConfirm.returnToCaseDetails();
     });
 
     await test.step('Verify correct next steps are displayed once complete decision and reasons event has been submitted', async () => {
-      await exui_pages.caseOverviewPage.verifyUserIsOnPage({});
-      await exui_pages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Complete decision and reasons' });
+      await exui_pages.caseOverview.verifyUserIsOnPage({});
+      await exui_pages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Complete decision and reasons' });
       await Promise.all([
-        expect(exui_pages.caseOverviewPage.$static.whatHappensNextHeading).toBeVisible(),
-        expect(exui_pages.caseOverviewPage.$static.whatHappensNextParagraph).toBeVisible(),
-        expect(exui_pages.caseOverviewPage.$static.whatHappensNextParagraph).toHaveText('No further action required.'),
+        expect(exui_pages.caseOverview.$static.whatHappensNextHeading).toBeVisible(),
+        expect(exui_pages.caseOverview.$static.whatHappensNextParagraph).toBeVisible(),
+        expect(exui_pages.caseOverview.$static.whatHappensNextParagraph).toHaveText('No further action required.'),
       ]);
     });
   });

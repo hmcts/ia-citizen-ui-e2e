@@ -1,8 +1,8 @@
 import { Page, Locator, expect } from '@playwright/test';
-import { CuiBase } from '../../../cui-base';
-import { DataUtils } from '../../../../../utils';
+import { Base } from './base';
+import { DataUtils } from '../utils';
 
-export class PaymentDetailsPage extends CuiBase {
+export class CardPaymentDetailsPage extends Base {
   private dataUtils: DataUtils = new DataUtils();
   constructor(page: Page) {
     super(page);

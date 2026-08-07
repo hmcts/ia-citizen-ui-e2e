@@ -31,21 +31,21 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
       const caseOfficerExuiPages =
         await test.step('Case Officer: Select request respondent evidence from next steps dropdown and submit event', async () => {
           const caseOfficerExuiPages = exui_pages;
-          await caseOfficerExuiPages.caseOverviewPage.goTo({ caseId: caseId });
+          await caseOfficerExuiPages.caseOverview.goTo({ caseId: caseId });
 
-          await caseOfficerExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Request respondent evidence' });
+          await caseOfficerExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Request respondent evidence' });
 
-          await caseOfficerExuiPages.requestRespondentEvidencePage.verifyUserIsOnPage();
-          await caseOfficerExuiPages.requestRespondentEvidencePage.continueOnToNextPage();
+          await caseOfficerExuiPages.requestRespondentEvidence.verifyUserIsOnPage();
+          await caseOfficerExuiPages.requestRespondentEvidence.continueOnToNextPage();
 
-          await caseOfficerExuiPages.requestRespondentEvidenceSubmitPage.verifyUserIsOnPage();
-          await caseOfficerExuiPages.requestRespondentEvidenceSubmitPage.sendDirection();
+          await caseOfficerExuiPages.requestRespondentEvidenceSubmit.verifyUserIsOnPage();
+          await caseOfficerExuiPages.requestRespondentEvidenceSubmit.sendDirection();
 
-          await caseOfficerExuiPages.requestRespondentEvidenceConfirmPage.verifyUserIsOnPage();
-          await caseOfficerExuiPages.requestRespondentEvidenceConfirmPage.returnToCaseDetails();
+          await caseOfficerExuiPages.requestRespondentEvidenceConfirm.verifyUserIsOnPage();
+          await caseOfficerExuiPages.requestRespondentEvidenceConfirm.returnToCaseDetails();
 
-          await caseOfficerExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-          await caseOfficerExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Request respondent evidence' });
+          await caseOfficerExuiPages.caseOverview.verifyUserIsOnPage({});
+          await caseOfficerExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Request respondent evidence' });
 
           return caseOfficerExuiPages;
         });
@@ -55,47 +55,47 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
           const homeOfficeUserNewBrowserContextAndPage = await newBrowserContextAndPage({ user: 'homeOfficeUser' });
           const homeOfficeUserExuiPages = await exui_pages.newPageContext({ pageContext: homeOfficeUserNewBrowserContextAndPage });
 
-          await homeOfficeUserExuiPages.caseOverviewPage.goTo({ caseId: caseId });
+          await homeOfficeUserExuiPages.caseOverview.goTo({ caseId: caseId });
 
-          await homeOfficeUserExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Upload Home Office bundle' });
+          await homeOfficeUserExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Upload Home Office bundle' });
 
-          await homeOfficeUserExuiPages.uploadHomeOfficeBundlePage.verifyUserIsOnPage();
-          await homeOfficeUserExuiPages.uploadHomeOfficeBundlePage.completePageAndContinue({ description: 'Test upload of Home Office bundle' });
+          await homeOfficeUserExuiPages.uploadHomeOfficeBundle.verifyUserIsOnPage();
+          await homeOfficeUserExuiPages.uploadHomeOfficeBundle.completePageAndContinue({ description: 'Test upload of Home Office bundle' });
 
-          await homeOfficeUserExuiPages.uploadHomeOfficeBundleSubmitPage.verifyUserIsOnPage();
-          await homeOfficeUserExuiPages.uploadHomeOfficeBundleSubmitPage.submitEvent();
+          await homeOfficeUserExuiPages.uploadHomeOfficeBundleSubmit.verifyUserIsOnPage();
+          await homeOfficeUserExuiPages.uploadHomeOfficeBundleSubmit.submitEvent();
 
-          await homeOfficeUserExuiPages.uploadHomeOfficeBundleConfirmPage.verifyUserIsOnPage();
-          await homeOfficeUserExuiPages.uploadHomeOfficeBundleConfirmPage.returnToCaseDetails();
+          await homeOfficeUserExuiPages.uploadHomeOfficeBundleConfirm.verifyUserIsOnPage();
+          await homeOfficeUserExuiPages.uploadHomeOfficeBundleConfirm.returnToCaseDetails();
 
-          await homeOfficeUserExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-          await homeOfficeUserExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Upload Home Office bundle' });
+          await homeOfficeUserExuiPages.caseOverview.verifyUserIsOnPage({});
+          await homeOfficeUserExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Upload Home Office bundle' });
 
           return homeOfficeUserExuiPages;
         });
 
       await test.step('Case Officer: Refresh application overview page until expected next steps has been shown', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.page.bringToFront();
-        await caseOfficerExuiPages.caseOverviewPage.refreshPageUntilExpectedTextIsVisible({
+        await caseOfficerExuiPages.caseOverview.page.bringToFront();
+        await caseOfficerExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
           expectedText: 'The respondent has submitted their evidence.',
           caseId: caseId,
         });
       });
 
       await test.step('Case Officer: Select Aip - request appeal reasons from next step dropdown and submit event', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'AiP - Request Appeal Reasons' });
+        await caseOfficerExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'AiP - Request Appeal Reasons' });
 
-        await caseOfficerExuiPages.aipRequestAppealReasonsPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.aipRequestAppealReasonsPage.continueOnToNextPage();
+        await caseOfficerExuiPages.aipRequestAppealReasons.verifyUserIsOnPage();
+        await caseOfficerExuiPages.aipRequestAppealReasons.continueOnToNextPage();
 
-        await caseOfficerExuiPages.aipRequestAppealReasonsSubmitPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.aipRequestAppealReasonsSubmitPage.sendDirection();
+        await caseOfficerExuiPages.aipRequestAppealReasonsSubmit.verifyUserIsOnPage();
+        await caseOfficerExuiPages.aipRequestAppealReasonsSubmit.sendDirection();
 
-        await caseOfficerExuiPages.aipRequestAppealReasonsConfirmPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.aipRequestAppealReasonsConfirmPage.returnToCaseDetails();
+        await caseOfficerExuiPages.aipRequestAppealReasonsConfirm.verifyUserIsOnPage();
+        await caseOfficerExuiPages.aipRequestAppealReasonsConfirm.returnToCaseDetails();
 
-        await caseOfficerExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-        await caseOfficerExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'AiP - Request Appeal Reasons' });
+        await caseOfficerExuiPages.caseOverview.verifyUserIsOnPage({});
+        await caseOfficerExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'AiP - Request Appeal Reasons' });
       });
 
       await test.step('Citizen Api: Submit appeal reasons', async () => {
@@ -105,223 +105,224 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
             reasonWhyHomeOfficeDecisionIsWrong: 'The home office decision is wrong test reason ',
             doYouWishToProvideSupportingEvidence: 'No',
           },
+          caseId: caseId,
         });
       });
 
       await test.step('Case Officer: Refresh application overview page until expected next step has been shown', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.refreshPageUntilExpectedTextIsVisible({
+        await caseOfficerExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
           expectedText: "Review the appellant's case in the appeal tab.",
           caseId: caseId,
         });
       });
 
       await test.step('Case Officer: Select request respondent review from next steps dropdown and submit event', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Request respondent review' });
+        await caseOfficerExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Request respondent review' });
 
-        await caseOfficerExuiPages.requestRespondentReviewPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.requestRespondentReviewPage.continueOnToNextPage();
+        await caseOfficerExuiPages.requestRespondentReview.verifyUserIsOnPage();
+        await caseOfficerExuiPages.requestRespondentReview.continueOnToNextPage();
 
-        await caseOfficerExuiPages.requestRespondentReviewSubmitPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.requestRespondentReviewSubmitPage.sendDirection();
+        await caseOfficerExuiPages.requestRespondentReviewSubmit.verifyUserIsOnPage();
+        await caseOfficerExuiPages.requestRespondentReviewSubmit.sendDirection();
 
-        await caseOfficerExuiPages.requestRespondentReviewConfirmPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.requestRespondentReviewConfirmPage.returnToCaseDetails();
+        await caseOfficerExuiPages.requestRespondentReviewConfirm.verifyUserIsOnPage();
+        await caseOfficerExuiPages.requestRespondentReviewConfirm.returnToCaseDetails();
 
-        await caseOfficerExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-        await caseOfficerExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Request respondent review' });
+        await caseOfficerExuiPages.caseOverview.verifyUserIsOnPage({});
+        await caseOfficerExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Request respondent review' });
       });
 
       await test.step('Home Office User: Refresh application overview page until expected next step is shown', async () => {
-        await homeOfficeUserExuiPages.caseOverviewPage.page.bringToFront();
-        await homeOfficeUserExuiPages.caseOverviewPage.refreshPageUntilExpectedTextIsVisible({
+        await homeOfficeUserExuiPages.caseOverview.page.bringToFront();
+        await homeOfficeUserExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
           expectedText: 'The Appeal Skeleton Argument is ready to view in the documents tab.',
           caseId: caseId,
         });
       });
 
       await test.step('Home Office User: Select upload the appeal response from next steps drop down and submit event', async () => {
-        await homeOfficeUserExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Upload the appeal response' });
+        await homeOfficeUserExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Upload the appeal response' });
 
-        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseReviewOutcomePage.verifyUserIsOnPage();
-        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseReviewOutcomePage.completePageAndContinue({
+        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseReviewOutcome.verifyUserIsOnPage();
+        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseReviewOutcome.completePageAndContinue({
           appealReviewOutcome: 'Decision maintained',
         });
 
-        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponsePage.verifyUserIsOnPage();
-        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponsePage.completePageAndContinue({});
+        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponse.verifyUserIsOnPage();
+        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponse.completePageAndContinue({});
 
-        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseSubmitPage.verifyUserIsOnPage();
-        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseSubmitPage.submitEvent();
+        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseSubmit.verifyUserIsOnPage();
+        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseSubmit.submitEvent();
 
-        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseConfirmPage.verifyUserIsOnPage();
-        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseConfirmPage.returnToCaseDetails();
+        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseConfirm.verifyUserIsOnPage();
+        await homeOfficeUserExuiPages.uploadHomeOfficeAppealResponseConfirm.returnToCaseDetails();
 
-        await homeOfficeUserExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-        await homeOfficeUserExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Upload the appeal response' });
+        await homeOfficeUserExuiPages.caseOverview.verifyUserIsOnPage({});
+        await homeOfficeUserExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Upload the appeal response' });
       });
 
       await test.step('Case Officer: Refresh application overview page until expected next step is shown', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.page.bringToFront();
-        await caseOfficerExuiPages.caseOverviewPage.refreshPageUntilExpectedTextIsVisible({
+        await caseOfficerExuiPages.caseOverview.page.bringToFront();
+        await caseOfficerExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
           expectedText: 'Check the response uploaded by the respondent.',
           caseId: caseId,
         });
       });
 
       await test.step('Case Officer: Select review home office response from next steps dropdown and submit event', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Review Home Office response' });
+        await caseOfficerExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Review Home Office response' });
 
-        await caseOfficerExuiPages.reviewHomeOfficeResponsePage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHomeOfficeResponsePage.continueOnToNextPage();
+        await caseOfficerExuiPages.reviewHomeOfficeResponse.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHomeOfficeResponse.continueOnToNextPage();
 
-        await caseOfficerExuiPages.reviewHomeOfficeResponseSubmitPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHomeOfficeResponseSubmitPage.submitEvent();
+        await caseOfficerExuiPages.reviewHomeOfficeResponseSubmit.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHomeOfficeResponseSubmit.submitEvent();
 
-        await caseOfficerExuiPages.reviewHomeOfficeResponseConfirmPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHomeOfficeResponseConfirmPage.returnToCaseDetails();
+        await caseOfficerExuiPages.reviewHomeOfficeResponseConfirm.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHomeOfficeResponseConfirm.returnToCaseDetails();
 
-        await caseOfficerExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-        await caseOfficerExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Review Home Office response' });
+        await caseOfficerExuiPages.caseOverview.verifyUserIsOnPage({});
+        await caseOfficerExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Review Home Office response' });
       });
 
       await test.step('Case Officer: Select request hearing requirements from next steps dropdown and submit event', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Request hearing requirements' });
+        await caseOfficerExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Request hearing requirements' });
 
-        await caseOfficerExuiPages.requestHearingRequirementsPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.requestHearingRequirementsPage.submitEvent();
+        await caseOfficerExuiPages.requestHearingRequirements.verifyUserIsOnPage();
+        await caseOfficerExuiPages.requestHearingRequirements.submitEvent();
 
-        await caseOfficerExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-        await caseOfficerExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Request hearing requirements' });
+        await caseOfficerExuiPages.caseOverview.verifyUserIsOnPage({});
+        await caseOfficerExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Request hearing requirements' });
       });
 
       await test.step('Citizen Api: Submit hearing requirements', async () => {
-        await cui_apiClient.commpleteAndSubmitHearingRequirementsJourneyViaApi({ pathToTake: 'Minimal Path' });
+        await cui_apiClient.commpleteAndSubmitHearingRequirementsJourneyViaApi({ pathToTake: 'Minimal Path', caseId: caseId });
       });
 
       await test.step('Case Officer: Refresh application overview page until expected next step is shown', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.refreshPageUntilExpectedTextIsVisible({
+        await caseOfficerExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
           expectedText: 'You can view the hearing requirements and any requests for additional adjustments in the Hearing and appointment tab.',
           caseId: caseId,
         });
       });
 
       await test.step('Case Officer: Select review hearing requirements from next steps dropdown and submit event', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Review hearing requirements' });
+        await caseOfficerExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Review hearing requirements' });
 
-        await caseOfficerExuiPages.reviewHearingRequirementsPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHearingRequirementsPage.continueOntoNextPage();
+        await caseOfficerExuiPages.reviewHearingRequirements.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHearingRequirements.continueOntoNextPage();
 
-        await caseOfficerExuiPages.reviewHearingRequirementsRemoteHearingPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHearingRequirementsRemoteHearingPage.completePageAndContinue({
+        await caseOfficerExuiPages.reviewHearingRequirementsRemoteHearing.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsRemoteHearing.completePageAndContinue({
           isRemoteHearingAllowed: 'Granted',
           description: 'Granted request for remote hearing',
         });
 
-        await caseOfficerExuiPages.reviewHearingRequirementsPersonalVulnerabilitiesPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHearingRequirementsPersonalVulnerabilitiesPage.continueOntoNextPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsPersonalVulnerabilities.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsPersonalVulnerabilities.continueOntoNextPage();
 
-        await caseOfficerExuiPages.reviewHearingRequirementsMultimediaEvidencePage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHearingRequirementsMultimediaEvidencePage.continueOntoNextPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsMultimediaEvidence.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsMultimediaEvidence.continueOntoNextPage();
 
-        await caseOfficerExuiPages.reviewHearingRequirementsSingleSexCourtPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHearingRequirementsSingleSexCourtPage.continueOntoNextPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsSingleSexCourt.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsSingleSexCourt.continueOntoNextPage();
 
-        await caseOfficerExuiPages.reviewHearingRequirementsInCameraCourtPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHearingRequirementsInCameraCourtPage.continueOntoNextPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsInCameraCourt.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsInCameraCourt.continueOntoNextPage();
 
-        await caseOfficerExuiPages.reviewHearingRequirementsAddtionalRequirementsPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHearingRequirementsAddtionalRequirementsPage.continueOntoNextPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsAddtionalRequirements.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsAddtionalRequirements.continueOntoNextPage();
 
-        await caseOfficerExuiPages.reviewHearingRequirementsHearingChannelPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHearingRequirementsHearingChannelPage.completePageAndContinue({ hearingChannel: 'Video' });
+        await caseOfficerExuiPages.reviewHearingRequirementsHearingChannel.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsHearingChannel.completePageAndContinue({ hearingChannel: 'Video' });
 
-        await caseOfficerExuiPages.reviewHearingRequirementsAppealSuitableToFloatPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHearingRequirementsAppealSuitableToFloatPage.completePageAndContinue({
+        await caseOfficerExuiPages.reviewHearingRequirementsAppealSuitableToFloat.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsAppealSuitableToFloat.completePageAndContinue({
           isAppealSuitableToFloat: 'Yes',
         });
 
-        await caseOfficerExuiPages.reviewHearingRequirementsAdditionalIntructionsPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHearingRequirementsAdditionalIntructionsPage.completePageAndContinue({
+        await caseOfficerExuiPages.reviewHearingRequirementsAdditionalIntructions.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsAdditionalIntructions.completePageAndContinue({
           anyAddtionalIntructions: 'No',
         });
 
-        await caseOfficerExuiPages.reviewHearingRequirementsSubmitPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHearingRequirementsSubmitPage.submitEvent();
+        await caseOfficerExuiPages.reviewHearingRequirementsSubmit.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsSubmit.submitEvent();
 
-        await caseOfficerExuiPages.reviewHearingRequirementsConfirmPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.reviewHearingRequirementsConfirmPage.returnToCaseDetails();
+        await caseOfficerExuiPages.reviewHearingRequirementsConfirm.verifyUserIsOnPage();
+        await caseOfficerExuiPages.reviewHearingRequirementsConfirm.returnToCaseDetails();
 
-        await caseOfficerExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-        await caseOfficerExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Review hearing requirements' });
+        await caseOfficerExuiPages.caseOverview.verifyUserIsOnPage({});
+        await caseOfficerExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Review hearing requirements' });
       });
 
       const adminOfficerExuiPages = await test.step('Admin user: Select list case from next steps dropdown and submit event', async () => {
         const adminOfficerNewBrowserContextAndPage = await newBrowserContextAndPage({ user: 'adminOfficer' });
         const adminOfficerExuiPages = await exui_pages.newPageContext({ pageContext: adminOfficerNewBrowserContextAndPage });
 
-        await adminOfficerExuiPages.caseOverviewPage.goTo({ caseId: caseId });
+        await adminOfficerExuiPages.caseOverview.goTo({ caseId: caseId });
 
-        await adminOfficerExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'List the case' });
+        await adminOfficerExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'List the case' });
 
-        await adminOfficerExuiPages.listCasePage.verifyUserIsOnPage();
-        await adminOfficerExuiPages.listCasePage.completePageAndContinue({
+        await adminOfficerExuiPages.listCase.verifyUserIsOnPage();
+        await adminOfficerExuiPages.listCase.completePageAndContinue({
           listingLocation: 'Newport Tribunal Centre - Columbus House',
           remoteHearing: 'Yes',
           dateToSet: 'tomorrow',
           hourToSet: 13,
         });
 
-        await adminOfficerExuiPages.listCaseSubmitPage.verifyUserIsOnPage();
-        await adminOfficerExuiPages.listCaseSubmitPage.listCase();
+        await adminOfficerExuiPages.listCaseSubmit.verifyUserIsOnPage();
+        await adminOfficerExuiPages.listCaseSubmit.listCase();
 
-        await adminOfficerExuiPages.listCaseConfirmPage.verifyUserIsOnPage();
-        await adminOfficerExuiPages.listCaseConfirmPage.returnToCaseDetails();
+        await adminOfficerExuiPages.listCaseConfirm.verifyUserIsOnPage();
+        await adminOfficerExuiPages.listCaseConfirm.returnToCaseDetails();
 
-        await adminOfficerExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-        await adminOfficerExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'List the case' });
+        await adminOfficerExuiPages.caseOverview.verifyUserIsOnPage({});
+        await adminOfficerExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'List the case' });
 
         return adminOfficerExuiPages;
       });
 
       await test.step('Case Officer: Refresh application overview page until expected next step is shown', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.page.bringToFront();
-        await caseOfficerExuiPages.caseOverviewPage.refreshPageUntilExpectedTextIsVisible({
+        await caseOfficerExuiPages.caseOverview.page.bringToFront();
+        await caseOfficerExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
           expectedText: 'You must create a case summary for the judge to use at the hearing.',
           caseId: caseId,
         });
       });
 
       await test.step('Case Officer: Select Create case summary from next steps dropdown and submit event', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Create case summary' });
+        await caseOfficerExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Create case summary' });
 
-        await caseOfficerExuiPages.createCaseSummaryPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.createCaseSummaryPage.completePageAndContinue({});
+        await caseOfficerExuiPages.createCaseSummary.verifyUserIsOnPage();
+        await caseOfficerExuiPages.createCaseSummary.completePageAndContinue({});
 
-        await caseOfficerExuiPages.createCaseSummarySubmitPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.createCaseSummarySubmitPage.uploadDocument();
+        await caseOfficerExuiPages.createCaseSummarySubmit.verifyUserIsOnPage();
+        await caseOfficerExuiPages.createCaseSummarySubmit.uploadDocument();
 
-        await caseOfficerExuiPages.createCaseSummaryConfirmPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.createCaseSummaryConfirmPage.returnToCaseDetails();
+        await caseOfficerExuiPages.createCaseSummaryConfirm.verifyUserIsOnPage();
+        await caseOfficerExuiPages.createCaseSummaryConfirm.returnToCaseDetails();
 
-        await caseOfficerExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-        await caseOfficerExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Create case summary' });
+        await caseOfficerExuiPages.caseOverview.verifyUserIsOnPage({});
+        await caseOfficerExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Create case summary' });
       });
 
       await test.step('Case Officer: Select Generate hearing bundle from next steps dropdown and submit event', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Generate hearing bundle' });
+        await caseOfficerExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Generate hearing bundle' });
 
-        await caseOfficerExuiPages.generateHearingBundlePage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.generateHearingBundlePage.submitGenerateHearingBundleEvent();
+        await caseOfficerExuiPages.generateHearingBundle.verifyUserIsOnPage();
+        await caseOfficerExuiPages.generateHearingBundle.submitGenerateHearingBundleEvent();
 
-        await caseOfficerExuiPages.generateHearingBundleConfirmPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.generateHearingBundleConfirmPage.returnToCaseDetails();
+        await caseOfficerExuiPages.generateHearingBundleConfirm.verifyUserIsOnPage();
+        await caseOfficerExuiPages.generateHearingBundleConfirm.returnToCaseDetails();
 
-        await caseOfficerExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-        await caseOfficerExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Generate hearing bundle' });
+        await caseOfficerExuiPages.caseOverview.verifyUserIsOnPage({});
+        await caseOfficerExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Generate hearing bundle' });
       });
 
       await test.step('Case Officer: Refresh application overview page until expected next step is shown', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.refreshPageUntilExpectedTextIsVisible({
+        await caseOfficerExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
           caseId: caseId,
           expectedText: 'You can start to create the decision and reasons document.',
           timeoutInSeconds: 90_000,
@@ -329,30 +330,30 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
       });
 
       await test.step('Case Officer: Select Start decision and reasons from next steps dropdown and submit event', async () => {
-        await caseOfficerExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Start decision and reasons' });
+        await caseOfficerExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Start decision and reasons' });
 
-        await caseOfficerExuiPages.startDecisionAndReasonsPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.startDecisionAndReasonsPage.completePageAndContinue({ caseIntroduction: 'This is a test case introduction' });
+        await caseOfficerExuiPages.startDecisionAndReasons.verifyUserIsOnPage();
+        await caseOfficerExuiPages.startDecisionAndReasons.completePageAndContinue({ caseIntroduction: 'This is a test case introduction' });
 
-        await caseOfficerExuiPages.decisionAndReasonsStartedAppellantSummaryPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.decisionAndReasonsStartedAppellantSummaryPage.completePageAndContinue({
+        await caseOfficerExuiPages.decisionAndReasonsStartedAppellantSummary.verifyUserIsOnPage();
+        await caseOfficerExuiPages.decisionAndReasonsStartedAppellantSummary.completePageAndContinue({
           appellantCaseSummary: 'This is a test appellant case summary',
         });
 
-        await caseOfficerExuiPages.decisionAndReasonsStartedImmigrationHistoryPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.decisionAndReasonsStartedImmigrationHistoryPage.completePageAndContinue({ agreeToImmigrationHistory: 'Yes' });
+        await caseOfficerExuiPages.decisionAndReasonsStartedImmigrationHistory.verifyUserIsOnPage();
+        await caseOfficerExuiPages.decisionAndReasonsStartedImmigrationHistory.completePageAndContinue({ agreeToImmigrationHistory: 'Yes' });
 
-        await caseOfficerExuiPages.decisionAndReasonsStartedScheduleOfIssuesPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.decisionAndReasonsStartedScheduleOfIssuesPage.completePageAndContinue({ agreeToScheduleOfIssues: 'Yes' });
+        await caseOfficerExuiPages.decisionAndReasonsStartedScheduleOfIssues.verifyUserIsOnPage();
+        await caseOfficerExuiPages.decisionAndReasonsStartedScheduleOfIssues.completePageAndContinue({ agreeToScheduleOfIssues: 'Yes' });
 
-        await caseOfficerExuiPages.decisionAndReasonsStartedSubmitPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.decisionAndReasonsStartedSubmitPage.saveCase();
+        await caseOfficerExuiPages.decisionAndReasonsStartedSubmit.verifyUserIsOnPage();
+        await caseOfficerExuiPages.decisionAndReasonsStartedSubmit.saveCase();
 
-        await caseOfficerExuiPages.decisionAndReasonsStartedConfirmPage.verifyUserIsOnPage();
-        await caseOfficerExuiPages.decisionAndReasonsStartedConfirmPage.returnToCaseDetails();
+        await caseOfficerExuiPages.decisionAndReasonsStartedConfirm.verifyUserIsOnPage();
+        await caseOfficerExuiPages.decisionAndReasonsStartedConfirm.returnToCaseDetails();
 
-        await caseOfficerExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-        await caseOfficerExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Start decision and reasons' });
+        await caseOfficerExuiPages.caseOverview.verifyUserIsOnPage({});
+        await caseOfficerExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Start decision and reasons' });
       });
 
       const judgeUserExuiPages =
@@ -360,45 +361,45 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
           const juedgeUserNewBrowserContextAndPage = await newBrowserContextAndPage({ user: 'judgeUser' });
           const judgeUserExuiPages = await exui_pages.newPageContext({ pageContext: juedgeUserNewBrowserContextAndPage });
 
-          await judgeUserExuiPages.caseOverviewPage.goTo({ caseId: caseId });
+          await judgeUserExuiPages.caseOverview.goTo({ caseId: caseId });
 
-          await judgeUserExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Prepare Decision and Reasons' });
+          await judgeUserExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Prepare Decision and Reasons' });
 
-          await judgeUserExuiPages.prepareDecisionAndReasonsAnonymityOrderPage.verifyUserIsOnPage();
-          await judgeUserExuiPages.prepareDecisionAndReasonsAnonymityOrderPage.completePageAndContinue({ anonymityOrderDirection: 'Yes' });
+          await judgeUserExuiPages.prepareDecisionAndReasonsAnonymityOrder.verifyUserIsOnPage();
+          await judgeUserExuiPages.prepareDecisionAndReasonsAnonymityOrder.completePageAndContinue({ anonymityOrderDirection: 'Yes' });
 
-          await judgeUserExuiPages.prepareDecisionAndReasonsLegalRepresentativesPage.verifyUserIsOnPage();
-          await judgeUserExuiPages.prepareDecisionAndReasonsLegalRepresentativesPage.completePageAndContinue();
+          await judgeUserExuiPages.prepareDecisionAndReasonsLegalRepresentatives.verifyUserIsOnPage();
+          await judgeUserExuiPages.prepareDecisionAndReasonsLegalRepresentatives.completePageAndContinue();
 
-          await judgeUserExuiPages.prepareDecisionAndReasonsSubmitPage.verifyUserIsOnPage();
-          await judgeUserExuiPages.prepareDecisionAndReasonsSubmitPage.generateDecisionAndReasons();
+          await judgeUserExuiPages.prepareDecisionAndReasonsSubmit.verifyUserIsOnPage();
+          await judgeUserExuiPages.prepareDecisionAndReasonsSubmit.generateDecisionAndReasons();
 
-          await judgeUserExuiPages.prepareDecisionAndReasonsConfirmPage.verifyUserIsOnPage();
-          await judgeUserExuiPages.prepareDecisionAndReasonsConfirmPage.returnToCaseDetails();
+          await judgeUserExuiPages.prepareDecisionAndReasonsConfirm.verifyUserIsOnPage();
+          await judgeUserExuiPages.prepareDecisionAndReasonsConfirm.returnToCaseDetails();
 
-          await judgeUserExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-          await judgeUserExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Prepare Decision and Reasons' });
+          await judgeUserExuiPages.caseOverview.verifyUserIsOnPage({});
+          await judgeUserExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Prepare Decision and Reasons' });
 
           return judgeUserExuiPages;
         });
 
       await test.step('Judge User: Select Complete decision and reasons from next steps dropdown and submit event', async () => {
-        await judgeUserExuiPages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Complete decision and reasons' });
+        await judgeUserExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Complete decision and reasons' });
 
-        await judgeUserExuiPages.completeDecisionAndReasonsPage.verifyUserIsOnPage();
-        await judgeUserExuiPages.completeDecisionAndReasonsPage.completePageAndContinue({ decision: 'Allowed' });
+        await judgeUserExuiPages.completeDecisionAndReasons.verifyUserIsOnPage();
+        await judgeUserExuiPages.completeDecisionAndReasons.completePageAndContinue({ decision: 'Allowed' });
 
-        await judgeUserExuiPages.completeDecisionAndReasonsUploadDecisionPage.verifyUserIsOnPage();
-        await judgeUserExuiPages.completeDecisionAndReasonsUploadDecisionPage.completePageAndContinue({});
+        await judgeUserExuiPages.completeDecisionAndReasonsUploadDecision.verifyUserIsOnPage();
+        await judgeUserExuiPages.completeDecisionAndReasonsUploadDecision.completePageAndContinue({});
 
-        await judgeUserExuiPages.completeDecisionAndReasonsSubmitPage.verifyUserIsOnPage();
-        await judgeUserExuiPages.completeDecisionAndReasonsSubmitPage.uploadDecisionAndReasons();
+        await judgeUserExuiPages.completeDecisionAndReasonsSubmit.verifyUserIsOnPage();
+        await judgeUserExuiPages.completeDecisionAndReasonsSubmit.uploadDecisionAndReasons();
 
-        await judgeUserExuiPages.completeDecisionAndReasonsConfirmPage.verifyUserIsOnPage();
-        await judgeUserExuiPages.completeDecisionAndReasonsConfirmPage.returnToCaseDetails();
+        await judgeUserExuiPages.completeDecisionAndReasonsConfirm.verifyUserIsOnPage();
+        await judgeUserExuiPages.completeDecisionAndReasonsConfirm.returnToCaseDetails();
 
-        await judgeUserExuiPages.caseOverviewPage.verifyUserIsOnPage({});
-        await judgeUserExuiPages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Complete decision and reasons' });
+        await judgeUserExuiPages.caseOverview.verifyUserIsOnPage({});
+        await judgeUserExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Complete decision and reasons' });
       });
     },
   );

@@ -23,44 +23,44 @@ test.describe('Set of tests to verify case officer is able to request respondent
 
     await test.step(`Case officer: Navigate to case overview page on exui`, async () => {
       const caseId = await exui_caseOfficerApiClient.fetchCaseId({ homeOfficeReferenceNumber: appealDetails.homeOfficeReference.toString() });
-      await exui_pages.caseOverviewPage.goTo({ caseId: caseId });
+      await exui_pages.caseOverview.goTo({ caseId: caseId });
     });
   });
 
   test('Verify case officer is able to request respondent evidence', async ({ exui_pages, dataUtils }) => {
     await test.step('Verify correct next steps are displayed on case overview page', async () => {
       await Promise.all([
-        expect(exui_pages.caseOverviewPage.$static.doThisNextHeading).toBeVisible(),
+        expect(exui_pages.caseOverview.$static.doThisNextHeading).toBeVisible(),
 
-        expect(exui_pages.caseOverviewPage.$static.doThisNextParagraph.nth(0)).toHaveText(
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(0)).toHaveText(
           'You must review the appeal in the documents tab. If the appeal looks valid, you must tell the respondent to supply their evidence.',
         ),
-        expect(exui_pages.caseOverviewPage.$static.doThisNextParagraph.nth(0)).toBeVisible(),
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(0)).toBeVisible(),
 
-        expect(exui_pages.caseOverviewPage.$static.doThisNextParagraph.nth(1)).toHaveText('Request respondent evidence.'),
-        expect(exui_pages.caseOverviewPage.$static.doThisNextParagraph.nth(1)).toBeVisible(),
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(1)).toHaveText('Request respondent evidence.'),
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(1)).toBeVisible(),
       ]);
     });
 
     await test.step('Select request respondent evidence from next steps dropdown and submit event', async () => {
-      await exui_pages.caseOverviewPage.selectEventFromDropdown({ eventToSelect: 'Request respondent evidence' });
+      await exui_pages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Request respondent evidence' });
 
-      await exui_pages.requestRespondentEvidencePage.verifyUserIsOnPage();
-      await exui_pages.requestRespondentEvidencePage.verifyAllTextOnPage();
-      await exui_pages.requestRespondentEvidencePage.continueOnToNextPage();
+      await exui_pages.requestRespondentEvidence.verifyUserIsOnPage();
+      await exui_pages.requestRespondentEvidence.verifyAllTextOnPage();
+      await exui_pages.requestRespondentEvidence.continueOnToNextPage();
 
-      await exui_pages.requestRespondentEvidenceSubmitPage.verifyUserIsOnPage();
+      await exui_pages.requestRespondentEvidenceSubmit.verifyUserIsOnPage();
       const expectedDate = await dataUtils.getDateFromToday({ dayOffset: 14 });
       const date = new Date(expectedDate.year, expectedDate.month - 1, expectedDate.day);
       const formattedExpectedDate = date.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
 
       await Promise.all([
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$static.caseRecordHeading).toBeVisible(),
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$static.checkYouAnswersHeading).toBeVisible(),
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$static.checkInformationCarefullyText).toBeVisible(),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$static.caseRecordHeading).toBeVisible(),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$static.checkYouAnswersHeading).toBeVisible(),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$static.checkInformationCarefullyText).toBeVisible(),
         // Verify explain the direction question and answer is correct
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$questionLocator('Explain the direction you are issuing')).toBeVisible(),
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$questionValueLocator('Explain the direction you are issuing'))
+        expect(exui_pages.requestRespondentEvidenceSubmit.$questionLocator('Explain the direction you are issuing')).toBeVisible(),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$questionValueLocator('Explain the direction you are issuing'))
           .toHaveText(`A notice of appeal has been lodged against this decision.
 
 By the date indicated below the respondent is directed to supply the documents:
@@ -88,40 +88,38 @@ Where the appeal involves deportation, you must also include the following evide
 - a copy of any mental health report.
 
 Parties must ensure they conduct proceedings with procedural rigour. The Tribunal will not overlook breaches of the requirements of the Procedure Rules, Practice Statement or Practice Direction, nor failures to comply with directions issued by the Tribunal. Parties are reminded of the sanctions for non-compliance set out in paragraph 5.3 of the Practice Direction of 01.11.24.`),
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$questionValueLocator('Explain the direction you are issuing')).toBeVisible(),
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$changeAnswerToQuestionLocator('Explain the direction you are issuing')).toHaveText(
+        expect(exui_pages.requestRespondentEvidenceSubmit.$questionValueLocator('Explain the direction you are issuing')).toBeVisible(),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$changeAnswerToQuestionLocator('Explain the direction you are issuing')).toHaveText(
           'Change',
         ),
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$changeAnswerToQuestionLocator('Explain the direction you are issuing')).toBeVisible(),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$changeAnswerToQuestionLocator('Explain the direction you are issuing')).toBeVisible(),
         // Verify who are you giving the direction to question and answer is correct
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$questionLocator('Who are you giving the direction to?')).toBeVisible(),
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$questionValueLocator('Who are you giving the direction to?')).toHaveText('Respondent'),
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$questionValueLocator('Who are you giving the direction to?')).toBeVisible(),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$questionLocator('Who are you giving the direction to?')).toBeVisible(),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$questionValueLocator('Who are you giving the direction to?')).toHaveText('Respondent'),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$questionValueLocator('Who are you giving the direction to?')).toBeVisible(),
         // Verify by what date must they comply question and answer is correct
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$questionLocator('By what date must they comply?')).toBeVisible(),
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$questionValueLocator('By what date must they comply?')).toHaveText(
-          formattedExpectedDate,
-        ),
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$questionValueLocator('By what date must they comply?')).toBeVisible(),
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$changeAnswerToQuestionLocator('By what date must they comply?')).toHaveText('Change'),
-        expect(exui_pages.requestRespondentEvidenceSubmitPage.$changeAnswerToQuestionLocator('By what date must they comply?')).toBeVisible(),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$questionLocator('By what date must they comply?')).toBeVisible(),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$questionValueLocator('By what date must they comply?')).toHaveText(formattedExpectedDate),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$questionValueLocator('By what date must they comply?')).toBeVisible(),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$changeAnswerToQuestionLocator('By what date must they comply?')).toHaveText('Change'),
+        expect(exui_pages.requestRespondentEvidenceSubmit.$changeAnswerToQuestionLocator('By what date must they comply?')).toBeVisible(),
       ]);
 
-      await exui_pages.requestRespondentEvidenceSubmitPage.sendDirection();
+      await exui_pages.requestRespondentEvidenceSubmit.sendDirection();
 
-      await exui_pages.requestRespondentEvidenceConfirmPage.verifyUserIsOnPage();
-      await exui_pages.requestRespondentEvidenceConfirmPage.verifyAllTextOnPage();
-      await exui_pages.requestRespondentEvidenceConfirmPage.returnToCaseDetails();
+      await exui_pages.requestRespondentEvidenceConfirm.verifyUserIsOnPage();
+      await exui_pages.requestRespondentEvidenceConfirm.verifyAllTextOnPage();
+      await exui_pages.requestRespondentEvidenceConfirm.returnToCaseDetails();
     });
 
     await test.step('Verify correct next steps are displayed once event has been submitted', async () => {
-      await exui_pages.caseOverviewPage.verifyUserIsOnPage({});
-      await exui_pages.caseOverviewPage.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Request respondent evidence' });
+      await exui_pages.caseOverview.verifyUserIsOnPage({});
+      await exui_pages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Request respondent evidence' });
 
       await Promise.all([
-        expect(exui_pages.caseOverviewPage.$static.whatHappensNextHeading).toBeVisible(),
-        expect(exui_pages.caseOverviewPage.$static.whatHappensNextParagraph.nth(0)).toHaveText('The Home Office will prepare their bundle.'),
-        expect(exui_pages.caseOverviewPage.$static.whatHappensNextParagraph.nth(0)).toBeVisible(),
+        expect(exui_pages.caseOverview.$static.whatHappensNextHeading).toBeVisible(),
+        expect(exui_pages.caseOverview.$static.whatHappensNextParagraph.nth(0)).toHaveText('The Home Office will prepare their bundle.'),
+        expect(exui_pages.caseOverview.$static.whatHappensNextParagraph.nth(0)).toBeVisible(),
       ]);
     });
   });

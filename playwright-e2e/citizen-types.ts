@@ -34,6 +34,7 @@ export type AppealData = YourDetailsJourney &
   };
 
 export type AppealReasonsFlowType = {
+  caseId: string;
   doesApplicantRequireMoreTimeToSubmitAppealReasons: boolean;
   appealReasons?: {
     reasonWhyHomeOfficeDecisionIsWrong: string;
@@ -47,6 +48,7 @@ export type AppealReasonsFlowType = {
 
 export type HearingRequestsFlowType = {
   pathToTake: 'Minimal Path' | 'Maximum Path';
+  caseId: string;
 };
 
 export type AppealType =
