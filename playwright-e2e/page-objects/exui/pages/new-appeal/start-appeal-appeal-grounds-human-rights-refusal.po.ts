@@ -2,7 +2,7 @@ import { Locator, Page, expect } from '@playwright/test';
 import { ExuiBase } from '../../exui-base';
 import { ExuiAppealGroundsHumanRightsRefusalType } from '../../../../exui-event-types';
 
-export class StartAppealAppealGroundsHumanRightsRefusal extends ExuiBase {
+export class StartAppealAppealGroundsHumanRightsRefusalPage extends ExuiBase {
   constructor(page: Page) {
     super(page);
   }

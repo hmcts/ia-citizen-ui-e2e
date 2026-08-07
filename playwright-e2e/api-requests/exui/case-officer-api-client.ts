@@ -87,7 +87,7 @@ export class CaseOfficerApiClient extends BaseExuiApiClient {
 
   public async submitDecisionAndReasonsStartedEvent(options: DecisionAndReasonsStartedEventType): Promise<void> {
     await expect(async () => {
-      const caseData = await this.fetchCaseData({ caseId: options.caseId });
+      const caseData = await this.fetchCaseOverviewData({ caseId: options.caseId });
       const caseDataString = JSON.stringify(caseData);
 
       const hasInstructionText = caseDataString.includes('You can start to create the decision and reasons document');

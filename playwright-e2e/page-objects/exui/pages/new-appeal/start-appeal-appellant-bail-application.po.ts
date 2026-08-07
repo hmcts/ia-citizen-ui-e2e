@@ -2,7 +2,7 @@ import { Locator, Page, expect } from '@playwright/test';
 import { ExuiBase } from '../../exui-base';
 import { PendingBailApplicationType } from '../../../../exui-event-types';
 
-export class StartAppealAppellantBailApplication extends ExuiBase {
+export class StartAppealAppellantBailApplicationPage extends ExuiBase {
   constructor(page: Page) {
     super(page);
   }

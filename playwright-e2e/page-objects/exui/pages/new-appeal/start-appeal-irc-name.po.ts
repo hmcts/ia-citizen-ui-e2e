@@ -2,7 +2,7 @@ import { Locator, Page, expect } from '@playwright/test';
 import { ExuiBase } from '../../exui-base';
 import { ImmigrationRemovalCentreNameType } from '../../../../exui-event-types';
 
-export class StartAppealIrcName extends ExuiBase {
+export class StartAppealIrcNamePage extends ExuiBase {
   constructor(page: Page) {
     super(page);
   }
