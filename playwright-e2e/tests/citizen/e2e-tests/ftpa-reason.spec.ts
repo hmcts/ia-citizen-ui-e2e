@@ -37,6 +37,8 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
       });
 
       await test.step('Progress jounrey to the point the judge has made a decision', async () => {
+        await exui_caseOfficerApiClient.submitCompleteCaseReviewEvent({ caseId: caseId });
+
         await exui_caseOfficerApiClient.submitRequestRespondentEvidenceEvent({
           caseId: caseId,
         });
