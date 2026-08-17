@@ -27,6 +27,8 @@ test.describe('Set of tests to verify case officer is able to review home office
     });
 
     await test.step('Progress case via api', async () => {
+      await exui_caseOfficerApiClient.submitCompleteCaseReviewEvent({ caseId: caseId });
+
       await exui_caseOfficerApiClient.submitRequestRespondentEvidenceEvent({
         caseId: caseId,
       });

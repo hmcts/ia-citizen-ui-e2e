@@ -29,26 +29,39 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
       const caseId = await exui_adminOfficerApiClient.fetchCaseId({ homeOfficeReferenceNumber: appealDetails.homeOfficeReference.toString() });
 
       const caseOfficerExuiPages =
-        await test.step('Case Officer: Select request respondent evidence from next steps dropdown and submit event', async () => {
+        await test.step('Case Officer: Select Complete case review from next steps dropdown and submit event', async () => {
           const caseOfficerExuiPages = exui_pages;
           await caseOfficerExuiPages.caseOverview.goTo({ caseId: caseId });
 
-          await caseOfficerExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Request respondent evidence' });
+          await caseOfficerExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Complete case review' });
 
-          await caseOfficerExuiPages.requestRespondentEvidence.verifyUserIsOnPage();
-          await caseOfficerExuiPages.requestRespondentEvidence.continueOnToNextPage();
+          await caseOfficerExuiPages.completeCaseReview.verifyUserIsOnPage();
+          await caseOfficerExuiPages.completeCaseReview.submitEvent();
 
-          await caseOfficerExuiPages.requestRespondentEvidenceSubmit.verifyUserIsOnPage();
-          await caseOfficerExuiPages.requestRespondentEvidenceSubmit.sendDirection();
-
-          await caseOfficerExuiPages.requestRespondentEvidenceConfirm.verifyUserIsOnPage();
-          await caseOfficerExuiPages.requestRespondentEvidenceConfirm.returnToCaseDetails();
+          await caseOfficerExuiPages.completeCaseReviewConfirm.verifyUserIsOnPage();
+          await caseOfficerExuiPages.completeCaseReviewConfirm.returnToCaseDetails();
 
           await caseOfficerExuiPages.caseOverview.verifyUserIsOnPage({});
-          await caseOfficerExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Request respondent evidence' });
+          await caseOfficerExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Complete case review' });
 
           return caseOfficerExuiPages;
         });
+
+      await test.step('Case Officer: Select Request respondent review from next steps dropdown and submit event', async () => {
+        await caseOfficerExuiPages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Request respondent evidence' });
+
+        await caseOfficerExuiPages.requestRespondentEvidence.verifyUserIsOnPage();
+        await caseOfficerExuiPages.requestRespondentEvidence.continueOnToNextPage();
+
+        await caseOfficerExuiPages.requestRespondentEvidenceSubmit.verifyUserIsOnPage();
+        await caseOfficerExuiPages.requestRespondentEvidenceSubmit.sendDirection();
+
+        await caseOfficerExuiPages.requestRespondentEvidenceConfirm.verifyUserIsOnPage();
+        await caseOfficerExuiPages.requestRespondentEvidenceConfirm.returnToCaseDetails();
+
+        await caseOfficerExuiPages.caseOverview.verifyUserIsOnPage({});
+        await caseOfficerExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Request respondent evidence' });
+      });
 
       const homeOfficeUserExuiPages =
         await test.step('Home Office User: Select upload home office bundle from next steps dropdown and submit event', async () => {

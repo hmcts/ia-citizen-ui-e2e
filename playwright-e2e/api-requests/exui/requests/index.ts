@@ -3,6 +3,7 @@ export * from './case-data.api';
 export * from './admin-officer/remission-decision.api';
 export * from './case-officer/request-respondent-evidence.api';
 export * from './home-office-user/upload-home-office-bundle.api';
+export * from './case-officer/complete-case-review.api';
 export * from './case-officer/send-direction.api';
 export * from './case-officer/request-reasons-for-appeal.api';
 export * from './case-officer/request-respondant-review.api';

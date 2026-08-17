@@ -32,7 +32,7 @@ test.describe('Set of tests to verify case officer is able to request home offic
         expect(exui_pages.caseOverview.$static.doThisNextHeading).toBeVisible(),
 
         expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(0)).toHaveText(
-          'You must review the appeal data and cross reference it with Home Office data in the Validation tab. If the appeal looks valid, you must tell the respondent to supply their evidence.',
+          'You must review the appeal data and cross reference it with Home Office data in the Validation tab. If the appeal is valid, you must run the Complete case review event which will validate the case and then run the Request respondent evidence event to tell the respondent to supply their evidence.',
         ),
         expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(0)).toBeVisible(),
       ]);
@@ -102,8 +102,9 @@ test.describe('Set of tests to verify case officer is able to request home offic
 
       await Promise.all([
         expect(exui_pages.caseOverview.$static.doThisNextHeading).toBeVisible(),
+
         expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(0)).toHaveText(
-          'You must review the appeal data and cross reference it with Home Office data in the Validation tab. If the appeal looks valid, you must tell the respondent to supply their evidence.',
+          'You must review the appeal data and cross reference it with Home Office data in the Validation tab. If the appeal is valid, you must run the Complete case review event which will validate the case and then run the Request respondent evidence event to tell the respondent to supply their evidence.',
         ),
         expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(0)).toBeVisible(),
       ]);

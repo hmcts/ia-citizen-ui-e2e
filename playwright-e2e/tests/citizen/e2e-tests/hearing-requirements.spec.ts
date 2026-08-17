@@ -23,6 +23,8 @@ test.describe('Set of tests to verify user is able to submit answers to hearing 
     });
 
     await test.step('Progress journey via citizen and exui api calls in order to allow appellant to submit their hearing requirements', async () => {
+      await exui_caseOfficerApiClient.submitCompleteCaseReviewEvent({ caseId: caseId });
+
       await exui_caseOfficerApiClient.submitRequestRespondentEvidenceEvent({ caseId: caseId });
 
       await exui_homeOfficeUserApiClient.submitUploadHomeOfficeBundleEvent({
