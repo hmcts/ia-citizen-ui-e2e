@@ -1,7 +1,6 @@
 import { Locator, Page, expect } from '@playwright/test';
 import { ExuiBase } from '../../exui-base';
-
-type HasOtherAppealsType = 'Yes' | 'Yes, but an appeal number was not provided' | 'No' | "I'm not sure";
+import { HasOtherAppealsType } from '../../../../exui-event-types';
 
 export class StartAppealHasOtherAppealsPage extends ExuiBase {
   constructor(page: Page) {

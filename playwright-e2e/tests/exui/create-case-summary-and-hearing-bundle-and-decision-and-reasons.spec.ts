@@ -31,6 +31,8 @@ test.describe('Set of tests to verify citizen user is able to create a case summ
       });
 
       await test.step('Progress case via api', async () => {
+        await exui_caseOfficerApiClient.submitCompleteCaseReviewEvent({ caseId: caseId });
+
         await exui_caseOfficerApiClient.submitRequestRespondentEvidenceEvent({
           caseId: caseId,
         });

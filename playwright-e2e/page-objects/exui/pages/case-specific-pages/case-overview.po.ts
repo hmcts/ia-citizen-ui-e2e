@@ -22,7 +22,8 @@ type DropdownEventTypes =
   | 'Generate Upper Tribunal bundle'
   | 'Request Home Office data'
   | 'Submit your appeal'
-  | 'Create a service request';
+  | 'Create a service request'
+  | 'Complete case review';
 
 type CaseOverviewTabsType =
   | 'Tasks'

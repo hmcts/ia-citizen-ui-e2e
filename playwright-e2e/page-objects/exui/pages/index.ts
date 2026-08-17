@@ -103,6 +103,8 @@ export * from './case-specific-pages/events/list-case//list-case-confirm.po';
 export * from './case-specific-pages/events/create-case-summary/create-case-summary.po';
 export * from './case-specific-pages/events/create-case-summary/create-case-summary-submit.po';
 export * from './case-specific-pages/events/create-case-summary/create-case-summary-confirm.po';
+export * from './case-specific-pages/events/complete-case-review/complete-case-review.po';
+export * from './case-specific-pages/events/complete-case-review/complete-case-review-confirm.po';
 export * from './case-specific-pages/events/generate-hearing-bundle/generate-hearing-bundle.po';
 export * from './case-specific-pages/events/generate-hearing-bundle/generate-hearing-bundle-confirm.po';
 export * from './case-specific-pages/events/start-decision-and-reasons/start-decision-and-reasons.po';

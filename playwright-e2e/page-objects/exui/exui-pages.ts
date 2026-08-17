@@ -105,6 +105,8 @@ import {
   CreateCaseSummaryPage,
   CreateCaseSummarySubmitPage,
   CreateCaseSummaryConfirmPage,
+  CompleteCaseReviewPage,
+  CompleteCaseReviewConfirmPage,
   GenerateHearingBundlePage,
   GenerateHearingBundleConfirmPage,
   StartDecisionAndReasonsPage,
@@ -250,6 +252,8 @@ export class ExuiPages {
   public readonly createCaseSummary: CreateCaseSummaryPage;
   public readonly createCaseSummarySubmit: CreateCaseSummarySubmitPage;
   public readonly createCaseSummaryConfirm: CreateCaseSummaryConfirmPage;
+  public readonly completeCaseReview: CompleteCaseReviewPage;
+  public readonly completeCaseReviewConfirm: CompleteCaseReviewConfirmPage;
   public readonly generateHearingBundle: GenerateHearingBundlePage;
   public readonly generateHearingBundleConfirm: GenerateHearingBundleConfirmPage;
   public readonly startDecisionAndReasons: StartDecisionAndReasonsPage;
@@ -393,6 +397,8 @@ export class ExuiPages {
     this.createCaseSummary = new CreateCaseSummaryPage(this.page);
     this.createCaseSummarySubmit = new CreateCaseSummarySubmitPage(this.page);
     this.createCaseSummaryConfirm = new CreateCaseSummaryConfirmPage(this.page);
+    this.completeCaseReview = new CompleteCaseReviewPage(this.page);
+    this.completeCaseReviewConfirm = new CompleteCaseReviewConfirmPage(this.page);
     this.generateHearingBundle = new GenerateHearingBundlePage(this.page);
     this.generateHearingBundleConfirm = new GenerateHearingBundleConfirmPage(this.page);
     this.startDecisionAndReasons = new StartDecisionAndReasonsPage(this.page);

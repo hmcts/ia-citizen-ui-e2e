@@ -11,6 +11,7 @@ import {
   CreateCaseSummaryApi,
   GenerateHearingBundleApi,
   DecisionAndReasonsStartedApi,
+  CompleteCaseReviewApi,
 } from './requests/index';
 import {
   RequestRespondentEvidenceEventType,
@@ -34,6 +35,7 @@ export class CaseOfficerApiClient extends BaseExuiApiClient {
   private createCaseSummaryApi: CreateCaseSummaryApi;
   private generateHearingBundleApi: GenerateHearingBundleApi;
   private decisionAndReasonsStartedApi: DecisionAndReasonsStartedApi;
+  private completeCaseReviewApi: CompleteCaseReviewApi;
 
   constructor(apiContext: APIRequestContext) {
     super(apiContext);
@@ -47,6 +49,11 @@ export class CaseOfficerApiClient extends BaseExuiApiClient {
     this.createCaseSummaryApi = new CreateCaseSummaryApi(apiContext);
     this.generateHearingBundleApi = new GenerateHearingBundleApi(apiContext);
     this.decisionAndReasonsStartedApi = new DecisionAndReasonsStartedApi(apiContext);
+    this.completeCaseReviewApi = new CompleteCaseReviewApi(apiContext);
+  }
+
+  public async submitCompleteCaseReviewEvent(options: { caseId: string }): Promise<void> {
+    await this.completeCaseReviewApi.submitEvent(options);
   }
 
   public async submitRequestRespondentEvidenceEvent(options: RequestRespondentEvidenceEventType): Promise<void> {

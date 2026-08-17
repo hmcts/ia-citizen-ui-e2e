@@ -28,6 +28,8 @@ test.describe('Set of tests to verify admin user is able to request a hearing on
     });
 
     await test.step('Progress case via api', async () => {
+      await exui_caseOfficerApiClient.submitCompleteCaseReviewEvent({ caseId: caseId });
+
       await exui_caseOfficerApiClient.submitRequestRespondentEvidenceEvent({
         caseId: caseId,
       });

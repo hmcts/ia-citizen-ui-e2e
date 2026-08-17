@@ -32,13 +32,36 @@ test.describe('Set of tests to verify case officer is able to request respondent
       await Promise.all([
         expect(exui_pages.caseOverview.$static.doThisNextHeading).toBeVisible(),
 
-        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(0)).toHaveText(
-          'You must review the appeal in the documents tab. If the appeal looks valid, you must tell the respondent to supply their evidence.',
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph).toHaveText(
+          'You must review the appeal in the documents tab. If the appeal is valid, you must run the Complete case review event which will validate the case and then run the Request respondent evidence event to tell the respondent to supply their evidence.',
         ),
-        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(0)).toBeVisible(),
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph).toBeVisible(),
+      ]);
+    });
 
-        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(1)).toHaveText('Request respondent evidence.'),
-        expect(exui_pages.caseOverview.$static.doThisNextParagraph.nth(1)).toBeVisible(),
+    await test.step('Select complete case review from next steps dropdown and submit event', async () => {
+      await exui_pages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Complete case review' });
+
+      await exui_pages.completeCaseReview.verifyUserIsOnPage();
+      await exui_pages.completeCaseReview.verifyAllTextOnPage();
+      await exui_pages.completeCaseReview.submitEvent();
+
+      await exui_pages.completeCaseReviewConfirm.verifyUserIsOnPage();
+      await exui_pages.completeCaseReviewConfirm.verifyAllTextOnPage();
+      await exui_pages.completeCaseReviewConfirm.returnToCaseDetails();
+    });
+
+    await test.step('Verify correct next steps are displayed once event has been submitted', async () => {
+      await exui_pages.caseOverview.verifyUserIsOnPage({});
+      await exui_pages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Complete case review' });
+
+      await Promise.all([
+        expect(exui_pages.caseOverview.$static.doThisNextHeading).toBeVisible(),
+
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph).toHaveText(
+          'You must review the appeal in the documents tab. If the appeal is valid, you must run the Complete case review event which will validate the case and then run the Request respondent evidence event to tell the respondent to supply their evidence.',
+        ),
+        expect(exui_pages.caseOverview.$static.doThisNextParagraph).toBeVisible(),
       ]);
     });
 

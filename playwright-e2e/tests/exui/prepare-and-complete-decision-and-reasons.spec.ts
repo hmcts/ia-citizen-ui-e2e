@@ -30,6 +30,8 @@ test.describe('Set of tests to verify judge user is able to prepare and complete
       });
 
       await test.step('Progress case via api', async () => {
+        await exui_caseOfficerApiClient.submitCompleteCaseReviewEvent({ caseId: caseId });
+
         await exui_caseOfficerApiClient.submitRequestRespondentEvidenceEvent({
           caseId: caseId,
         });
