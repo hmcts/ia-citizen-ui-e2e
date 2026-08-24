@@ -15,10 +15,9 @@ export class IdamSignInPage extends Base {
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.page.locator('h1[class="heading-large"]', {
+    signInOrCreateAnAccountHeading: this.page.locator('h1[class="heading-large"]', {
       hasText: 'Sign in or create an account',
     }).or(this.page.locator('h1 label[for="email"]', { hasText: 'Enter your email address' })),
-    signInOrCreateAnAccountHeading: this.page.getByRole('heading', { name: 'Sign in or create an account', level: 1, exact: true }),
     enterYourEmailAddressHeading: this.page.getByRole('heading', { name: 'Enter your email address', level: 1, exact: true }),
     enterYourPasswordHeading: this.page.getByRole('heading', { name: 'Enter your password', level: 1, exact: true }),
   } as const satisfies Record<string, Locator>;
