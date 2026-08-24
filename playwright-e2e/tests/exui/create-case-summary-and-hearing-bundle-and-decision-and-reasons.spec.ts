@@ -3,7 +3,6 @@ import { config } from '../../utils/config.utils.js';
 
 test.describe('Set of tests to verify citizen user is able to create a case summary and generate a hearing bundle whilst also submitting a decision and reasons event on exui manage cases', () => {
   test.use({ storageState: config.exuiUsers.caseOfficer.sessionFile });
-  let caseIdFromBeforeEach: string;
 
   test.beforeEach(
     async ({ exui_caseOfficerApiClient, cui_apiClient, exui_pages, exui_homeOfficeUserApiClient, exui_adminOfficerApiClient, dataUtils }) => {
@@ -101,8 +100,6 @@ test.describe('Set of tests to verify citizen user is able to create a case summ
       await test.step(`Case Officer: Navigate to case overview page on exui`, async () => {
         await exui_pages.caseOverview.goTo({ caseId: caseId });
       });
-
-      caseIdFromBeforeEach = caseId;
     },
   );
 
@@ -204,7 +201,6 @@ test.describe('Set of tests to verify citizen user is able to create a case summ
 
     await test.step('Case Officer: Refresh application overview page and verify correct next steps are displayed', async () => {
       await exui_pages.caseOverview.refreshPageUntilExpectedTextIsVisible({
-        caseId: caseIdFromBeforeEach,
         expectedText: 'You can start to create the decision and reasons document.',
         timeoutInSeconds: 90_000,
       });

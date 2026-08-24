@@ -11,6 +11,7 @@ import {
   StartAppealAppealGroundsProtectionPage,
   StartAppealAppealGroundsRevocationPage,
   StartAppealOutOfCountryPage,
+  StartAppealOocAppellantAddressPage,
   StartAppealOocHomeOfficeReferenceNumberPage,
   StartAppealDepartureDatePage,
   StartAppealOutOfCountryDecisionTypePage,
@@ -23,6 +24,8 @@ import {
   StartAppealOtherAppealsPage,
   StartAppealLegalRepresentativeDetailsPage,
   StartAppealHearingFeeDecisionPage,
+  StartAppealRpDcAppealHearingOptionPage,
+  StartAppealPaymentOptionsPage,
   StartAppealRemissionTypePage,
   StartAppealHelpWithFeesPage,
   StartAppealDetentionFacilityPage,
@@ -38,8 +41,11 @@ import {
   StartAppealAppellantBailApplicationPage,
   StartAppealAppellantBasicDetailsPage,
   StartAppealAppellantNationalitiesPage,
+  StartAppealAppellantAddressPage,
+  StartAppealAppellantContactPreferencePage,
   StartAppealHomeOfficeReferenceNumberPage,
   StartAppealHomeOfficeDecisionLetterPage,
+  StartAppealEntryClearanceDecisionLetterPage,
   StartAppealUploadTheNoticeOfDecisionPage,
   StartAppealSponsorPage,
   StartAppealSponsorAuthorisationPage,
@@ -136,6 +142,7 @@ import {
   RequestHomeOfficeDataSubmitPage,
   RequestHomeOfficeDataConfirmPage,
   SubmitAppealDeclarationPage,
+  SubmitAppealSubmissionOutOfTimePage,
   SubmitAppealConfirmPage,
   GenerateServiceRequestCreateAServiceRequestPage,
   GenerateServiceRequestConfirmPage,
@@ -158,6 +165,7 @@ export class ExuiPages {
   public readonly startAppealAppealGroundsProtection: StartAppealAppealGroundsProtectionPage;
   public readonly startAppealAppealGroundsRevocation: StartAppealAppealGroundsRevocationPage;
   public readonly startAppealOutOfCountry: StartAppealOutOfCountryPage;
+  public readonly startAppealOocAppellantAddress: StartAppealOocAppellantAddressPage;
   public readonly startAppealOocHomeOfficeReferenceNumber: StartAppealOocHomeOfficeReferenceNumberPage;
   public readonly startAppealDepartureDate: StartAppealDepartureDatePage;
   public readonly startAppealOutOfCountryDecisionType: StartAppealOutOfCountryDecisionTypePage;
@@ -170,6 +178,8 @@ export class ExuiPages {
   public readonly startAppealOtherAppeals: StartAppealOtherAppealsPage;
   public readonly startAppealLegalRepresentativeDetails: StartAppealLegalRepresentativeDetailsPage;
   public readonly startAppealHearingFeeDecision: StartAppealHearingFeeDecisionPage;
+  public readonly startAppealRpDcAppealHearingOption: StartAppealRpDcAppealHearingOptionPage;
+  public readonly startAppealPaymentOptions: StartAppealPaymentOptionsPage;
   public readonly startAppealRemissionType: StartAppealRemissionTypePage;
   public readonly startAppealHelpWithFees: StartAppealHelpWithFeesPage;
   public readonly startAppealDetentionFacility: StartAppealDetentionFacilityPage;
@@ -185,8 +195,11 @@ export class ExuiPages {
   public readonly startAppealAppellantBailApplication: StartAppealAppellantBailApplicationPage;
   public readonly startAppealAppellantBasicDetails: StartAppealAppellantBasicDetailsPage;
   public readonly startAppealAppellantNationalities: StartAppealAppellantNationalitiesPage;
+  public readonly startAppealAppellantAddress: StartAppealAppellantAddressPage;
+  public readonly startAppealAppellantContactPreference: StartAppealAppellantContactPreferencePage;
   public readonly startAppealHomeOfficeReferenceNumber: StartAppealHomeOfficeReferenceNumberPage;
   public readonly startAppealHomeOfficeDecisionLetter: StartAppealHomeOfficeDecisionLetterPage;
+  public readonly startAppealEntryClearanceDecisionLetter: StartAppealEntryClearanceDecisionLetterPage;
   public readonly startAppealUploadTheNoticeOfDecision: StartAppealUploadTheNoticeOfDecisionPage;
   public readonly startAppealSponsor: StartAppealSponsorPage;
   public readonly startAppealSponsorAuthorisation: StartAppealSponsorAuthorisationPage;
@@ -283,6 +296,7 @@ export class ExuiPages {
   public readonly requestHomeOfficeDataSubmit: RequestHomeOfficeDataSubmitPage;
   public readonly requestHomeOfficeDataConfirm: RequestHomeOfficeDataConfirmPage;
   public readonly submitAppealDeclaration: SubmitAppealDeclarationPage;
+  public readonly submitAppealSubmissionOutOfTime: SubmitAppealSubmissionOutOfTimePage;
   public readonly submitAppealConfirm: SubmitAppealConfirmPage;
   public readonly generateServiceRequestCreateAServiceRequest: GenerateServiceRequestCreateAServiceRequestPage;
   public readonly generateServiceRequestConfirm: GenerateServiceRequestConfirmPage;
@@ -303,6 +317,7 @@ export class ExuiPages {
     this.startAppealAppealGroundsProtection = new StartAppealAppealGroundsProtectionPage(this.page);
     this.startAppealAppealGroundsRevocation = new StartAppealAppealGroundsRevocationPage(this.page);
     this.startAppealOutOfCountry = new StartAppealOutOfCountryPage(this.page);
+    this.startAppealOocAppellantAddress = new StartAppealOocAppellantAddressPage(this.page);
     this.startAppealOocHomeOfficeReferenceNumber = new StartAppealOocHomeOfficeReferenceNumberPage(this.page);
     this.startAppealDepartureDate = new StartAppealDepartureDatePage(this.page);
     this.startAppealOutOfCountryDecisionType = new StartAppealOutOfCountryDecisionTypePage(this.page);
@@ -315,6 +330,8 @@ export class ExuiPages {
     this.startAppealOtherAppeals = new StartAppealOtherAppealsPage(this.page);
     this.startAppealLegalRepresentativeDetails = new StartAppealLegalRepresentativeDetailsPage(this.page);
     this.startAppealHearingFeeDecision = new StartAppealHearingFeeDecisionPage(this.page);
+    this.startAppealRpDcAppealHearingOption = new StartAppealRpDcAppealHearingOptionPage(this.page);
+    this.startAppealPaymentOptions = new StartAppealPaymentOptionsPage(this.page);
     this.startAppealRemissionType = new StartAppealRemissionTypePage(this.page);
     this.startAppealHelpWithFees = new StartAppealHelpWithFeesPage(this.page);
     this.startAppealDetentionFacility = new StartAppealDetentionFacilityPage(this.page);
@@ -330,8 +347,11 @@ export class ExuiPages {
     this.startAppealAppellantBailApplication = new StartAppealAppellantBailApplicationPage(this.page);
     this.startAppealAppellantBasicDetails = new StartAppealAppellantBasicDetailsPage(this.page);
     this.startAppealAppellantNationalities = new StartAppealAppellantNationalitiesPage(this.page);
+    this.startAppealAppellantAddress = new StartAppealAppellantAddressPage(this.page);
+    this.startAppealAppellantContactPreference = new StartAppealAppellantContactPreferencePage(this.page);
     this.startAppealHomeOfficeReferenceNumber = new StartAppealHomeOfficeReferenceNumberPage(this.page);
     this.startAppealHomeOfficeDecisionLetter = new StartAppealHomeOfficeDecisionLetterPage(this.page);
+    this.startAppealEntryClearanceDecisionLetter = new StartAppealEntryClearanceDecisionLetterPage(this.page);
     this.startAppealUploadTheNoticeOfDecision = new StartAppealUploadTheNoticeOfDecisionPage(this.page);
     this.startAppealSponsor = new StartAppealSponsorPage(this.page);
     this.startAppealSponsorAuthorisation = new StartAppealSponsorAuthorisationPage(this.page);
@@ -428,6 +448,7 @@ export class ExuiPages {
     this.requestHomeOfficeDataSubmit = new RequestHomeOfficeDataSubmitPage(this.page);
     this.requestHomeOfficeDataConfirm = new RequestHomeOfficeDataConfirmPage(this.page);
     this.submitAppealDeclaration = new SubmitAppealDeclarationPage(this.page);
+    this.submitAppealSubmissionOutOfTime = new SubmitAppealSubmissionOutOfTimePage(this.page);
     this.submitAppealConfirm = new SubmitAppealConfirmPage(this.page);
     this.generateServiceRequestCreateAServiceRequest = new GenerateServiceRequestCreateAServiceRequestPage(this.page);
     this.generateServiceRequestConfirm = new GenerateServiceRequestConfirmPage(this.page);

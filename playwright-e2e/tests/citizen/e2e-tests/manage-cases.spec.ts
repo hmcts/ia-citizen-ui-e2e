@@ -91,7 +91,6 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
         await caseOfficerExuiPages.caseOverview.page.bringToFront();
         await caseOfficerExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
           expectedText: 'The respondent has submitted their evidence.',
-          caseId: caseId,
         });
       });
 
@@ -125,7 +124,6 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
       await test.step('Case Officer: Refresh application overview page until expected next step has been shown', async () => {
         await caseOfficerExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
           expectedText: "Review the appellant's case in the appeal tab.",
-          caseId: caseId,
         });
       });
 
@@ -149,7 +147,6 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
         await homeOfficeUserExuiPages.caseOverview.page.bringToFront();
         await homeOfficeUserExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
           expectedText: 'The Appeal Skeleton Argument is ready to view in the documents tab.',
-          caseId: caseId,
         });
       });
 
@@ -178,7 +175,6 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
         await caseOfficerExuiPages.caseOverview.page.bringToFront();
         await caseOfficerExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
           expectedText: 'Check the response uploaded by the respondent.',
-          caseId: caseId,
         });
       });
 
@@ -215,7 +211,6 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
       await test.step('Case Officer: Refresh application overview page until expected next step is shown', async () => {
         await caseOfficerExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
           expectedText: 'You can view the hearing requirements and any requests for additional adjustments in the Hearing and appointment tab.',
-          caseId: caseId,
         });
       });
 
@@ -301,7 +296,6 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
         await caseOfficerExuiPages.caseOverview.page.bringToFront();
         await caseOfficerExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
           expectedText: 'You must create a case summary for the judge to use at the hearing.',
-          caseId: caseId,
         });
       });
 
@@ -336,7 +330,6 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
 
       await test.step('Case Officer: Refresh application overview page until expected next step is shown', async () => {
         await caseOfficerExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
-          caseId: caseId,
           expectedText: 'You can start to create the decision and reasons document.',
           timeoutInSeconds: 90_000,
         });

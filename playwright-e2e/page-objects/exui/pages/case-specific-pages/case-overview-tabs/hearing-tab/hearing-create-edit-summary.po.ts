@@ -1,4 +1,4 @@
-import { ExuiBase } from '../../../exui-base';
+import { ExuiBase } from '../../../../exui-base';
 import { Locator, Page } from '@playwright/test';
 
 type listThatCanNotBeChanged = 'Case name' | 'Case reference' | 'Type';

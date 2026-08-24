@@ -195,6 +195,7 @@ export type HasOtherAppealsType = 'Yes' | 'Yes, but an appeal number was not pro
 export type HearingFeeDecisionType =
   | 'Decision with a hearing. The fee for this type of appeal is £144'
   | 'Decision without a hearing. The fee for this type of appeal is £82';
+export type StartAppealPaymentOptionType = 'Pay Now' | 'Pay Later';
 export type HearingWihtoutFeeDecisionType = 'Decision with a hearing' | 'Decision without a hearing';
 export type RemissionTypeOption =
   | 'The appellant is not eligible for a fee remission'

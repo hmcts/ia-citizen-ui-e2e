@@ -62,8 +62,6 @@ export class SubmitAppealDeclarationPage extends ExuiBase {
         expect(this.$static.feeAmount).toHaveText(`£${options.feeToPay.toFixed(2)}`),
         expect(this.$static.feeAmount).toBeVisible(),
       ]);
-    } else {
-      throw new Error('Currently, only scenarios where hasFeeToPay is true are supported. Please update the test case to reflect this.');
     }
 
     await this.navigationClick(this.$interactive.submitButton);
