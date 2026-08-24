@@ -1,6 +1,7 @@
 import { Locator, Page, expect } from '@playwright/test';
 import { ExuiBase } from '../../exui-base';
 import { ExuiCreateCaseType } from '../../../../exui-event-types';
+import { config } from '../../../../utils';
 
 export class CreateCasePage extends ExuiBase {
   constructor(page: Page) {
@@ -21,6 +22,11 @@ export class CreateCasePage extends ExuiBase {
     eventLabel: this.page.locator('label[for="cc-event"]'),
   } as const satisfies Record<string, Locator>;
 
+  public async goTo(): Promise<void> {
+    await this.page.goto(config.urls.exuiDefaultUrl + 'cases/case-filter');
+    await this.verifyUserIsOnPage();
+  }
+
   public async verifyUserIsOnPage(): Promise<void> {
     await this.verifyUserIsOnExpectedPage({
       urlPath: 'cases/case-filter',
@@ -40,7 +46,7 @@ export class CreateCasePage extends ExuiBase {
   }
 
   public async completePageAndContinue(options: ExuiCreateCaseType): Promise<void> {
-    await this.$interactive.jurisdictionDropdown.selectOption({ label: options.jurisdiction }, { timeout: 10_000 });
+    await this.$interactive.jurisdictionDropdown.selectOption({ label: options.jurisdiction }, { timeout: 30_000 });
     await expect(this.$interactive.jurisdictionDropdown.locator('option:checked')).toHaveText(options.jurisdiction);
 
     await this.$interactive.caseTypeDropdown.selectOption({ label: options.caseType });

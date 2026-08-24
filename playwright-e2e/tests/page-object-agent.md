@@ -152,44 +152,32 @@ For summary pages (`/submit`, `/check-your-answers`, similar summary views), use
 1. Do **not** generate `verifyAllTextOnPage()` for these pages.
 2. Provide granular locators so tests can assert only scenario-relevant rows.
 3. Use `verifyUserIsOnPage()` with `verifyUserIsOnExpectedPage(...)`.
-4. Split labels into:
-   - `StandardQuestionType` for single-value rows
-   - `ComplexQuestionType` for nested/collection/multi-field rows if and when needed
+4. Use a single page-specific question union type for summary row labels.
 
 ### Required locator shape
 
-Use `.last()` on `$questionValueLocator` to avoid text bleeding from wrappers.
+Follow the locator pattern used in `start-appeal-submit.po.ts`.
 
 ```ts
-public $questionLocator = (question: StandardQuestionType | ComplexQuestionType): Locator =>
-  this.page.locator('tr').getByText(question, { exact: true });
+type QuestionsType =
+   | 'Question label 1'
+   | 'Question label 2';
 
-public $questionValueLocator(question: StandardQuestionType): Locator {
+public $questionLocator = (question: QuestionsType): Locator =>
+   this.page.locator('tr [class*="case-field-label"]').getByText(question, { exact: true });
+
+public $questionValueLocator(question: QuestionsType): Locator {
   return this.page
-    .locator('tr', { has: this.page.getByText(question, { exact: true }) })
-    .locator('td ccd-field-read span, td ccd-field-read button')
-    .last();
+      .locator('tr', { has: this.page.locator('[class*="case-field-label"]').getByText(question, { exact: true }) })
+      .locator('td ccd-field-read');
 }
 
-public $changeAnswerToQuestionLocator(question: StandardQuestionType | ComplexQuestionType): Locator {
+public $changeAnswerToQuestionLocator(question: QuestionsType): Locator {
   return this.page
-    .locator('tr', { has: this.page.getByText(question, { exact: true }) })
-    .locator('td[class*="change case-field"] span', { hasText: 'Change' })
-    .last();
+      .locator('tr', { has: this.page.locator('[class*="case-field-label"]').getByText(question, { exact: true }) })
+      .locator('td[class*="change case-field"] span', { hasText: 'Change' });
 }
 ```
-
-### Complex nested rows
-
-For `ComplexQuestionType` rows, do not use `$questionValueLocator`. Create dedicated methods (e.g. `verifyAnswerToAddressQuestion`) and:
-
-1. Scope first to the parent `tr` for the complex question label.
-2. Inside the panel, locate sub-fields via `tr` + `hasText`.
-3. Keep labels/titles hardcoded; pass user values via typed options object.
-4. For collections, use `.nth(index)` and verify 1-based labels like `Notice of Decision ${index + 1}`.
-5. Use specific field locators for example:
-   - Documents: `ccd-read-document-field button`
-   - Text areas: `ccd-read-text-area-field span`
 
 ### Action methods for summary pages
 

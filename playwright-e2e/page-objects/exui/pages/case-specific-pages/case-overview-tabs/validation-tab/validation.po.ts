@@ -1,9 +1,9 @@
-import { Page, Locator } from '@playwright/test';
-import { ExuiBase } from '../../../exui-base';
+import { Page, Locator, expect } from '@playwright/test';
+import { CaseOverViewBase } from '../../case-overview-base';
 
 type listOfAppellantDetails = 'Given name' | 'Family name' | 'Full name' | 'Gender' | 'Date of birth' | 'HO role' | 'HO sub-role' | 'Nationality';
 type listOfApplicationDetails = 'HO reference' | 'HO decision' | 'HO decision date' | 'HO decision sent' | 'HO decision communication';
-export class ValidationPage extends ExuiBase {
+export class ValidationPage extends CaseOverViewBase {
   constructor(page: Page) {
     super(page);
   }
@@ -36,5 +36,7 @@ export class ValidationPage extends ExuiBase {
       urlPath: 'Validation',
       pageHeading: this.$static.pageHeading,
     });
+
+    await expect(this.page.getByRole('tab', { name: 'Validation', exact: true })).toHaveAttribute('aria-selected', 'true', { timeout: 30_000 });
   }
 }

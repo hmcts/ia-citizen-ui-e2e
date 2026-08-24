@@ -1,5 +1,5 @@
 import { Page, Locator, expect } from '@playwright/test';
-import { ExuiBase } from '../../../exui-base';
+import { ExuiBase } from '../../../../exui-base';
 
 type hearingRequirementsType =
   | 'Step free / wheelchair access'

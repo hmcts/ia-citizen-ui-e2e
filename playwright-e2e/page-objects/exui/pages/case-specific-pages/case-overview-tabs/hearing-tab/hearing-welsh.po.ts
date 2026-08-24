@@ -1,6 +1,6 @@
 import { expect, Locator, Page } from '@playwright/test';
-import { ExuiBase } from '../../../exui-base';
-import { YesOrNoType } from '../../../../../citizen-types';
+import { ExuiBase } from '../../../../exui-base';
+import { YesOrNoType } from '../../../../../../citizen-types';
 
 export class HearingWelshPage extends ExuiBase {
   constructor(page: Page) {

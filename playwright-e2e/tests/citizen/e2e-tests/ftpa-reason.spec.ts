@@ -445,7 +445,6 @@ test.describe('Tests the allow the user to submit a response to a judges decisio
         ]);
 
         await judgeExuiPages.caseOverview.refreshPageUntilExpectedTextIsVisible({
-          caseId: caseIdFromBeforeEach,
           expectedText: 'The Upper Tribunal bundle has been generated',
         });
 

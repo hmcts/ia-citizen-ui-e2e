@@ -25,9 +25,7 @@ export const cuiPageFixtures = {
       await cuiPages.startAppeal.goTo();
       await cuiPages.startAppeal.verifyUserIsOnPage();
       await cuiPages.startAppeal.navigationClick(cuiPages.startAppeal.$interactive.signInLink);
-
-      await idam_signInPage.verifyUserIsOnPage();
-      await idam_signInPage.signIn(options.email, options.password);
+      await idam_signInPage.citizenSignIn(options.email, options.password);
 
       await cuiPages.caseList.verifyUserIsOnPage();
     });
@@ -41,8 +39,7 @@ export const cuiPageFixtures = {
       await cuiPages.startAppeal.verifyUserIsOnPage();
       await cuiPages.startAppeal.navigationClick(cuiPages.startAppeal.$interactive.signInLink);
 
-      await idam_signInPage.verifyUserIsOnPage();
-      await idam_signInPage.signIn(options.email, options.password);
+      await idam_signInPage.citizenSignIn(options.email, options.password);
 
       await cuiPages.caseList.verifyUserIsOnPage();
     });

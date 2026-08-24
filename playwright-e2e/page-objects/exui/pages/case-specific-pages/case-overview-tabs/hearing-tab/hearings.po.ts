@@ -1,7 +1,7 @@
 import { Page, Locator, expect } from '@playwright/test';
-import { ExuiBase } from '../../../exui-base';
+import { CaseOverViewBase } from '../../case-overview-base';
 
-export class HearingsPage extends ExuiBase {
+export class HearingsPage extends CaseOverViewBase {
   constructor(page: Page) {
     super(page);
   }
@@ -20,6 +20,8 @@ export class HearingsPage extends ExuiBase {
       urlPath: 'Hearings',
       pageHeading: this.$static.pageHeading,
     });
+
+    await expect(this.page.getByRole('tab', { name: 'Hearings', exact: true })).toHaveAttribute('aria-selected', 'true', { timeout: 30_000 });
   }
 
   public async navigateToRequestHearingPage(): Promise<void> {
