@@ -1,4 +1,4 @@
-import { ExuiBase } from '../../../exui-base';
+import { ExuiBase } from '../../../../exui-base';
 import { expect, Locator, Page } from '@playwright/test';
 
 export class HearingConfirmationPage extends ExuiBase {

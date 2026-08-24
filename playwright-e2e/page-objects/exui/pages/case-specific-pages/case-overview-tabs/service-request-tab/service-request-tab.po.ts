@@ -1,7 +1,7 @@
 import { Page, Locator, expect } from '@playwright/test';
-import { ExuiBase } from '../../../exui-base';
+import { CaseOverViewBase } from '../../case-overview-base';
 
-export class ServiceRequestTabPage extends ExuiBase {
+export class ServiceRequestTabPage extends CaseOverViewBase {
   constructor(page: Page) {
     super(page);
   }
@@ -37,21 +37,64 @@ export class ServiceRequestTabPage extends ExuiBase {
       urlPath: '#Service%20Request',
       pageHeading: this.$static.pageHeading,
     });
+
+    await expect(this.page.getByRole('tab', { name: 'Service Request', exact: true })).toHaveAttribute('aria-selected', 'true', { timeout: 60_000 });
   }
 
-  public async verifyServiceRequestTableHeadings(): Promise<void> {
+  public async verifyServiceRequestStatus(options: {
+    status: 'Not paid' | 'Paid';
+    amount: number;
+    party: string;
+    tableRowIndex?: number;
+  }): Promise<void> {
     await Promise.all([
       expect(this.$static.statusHeader).toBeVisible(),
       expect(this.$static.amountHeader).toBeVisible(),
       expect(this.$static.partyHeader).toBeVisible(),
       expect(this.$static.requestReferenceHeader).toBeVisible(),
     ]);
+
+    const tableRow = this.page.locator('tbody[class*="govuk-table__body"] tr');
+
+    if ((await tableRow.count()) > 1 && !options.tableRowIndex) {
+      throw new Error('Multiple service request rows found. Please provide a tableRowIndex to specify which row to verify.');
+    }
+
+    const tableRowToVerify = options.tableRowIndex !== undefined ? tableRow.nth(options.tableRowIndex) : tableRow;
+    const statusValue = tableRowToVerify.locator('td').nth(0);
+    const amountValue = tableRowToVerify.locator('td').nth(1);
+    const partyValue = tableRowToVerify.locator('td').nth(2);
+    const requestReferenceValue = tableRowToVerify.locator('td').nth(3);
+
+    const currentYear = new Date().getFullYear();
+    const requestReferenceRegex = new RegExp(`^${currentYear}-\\d{13}$`);
+
+    await Promise.all([
+      expect(statusValue).toBeVisible(),
+      expect(statusValue).toHaveText(options.status),
+      expect(amountValue).toBeVisible(),
+      expect(amountValue).toHaveText(`£${options.amount.toFixed(2)}`),
+      expect(partyValue).toBeVisible(),
+      expect(partyValue).toHaveText(options.party),
+      expect(requestReferenceValue).toBeVisible(),
+      expect(requestReferenceValue).toHaveText(requestReferenceRegex),
+    ]);
+
+    if (options.status === 'Not paid') {
+      await expect(this.$interactive.payNowLink).toBeVisible();
+    } else {
+      await expect(this.$interactive.payNowLink).toBeHidden();
+    }
+
+    await expect(this.$interactive.reviewLink).toBeVisible();
   }
 
-  public async selectPayNowLink(): Promise<void> {
+  public async selectPayNowLink(options?: { linkIndex: number }): Promise<void> {
+    const payNowLinkToClick = options?.linkIndex !== undefined ? this.$interactive.payNowLink.nth(options.linkIndex) : this.$interactive.payNowLink;
+
     await expect(async () => {
-      await this.$interactive.payNowLink.click();
-      await expect(this.$interactive.payNowLink).toBeHidden({ timeout: 5_000 });
+      await payNowLinkToClick.click();
+      await expect(payNowLinkToClick).toBeHidden({ timeout: 5_000 });
     }).toPass({ intervals: [1_000], timeout: 30_000 });
   }
 

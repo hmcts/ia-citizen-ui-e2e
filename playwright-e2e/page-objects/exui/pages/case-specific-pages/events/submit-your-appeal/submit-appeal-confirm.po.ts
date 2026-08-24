@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import { ExuiBase } from '../../../../exui-base';
 
 export class SubmitAppealConfirmPage extends ExuiBase {
@@ -13,9 +13,12 @@ export class SubmitAppealConfirmPage extends ExuiBase {
   public readonly $static = {
     pageHeading: this.page.getByRole('heading', { level: 1, name: 'Submit your appeal', exact: true }),
     caseRecordHeading: this.page.getByRole('heading', { level: 1, name: 'Case record for' }),
-    appealSubmittedHeading: this.page.getByRole('heading', { level: 1, name: 'Your appeal has been submitted', exact: true }),
+    yourAppealHasBeenSubmittedHeading: this.page.getByRole('heading', { level: 1, name: 'Your appeal has been submitted', exact: true }),
+    outOfTimeConfirmation: this.page.getByRole('img', { name: 'Out of time confirmation', exact: true }),
     doThisNextHeading: this.page.getByRole('heading', { level: 4, name: 'Do this next', exact: true }),
-    doThisNextParagraph: this.page.getByRole('heading', { level: 4, name: 'Do this next', exact: true }).locator('+ p'),
+    doThisNextParagraph: this.page.getByRole('heading', { level: 4, name: 'Do this next', exact: true }).locator('~ p'),
+    whatHappensNextHeading: this.page.getByRole('heading', { level: 4, name: 'What happens next', exact: true }),
+    whatHappensNextParagraph: this.page.getByRole('heading', { level: 4, name: 'What happens next', exact: true }).locator('~ p'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
@@ -23,18 +26,6 @@ export class SubmitAppealConfirmPage extends ExuiBase {
       urlPath: 'trigger/submitAppeal/confirm',
       pageHeading: this.$static.pageHeading,
     });
-  }
-
-  public async verifyAllTextOnPage(): Promise<void> {
-    await Promise.all([
-      expect(this.$static.caseRecordHeading).toBeVisible(),
-      expect(this.$static.appealSubmittedHeading).toBeVisible(),
-      expect(this.$static.doThisNextHeading).toBeVisible(),
-      expect(this.$static.doThisNextParagraph).toBeVisible(),
-      expect(this.$static.doThisNextParagraph).toHaveText(
-        "You must now pay for this appeal. First create a service request, you can do this by selecting 'Create a service request' from the 'Next step' dropdown list. Then select 'Go'.",
-      ),
-    ]);
   }
 
   public async returnToCaseDetails(): Promise<void> {

@@ -65,7 +65,7 @@ export class AppellantInDetentionFlow {
     addToPayload(
       await this.startAppealAppellantBailApplication.appellantBailApplication({
         hasPendingBailApplications: 'Yes',
-        bailApplicationNumber: 'BailRef123456',
+        bailApplicationNumber: 'AB/01234',
       }),
     );
 

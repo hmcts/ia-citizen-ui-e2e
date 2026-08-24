@@ -1,5 +1,5 @@
 import { expect, Locator, Page } from '@playwright/test';
-import { ExuiBase } from '../../../exui-base';
+import { ExuiBase } from '../../../../exui-base';
 
 const hearingStages = ['Bail', 'Case Management Review', 'Costs', 'Substantive'] as const;
 type HearingStageType = (typeof hearingStages)[number];
