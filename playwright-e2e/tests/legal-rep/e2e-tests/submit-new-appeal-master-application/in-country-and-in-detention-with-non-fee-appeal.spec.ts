@@ -178,7 +178,7 @@ test.describe('Tests to verify legal rep is able to submit new appeal on exui', 
         day: 'numeric',
         month: 'short',
         year: 'numeric',
-      });
+      }).replace('Sept', 'Sep');
 
       const removalDirectionsDate = new Date(
         dynamicTestData.removalDirectionsDate.year,
@@ -189,7 +189,7 @@ test.describe('Tests to verify legal rep is able to submit new appeal on exui', 
         day: 'numeric',
         month: 'short',
         year: 'numeric',
-      });
+      }).replace('Sept', 'Sep');
 
       await Promise.all([
         expect(exui_pages.startAppealSubmit.$questionLocator('Is the appellant currently living in the United Kingdom?')).toBeVisible(),

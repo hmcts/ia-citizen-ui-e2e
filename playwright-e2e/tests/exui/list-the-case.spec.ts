@@ -112,7 +112,9 @@ test.describe('Set of tests to verify admin user is able to list a case for hear
       });
 
       const dateResult = await dataUtils.getDateFromToday({ dayOffset: 1 });
-      const expectedDate = `${dateResult.day} ${new Date(dateResult.year, dateResult.month - 1).toLocaleString('en-GB', { month: 'short' })} ${dateResult.year}`;
+      const expectedDate = `${dateResult.day} ${new Date(dateResult.year, dateResult.month - 1)
+        .toLocaleString('en-GB', { month: 'short' })
+        .replace('Sept', 'Sep')} ${dateResult.year}`;
       await exui_pages.listCaseSubmit.verifyUserIsOnPage();
       await Promise.all([
         expect(exui_pages.listCaseSubmit.$static.caseRecordHeading).toBeVisible(),
