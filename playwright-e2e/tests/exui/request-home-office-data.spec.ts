@@ -67,7 +67,7 @@ test.describe('Set of tests to verify case officer is able to request home offic
         applicationDetails.applicantDetails.dob.month - 1,
         applicationDetails.applicantDetails.dob.day,
       );
-      const formattedDob = appellantDob.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      const formattedDob = appellantDob.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace('Sept', 'Sep');
 
       await exui_pages.caseOverview.selectEventFromDropdown({ eventToSelect: 'Request Home Office data' });
 
@@ -119,13 +119,13 @@ test.describe('Set of tests to verify case officer is able to request home offic
         applicationDetails.applicantDetails.dob.month - 1,
         applicationDetails.applicantDetails.dob.day,
       );
-      const formattedDob = appellantDob.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      const formattedDob = appellantDob.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace('Sept', 'Sep');
       const decisionDate = new Date(
         applicationDetails.applicantDetails.decisionLetterDate.year,
         applicationDetails.applicantDetails.decisionLetterDate.month - 1,
         applicationDetails.applicantDetails.decisionLetterDate.day,
       );
-      const formattedDecisionDate = decisionDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+      const formattedDecisionDate = decisionDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).replace('Sept', 'Sep');
 
       await exui_pages.caseOverview.navigateToTab({ tabToSelect: 'Validation' });
 
