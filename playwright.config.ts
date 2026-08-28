@@ -10,8 +10,9 @@ export default defineConfig({
   ...CommonConfig.recommended,
   testDir: './playwright-e2e/',
   snapshotDir: './playwright-e2e/snapshots',
-  reporter: [['list'], ['html', { outputFolder: 'playwright-report' }]],
+  reporter: [['list'], ['html', { outputFolder: process.env.PLAYWRIGHT_HTML_OUTPUT_DIR || 'playwright-report' }]],
   timeout: 180_000,
+  retries: Number(process.env.PLAYWRIGHT_RETRIES) || 3,
   workers: Number(process.env.WORKERS) || 4,
   expect: {
     timeout: 5_000,
@@ -32,10 +33,6 @@ export default defineConfig({
     {
       name: 'teardown',
       testMatch: 'global.teardown.ts',
-    },
-    {
-      ...ProjectsConfig.chromium,
-      dependencies: ['setup'],
     },
     {
       ...ProjectsConfig.chrome,

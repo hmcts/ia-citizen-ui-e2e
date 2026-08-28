@@ -1,12 +1,12 @@
 import { test, expect } from '../../../fixtures.js';
 
-test.describe('Set of tests to verify user is able to submit an appeal via the UI', () => {
+test.describe('Set of tests to verify user is able to submit an appeal via the UI', { tag: ['@e2e'] }, () => {
   test.beforeEach(async ({ citizenUser, cui_login }) => {
     await cui_login({ email: citizenUser.email, password: citizenUser.password });
   });
 
   // The following test covers a late appeal that also has a sponsor and fee support.
-  test('Verify user is able to submit a paid appeal via the UI', { tag: ['@e2e'] }, async ({ cui_pages, dataUtils }) => {
+  test('Verify user is able to submit a paid appeal via the UI', async ({ cui_pages, dataUtils }) => {
     await test.step('Navigate to appeal overview page', async () => {
       await cui_pages.caseList.createNewAppeal();
       await cui_pages.appealOverview.verifyUserIsOnPage();
@@ -266,7 +266,7 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
   });
 
   // The following test covers an alternative path i.e an application that is in time and does not require any payment nor has a sponsor
-  test('Verify user is able to submit a non paid appeal via the UI', { tag: ['@e2e'] }, async ({ cui_pages, dataUtils }) => {
+  test('Verify user is able to submit a non paid appeal via the UI', async ({ cui_pages, dataUtils }) => {
     await test.step('Navigate to appeal overview page', async () => {
       await cui_pages.caseList.createNewAppeal();
       await cui_pages.appealOverview.verifyUserIsOnPage();

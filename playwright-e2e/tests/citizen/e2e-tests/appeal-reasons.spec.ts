@@ -1,6 +1,6 @@
 import { test, expect } from '../../../fixtures.js';
 
-test.describe('Set of tests to verify user is able to submit answers to appeal reasons via UI', () => {
+test.describe('Set of tests to verify user is able to submit answers to appeal reasons via UI', { tag: ['@e2e'] }, () => {
   test.beforeEach(async ({ citizenUser, cui_login, cui_apiClient, exui_caseOfficerApiClient, exui_homeOfficeUserApiClient, cui_pages }) => {
     const detailsOfNewAppeal = await test.step('Submit a new appeal via Api', async () => {
       const appealDetails = await cui_apiClient.completeAndSubmitNewAppealJourneyViaApi({
@@ -51,7 +51,7 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
     });
   });
 
-  test('Verify user is able to submit answers to appeal reasons via the UI', { tag: ['@e2e'] }, async ({ cui_pages, dataUtils }) => {
+  test('Verify user is able to submit answers to appeal reasons via the UI', async ({ cui_pages, dataUtils }) => {
     await test.step('Provide a response to appeal reasons', async () => {
       await cui_pages.appealOverview.navigationClick(cui_pages.appealOverview.$interactive.continueButton);
 
@@ -127,7 +127,7 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
     });
   });
 
-  test('Verify user is able to ask for time when responding to appeal reasons', { tag: ['@e2e'] }, async ({ cui_pages }) => {
+  test('Verify user is able to ask for time when responding to appeal reasons', async ({ cui_pages }) => {
     await test.step('Ask for more time for appeal reasons', async () => {
       await cui_pages.appealOverview.navigationClick(cui_pages.appealOverview.$interactive.askForMoreTimeLink);
 
@@ -211,7 +211,7 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
     });
   });
 
-  test('Verify user is able to submit answers to appeal reasons after requesting for more time', { tag: ['@e2e'] }, async ({ cui_pages }) => {
+  test('Verify user is able to submit answers to appeal reasons after requesting for more time', async ({ cui_pages }) => {
     await test.step('Ask for more time for appeal reasons', async () => {
       await cui_pages.appealOverview.navigationClick(cui_pages.appealOverview.$interactive.askForMoreTimeLink);
 

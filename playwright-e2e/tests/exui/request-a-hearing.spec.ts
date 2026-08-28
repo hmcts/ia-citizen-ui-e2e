@@ -1,7 +1,7 @@
 import { test, expect } from '../../fixtures.js';
 import { config } from '../../utils/config.utils.js';
 
-test.describe('Set of tests to verify admin user is able to request a hearing on exui manage cases', () => {
+test.describe('Set of tests to verify admin user is able to request a hearing on exui manage cases', { tag: ['@functional'] }, () => {
   test.use({ storageState: config.exuiUsers.adminOfficer.sessionFile });
   let caseIdFromBeforeEach: string;
 
