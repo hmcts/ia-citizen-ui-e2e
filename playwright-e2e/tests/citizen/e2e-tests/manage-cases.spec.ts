@@ -1,13 +1,19 @@
 import { test, expect } from '../../../fixtures.js';
 import { config } from '../../../utils/config.utils.js';
 
-test.describe('Set of tests to verify user is able to carry out events on ExUI manage cases to progress the citizen journey to its end', () => {
-  test.use({ storageState: config.exuiUsers.caseOfficer.sessionFile });
+test.describe(
+  'Set of tests to verify user is able to carry out events on ExUI manage cases to progress the citizen journey to its end',
+  { tag: ['@e2e'] },
+  () => {
+    test.use({ storageState: config.exuiUsers.caseOfficer.sessionFile });
 
-  test(
-    'Verify user is able to progress citizen journey through to appeal being decided by a judge',
-    { tag: ['@e2e'] },
-    async ({ cui_apiClient, newBrowserContextAndPage, exui_pages, exui_adminOfficerApiClient, dataUtils }) => {
+    test('Verify user is able to progress citizen journey through to appeal being decided by a judge', async ({
+      cui_apiClient,
+      newBrowserContextAndPage,
+      exui_pages,
+      exui_adminOfficerApiClient,
+      dataUtils,
+    }) => {
       test.setTimeout(7 * 60 * 1000);
 
       const appealDetails = await test.step('Citizen Api: Submit a new appeal with fee remission', async () => {
@@ -407,6 +413,6 @@ test.describe('Set of tests to verify user is able to carry out events on ExUI m
         await judgeUserExuiPages.caseOverview.verifyUserIsOnPage({});
         await judgeUserExuiPages.caseOverview.verifyAlertMessageAfterSubmittingEvent({ eventSubmitted: 'Complete decision and reasons' });
       });
-    },
-  );
-});
+    });
+  },
+);

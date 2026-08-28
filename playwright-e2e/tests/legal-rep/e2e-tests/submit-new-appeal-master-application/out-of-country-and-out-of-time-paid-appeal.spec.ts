@@ -1,7 +1,7 @@
 import { test, expect } from '../../../../fixtures.js';
 import { config } from '../../../../utils/config.utils.js';
 
-test.describe('Tests to verify legal rep is able to submit new appeal on exui', () => {
+test.describe('Tests to verify legal rep is able to submit new appeal on exui', { tag: ['@e2e'] }, () => {
   test.use({ storageState: config.exuiUsers.legalRepUser.sessionFile });
 
   test('Verify legal rep user is able to submit a new out of country appeal that has a sponsor, is out of time and pays for the appeal', async ({

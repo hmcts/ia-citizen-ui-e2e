@@ -1,6 +1,6 @@
 import { test, expect } from '../../../fixtures.js';
 
-test.describe('Set of tests to verify functionality of case list page on citizen ui', () => {
+test.describe('Set of tests to verify functionality of case list page on citizen ui', { tag: ['@functional'] }, () => {
   test('Verify correct information is displayed on case list page for a draft application', async ({ citizenUser, cui_login, cui_pages }) => {
     await test.step('Create a draft application', async () => {
       await cui_login({ email: citizenUser.email, password: citizenUser.password });

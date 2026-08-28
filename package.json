@@ -35,17 +35,10 @@
     "setup": "yarn playwright install --with-deps",
     "setup:edge": "PLAYWRIGHT_BROWSERS_PATH=0 yarn playwright install msedge --with-deps",
     "load-secrets-aat": "yarn get-secrets ia-aat",
-    "test:chrome": "yarn playwright test tests/ --project=chrome --grep-invert='(@a11y)|(@performance)|(@visual)'",
-    "test:firefox": "yarn playwright test tests/ --project=firefox --grep-invert='(@a11y)|(@performance)|(@visual)'",
-    "test:webkit": "yarn playwright test tests/ --project=webkit --grep-invert='(@a11y)|(@performance)|(@visual)'",
-    "test:edge": "yarn playwright test tests/ --project=edge --grep-invert='(@a11y)|(@performance)|(@visual)'",
-    "test:tabletchrome": "yarn playwright test tests/ --project=tabletchrome --grep-invert='(@a11y)|(@performance)|(@visual)'",
-    "test:tabletwebkit": "yarn playwright test tests/ --project=tabletwebkit --grep-invert='(@a11y)|(@performance)|(@visual)'",
-    "test:a11y": "yarn playwright test tests/ --grep @a11y --project=chrome",
-    "start-container": "docker compose run --rm playwright",
-    "test:visual": "yarn playwright test tests/ --grep @visual --project=chromium",
-    "test:update-snapshots": "yarn playwright test tests/ --grep @visual --project=chromium --update-snapshots",
-    "test:e2e": "yarn playwright test --project \"${PLAYWRIGHT_PROJECT:-chrome}\" --grep-invert='(@a11y)|(@performance)|(@visual)'; EXIT_CODE=$?; exit $EXIT_CODE"
+    "test:citizen:e2e": "yarn playwright test tests/citizen --project \"${PLAYWRIGHT_PROJECT:-chrome}\" --grep @e2e",
+    "test:citizen:functional": "yarn playwright test tests/citizen --project \"${PLAYWRIGHT_PROJECT:-chrome}\" --grep @functional",
+    "test:exui:functional": "yarn playwright test tests/exui --project \"${PLAYWRIGHT_PROJECT:-chrome}\" --grep @functional",
+    "test:legal-rep:e2e": "yarn playwright test tests/legal-rep --project \"${PLAYWRIGHT_PROJECT:-chrome}\" --grep @e2e"
   },
   "packageManager": "yarn@4.9.4",
   "dependencies": {
