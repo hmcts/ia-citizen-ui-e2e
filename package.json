@@ -35,10 +35,11 @@
     "setup": "yarn playwright install --with-deps",
     "setup:edge": "PLAYWRIGHT_BROWSERS_PATH=0 yarn playwright install msedge --with-deps",
     "load-secrets-aat": "yarn get-secrets ia-aat",
-    "test:citizen:e2e": "yarn playwright test tests/citizen --project \"${PLAYWRIGHT_PROJECT:-chrome}\" --grep @e2e",
-    "test:citizen:functional": "yarn playwright test tests/citizen --project \"${PLAYWRIGHT_PROJECT:-chrome}\" --grep @functional",
-    "test:exui:functional": "yarn playwright test tests/exui --project \"${PLAYWRIGHT_PROJECT:-chrome}\" --grep @functional",
-    "test:legal-rep:e2e": "yarn playwright test tests/legal-rep --project \"${PLAYWRIGHT_PROJECT:-chrome}\" --grep @e2e"
+    "test:citizen:e2e": "yarn playwright test tests/citizen --project chrome --grep @e2e",
+    "test:citizen:functional": "yarn playwright test tests/citizen --project chrome --grep @functional",
+    "test:citizen:crossBrowser": "yarn playwright test tests/citizen --grep @crossBrowser",
+    "test:exui:functional": "yarn playwright test tests/exui --project chrome --grep @functional",
+    "test:legal-rep:e2e": "yarn playwright test tests/legal-rep --project chrome --grep @e2e"
   },
   "packageManager": "yarn@4.9.4",
   "dependencies": {

@@ -6,7 +6,7 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
   });
 
   // The following test covers a late appeal that also has a sponsor and fee support.
-  test('Verify user is able to submit a paid appeal via the UI', async ({ cui_pages, dataUtils }) => {
+  test('Verify user is able to submit a paid appeal via the UI', { tag: ['@crossBrowser'] }, async ({ cui_pages, dataUtils }) => {
     await test.step('Navigate to appeal overview page', async () => {
       await cui_pages.caseList.createNewAppeal();
       await cui_pages.appealOverview.verifyUserIsOnPage();
