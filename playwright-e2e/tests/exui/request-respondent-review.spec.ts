@@ -1,7 +1,7 @@
 import { test, expect } from '../../fixtures.js';
 import { config } from '../../utils/config.utils.js';
 
-test.describe('Set of tests to verify case officer is able to request respondent review on exui manage cases', () => {
+test.describe('Set of tests to verify case officer is able to request respondent review on exui manage cases', { tag: ['@functional'] }, () => {
   test.use({ storageState: config.exuiUsers.caseOfficer.sessionFile });
 
   test.beforeEach(async ({ exui_caseOfficerApiClient, cui_apiClient, exui_pages, exui_homeOfficeUserApiClient }) => {

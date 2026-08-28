@@ -12,23 +12,24 @@ properties([
     booleanParam(
       name: 'CHROME',
       defaultValue: true,
-      description: 'Run E2E tests in Chrome (on by default).'
+      description: 'Run tests in Chrome (on by default).'
     ),
      booleanParam(
       name: 'FIREFOX_TESTS',
       defaultValue: false,
-      description: 'Run E2E tests in Firefox.'
+      description: 'Run tests in Firefox.'
     ),
      booleanParam(
       name: 'WEBKIT_TESTS',
       defaultValue: false,
-      description: 'Run E2E tests in Safari (WebKit).'
+      description: 'Run tests in Safari (WebKit).'
     ),
      booleanParam(
       name: 'EDGE_TESTS',
       defaultValue: false,
-      description: 'Run E2E tests in Edge.'
-    )]) 
+      description: 'Run tests in Edge.'
+    ),
+    string(name: 'PLAYWRIGHT_RETRIES', defaultValue: '3', description: 'Playwright retries')]) 
 ])
 
 @Library("Infrastructure")
@@ -96,25 +97,54 @@ def runFunctionalTest(yarnBuilder) {
   ]
   e2eMatrix.each { row ->
     if (params[row.flag]) {
-      runFunctionalStage(yarnBuilder, row.project, row.browser, row.label)
+      runTaggedStage(
+        yarnBuilder,
+        row.project,
+        "Citizen E2E Tests - ${row.label}",
+        'test:citizen:e2e'
+      )
+      runTaggedStage(
+        yarnBuilder,
+        row.project,
+        "Citizen Functional Tests - ${row.label}",
+        'test:citizen:functional'
+      )
+      runTaggedStage(
+        yarnBuilder,
+        row.project,
+        "Exui Functional Tests - ${row.label}",
+        'test:exui:functional'
+      )
+      runTaggedStage(
+        yarnBuilder,
+        row.project,
+        "Legal Rep E2E Tests - ${row.label}",
+        'test:legal-rep:e2e'
+      )
     }
   }
 }
 
-def runFunctionalStage(yarnBuilder, String playwrightProject, String browser, String stageLabel) {
-  stage("E2E - ${stageLabel}") {
+def runTaggedStage(yarnBuilder, String playwrightProject, String stageName, String yarnScript) {
+  stage(stageName) {
+      def reportDir = "playwright-report-${stageName.replaceAll(/[^A-Za-z0-9]+/, '-').replaceAll(/^-|-$/, '')}"
       catchError(buildResult: 'UNSTABLE', stageResult: 'FAILURE') {
-        withEnv(["PLAYWRIGHT_PROJECT=${playwrightProject}"]) {
-          yarnBuilder.yarn('test:e2e')
+        withEnv([
+          "PLAYWRIGHT_PROJECT=${playwrightProject}",
+          "PLAYWRIGHT_RETRIES=${params.PLAYWRIGHT_RETRIES}",
+          "PLAYWRIGHT_HTML_OUTPUT_DIR=${reportDir}",
+          'CI=true'
+        ]) {
+          yarnBuilder.yarn(yarnScript)
         }
       }
       publishHTML([
           allowMissing: false,
           alwaysLinkToLastBuild: true,
           keepAll: true,
-          reportDir: 'playwright-report',
+          reportDir: reportDir,
           reportFiles: 'index.html',
-          reportName: 'Test Report'
+          reportName: "${stageName} - Report"
         ])
     }
 }

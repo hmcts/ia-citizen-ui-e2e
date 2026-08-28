@@ -1,6 +1,6 @@
 import { test, expect } from '../../../fixtures.js';
 
-test.describe('Set of tests to verify functionality of application overview page on citizen ui', () => {
+test.describe('Set of tests to verify functionality of application overview page on citizen ui', { tag: ['@functional'] }, () => {
   test('Verify application overview page displays correct information for a paid application that has not received any payment', async ({
     cui_apiClient,
     citizenUser,
