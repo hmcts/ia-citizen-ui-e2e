@@ -51,7 +51,7 @@ test.describe('Set of tests to verify user is able to submit answers to appeal r
     });
   });
 
-  test('Verify user is able to submit answers to appeal reasons via the UI', async ({ cui_pages, dataUtils }) => {
+  test('Verify user is able to submit answers to appeal reasons via the UI', { tag: ['@crossBrowser'] }, async ({ cui_pages, dataUtils }) => {
     await test.step('Provide a response to appeal reasons', async () => {
       await cui_pages.appealOverview.navigationClick(cui_pages.appealOverview.$interactive.continueButton);
 

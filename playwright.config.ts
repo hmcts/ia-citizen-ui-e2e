@@ -23,6 +23,7 @@ export default defineConfig({
   use: {
     ...CommonConfig.recommended.use,
     actionTimeout: 10_000,
+    navigationTimeout: 60_000,
   },
 
   projects: [
@@ -41,14 +42,17 @@ export default defineConfig({
     {
       ...ProjectsConfig.firefox,
       dependencies: ['setup'],
+      grep: /@crossBrowser/,
     },
     {
       ...ProjectsConfig.webkit,
       dependencies: ['setup'],
+      grep: /@crossBrowser/,
     },
     {
       ...ProjectsConfig.edge,
       dependencies: ['setup'],
+      grep: /@crossBrowser/,
     },
   ],
 });
