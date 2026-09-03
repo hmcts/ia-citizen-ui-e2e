@@ -10,6 +10,8 @@ export type YourDetailsJourney = {
   nationality?: Nationality;
   hasApplicantReceivedADeportationOrder: YesOrNoType;
   doesApplicantHaveASponsor: YesOrNoType;
+  doesApplicantHaveANonLegalRepresentative?: YesOrNoType;
+  isSponsorAndNonLegalRepresentativeTheSamePerson?: YesOrNoType;
 };
 
 export type DecisionTypeJourney = {

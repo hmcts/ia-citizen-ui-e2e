@@ -23,11 +23,16 @@ import {
   ApplicantAddressPage,
   SelectAddressPage,
   ManualAddressPage,
-  HasSponsorPage,
+  HasSponsorOrNonLegalRepPage,
   SponsorNamePage,
   SponsorAddressPage,
   SponsorContactPreferencesPage,
   SponsorAuthorisationPage,
+  IsSamePersonAsSponsorPage,
+  NonLegalRepNamePage,
+  NonLegalRepAddressPage,
+  NonLegalRepAddressOutOfCountryPage,
+  NonLegalRepContactDetailsPage,
   DecisionTypePage,
   PayNowPage,
   EqualityAndDiversityStartPage,
@@ -122,11 +127,16 @@ export class CuiPages {
   public readonly applicantAddress: ApplicantAddressPage;
   public readonly selectAddress: SelectAddressPage;
   public readonly manualAddress: ManualAddressPage;
-  public readonly hasSponsor: HasSponsorPage;
+  public readonly hasSponsorOrNonLegalRep: HasSponsorOrNonLegalRepPage;
   public readonly sponsorName: SponsorNamePage;
   public readonly sponsorAddress: SponsorAddressPage;
   public readonly sponsorContactPreferences: SponsorContactPreferencesPage;
   public readonly sponsorAuthorisation: SponsorAuthorisationPage;
+  public readonly isSamePersonAsSponsor: IsSamePersonAsSponsorPage;
+  public readonly nonLegalRepName: NonLegalRepNamePage;
+  public readonly nonLegalRepAddress: NonLegalRepAddressPage;
+  public readonly nonLegalRepAddressOutOfCountry: NonLegalRepAddressOutOfCountryPage;
+  public readonly nonLegalRepContactDetails: NonLegalRepContactDetailsPage;
   public readonly decisionType: DecisionTypePage;
   public readonly payNow: PayNowPage;
   public readonly equalityAndDiversityStart: EqualityAndDiversityStartPage;
@@ -219,11 +229,16 @@ export class CuiPages {
     this.applicantAddress = new ApplicantAddressPage(page);
     this.selectAddress = new SelectAddressPage(page);
     this.manualAddress = new ManualAddressPage(page);
-    this.hasSponsor = new HasSponsorPage(page);
+    this.hasSponsorOrNonLegalRep = new HasSponsorOrNonLegalRepPage(page);
     this.sponsorName = new SponsorNamePage(page);
     this.sponsorAddress = new SponsorAddressPage(page);
     this.sponsorContactPreferences = new SponsorContactPreferencesPage(page);
     this.sponsorAuthorisation = new SponsorAuthorisationPage(page);
+    this.isSamePersonAsSponsor = new IsSamePersonAsSponsorPage(page);
+    this.nonLegalRepName = new NonLegalRepNamePage(page);
+    this.nonLegalRepAddress = new NonLegalRepAddressPage(page);
+    this.nonLegalRepAddressOutOfCountry = new NonLegalRepAddressOutOfCountryPage(page);
+    this.nonLegalRepContactDetails = new NonLegalRepContactDetailsPage(page);
     this.decisionType = new DecisionTypePage(page);
     this.payNow = new PayNowPage(page);
     this.equalityAndDiversityStart = new EqualityAndDiversityStartPage(page);

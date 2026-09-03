@@ -2,7 +2,7 @@ import { Page, Locator, expect } from '@playwright/test';
 import { CuiBase } from '../../../../cui-base';
 import { YesOrNoType } from '../../../../../../citizen-types';
 
-export class HasSponsorPage extends CuiBase {
+export class IsSamePersonAsSponsorPage extends CuiBase {
   constructor(page: Page) {
     super(page);
   }
@@ -15,22 +15,21 @@ export class HasSponsorPage extends CuiBase {
 
   public readonly $static = {
     pageHeading: this.page.locator('h1', {
-      hasText: 'Do you have a sponsor?',
+      hasText: 'Are your sponsor and non-legal representative the same person?',
     }),
-    sponsorHintText: this.page.locator('div[id="answer-hint"]'),
     yesLabel: this.page.locator("//input[@value='Yes']/following-sibling::label"),
     noLabel: this.page.locator("//input[@value='No']/following-sibling::label"),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
-    await this.verifyUserIsOnExpectedPage({ urlPath: 'has-sponsor', pageHeading: this.$static.pageHeading });
+    await this.verifyUserIsOnExpectedPage({
+      urlPath: 'is-same-person',
+      pageHeading: this.$static.pageHeading,
+    });
   }
 
   public async verifyAllTextOnPage(): Promise<void> {
     await Promise.all([
-      expect(this.$static.sponsorHintText).toHaveText('A sponsor is usually someone you want to join in the UK.'),
-      expect(this.$static.sponsorHintText).toBeVisible(),
-
       expect(this.$static.yesLabel).toHaveText('Yes'),
       expect(this.$static.yesLabel).toBeVisible(),
 
@@ -39,8 +38,8 @@ export class HasSponsorPage extends CuiBase {
     ]);
   }
 
-  public async completePageAndContinue(option: { doesApplicantHaveASponsor: YesOrNoType }): Promise<void> {
-    const element = this.page.locator(`input[type="radio"][value="${option.doesApplicantHaveASponsor}"]`);
+  public async completePageAndContinue(option: { isSponsorAndNonLegalRepresentativeTheSamePerson: YesOrNoType }): Promise<void> {
+    const element = this.page.locator(`input[type="radio"][value="${option.isSponsorAndNonLegalRepresentativeTheSamePerson}"]`);
     await element.check();
     await expect(element).toBeChecked();
     await this.navigationClick(this.$interactive.continueButton);
