@@ -28,7 +28,6 @@ export * from './new-appeal/your-details/your-contact-details/sponsor-authorisat
 export * from './new-appeal/your-details/your-contact-details/is-same-person-as-sponsor.po';
 export * from './new-appeal/your-details/your-contact-details/non-legal-rep-name.po';
 export * from './new-appeal/your-details/your-contact-details/non-legal-rep-address.po';
-export * from './new-appeal/your-details/your-contact-details/non-legal-rep-address-out-of-country.po';
 export * from './new-appeal/your-details/your-contact-details/non-legal-rep-contact-details.po';
 export * from './new-appeal/decision-type/decision-type.po';
 export * from './new-appeal/decision-type/pay-now.po';

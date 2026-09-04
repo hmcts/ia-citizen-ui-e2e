@@ -7,11 +7,7 @@ export class NonLegalRepAddressPage extends CuiBase {
   }
 
   public readonly $inputs = {
-    addressLine1: this.page.locator('input[id="address-line-1"]'),
-    addressLine2: this.page.locator('input[id="address-line-2"]'),
-    townOrCity: this.page.locator('input[id="address-town"]'),
-    county: this.page.locator('input[id="address-county"]'),
-    postCode: this.page.locator('input[id="address-postcode"]'),
+    addressTextArea: this.page.locator('textarea[id="nlr-address"]'),
   } as const satisfies Record<string, Locator>;
 
   public readonly $interactive = {
@@ -24,10 +20,7 @@ export class NonLegalRepAddressPage extends CuiBase {
     pageHeading: this.page.locator('h1', {
       hasText: `What is your non-legal representative's address?`,
     }),
-    buildingAndStreetLabel: this.page.locator('label[for="address-line-1"]'),
-    townOrCityLabel: this.page.locator('label[for="address-town"]'),
-    countyLabel: this.page.locator('label[for="address-county"]'),
-    postCodeLabel: this.page.locator('label[for="address-postcode"]'),
+    enterAddressText: this.page.locator('label[for="nlr-address"]'),
   } as const satisfies Record<string, Locator>;
 
   public async verifyUserIsOnPage(): Promise<void> {
@@ -37,47 +30,12 @@ export class NonLegalRepAddressPage extends CuiBase {
     });
   }
 
-  public async verifyAllTextOnPage(): Promise<void> {
-    await Promise.all([
-      expect(this.$static.buildingAndStreetLabel).toContainText('Building and street'),
-      expect(this.$static.buildingAndStreetLabel).toBeVisible(),
+  public async completePageAndContinue(options: { nonLegalRepAddress: string }): Promise<void> {
+    await expect(this.$static.enterAddressText).toHaveText(`Enter your non-legal representative's address`);
+    await expect(this.$static.enterAddressText).toBeVisible();
 
-      expect(this.$static.townOrCityLabel).toHaveText('Town or city'),
-      expect(this.$static.townOrCityLabel).toBeVisible(),
-
-      expect(this.$static.countyLabel).toHaveText('County'),
-      expect(this.$static.countyLabel).toBeVisible(),
-
-      expect(this.$static.postCodeLabel).toHaveText('Postcode'),
-      expect(this.$static.postCodeLabel).toBeVisible(),
-    ]);
-  }
-
-  public async completePageAndContinue(options: {
-    addressLine1: string;
-    addressLine2?: string;
-    townOrCity: string;
-    county?: string;
-    postCode: string;
-  }): Promise<void> {
-    await this.$inputs.addressLine1.fill(options.addressLine1);
-    await expect(this.$inputs.addressLine1).toHaveValue(options.addressLine1);
-
-    if (options.addressLine2) {
-      await this.$inputs.addressLine2.fill(options.addressLine2);
-      await expect(this.$inputs.addressLine2).toHaveValue(options.addressLine2);
-    }
-
-    await this.$inputs.townOrCity.fill(options.townOrCity);
-    await expect(this.$inputs.townOrCity).toHaveValue(options.townOrCity);
-
-    if (options.county) {
-      await this.$inputs.county.fill(options.county);
-      await expect(this.$inputs.county).toHaveValue(options.county);
-    }
-
-    await this.$inputs.postCode.fill(options.postCode);
-    await expect(this.$inputs.postCode).toHaveValue(options.postCode);
+    await this.$inputs.addressTextArea.fill(options.nonLegalRepAddress);
+    await expect(this.$inputs.addressTextArea).toHaveValue(options.nonLegalRepAddress);
 
     await this.navigationClick(this.$interactive.saveAndContinueButton);
   }

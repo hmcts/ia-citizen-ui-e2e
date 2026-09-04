@@ -31,7 +31,6 @@ import {
   IsSamePersonAsSponsorPage,
   NonLegalRepNamePage,
   NonLegalRepAddressPage,
-  NonLegalRepAddressOutOfCountryPage,
   NonLegalRepContactDetailsPage,
   DecisionTypePage,
   PayNowPage,
@@ -135,7 +134,7 @@ export class CuiPages {
   public readonly isSamePersonAsSponsor: IsSamePersonAsSponsorPage;
   public readonly nonLegalRepName: NonLegalRepNamePage;
   public readonly nonLegalRepAddress: NonLegalRepAddressPage;
-  public readonly nonLegalRepAddressOutOfCountry: NonLegalRepAddressOutOfCountryPage;
+  public readonly nonLegalRepAddressOutOfCountry: NonLegalRepAddressPage;
   public readonly nonLegalRepContactDetails: NonLegalRepContactDetailsPage;
   public readonly decisionType: DecisionTypePage;
   public readonly payNow: PayNowPage;
@@ -237,7 +236,7 @@ export class CuiPages {
     this.isSamePersonAsSponsor = new IsSamePersonAsSponsorPage(page);
     this.nonLegalRepName = new NonLegalRepNamePage(page);
     this.nonLegalRepAddress = new NonLegalRepAddressPage(page);
-    this.nonLegalRepAddressOutOfCountry = new NonLegalRepAddressOutOfCountryPage(page);
+    this.nonLegalRepAddressOutOfCountry = new NonLegalRepAddressPage(page);
     this.nonLegalRepContactDetails = new NonLegalRepContactDetailsPage(page);
     this.decisionType = new DecisionTypePage(page);
     this.payNow = new PayNowPage(page);

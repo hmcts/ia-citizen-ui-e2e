@@ -535,9 +535,8 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
 
       await cui_pages.nonLegalRepAddress.verifyUserIsOnPage();
       await cui_pages.nonLegalRepAddress.completePageAndContinue({
-        addressLine1: '123 Fake Street',
-        townOrCity: 'Faketown',
-        postCode: 'FK1 1FK',
+        'nonLegalRepAddress':
+          'Flat 1, 1 Test Street, Test Town, TE1 1ST, United Kingdom'
       });
 
       await cui_pages.nonLegalRepContactDetails.verifyUserIsOnPage();
