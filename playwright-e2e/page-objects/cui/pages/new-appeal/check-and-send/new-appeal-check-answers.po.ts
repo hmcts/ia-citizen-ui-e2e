@@ -1,20 +1,19 @@
 import { Page, Locator, expect } from '@playwright/test';
 import { CuiBase } from '../../../cui-base';
 
+type ListOfQuestionsType =
+  | 'Sponsor'
+  | 'Non-legal representative'
+  | "Non-legal representative's name"
+  | "Non-legal representative's address"
+  | "Non-legal representative's email"
+  | "Non-legal representative's phone number"
+  | 'Is your sponsor the same as your non-legal representative?'
+
 export class NewAppealCheckAnswersPage extends CuiBase {
   constructor(page: Page) {
     super(page);
   }
-
-  private readonly listOfQuestions = {
-    sponsor: 'Sponsor',
-    nonLegalRepresentative: 'Non-legal representative',
-    nonLegalRepresentativeName: "Non-legal representative's name",
-    nonLegalRepresentativeAddress: "Non-legal representative's address",
-    nonLegalRepresentativeEmail: "Non-legal representative's email",
-    nonLegalRepresentativePhoneNumber: "Non-legal representative's phone number",
-    isSponsorTheSameAsNonLegalRepresentative: 'Is your sponsor the same as your non-legal representative?',
-  } as const satisfies Record<string, string>;
 
   public readonly $interactive = {
     statementCheckbox: this.page.locator('input[type="checkbox"][id="statement"]'),
@@ -27,16 +26,16 @@ export class NewAppealCheckAnswersPage extends CuiBase {
     }),
   } as const satisfies Record<string, Locator>;
 
-  public $questionLocator = (questionKey: keyof typeof this.listOfQuestions): Locator =>
-    this.page.locator('dt.govuk-summary-list__key').getByText(this.listOfQuestions[questionKey], { exact: true });
+  public $questionLocator = (questionKey: ListOfQuestionsType): Locator =>
+    this.page.locator('dt.govuk-summary-list__key').getByText(questionKey, { exact: true });
 
-  public $questionValueLocator(questionKey: keyof typeof this.listOfQuestions): Locator {
+  public $questionValueLocator(questionKey: ListOfQuestionsType): Locator {
     return this.page
       .locator('div.govuk-summary-list__row', { has: this.$questionLocator(questionKey) })
       .locator('dd.govuk-summary-list__value');
   }
 
-  public $changeAnswerToQuestionLocator(questionKey: keyof typeof this.listOfQuestions): Locator {
+  public $changeAnswerToQuestionLocator(questionKey: ListOfQuestionsType): Locator {
     return this.page
       .locator('div.govuk-summary-list__row', { has: this.$questionLocator(questionKey) })
       .locator('dd.govuk-summary-list__actions a', { hasText: 'Change' });

@@ -62,8 +62,12 @@ export class CaseListPage extends CuiBase {
     await expect(this.$interactive.createANewAppealButton).toBeEnabled();
 
     await expect(async () => {
+      if (await this.$static.confirmCreateModalHeading.isVisible()) {
+        return;
+      }
+
       await this.$interactive.createANewAppealButton.click();
-      await expect(this.$static.confirmCreateModalHeading).toBeVisible({ timeout: 3_000 });
+      await expect(this.$static.confirmCreateModalHeading).toBeVisible({ timeout: 5_000 });
     }).toPass({ intervals: [1_000], timeout: 30_000 });
 
     await expect(this.$static.confirmCreateModalDescription).toBeVisible();
