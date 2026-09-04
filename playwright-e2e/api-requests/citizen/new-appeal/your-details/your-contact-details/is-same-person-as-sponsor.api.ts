@@ -17,9 +17,8 @@ export class IsSamePersonAsSponsorApi {
       path: 'is-same-person',
       form: {
         _csrf: csrfToken,
-        questionId: '',
-        answer: option.isSponsorAndNonLegalRepresentativeTheSamePerson,
-        continue: '',
+        isSponsorSameAsNlr: option.isSponsorAndNonLegalRepresentativeTheSamePerson,
+        saveAndContinue: '',
       },
     });
   }

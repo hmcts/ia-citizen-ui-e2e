@@ -9,11 +9,7 @@ export class NonLegalRepAddressApi {
   }
 
   public async submitForm(options: {
-    addressLine1: string;
-    addressLine2?: string;
-    townOrCity: string;
-    county?: string;
-    postCode: string;
+    nonLegalRepAddress: string;
   }): Promise<void> {
     const csrfToken = await cui_getCsrfToken({ apiContext: this.apiContext, path: 'non-legal-rep-address' });
 
@@ -22,11 +18,7 @@ export class NonLegalRepAddressApi {
       path: 'non-legal-rep-address',
       form: {
         _csrf: csrfToken,
-        'address-line-1': options.addressLine1,
-        'address-line-2': options.addressLine2 || '',
-        'address-town': options.townOrCity,
-        'address-county': options.county || '',
-        'address-postcode': options.postCode,
+        'nlr-address': options.nonLegalRepAddress,
         saveAndContinue: '',
       },
     });

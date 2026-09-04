@@ -26,7 +26,6 @@ import {
   IsSamePersonAsSponsorApi,
   NonLegalRepNameApi,
   NonLegalRepAddressApi,
-  NonLegalRepAddressOutOfCountryApi,
   NonLegalRepContactDetailsApi,
 } from '../../../../api-requests/citizen/index';
 
@@ -91,7 +90,6 @@ export class YourDetailsUserFlowApi {
   private cui_isSamePersonAsSponsorApi: IsSamePersonAsSponsorApi;
   private cui_nonLegalRepNameApi: NonLegalRepNameApi;
   private cui_nonLegalRepAddressApi: NonLegalRepAddressApi;
-  private cui_nonLegalRepAddressOutOfCountryApi: NonLegalRepAddressOutOfCountryApi;
   private cui_nonLegalRepContactDetailsApi: NonLegalRepContactDetailsApi;
   private dataUtils = new DataUtils();
 
@@ -120,7 +118,6 @@ export class YourDetailsUserFlowApi {
     this.cui_isSamePersonAsSponsorApi = new IsSamePersonAsSponsorApi(apiContext);
     this.cui_nonLegalRepNameApi = new NonLegalRepNameApi(apiContext);
     this.cui_nonLegalRepAddressApi = new NonLegalRepAddressApi(apiContext);
-    this.cui_nonLegalRepAddressOutOfCountryApi = new NonLegalRepAddressOutOfCountryApi(apiContext);
     this.cui_nonLegalRepContactDetailsApi = new NonLegalRepContactDetailsApi(apiContext);
   }
 
@@ -277,7 +274,6 @@ export class YourDetailsUserFlowApi {
       const nlrContactDetails = await this.dataUtils.generateContactDetails('Email and Phone');
 
       await this.cui_nonLegalRepNameApi.submitForm({ givenNames: nlrName.firstNames, familyName: nlrName.lastNames[0] });
-      await this.cui_nonLegalRepAddressOutOfCountryApi.submitForm({ nonLegalRepAddress: nlrAddress });
       await this.cui_nonLegalRepContactDetailsApi.submitForm({
         nlrEmail: nlrContactDetails.email!,
         nlrPhoneNumber: nlrContactDetails.phone!,
@@ -306,10 +302,9 @@ export class YourDetailsUserFlowApi {
         });
         const nlrAddress = '123 Fake Street, Faketown, FK1 2AB';
         const nlrContactDetails = await this.dataUtils.generateContactDetails('Email and Phone');
-        const address = nlrAddress.split(', ');
 
         await this.cui_nonLegalRepNameApi.submitForm({ givenNames: nlrName.firstNames, familyName: nlrName.lastNames[0] });
-        await this.cui_nonLegalRepAddressApi.submitForm({ addressLine1: address[0], townOrCity: address[1], postCode: address[2] });
+        await this.cui_nonLegalRepAddressApi.submitForm({ nonLegalRepAddress: nlrAddress });
         await this.cui_nonLegalRepContactDetailsApi.submitForm({
           nlrEmail: nlrContactDetails.email!,
           nlrPhoneNumber: nlrContactDetails.phone!,

@@ -24,7 +24,6 @@ export * from './new-appeal/your-details/your-contact-details/sponsor-authorisat
 export * from './new-appeal/your-details/your-contact-details/is-same-person-as-sponsor.api';
 export * from './new-appeal/your-details/your-contact-details/non-legal-rep-name.api';
 export * from './new-appeal/your-details/your-contact-details/non-legal-rep-address.api';
-export * from './new-appeal/your-details/your-contact-details/non-legal-rep-address-out-of-country.api';
 export * from './new-appeal/your-details/your-contact-details/non-legal-rep-contact-details.api';
 export * from './new-appeal/decision-type/decision-type.api';
 export * from './new-appeal/decision-type/pay-now.api';
