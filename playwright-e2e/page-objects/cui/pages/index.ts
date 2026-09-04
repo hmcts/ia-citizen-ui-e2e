@@ -20,11 +20,15 @@ export * from './new-appeal/your-details/your-contact-details/out-of-country-add
 export * from './new-appeal/your-details/your-contact-details/applicant-address.po';
 export * from './new-appeal/your-details/your-contact-details/select-address.po';
 export * from './new-appeal/your-details/your-contact-details/manual-address.po';
-export * from './new-appeal/your-details/your-contact-details/has-sponsor.po';
+export * from './new-appeal/your-details/your-contact-details/has-sponsor-or-non-legal-rep.po';
 export * from './new-appeal/your-details/your-contact-details/sponsor-name.po';
 export * from './new-appeal/your-details/your-contact-details/sponsor-address.po';
 export * from './new-appeal/your-details/your-contact-details/sponsor-contact-preferences.po';
 export * from './new-appeal/your-details/your-contact-details/sponsor-authorisation.po';
+export * from './new-appeal/your-details/your-contact-details/is-same-person-as-sponsor.po';
+export * from './new-appeal/your-details/your-contact-details/non-legal-rep-name.po';
+export * from './new-appeal/your-details/your-contact-details/non-legal-rep-address.po';
+export * from './new-appeal/your-details/your-contact-details/non-legal-rep-contact-details.po';
 export * from './new-appeal/decision-type/decision-type.po';
 export * from './new-appeal/decision-type/pay-now.po';
 export * from './new-appeal/decision-type/equality-and-diversity-start-page.po';

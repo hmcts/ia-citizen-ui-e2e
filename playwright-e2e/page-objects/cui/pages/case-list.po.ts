@@ -15,7 +15,7 @@ export class CaseListPage extends CuiBase {
   } as const satisfies Record<string, Locator>;
 
   public readonly $static = {
-    pageHeading: this.page.getByRole('heading', { name: 'Your appeals', level: 1, exact: true }),
+    pageHeading: this.page.getByRole('heading', { name: 'Appeal list', level: 1, exact: true }),
     noAppealsText: this.page.getByText('You do not have any appeals.', { exact: true }),
     confirmCreateModalHeading: this.page.getByRole('heading', {
       name: 'Are you sure you want to create a new appeal?',
@@ -48,8 +48,9 @@ export class CaseListPage extends CuiBase {
     return this.$appealRow(searchTerm).getByRole('button', { name: 'Delete', exact: true });
   }
 
-  public async verifyUserIsOnPage(): Promise<void> {
-    await this.verifyUserIsOnExpectedPage({ urlPath: '/cases-list', pageHeading: this.$static.pageHeading });
+  public async verifyUserIsOnPage(options: { timeoutMs?: number } = {}): Promise<void> {
+    const timeoutMs = options.timeoutMs ?? 30_000;
+    await this.verifyUserIsOnExpectedPage({ urlPath: '/cases-list', pageHeading: this.$static.pageHeading, timeout: timeoutMs });
   }
 
   public async verifyNoAppealsTextOnPage(): Promise<void> {
@@ -59,15 +60,20 @@ export class CaseListPage extends CuiBase {
   public async createNewAppeal(): Promise<void> {
     await expect(this.$interactive.createANewAppealButton).toBeVisible();
     await expect(this.$interactive.createANewAppealButton).toBeEnabled();
-    await this.$interactive.createANewAppealButton.click();
 
-    await Promise.all([
-      expect(this.$static.confirmCreateModalHeading).toBeVisible(),
-      expect(this.$static.confirmCreateModalDescription).toBeVisible(),
-      expect(this.$static.confirmCreateModalDescription).toHaveText(
-        'You can only have 5 draft appeals at one time. If you have more than this, you will need to submit or delete some first.',
-      ),
-    ]);
+    await expect(async () => {
+      if (await this.$static.confirmCreateModalHeading.isVisible()) {
+        return;
+      }
+
+      await this.$interactive.createANewAppealButton.click();
+      await expect(this.$static.confirmCreateModalHeading).toBeVisible({ timeout: 5_000 });
+    }).toPass({ intervals: [1_000], timeout: 30_000 });
+
+    await expect(this.$static.confirmCreateModalDescription).toBeVisible();
+    await expect(this.$static.confirmCreateModalDescription).toHaveText(
+      'You can only have 5 draft appeals at one time. If you have more than this, you will need to submit or delete some first.',
+    );
 
     await this.navigationClick(this.$interactive.confirmCreateNewAppealButton);
   }

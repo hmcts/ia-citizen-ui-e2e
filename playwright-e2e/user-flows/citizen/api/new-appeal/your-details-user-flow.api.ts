@@ -18,11 +18,15 @@ import {
   ContactPreferencesApi,
   OutOfCountryAddressApi,
   ManualAddressApi,
-  HasSponsorApi,
+  HasSponsorOrNonLegalRepApi,
   SponsorNameApi,
   SponsorAddressApi,
   SponsorContactPreferencesApi,
   SponsorAuthorisationApi,
+  IsSamePersonAsSponsorApi,
+  NonLegalRepNameApi,
+  NonLegalRepAddressApi,
+  NonLegalRepContactDetailsApi,
 } from '../../../../api-requests/citizen/index';
 
 export type ApplicantDetailsType = {
@@ -52,6 +56,13 @@ export type ApplicantDetailsType = {
     email?: string;
     phoneNumber?: string;
   };
+  nonLegalRepresentativeDetails?: {
+    givenNames: string[];
+    familyName: string;
+    address: string;
+    email?: string;
+    phoneNumber?: string;
+  };
 };
 
 export class YourDetailsUserFlowApi {
@@ -71,11 +82,15 @@ export class YourDetailsUserFlowApi {
   private cui_contactPreferencesApi: ContactPreferencesApi;
   private cui_outOfCountryAddressApi: OutOfCountryAddressApi;
   private cui_manualAddressApi: ManualAddressApi;
-  private cui_hasSponsorApi: HasSponsorApi;
+  private cui_hasSponsorOrNonLegalRepApi: HasSponsorOrNonLegalRepApi;
   private cui_sponsorNameApi: SponsorNameApi;
   private cui_sponsorAddressApi: SponsorAddressApi;
   private cui_sponsorContactPreferencesApi: SponsorContactPreferencesApi;
   private cui_sponsorAuthorisationApi: SponsorAuthorisationApi;
+  private cui_isSamePersonAsSponsorApi: IsSamePersonAsSponsorApi;
+  private cui_nonLegalRepNameApi: NonLegalRepNameApi;
+  private cui_nonLegalRepAddressApi: NonLegalRepAddressApi;
+  private cui_nonLegalRepContactDetailsApi: NonLegalRepContactDetailsApi;
   private dataUtils = new DataUtils();
 
   constructor(apiContext: APIRequestContext) {
@@ -95,11 +110,15 @@ export class YourDetailsUserFlowApi {
     this.cui_contactPreferencesApi = new ContactPreferencesApi(apiContext);
     this.cui_outOfCountryAddressApi = new OutOfCountryAddressApi(apiContext);
     this.cui_manualAddressApi = new ManualAddressApi(apiContext);
-    this.cui_hasSponsorApi = new HasSponsorApi(apiContext);
+    this.cui_hasSponsorOrNonLegalRepApi = new HasSponsorOrNonLegalRepApi(apiContext);
     this.cui_sponsorNameApi = new SponsorNameApi(apiContext);
     this.cui_sponsorAddressApi = new SponsorAddressApi(apiContext);
     this.cui_sponsorContactPreferencesApi = new SponsorContactPreferencesApi(apiContext);
     this.cui_sponsorAuthorisationApi = new SponsorAuthorisationApi(apiContext);
+    this.cui_isSamePersonAsSponsorApi = new IsSamePersonAsSponsorApi(apiContext);
+    this.cui_nonLegalRepNameApi = new NonLegalRepNameApi(apiContext);
+    this.cui_nonLegalRepAddressApi = new NonLegalRepAddressApi(apiContext);
+    this.cui_nonLegalRepContactDetailsApi = new NonLegalRepContactDetailsApi(apiContext);
   }
 
   public async submitYourDetailsFlowViaApi(appealData: YourDetailsJourney): Promise<ApplicantDetailsType> {
@@ -210,28 +229,103 @@ export class YourDetailsUserFlowApi {
         throw new Error(`Invalid isUserInTheUk value: ${appealData.isUserInTheUk}`);
     }
 
-    await this.cui_hasSponsorApi.submitForm({ doesApplicantHaveASponsor: appealData.doesApplicantHaveASponsor });
+    const doesApplicantHaveANonLegalRepresentative = appealData.doesApplicantHaveANonLegalRepresentative ?? 'No';
 
-    const sponsorName = await this.dataUtils.generateRandomFirstAndLastNames({
-      countOfFirstNamesToGenerate: 1,
-      countOfLastNamesToGenerate: 1,
+    await this.cui_hasSponsorOrNonLegalRepApi.submitForm({
+      doesApplicantHaveASponsor: appealData.doesApplicantHaveASponsor,
+      doesApplicantHaveANonLegalRepresentative,
     });
-    const sponsorAddress = '123 Fake Street, Faketown, FK1 2AB';
-    const sponsorContactDetails = await this.dataUtils.generateContactDetails('Email and Phone');
 
-    if (appealData.doesApplicantHaveASponsor === 'Yes') {
-      await this.cui_sponsorNameApi.submitForm({ givenNames: sponsorName.firstNames, familyName: sponsorName.lastNames[0] });
-
+    const submitSponsorDetailsAndReturn = async (): Promise<NonNullable<ApplicantDetailsType['sponsorDetails']>> => {
+      const sponsorName = await this.dataUtils.generateRandomFirstAndLastNames({
+        countOfFirstNamesToGenerate: 1,
+        countOfLastNamesToGenerate: 1,
+      });
+      const sponsorAddress = '123 Fake Street, Faketown, FK1 2AB';
+      const sponsorContactDetails = await this.dataUtils.generateContactDetails('Email and Phone');
       const address = sponsorAddress.split(', ');
-      await this.cui_sponsorAddressApi.submitForm({ addressLine1: address[0], townOrCity: address[1], postCode: address[2] });
 
+      await this.cui_sponsorNameApi.submitForm({ givenNames: sponsorName.firstNames, familyName: sponsorName.lastNames[0] });
+      await this.cui_sponsorAddressApi.submitForm({ addressLine1: address[0], townOrCity: address[1], postCode: address[2] });
       await this.cui_sponsorContactPreferencesApi.submitForm({
         contactPreference: 'Email and Phone',
         sponsorEmail: sponsorContactDetails.email,
         sponsorPhoneNumber: sponsorContactDetails.phone,
       });
-
       await this.cui_sponsorAuthorisationApi.submitForm({ allowSponsorToSeeAppealInformation: 'Yes' });
+
+      return {
+        givenNames: sponsorName.firstNames,
+        familyName: sponsorName.lastNames[0],
+        address: sponsorAddress,
+        email: sponsorContactDetails.email,
+        phoneNumber: sponsorContactDetails.phone,
+      };
+    };
+
+    const submitNonLegalRepDetailsWithFreeTextAddressAndReturn = async (): Promise<
+      NonNullable<ApplicantDetailsType['nonLegalRepresentativeDetails']>
+    > => {
+      const nlrName = await this.dataUtils.generateRandomFirstAndLastNames({
+        countOfFirstNamesToGenerate: 1,
+        countOfLastNamesToGenerate: 1,
+      });
+      const nlrAddress = 'Flat 2, 45 Example Road, Example City, EX2 3PL, United Kingdom';
+      const nlrContactDetails = await this.dataUtils.generateContactDetails('Email and Phone');
+
+      await this.cui_nonLegalRepNameApi.submitForm({ givenNames: nlrName.firstNames, familyName: nlrName.lastNames[0] });
+      await this.cui_nonLegalRepContactDetailsApi.submitForm({
+        nlrEmail: nlrContactDetails.email!,
+        nlrPhoneNumber: nlrContactDetails.phone!,
+      });
+
+      return {
+        givenNames: nlrName.firstNames,
+        familyName: nlrName.lastNames[0],
+        address: nlrAddress,
+        email: nlrContactDetails.email,
+        phoneNumber: nlrContactDetails.phone,
+      };
+    };
+
+    let sponsorDetails: ApplicantDetailsType['sponsorDetails'];
+    let nonLegalRepresentativeDetails: ApplicantDetailsType['nonLegalRepresentativeDetails'];
+
+    if (appealData.doesApplicantHaveASponsor === 'Yes' && doesApplicantHaveANonLegalRepresentative === 'Yes') {
+      const isSponsorAndNonLegalRepresentativeTheSamePerson = appealData.isSponsorAndNonLegalRepresentativeTheSamePerson ?? 'No';
+      await this.cui_isSamePersonAsSponsorApi.submitForm({ isSponsorAndNonLegalRepresentativeTheSamePerson });
+
+      if (isSponsorAndNonLegalRepresentativeTheSamePerson === 'Yes') {
+        const nlrName = await this.dataUtils.generateRandomFirstAndLastNames({
+          countOfFirstNamesToGenerate: 1,
+          countOfLastNamesToGenerate: 1,
+        });
+        const nlrAddress = '123 Fake Street, Faketown, FK1 2AB';
+        const nlrContactDetails = await this.dataUtils.generateContactDetails('Email and Phone');
+
+        await this.cui_nonLegalRepNameApi.submitForm({ givenNames: nlrName.firstNames, familyName: nlrName.lastNames[0] });
+        await this.cui_nonLegalRepAddressApi.submitForm({ nonLegalRepAddress: nlrAddress });
+        await this.cui_nonLegalRepContactDetailsApi.submitForm({
+          nlrEmail: nlrContactDetails.email!,
+          nlrPhoneNumber: nlrContactDetails.phone!,
+        });
+
+        nonLegalRepresentativeDetails = {
+          givenNames: nlrName.firstNames,
+          familyName: nlrName.lastNames[0],
+          address: nlrAddress,
+          email: nlrContactDetails.email,
+          phoneNumber: nlrContactDetails.phone,
+        };
+        sponsorDetails = { ...nonLegalRepresentativeDetails };
+      } else {
+        sponsorDetails = await submitSponsorDetailsAndReturn();
+        nonLegalRepresentativeDetails = await submitNonLegalRepDetailsWithFreeTextAddressAndReturn();
+      }
+    } else if (appealData.doesApplicantHaveASponsor === 'Yes') {
+      sponsorDetails = await submitSponsorDetailsAndReturn();
+    } else if (doesApplicantHaveANonLegalRepresentative === 'Yes') {
+      nonLegalRepresentativeDetails = await submitNonLegalRepDetailsWithFreeTextAddressAndReturn();
     }
 
     return {
@@ -250,16 +344,8 @@ export class YourDetailsUserFlowApi {
         email: applicantContactDetails.email,
         phoneNumber: applicantContactDetails.phone,
       },
-      sponsorDetails:
-        appealData.doesApplicantHaveASponsor === 'Yes'
-          ? {
-              givenNames: sponsorName.firstNames,
-              familyName: sponsorName.lastNames[0],
-              address: sponsorAddress,
-              email: sponsorContactDetails.email,
-              phoneNumber: sponsorContactDetails.phone,
-            }
-          : undefined,
+      sponsorDetails,
+      nonLegalRepresentativeDetails,
     };
   }
 }

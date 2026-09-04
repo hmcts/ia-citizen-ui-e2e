@@ -109,9 +109,12 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
         applicantAddress: 'Flat 1, 1 Test Street, Test Town, TE1 1ST, United Kingdom',
       });
 
-      await cui_pages.hasSponsor.verifyUserIsOnPage();
-      await cui_pages.hasSponsor.verifyAllTextOnPage();
-      await cui_pages.hasSponsor.completePageAndContinue({ doesApplicantHaveASponsor: 'Yes' });
+      await cui_pages.hasSponsorOrNonLegalRep.verifyUserIsOnPage();
+      await cui_pages.hasSponsorOrNonLegalRep.verifyAllTextOnPage();
+      await cui_pages.hasSponsorOrNonLegalRep.completePageAndContinue({
+        doesApplicantHaveASponsor: 'Yes',
+        doesApplicantHaveANonLegalRepresentative: 'No',
+      });
 
       await cui_pages.sponsorName.verifyUserIsOnPage();
       await cui_pages.sponsorName.verifyAllTextOnPage();
@@ -362,8 +365,11 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
         postCode: 'N1 7DA',
       });
 
-      await cui_pages.hasSponsor.verifyUserIsOnPage();
-      await cui_pages.hasSponsor.completePageAndContinue({ doesApplicantHaveASponsor: 'No' });
+      await cui_pages.hasSponsorOrNonLegalRep.verifyUserIsOnPage();
+      await cui_pages.hasSponsorOrNonLegalRep.completePageAndContinue({
+        doesApplicantHaveASponsor: 'No',
+        doesApplicantHaveANonLegalRepresentative: 'No',
+      });
 
       await cui_pages.aboutAppeal.verifyUserIsOnPage();
     });
@@ -408,6 +414,587 @@ test.describe('Set of tests to verify user is able to submit an appeal via the U
       const expectedDate = (await dataUtils.getDateFromToday({ dayOffset: 5 })).full;
       await expect(
         cui_pages.appealDetailsSent.page.getByText(`This should be by ${expectedDate} but it might take longer than that`, { exact: true }),
+      ).toBeVisible();
+
+      await expect(cui_pages.appealDetailsSent.$static.thingsYouCanDoNowHeading).toBeVisible();
+      await expect(cui_pages.appealDetailsSent.$interactive.readMoreAboutAppealingAsylumDecisionLink).toBeVisible();
+      await expect(cui_pages.appealDetailsSent.$interactive.findOrganisationsThatCanHelpLink).toBeVisible();
+    });
+  });
+
+  test('Verify user is able to submit an appeal where the sponsor and non-legal representative are the same person', async ({
+    cui_pages,
+    dataUtils,
+  }) => {
+    await test.step('Navigate to appeal overview page', async () => {
+      await cui_pages.caseList.createNewAppeal();
+      await cui_pages.appealOverview.verifyUserIsOnPage();
+    });
+
+    await test.step('Navigate to about appeals page', async () => {
+      await cui_pages.appealOverview.navigationClick(cui_pages.appealOverview.$interactive.continueButton);
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete appeal type section of journey', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.appealTypeLink);
+
+      await cui_pages.inTheUk.verifyUserIsOnPage();
+      await cui_pages.inTheUk.completePageAndContinue({ isUserInTheUk: 'Yes' });
+
+      await cui_pages.appealType.verifyUserIsOnPage();
+      await cui_pages.appealType.completePageAndContinue({ appealType: 'Deprivation of Citizenship' });
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete your home office and details section of journey', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.homeOfficeAndPersonalDetailsLink);
+
+      await cui_pages.homeOfficeReferenceNumber.verifyUserIsOnPage();
+      const homeOfficeReference = await dataUtils.generateRandomNumber({ digitLength: 9 });
+      await cui_pages.homeOfficeReferenceNumber.completePageAndContinue({ homeOfficeReference: homeOfficeReference });
+
+      await cui_pages.applicantName.verifyUserIsOnPage();
+      const applicantName = await dataUtils.generateRandomFirstAndLastNames({ countOfFirstNamesToGenerate: 1, countOfLastNamesToGenerate: 1 });
+      await cui_pages.applicantName.completePageAndContinue({
+        givenNames: applicantName.firstNames[0],
+        familyName: applicantName.lastNames[0],
+      });
+
+      await cui_pages.applicantDob.verifyUserIsOnPage();
+      const applicantDob = await dataUtils.getDateFromToday({ yearOffset: -30 });
+      await cui_pages.applicantDob.completePageAndContinue({
+        day: applicantDob.day,
+        month: applicantDob.month,
+        year: applicantDob.year,
+      });
+
+      await cui_pages.applicantNationality.verifyUserIsOnPage();
+      await cui_pages.applicantNationality.completePageAndContinue({ stateless: true });
+
+      await cui_pages.decisionLetterSent.verifyUserIsOnPage();
+      const dateLetterSent = await dataUtils.getDateFromToday({ dayOffset: -10 });
+      await cui_pages.decisionLetterSent.completePageAndContinue({
+        day: dateLetterSent.day,
+        month: dateLetterSent.month,
+        year: dateLetterSent.year,
+      });
+
+      await cui_pages.uploadDecisionLetter.verifyUserIsOnPage();
+      await cui_pages.uploadDecisionLetter.completePageAndContinue({});
+
+      await cui_pages.deportationOrder.verifyUserIsOnPage();
+      await cui_pages.deportationOrder.completePageAndContinue({ deportationOrderReceived: 'No' });
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete your contact details section of journey, including sponsor/non-legal representative as the same person', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.yourContactDetailsLink);
+
+      await cui_pages.contactPreferences.verifyUserIsOnPage();
+      const contactDetails = await dataUtils.generateContactDetails('Email and Phone');
+      await cui_pages.contactPreferences.completePageAndContinue({
+        contactPreference: 'Email and Phone',
+        applicantEmail: contactDetails.email,
+        applicantPhoneNumber: contactDetails.phone,
+      });
+
+      await cui_pages.applicantAddress.verifyUserIsOnPage();
+      await cui_pages.applicantAddress.completePageAndContinue({
+        addressPreference: 'Post Code Search',
+        postCode: 'N1 7DA',
+      });
+
+      await cui_pages.selectAddress.verifyUserIsOnPage();
+      await cui_pages.selectAddress.completePageAndContinue({ preference: 'Select Address At Random' });
+
+      await cui_pages.manualAddress.verifyUserIsOnPage();
+      await cui_pages.manualAddress.completePageAndContinue({
+        preference: 'Address selected via postcode search',
+        postCode: 'N1 7DA',
+      });
+
+      await cui_pages.hasSponsorOrNonLegalRep.verifyUserIsOnPage();
+      await cui_pages.hasSponsorOrNonLegalRep.completePageAndContinue({
+        doesApplicantHaveASponsor: 'Yes',
+        doesApplicantHaveANonLegalRepresentative: 'Yes',
+      });
+
+      await cui_pages.isSamePersonAsSponsor.verifyUserIsOnPage();
+      await cui_pages.isSamePersonAsSponsor.completePageAndContinue({ isSponsorAndNonLegalRepresentativeTheSamePerson: 'Yes' });
+
+      await cui_pages.nonLegalRepName.verifyUserIsOnPage();
+      const nlrName = await dataUtils.generateRandomFirstAndLastNames({ countOfFirstNamesToGenerate: 1, countOfLastNamesToGenerate: 1 });
+      await cui_pages.nonLegalRepName.completePageAndContinue({
+        givenNames: nlrName.firstNames[0],
+        familyName: nlrName.lastNames[0],
+      });
+
+      await cui_pages.nonLegalRepAddress.verifyUserIsOnPage();
+      await cui_pages.nonLegalRepAddress.completePageAndContinue({
+        'nonLegalRepAddress':
+          'Flat 1, 1 Test Street, Test Town, TE1 1ST, United Kingdom'
+      });
+
+      await cui_pages.nonLegalRepContactDetails.verifyUserIsOnPage();
+      const nlrContactDetails = await dataUtils.generateContactDetails('Email and Phone');
+      await cui_pages.nonLegalRepContactDetails.completePageAndContinue({
+        nlrEmail: nlrContactDetails.email!,
+        nlrPhoneNumber: nlrContactDetails.phone!,
+      });
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete decision with or without a hearing section of journey', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.decisionWithOrWithoutHearingLink);
+
+      await cui_pages.decisionType.verifyUserIsOnPage();
+      await cui_pages.decisionType.completePageAndContinue({ decisionWithOrWithoutHearing: 'decisionWithoutHearing' });
+
+      await cui_pages.equalityAndDiversityStart.verifyUserIsOnPage();
+      await cui_pages.equalityAndDiversityStart.completePageAndContinue();
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete check and send section of journey', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.checkAndSendYourAppealDetailsLink);
+
+      await cui_pages.newAppealCheckAnswers.verifyUserIsOnPage();
+      await cui_pages.newAppealCheckAnswers.submitApplication();
+    });
+
+    await test.step('Verify application has successfully been submitted', async () => {
+      await cui_pages.appealDetailsSent.verifyUserIsOnPage();
+
+      await expect(cui_pages.appealDetailsSent.$static.pageHeading).toHaveText('Your appeal details have been sent');
+      await expect(cui_pages.appealDetailsSent.$static.whatHappensNextHeading).toBeVisible();
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(
+          'A Legal Officer will ask the Home Office to send any documents it has about your case to the Tribunal',
+          { exact: true },
+        ),
+      ).toBeVisible();
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(
+          'A Legal Officer will check the Home Office documents and then contact you to tell you what to do next',
+          { exact: true },
+        ),
+      ).toBeVisible();
+
+      const expectedDate = (await dataUtils.getDateFromToday({ dayOffset: 5 })).full;
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(`This should be by ${expectedDate} but it might take longer than that`, { exact: true }),
+      ).toBeVisible();
+
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(
+          'You have submitted your appeal details with a non-legal representative. If they do not already have an account with MyHMCTS, they will be sent an email to create an account..',
+          { exact: true },
+        ),
+      ).toBeVisible();
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(
+          'To continue to add your non-legal representative once they have created an account, please click the Add non-legal representative link on the right of your appeal page in order to send them instructions to access your case.',
+          { exact: true },
+        ),
+      ).toBeVisible();
+
+      await expect(cui_pages.appealDetailsSent.$static.thingsYouCanDoNowHeading).toBeVisible();
+      await expect(cui_pages.appealDetailsSent.$interactive.readMoreAboutAppealingAsylumDecisionLink).toBeVisible();
+      await expect(cui_pages.appealDetailsSent.$interactive.findOrganisationsThatCanHelpLink).toBeVisible();
+    });
+  });
+
+  test('Verify user is able to submit an appeal where the sponsor and non-legal representative are different people', async ({
+    cui_pages,
+    dataUtils,
+  }) => {
+    await test.step('Navigate to appeal overview page', async () => {
+      await cui_pages.caseList.createNewAppeal();
+      await cui_pages.appealOverview.verifyUserIsOnPage();
+    });
+
+    await test.step('Navigate to about appeals page', async () => {
+      await cui_pages.appealOverview.navigationClick(cui_pages.appealOverview.$interactive.continueButton);
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete appeal type section of journey', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.appealTypeLink);
+
+      await cui_pages.inTheUk.verifyUserIsOnPage();
+      await cui_pages.inTheUk.completePageAndContinue({ isUserInTheUk: 'Yes' });
+
+      await cui_pages.appealType.verifyUserIsOnPage();
+      await cui_pages.appealType.completePageAndContinue({ appealType: 'Deprivation of Citizenship' });
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete your home office and details section of journey', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.homeOfficeAndPersonalDetailsLink);
+
+      await cui_pages.homeOfficeReferenceNumber.verifyUserIsOnPage();
+      const homeOfficeReference = await dataUtils.generateRandomNumber({ digitLength: 9 });
+      await cui_pages.homeOfficeReferenceNumber.completePageAndContinue({ homeOfficeReference: homeOfficeReference });
+
+      await cui_pages.applicantName.verifyUserIsOnPage();
+      const applicantName = await dataUtils.generateRandomFirstAndLastNames({ countOfFirstNamesToGenerate: 1, countOfLastNamesToGenerate: 1 });
+      await cui_pages.applicantName.completePageAndContinue({
+        givenNames: applicantName.firstNames[0],
+        familyName: applicantName.lastNames[0],
+      });
+
+      await cui_pages.applicantDob.verifyUserIsOnPage();
+      const applicantDob = await dataUtils.getDateFromToday({ yearOffset: -30 });
+      await cui_pages.applicantDob.completePageAndContinue({
+        day: applicantDob.day,
+        month: applicantDob.month,
+        year: applicantDob.year,
+      });
+
+      await cui_pages.applicantNationality.verifyUserIsOnPage();
+      await cui_pages.applicantNationality.completePageAndContinue({ stateless: true });
+
+      await cui_pages.decisionLetterSent.verifyUserIsOnPage();
+      const dateLetterSent = await dataUtils.getDateFromToday({ dayOffset: -10 });
+      await cui_pages.decisionLetterSent.completePageAndContinue({
+        day: dateLetterSent.day,
+        month: dateLetterSent.month,
+        year: dateLetterSent.year,
+      });
+
+      await cui_pages.uploadDecisionLetter.verifyUserIsOnPage();
+      await cui_pages.uploadDecisionLetter.completePageAndContinue({});
+
+      await cui_pages.deportationOrder.verifyUserIsOnPage();
+      await cui_pages.deportationOrder.completePageAndContinue({ deportationOrderReceived: 'No' });
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete your contact details section of journey, including BAU sponsor questions followed by non-legal representative questions', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.yourContactDetailsLink);
+
+      await cui_pages.contactPreferences.verifyUserIsOnPage();
+      const contactDetails = await dataUtils.generateContactDetails('Email and Phone');
+      await cui_pages.contactPreferences.completePageAndContinue({
+        contactPreference: 'Email and Phone',
+        applicantEmail: contactDetails.email,
+        applicantPhoneNumber: contactDetails.phone,
+      });
+
+      await cui_pages.applicantAddress.verifyUserIsOnPage();
+      await cui_pages.applicantAddress.completePageAndContinue({
+        addressPreference: 'Post Code Search',
+        postCode: 'N1 7DA',
+      });
+
+      await cui_pages.selectAddress.verifyUserIsOnPage();
+      await cui_pages.selectAddress.completePageAndContinue({ preference: 'Select Address At Random' });
+
+      await cui_pages.manualAddress.verifyUserIsOnPage();
+      await cui_pages.manualAddress.completePageAndContinue({
+        preference: 'Address selected via postcode search',
+        postCode: 'N1 7DA',
+      });
+
+      await cui_pages.hasSponsorOrNonLegalRep.verifyUserIsOnPage();
+      await cui_pages.hasSponsorOrNonLegalRep.completePageAndContinue({
+        doesApplicantHaveASponsor: 'Yes',
+        doesApplicantHaveANonLegalRepresentative: 'Yes',
+      });
+
+      await cui_pages.isSamePersonAsSponsor.verifyUserIsOnPage();
+      await cui_pages.isSamePersonAsSponsor.completePageAndContinue({ isSponsorAndNonLegalRepresentativeTheSamePerson: 'No' });
+
+      await cui_pages.sponsorName.verifyUserIsOnPage();
+      const sponsorName = await dataUtils.generateRandomFirstAndLastNames({ countOfFirstNamesToGenerate: 1, countOfLastNamesToGenerate: 1 });
+      await cui_pages.sponsorName.completePageAndContinue({
+        givenNames: sponsorName.firstNames[0],
+        familyName: sponsorName.lastNames[0],
+      });
+
+      await cui_pages.sponsorAddress.verifyUserIsOnPage();
+      await cui_pages.sponsorAddress.completePageAndContinue({
+        addressLine1: '123 Fake Street',
+        townOrCity: 'Faketown',
+        postCode: 'FK1 1FK',
+      });
+
+      await cui_pages.sponsorContactPreferences.verifyUserIsOnPage();
+      const sponsorContactDetails = await dataUtils.generateContactDetails('Email and Phone');
+      await cui_pages.sponsorContactPreferences.completePageAndContinue({
+        contactPreference: 'Email and Phone',
+        sponsorEmail: sponsorContactDetails.email,
+        sponsorPhoneNumber: sponsorContactDetails.phone,
+      });
+
+      await cui_pages.sponsorAuthorisation.verifyUserIsOnPage();
+      await cui_pages.sponsorAuthorisation.completePageAndContinue({ allowSponsorToSeeAppealInformation: 'Yes' });
+
+      await cui_pages.nonLegalRepName.verifyUserIsOnPage();
+      const nlrName = await dataUtils.generateRandomFirstAndLastNames({ countOfFirstNamesToGenerate: 1, countOfLastNamesToGenerate: 1 });
+      await cui_pages.nonLegalRepName.completePageAndContinue({
+        givenNames: nlrName.firstNames[0],
+        familyName: nlrName.lastNames[0],
+      });
+
+      await cui_pages.nonLegalRepAddressOutOfCountry.verifyUserIsOnPage();
+      await cui_pages.nonLegalRepAddressOutOfCountry.completePageAndContinue({
+        nonLegalRepAddress: 'Flat 1, 1 Test Street, Test Town, TE1 1ST, United Kingdom',
+      });
+
+      await cui_pages.nonLegalRepContactDetails.verifyUserIsOnPage();
+      const nlrContactDetails = await dataUtils.generateContactDetails('Email and Phone');
+      await cui_pages.nonLegalRepContactDetails.completePageAndContinue({
+        nlrEmail: nlrContactDetails.email!,
+        nlrPhoneNumber: nlrContactDetails.phone!,
+      });
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete decision with or without a hearing section of journey', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.decisionWithOrWithoutHearingLink);
+
+      await cui_pages.decisionType.verifyUserIsOnPage();
+      await cui_pages.decisionType.completePageAndContinue({ decisionWithOrWithoutHearing: 'decisionWithoutHearing' });
+
+      await cui_pages.equalityAndDiversityStart.verifyUserIsOnPage();
+      await cui_pages.equalityAndDiversityStart.completePageAndContinue();
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete check and send section of journey', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.checkAndSendYourAppealDetailsLink);
+
+      await cui_pages.newAppealCheckAnswers.verifyUserIsOnPage();
+      await cui_pages.newAppealCheckAnswers.submitApplication();
+    });
+
+    await test.step('Verify application has successfully been submitted', async () => {
+      await cui_pages.appealDetailsSent.verifyUserIsOnPage();
+
+      await expect(cui_pages.appealDetailsSent.$static.pageHeading).toHaveText('Your appeal details have been sent');
+      await expect(cui_pages.appealDetailsSent.$static.whatHappensNextHeading).toBeVisible();
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(
+          'A Legal Officer will ask the Home Office to send any documents it has about your case to the Tribunal',
+          { exact: true },
+        ),
+      ).toBeVisible();
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(
+          'A Legal Officer will check the Home Office documents and then contact you to tell you what to do next',
+          { exact: true },
+        ),
+      ).toBeVisible();
+
+      const expectedDate = (await dataUtils.getDateFromToday({ dayOffset: 5 })).full;
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(`This should be by ${expectedDate} but it might take longer than that`, { exact: true }),
+      ).toBeVisible();
+
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(
+          'You have submitted your appeal details with a non-legal representative. If they do not already have an account with MyHMCTS, they will be sent an email to create an account..',
+          { exact: true },
+        ),
+      ).toBeVisible();
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(
+          'To continue to add your non-legal representative once they have created an account, please click the Add non-legal representative link on the right of your appeal page in order to send them instructions to access your case.',
+          { exact: true },
+        ),
+      ).toBeVisible();
+
+      await expect(cui_pages.appealDetailsSent.$static.thingsYouCanDoNowHeading).toBeVisible();
+      await expect(cui_pages.appealDetailsSent.$interactive.readMoreAboutAppealingAsylumDecisionLink).toBeVisible();
+      await expect(cui_pages.appealDetailsSent.$interactive.findOrganisationsThatCanHelpLink).toBeVisible();
+    });
+  });
+
+  test('Verify user is able to submit an appeal with a non-legal representative but no sponsor', async ({ cui_pages, dataUtils }) => {
+    await test.step('Navigate to appeal overview page', async () => {
+      await cui_pages.caseList.createNewAppeal();
+      await cui_pages.appealOverview.verifyUserIsOnPage();
+    });
+
+    await test.step('Navigate to about appeals page', async () => {
+      await cui_pages.appealOverview.navigationClick(cui_pages.appealOverview.$interactive.continueButton);
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete appeal type section of journey', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.appealTypeLink);
+
+      await cui_pages.inTheUk.verifyUserIsOnPage();
+      await cui_pages.inTheUk.completePageAndContinue({ isUserInTheUk: 'Yes' });
+
+      await cui_pages.appealType.verifyUserIsOnPage();
+      await cui_pages.appealType.completePageAndContinue({ appealType: 'Deprivation of Citizenship' });
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete your home office and details section of journey', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.homeOfficeAndPersonalDetailsLink);
+
+      await cui_pages.homeOfficeReferenceNumber.verifyUserIsOnPage();
+      const homeOfficeReference = await dataUtils.generateRandomNumber({ digitLength: 9 });
+      await cui_pages.homeOfficeReferenceNumber.completePageAndContinue({ homeOfficeReference: homeOfficeReference });
+
+      await cui_pages.applicantName.verifyUserIsOnPage();
+      const applicantName = await dataUtils.generateRandomFirstAndLastNames({ countOfFirstNamesToGenerate: 1, countOfLastNamesToGenerate: 1 });
+      await cui_pages.applicantName.completePageAndContinue({
+        givenNames: applicantName.firstNames[0],
+        familyName: applicantName.lastNames[0],
+      });
+
+      await cui_pages.applicantDob.verifyUserIsOnPage();
+      const applicantDob = await dataUtils.getDateFromToday({ yearOffset: -30 });
+      await cui_pages.applicantDob.completePageAndContinue({
+        day: applicantDob.day,
+        month: applicantDob.month,
+        year: applicantDob.year,
+      });
+
+      await cui_pages.applicantNationality.verifyUserIsOnPage();
+      await cui_pages.applicantNationality.completePageAndContinue({ stateless: true });
+
+      await cui_pages.decisionLetterSent.verifyUserIsOnPage();
+      const dateLetterSent = await dataUtils.getDateFromToday({ dayOffset: -10 });
+      await cui_pages.decisionLetterSent.completePageAndContinue({
+        day: dateLetterSent.day,
+        month: dateLetterSent.month,
+        year: dateLetterSent.year,
+      });
+
+      await cui_pages.uploadDecisionLetter.verifyUserIsOnPage();
+      await cui_pages.uploadDecisionLetter.completePageAndContinue({});
+
+      await cui_pages.deportationOrder.verifyUserIsOnPage();
+      await cui_pages.deportationOrder.completePageAndContinue({ deportationOrderReceived: 'No' });
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete your contact details section of journey, including non-legal representative questions with no sponsor', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.yourContactDetailsLink);
+
+      await cui_pages.contactPreferences.verifyUserIsOnPage();
+      const contactDetails = await dataUtils.generateContactDetails('Email and Phone');
+      await cui_pages.contactPreferences.completePageAndContinue({
+        contactPreference: 'Email and Phone',
+        applicantEmail: contactDetails.email,
+        applicantPhoneNumber: contactDetails.phone,
+      });
+
+      await cui_pages.applicantAddress.verifyUserIsOnPage();
+      await cui_pages.applicantAddress.completePageAndContinue({
+        addressPreference: 'Post Code Search',
+        postCode: 'N1 7DA',
+      });
+
+      await cui_pages.selectAddress.verifyUserIsOnPage();
+      await cui_pages.selectAddress.completePageAndContinue({ preference: 'Select Address At Random' });
+
+      await cui_pages.manualAddress.verifyUserIsOnPage();
+      await cui_pages.manualAddress.completePageAndContinue({
+        preference: 'Address selected via postcode search',
+        postCode: 'N1 7DA',
+      });
+
+      await cui_pages.hasSponsorOrNonLegalRep.verifyUserIsOnPage();
+      await cui_pages.hasSponsorOrNonLegalRep.completePageAndContinue({
+        doesApplicantHaveASponsor: 'No',
+        doesApplicantHaveANonLegalRepresentative: 'Yes',
+      });
+
+      await cui_pages.nonLegalRepName.verifyUserIsOnPage();
+      const nlrName = await dataUtils.generateRandomFirstAndLastNames({ countOfFirstNamesToGenerate: 1, countOfLastNamesToGenerate: 1 });
+      await cui_pages.nonLegalRepName.completePageAndContinue({
+        givenNames: nlrName.firstNames[0],
+        familyName: nlrName.lastNames[0],
+      });
+
+      await cui_pages.nonLegalRepAddressOutOfCountry.verifyUserIsOnPage();
+      await cui_pages.nonLegalRepAddressOutOfCountry.completePageAndContinue({
+        nonLegalRepAddress: 'Flat 1, 1 Test Street, Test Town, TE1 1ST, United Kingdom',
+      });
+
+      await cui_pages.nonLegalRepContactDetails.verifyUserIsOnPage();
+      const nlrContactDetails = await dataUtils.generateContactDetails('Email and Phone');
+      await cui_pages.nonLegalRepContactDetails.completePageAndContinue({
+        nlrEmail: nlrContactDetails.email!,
+        nlrPhoneNumber: nlrContactDetails.phone!,
+      });
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete decision with or without a hearing section of journey', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.decisionWithOrWithoutHearingLink);
+
+      await cui_pages.decisionType.verifyUserIsOnPage();
+      await cui_pages.decisionType.completePageAndContinue({ decisionWithOrWithoutHearing: 'decisionWithoutHearing' });
+
+      await cui_pages.equalityAndDiversityStart.verifyUserIsOnPage();
+      await cui_pages.equalityAndDiversityStart.completePageAndContinue();
+
+      await cui_pages.aboutAppeal.verifyUserIsOnPage();
+    });
+
+    await test.step('Complete check and send section of journey', async () => {
+      await cui_pages.aboutAppeal.navigationClick(cui_pages.aboutAppeal.$interactive.checkAndSendYourAppealDetailsLink);
+
+      await cui_pages.newAppealCheckAnswers.verifyUserIsOnPage();
+      await cui_pages.newAppealCheckAnswers.submitApplication();
+    });
+
+    await test.step('Verify application has successfully been submitted', async () => {
+      await cui_pages.appealDetailsSent.verifyUserIsOnPage();
+
+      await expect(cui_pages.appealDetailsSent.$static.pageHeading).toHaveText('Your appeal details have been sent');
+      await expect(cui_pages.appealDetailsSent.$static.whatHappensNextHeading).toBeVisible();
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(
+          'A Legal Officer will ask the Home Office to send any documents it has about your case to the Tribunal',
+          { exact: true },
+        ),
+      ).toBeVisible();
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(
+          'A Legal Officer will check the Home Office documents and then contact you to tell you what to do next',
+          { exact: true },
+        ),
+      ).toBeVisible();
+
+      const expectedDate = (await dataUtils.getDateFromToday({ dayOffset: 5 })).full;
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(`This should be by ${expectedDate} but it might take longer than that`, { exact: true }),
+      ).toBeVisible();
+
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(
+          'You have submitted your appeal details with a non-legal representative. If they do not already have an account with MyHMCTS, they will be sent an email to create an account..',
+          { exact: true },
+        ),
+      ).toBeVisible();
+      await expect(
+        cui_pages.appealDetailsSent.page.getByText(
+          'To continue to add your non-legal representative once they have created an account, please click the Add non-legal representative link on the right of your appeal page in order to send them instructions to access your case.',
+          { exact: true },
+        ),
       ).toBeVisible();
 
       await expect(cui_pages.appealDetailsSent.$static.thingsYouCanDoNowHeading).toBeVisible();
